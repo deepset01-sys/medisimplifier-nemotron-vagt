@@ -1,0 +1,82 @@
+VAGT decomposition on MedSimp-JudgeBench — Llama + Qwen + Nemotron Nano
+Source: nemotron_calibration_full.json (708 records, no-CoT / v2 condition).
+Point estimate [2.5%, 97.5%] via 1000-item bootstrap, seed=42. SAFE=0/UNSAFE=1.
+Each stratum = corrupted-feature items (τ=1) + shared clean controls (τ=0).
+Two panels per feature: 2-rater {Llama,Qwen} baseline vs 3-rater {+Nemotron}.
+
+========================================================================
+FEATURE: dose   (3-rater n=280, corrupted prevalence=0.30, dropped-for-ERROR=15)
+========================================================================
+  metric                  2-rater {L,Q}           3-rater {L,Q,Nemo}
+  σ²_τ                       0.214 [0.191, 0.231]         0.211 [0.188, 0.229]
+  σ²_B (shared bias)         0.054 [0.034, 0.075]         0.047 [0.032, 0.062]
+  σ²_R (rater)               0.004 [0.001, 0.007]         0.024 [0.016, 0.033]
+  σ²_N (noise)               0.037 [0.027, 0.046]         0.067 [0.059, 0.074]
+  Φ_V                        0.743 [0.695, 0.797]         0.733 [0.692, 0.778]
+  Fleiss κ                   0.514 [0.388, 0.635]         0.369 [0.275, 0.460]
+  Kripp α                    0.515 [0.389, 0.636]         0.370 [0.276, 0.460]
+  pairwise Cohen κ:  L–Q=0.544   L–Nemo=0.230   Q–Nemo=0.482
+  UNSAFE rate / α_r:  Llama=0.15/-0.16   Qwen=0.26/-0.05   Nemotron=0.52/+0.21
+  Δ adding Nemotron:  ΔΦ_V=-0.010   Δσ²_B=-0.007   (blind spot reduced; dependability down)
+
+========================================================================
+FEATURE: negation   (3-rater n=295, corrupted prevalence=0.34, dropped-for-ERROR=18)
+========================================================================
+  metric                  2-rater {L,Q}           3-rater {L,Q,Nemo}
+  σ²_τ                       0.225 [0.205, 0.240]         0.224 [0.202, 0.239]
+  σ²_B (shared bias)         0.145 [0.109, 0.186]         0.104 [0.079, 0.132]
+  σ²_R (rater)               0.001 [0.000, 0.004]         0.029 [0.020, 0.037]
+  σ²_N (noise)               0.038 [0.029, 0.047]         0.075 [0.068, 0.083]
+  Φ_V                        0.578 [0.532, 0.624]         0.618 [0.575, 0.658]
+  Fleiss κ                   0.390 [0.236, 0.529]         0.203 [0.114, 0.287]
+  Kripp α                    0.391 [0.238, 0.530]         0.204 [0.115, 0.288]
+  pairwise Cohen κ:  L–Q=0.392   L–Nemo=0.128   Q–Nemo=0.317
+  UNSAFE rate / α_r:  Llama=0.11/-0.15   Qwen=0.19/-0.08   Nemotron=0.50/+0.24
+  Δ adding Nemotron:  ΔΦ_V=+0.040   Δσ²_B=-0.041   (blind spot reduced; dependability up)
+
+========================================================================
+FEATURE: lateral   (3-rater n=341, corrupted prevalence=0.43, dropped-for-ERROR=9)
+========================================================================
+  metric                  2-rater {L,Q}           3-rater {L,Q,Nemo}
+  σ²_τ                       0.245 [0.234, 0.250]         0.245 [0.235, 0.250]
+  σ²_B (shared bias)         0.077 [0.057, 0.100]         0.050 [0.038, 0.064]
+  σ²_R (rater)               0.008 [0.004, 0.013]         0.030 [0.023, 0.038]
+  σ²_N (noise)               0.051 [0.042, 0.059]         0.073 [0.067, 0.079]
+  Φ_V                        0.697 [0.653, 0.740]         0.745 [0.711, 0.774]
+  Fleiss κ                   0.417 [0.310, 0.519]         0.351 [0.280, 0.420]
+  Kripp α                    0.418 [0.311, 0.520]         0.351 [0.281, 0.421]
+  pairwise Cohen κ:  L–Q=0.438   L–Nemo=0.238   Q–Nemo=0.513
+  UNSAFE rate / α_r:  Llama=0.19/-0.20   Qwen=0.37/-0.02   Nemotron=0.61/+0.22
+  Δ adding Nemotron:  ΔΦ_V=+0.047   Δσ²_B=-0.027   (blind spot reduced; dependability up)
+
+========================================================================
+FEATURE: diagnosis   (3-rater n=333, corrupted prevalence=0.41, dropped-for-ERROR=17)
+========================================================================
+  metric                  2-rater {L,Q}           3-rater {L,Q,Nemo}
+  σ²_τ                       0.243 [0.232, 0.249]         0.243 [0.231, 0.249]
+  σ²_B (shared bias)         0.347 [0.299, 0.402]         0.229 [0.196, 0.265]
+  σ²_R (rater)               0.000 [0.000, 0.001]         0.040 [0.031, 0.050]
+  σ²_N (noise)               0.021 [0.014, 0.029]         0.072 [0.065, 0.078]
+  Φ_V                        0.404 [0.376, 0.428]         0.476 [0.450, 0.502]
+  Fleiss κ                  0.076 [-0.053, 0.243]      -0.088 [-0.143, -0.025]
+  Kripp α                   0.077 [-0.052, 0.244]      -0.086 [-0.142, -0.024]
+  pairwise Cohen κ:  L–Q=0.081   L–Nemo=0.007   Q–Nemo=0.060
+  UNSAFE rate / α_r:  Llama=0.07/-0.13   Qwen=0.03/-0.16   Nemotron=0.47/+0.28
+  Δ adding Nemotron:  ΔΦ_V=+0.072   Δσ²_B=-0.118   (blind spot reduced; dependability up)
+
+========================================================================
+SUMMARY — effect of adding Nemotron as a third rater
+========================================================================
+  feature      Φ_V(2)   Φ_V(3)     ΔΦ_V    σ²_B(2)  σ²_B(3)    Δσ²_B
+  dose          0.743    0.733   -0.010      0.054    0.047   -0.007
+  negation      0.578    0.618   +0.040      0.145    0.104   -0.041
+  lateral       0.697    0.745   +0.047      0.077    0.050   -0.027
+  diagnosis     0.404    0.476   +0.072      0.347    0.229   -0.118
+
+  Lowest Φ_V (worst-calibrated feature): 2-rater=diagnosis, 3-rater=diagnosis.
+  Largest shared-bias reduction from Nemotron: diagnosis (Δσ²_B=-0.118, ΔΦ_V=+0.072).
+
+  Interpretation: Nemotron's high sensitivity pulls the consensus toward
+  ground truth on features where Llama+Qwen share a blind spot (shrinking σ²_B),
+  but its divergence raises rater variance σ²_R. Φ_V nets these effects; a
+  positive ΔΦ_V means the veridicality gain outweighs the added rater noise.

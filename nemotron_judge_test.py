@@ -312,7 +312,7 @@ def main():
         return "n/a" if x is None else f"{x:.1%}"
 
     print("\n" + "=" * 60)
-    print("SMOKE TEST RESULTS")
+    print("RUN RESULTS")
     print("=" * 60)
     print(f"Model:              {args.model}")
     print(f"Samples judged:     {n}")
@@ -342,13 +342,13 @@ def main():
     }, indent=2), encoding="utf-8")
     print(f"\nSaved detailed results to {out.resolve()}")
 
-    # Smoke-test verdict on the test itself.
+    # Run status.
     if n_nemo_err == n:
         print("\n>>> FAIL: every call errored — check the model string (--list-models) and API key.")
     elif n_nemo_err > 0:
-        print(f"\n>>> PARTIAL: {n - n_nemo_err}/{n} valid. Prompt works but some calls failed.")
+        print(f"\n>>> DONE: {n - n_nemo_err}/{n} valid verdicts, {n_nemo_err} transient errors.")
     else:
-        print("\n>>> PASS: model string works and all verdicts parsed as valid SAFE/UNSAFE.")
+        print("\n>>> DONE: all verdicts parsed as valid SAFE/UNSAFE (0 errors).")
 
 
 if __name__ == "__main__":

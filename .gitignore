@@ -92,3 +92,6 @@ mlruns/
 *.pem
 secrets.yaml
 credentials.json
+
+# Smoke-test scratch output (the full calibration file IS tracked)
+nemotron_judge_test_results.json
