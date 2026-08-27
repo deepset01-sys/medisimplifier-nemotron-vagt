@@ -52,11 +52,11 @@ FINDINGS.md                      # All key findings documented
 NEMOTRON_NANO  = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
 NEMOTRON_SUPER = "nvidia/nemotron-3-super-120b-a12b"
 NEMOTRON_ULTRA = "nvidia/Nemotron-3-Ultra-550b-a55b"
-LLAMA          = "meta-llama/Meta-Llama-3.1-70B-Instruct"
-QWEN           = "Qwen/Qwen2.5-32B-Instruct"
+LLAMA          = "meta-llama/Llama-3.3-70B-Instruct"
+QWEN           = "Qwen/Qwen3-32B"
 
 # Token Factory endpoint
-BASE_URL = "https://api.studio.nebius.com/v1/"
+BASE_URL = "https://api.studio.nebius.ai/v1/"
 
 # CRITICAL: Nemotron is a reasoning model
 # max_tokens=8000 REQUIRED (uses ~3.7k thinking tokens)
