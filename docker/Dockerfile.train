@@ -1,0 +1,20 @@
+FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+
+# Training deps live at docker/requirements_train.txt — separate from the repo-root
+# requirements.txt, which is the lightweight Token Factory generation set.
+COPY docker/requirements_train.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY src/ .
+
+ARG GIT_SHA=unknown
+LABEL org.opencontainers.image.revision=$GIT_SHA
+
+ENV PYTHONUNBUFFERED=1
+ENV HF_HOME=/tmp/hf_cache
+
+CMD ["python", "train.py", "--model", "openbio", "--output-dir", "/output/adapter", "--epochs", "3"]

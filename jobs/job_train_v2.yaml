@@ -1,0 +1,40 @@
+name: medisimplifier-v2-training
+description: "LoRA v2 — OpenBioLLM-8B on Nemotron Super references, r=32, all_attn, 3 epochs"
+parent_id: ${NEBIUS_PROJECT_ID}
+
+resources:
+  platform: gpu-h100-sxm
+  preset: 1gpu-16vcpu-200gb
+  disk_size: 250Gi
+  subnet_id: ${NEBIUS_SUBNET_ID}
+
+docker:
+  image: chambul/medisimplifier:train-v28
+  command: python
+  args:
+    - "train.py"
+    - "--model"
+    - "openbio"
+    - "--epochs"
+    - "3"
+    - "--rank"
+    - "32"
+    - "--modules"
+    - "all_attn"
+    - "--seed"
+    - "42"
+    - "--dataset"
+    - "chambul/medisimplifier-nemotron-dataset"
+
+env:
+  HF_TOKEN: "${HF_TOKEN}"
+  HF_HOME: "/tmp/hf_cache"
+  PYTHONUNBUFFERED: "1"
+  TEACHER_MODEL: "nemotron-super"
+
+volumes:
+  - bucket: medisimplifier-adapters-v2
+    mount: /output
+    mode: rw
+
+timeout: 5h
