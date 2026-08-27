@@ -23,10 +23,15 @@ fine-tuned model to generate new simplifications.
 
 Usage:
   python nemotron_judge_test.py --list-models          # discover exact Nemotron string
-  python nemotron_judge_test.py                          # run smoke test (20 samples)
-  python nemotron_judge_test.py --n 20 --seed 42 --model nvidia/<string>
+  python nemotron_judge_test.py                          # smoke test (20 samples, 12 workers)
+  # full calibration over all 708 records, 12 concurrent workers, checkpointed:
+  python nemotron_judge_test.py --n 708 --workers 12 --output nemotron_calibration_full.json
 
-Requires: NEBIUS_API_KEY in env (or --nebius-api-key).
+Flags: --n/--limit (samples), --workers (concurrency), --checkpoint-every,
+       --seed, --data, --output, --model, --nebius-api-key.
+Concurrency: judges run on a ThreadPoolExecutor; partial results are written to
+--output every --checkpoint-every completed calls (status="in_progress"), so an
+interrupted run is recoverable. Requires NEBIUS_API_KEY in env (or --nebius-api-key).
 """
 
 import os
@@ -35,6 +40,8 @@ import json
 import time
 import argparse
 import random
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 import requests
@@ -217,6 +224,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default=NEMOTRON_MODEL, help="Nemotron Nano model string on Token Factory")
     ap.add_argument("--n", type=int, default=20, help="number of samples to judge")
+    ap.add_argument("--limit", type=int, default=None, help="alias for --n; takes precedence if set")
+    ap.add_argument("--workers", type=int, default=12, help="concurrent judge workers (ThreadPoolExecutor)")
+    ap.add_argument("--checkpoint-every", type=int, default=50, help="write partial results every N completed calls")
     ap.add_argument("--seed", type=int, default=42, help="sampling seed")
     ap.add_argument("--data", default=None, help="path to calibration_verdicts.json")
     ap.add_argument("--nebius-api-key", default=os.getenv("NEBIUS_API_KEY"))
@@ -232,36 +242,59 @@ def main():
         return
 
     recs = load_data(args.data)
+    effective_n = args.limit if args.limit is not None else args.n
 
     # Deterministic sample across the full set (mixes clean + corrupted, all error types).
     rng = random.Random(args.seed)
-    sample = rng.sample(recs, min(args.n, len(recs)))
+    sample = rng.sample(recs, min(effective_n, len(recs)))
+    total = len(sample)
 
-    print(f"\nJudging {len(sample)} samples with Nemotron Nano: {args.model}")
-    print("Comparison baselines: existing Llama + Qwen verdicts (v2 / no-CoT).\n")
+    print(f"\nJudging {total} samples with Nemotron Nano: {args.model}")
+    print(f"Concurrency: {args.workers} workers | checkpoint every {args.checkpoint_every} | output: {args.output}")
+    print("Comparison baselines: existing Llama + Qwen verdicts (v2 / no-CoT).", flush=True)
 
     per_sample = []
     nemo_verdicts, llama_verdicts, qwen_verdicts = [], [], []
+    lock = threading.Lock()
+    out_path = Path(args.output)
 
-    for i, r in enumerate(sample):
-        original = r["input"]
-        simplified = r["perturbed"]  # the text the stored verdicts judged
-        res = llm_judge_eval(original, simplified, args.nebius_api_key, args.model)
+    def judge_one(r):
+        # `perturbed` is the text the stored Llama/Qwen verdicts judged.
+        res = llm_judge_eval(r["input"], r["perturbed"], args.nebius_api_key, args.model)
+        return r, res
 
-        nv, lv, qv = res["verdict"], r["llama_verdict"], r["qwen_verdict"]
-        nemo_verdicts.append(nv)
-        llama_verdicts.append(lv)
-        qwen_verdicts.append(qv)
+    def write_checkpoint(done, status="in_progress"):
+        out_path.write_text(json.dumps({
+            "status": status, "completed": done, "total": total,
+            "model": args.model, "seed": args.seed, "workers": args.workers,
+            "dist": {"nemotron": dist(nemo_verdicts), "llama": dist(llama_verdicts), "qwen": dist(qwen_verdicts)},
+            "per_sample": sorted(per_sample, key=lambda x: x["idx"]),
+        }, indent=2), encoding="utf-8")
 
-        per_sample.append({
-            "idx": r["idx"], "error_type": r["error_type"], "condition": r["condition"],
-            "nemotron_verdict": nv, "llama_verdict": lv, "qwen_verdict": qv,
-        })
-
-        flag = "" if nv in ("SAFE", "UNSAFE") else "  <-- ERROR"
-        print(f"  [{i + 1:>2}/{len(sample)}] idx={r['idx']:>4} "
-              f"{r['condition']:>9}/{r['error_type']:<9} "
-              f"Nemotron={nv:<6} Llama={lv:<6} Qwen={qv:<6}{flag}")
+    t0 = time.time()
+    with ThreadPoolExecutor(max_workers=args.workers) as ex:
+        futures = [ex.submit(judge_one, r) for r in sample]
+        done = 0
+        for fut in as_completed(futures):
+            r, res = fut.result()
+            nv, lv, qv = res["verdict"], r["llama_verdict"], r["qwen_verdict"]
+            with lock:
+                # append the triplet together so per-item alignment is preserved
+                nemo_verdicts.append(nv); llama_verdicts.append(lv); qwen_verdicts.append(qv)
+                per_sample.append({
+                    "idx": r["idx"], "error_type": r["error_type"], "condition": r["condition"],
+                    "nemotron_verdict": nv, "llama_verdict": lv, "qwen_verdict": qv,
+                })
+                done += 1
+                n_err = sum(1 for v in nemo_verdicts if v not in ("SAFE", "UNSAFE"))
+                if done % 100 == 0 or done == total:
+                    elapsed = time.time() - t0
+                    rate = done / max(1e-9, elapsed)
+                    eta = (total - done) / rate if rate > 0 else 0.0
+                    print(f"  [{done:>3}/{total}] elapsed={elapsed / 60:.1f}m eta={eta / 60:.1f}m "
+                          f"| Nemotron so far: {dist(nemo_verdicts)} | errors={n_err}", flush=True)
+                if done % args.checkpoint_every == 0 or done == total:
+                    write_checkpoint(done)
 
     # ── Agreement / distribution ────────────────────────────────────────────
     n = len(sample)
@@ -295,7 +328,8 @@ def main():
 
     out = Path(args.output)
     out.write_text(json.dumps({
-        "model": args.model, "n": n, "seed": args.seed,
+        "status": "complete",
+        "model": args.model, "n": n, "seed": args.seed, "workers": args.workers,
         "n_nemotron_errors": n_nemo_err,
         "dist": {"nemotron": dist(nemo_verdicts), "llama": dist(llama_verdicts), "qwen": dist(qwen_verdicts)},
         "agreement": {
@@ -304,7 +338,7 @@ def main():
             "kappa_llama": cohen_kappa(nemo_verdicts, llama_verdicts),
             "kappa_qwen": cohen_kappa(nemo_verdicts, qwen_verdicts),
         },
-        "per_sample": per_sample,
+        "per_sample": sorted(per_sample, key=lambda x: x["idx"]),
     }, indent=2), encoding="utf-8")
     print(f"\nSaved detailed results to {out.resolve()}")
 
