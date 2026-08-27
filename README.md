@@ -27,11 +27,13 @@ MediSimplifier simplifies medical discharge summaries to a 6th-grade reading lev
 |--|--|--|
 | Teacher (reference generation) | Claude Opus 4.5 | **Nemotron Super** (`nemotron-3-super-120b-a12b`) |
 | Safety judges | Llama-3.3-70B + Qwen3-32B | **+ Nemotron Nano** (`Nemotron-3-Nano-30B-A3B`) — 3rd, calibrated |
-| Calibration measurement | Cohen's κ / PABAK / Krippendorff α (consensus only) | **VAGT** — Φ_V, veridicality-anchored (agreement with ground truth) |
+| Calibration measurement | Cohen's κ only | VAGT 3-rater + Nemotron Nano |
 | Judge benchmark | MedSimp-JudgeBench (708, dual-judge) | Same set, **3-judge decomposition** |
 | Training references | Claude Opus (9,999 records) | **Nemotron Super** (9,999 records) — `[PLACEHOLDER — run in progress]` |
 | Fine-tuned student | OpenBioLLM-8B, ROUGE-L 0.6638 | `[PLACEHOLDER — Nemotron-taught student]` |
 | Serving | vLLM + dual-judge guardrail | `[PLACEHOLDER — Nemotron-in-the-loop endpoint]` |
+
+> **Note on calibration history:** PABAK, Gwet AC1, Krippendorff α, and VAGT (2-rater) were developed as part of v1's post-challenge analysis ([github.com/deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius)); v2 extends VAGT to a 3-rater panel with Nemotron Nano.
 
 > All Nemotron inference runs on **Nebius Token Factory** (OpenAI-compatible, `https://api.studio.nebius.ai/v1/`). No standing infrastructure.
 
@@ -84,7 +86,7 @@ Pipeline:
 
 **Question:** Can Nemotron Super replace Claude Opus 4.5 as the reference-simplification teacher, using the *same* prompt?
 
-**Method.** The teacher prompt is imported **verbatim** from the original Technion notebook (`SIMPLIFICATION_INSTRUCTION` — persona + 9 guidelines + Input/Output template, in a single user message, no system prompt). Only three things change from the Opus run:
+**Method.** The teacher prompt is identical to the one used to generate the Claude Opus 4.5 reference simplifications in v1 ([github.com/deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius)) — a single user message with 9 simplification guidelines, no system prompt. Using the exact same prompt for both teachers ensures a fair comparison: any difference in output quality reflects the model, not the instructions. Only three things change from the Opus run:
 
 | Parameter | Opus (v1) | Nemotron Super (v2) |
 |--|--|--|
