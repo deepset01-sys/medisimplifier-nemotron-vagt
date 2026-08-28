@@ -14,10 +14,10 @@ MODELS = {
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", default="openbio")
-    parser.add_argument("--adapter-path", default="/mnt/adapters/full_training")
-    parser.add_argument("--output-path", default="/tmp/merged_openbio")
-    parser.add_argument("--bucket", default="medisimplifier-adapters")
-    parser.add_argument("--bucket-key", default="merged_openbio")
+    parser.add_argument("--adapter-path", default="/mnt/adapters/adapter")
+    parser.add_argument("--output-path", default="/tmp/merged_openbio_v2")
+    parser.add_argument("--bucket", default="medisimplifier-adapters-v2")
+    parser.add_argument("--bucket-key", default="merged_openbio_v2")
     args = parser.parse_args()
 
     hf_path = MODELS[args.model]
