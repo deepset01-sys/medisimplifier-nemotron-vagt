@@ -5,7 +5,7 @@
 
 set -euo pipefail
 
-MODEL="chambul/MediSimplifier-OpenBioLLM-merged"
+MODEL="chambul/MediSimplifier-OpenBioLLM-v2-merged"
 VLLM_PORT=8001
 API_PORT=8000
 
