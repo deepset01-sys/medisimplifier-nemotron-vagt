@@ -6,10 +6,15 @@
 [![JudgeBench](https://img.shields.io/badge/HF-MedSimp--JudgeBench-yellow)](https://huggingface.co/datasets/chambul/MedSimp-JudgeBench)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 
-> **v2 of [MediSimplifier](https://github.com/deepset01-sys/medisimplifier-nebius)** (🥇 First Place — Nebius Serverless AI Builders Challenge).
-> This iteration replaces the proprietary teacher and the ad-hoc judge panel with **NVIDIA Nemotron** end to end, and introduces **VAGT** — a measurement framework that scores an LLM judge by agreement with *ground truth*, not agreement with other judges.
+> **Nebius x NVIDIA Global AI Hackathon submission by Shmulik Avraham.**
+> Built on top of [MediSimplifier-Nebius](https://github.com/deepset01-sys/medisimplifier-nebius) — 🥇 First Place winner of the Nebius Serverless AI Builders Challenge.
+> The Nemotron teacher pipeline, 3-judge calibration panel, VAGT measurement framework, and v2 training infrastructure were built independently for this hackathon.
 
-**Executive Summary:** Medical text simplification with an all-Nemotron pipeline on Nebius Token Factory — **Nemotron Super (120B-A12B)** generates reference simplifications (teacher), **Nemotron Nano (30B-A3B)** serves as a calibrated safety judge, and **VAGT (Veridicality-Anchored G-Theory)** measures judge calibration against injected-error ground truth. Headline result: on the MedSimp-JudgeBench perturbation set (n=708), Nemotron Nano catches injected errors at **84.2%** recall vs Llama-3.3-70B's 31.7% and Qwen3-32B's 55.9% — and on the hardest failure mode (silent diagnosis drop) it reaches **68%** vs 14% / 7%. Adding Nemotron as a third judge produces a **consensus-vs-veridicality inversion**: rater-agreement (Fleiss κ) goes *negative* on diagnosis while VAGT dependability (Φ_V) *rises* — the exact blind spot κ cannot see.
+**Executive Summary:** 9,999 Nemotron Super teacher calls via Token Factory → training on H100 (3 epochs, ~2.4h) → Nemotron Nano joins Llama + Qwen as calibrated third judge → 708-sample VAGT 3-rater analysis → Safe Simplification Endpoint v2 (in progress) — zero standing infrastructure, $0 idle cost.
+
+**Key findings:** (1) Nemotron Super as teacher produces stylistically different references than Claude Opus (ROUGE-L 0.525 between teachers) — student faithfully learns Nemotron's style (FK-Grade 8.87 vs 7.33 in v1); (2) Nemotron Nano catches diagnosis omissions at 68% recall vs Llama's 14% and Qwen's 7% — the clinical blind spot both v1 judges shared; (3) VAGT inversion — adding Nemotron as third judge cuts shared bias σ²_B on diagnosis from 0.347→0.229 while Fleiss κ goes negative, proving consensus statistics are blind to the improvement. Three Nebius services: Token Factory, Jobs, Object Storage.
+
+**Blog Post:** [coming soon]
 
 ## What this project does
 
