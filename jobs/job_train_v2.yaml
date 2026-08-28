@@ -9,7 +9,7 @@ resources:
   subnet_id: ${NEBIUS_SUBNET_ID}
 
 docker:
-  image: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v28@sha256:b34dca7f8ac70ab57dc0c83cdc7b1cb408b16f518b8d1b896870caf93a56a777
+  image: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v29@sha256:bbbf6df1b1649c6dbd3828de8156a55970b541e0e0549cf3839df7dc6dd457f5
   command: python
   args:
     - "train.py"
