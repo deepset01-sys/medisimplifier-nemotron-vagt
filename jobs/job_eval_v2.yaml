@@ -1,0 +1,35 @@
+name: medisimplifier-v2-evaluate
+description: "Evaluation — ROUGE-L, SARI, BERTScore, FK-Grade on test split"
+parent_id: ${NEBIUS_PROJECT_ID}
+
+resources:
+  platform: gpu-h100-sxm
+  preset: 1gpu-16vcpu-200gb
+  disk_size: 250Gi
+  subnet_id: ${NEBIUS_SUBNET_ID}
+
+docker:
+  image: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v30@sha256:6c3cd4cd99480ced3fd4dfe1977a1f4fd42e0ff18f970a5cc3fe08ca7aa70cd6
+  command: python
+  args:
+    - "evaluate.py"
+    - "--model"
+    - "openbio"
+    - "--adapter-path"
+    - "/mnt/adapters/adapter"
+    - "--split"
+    - "test"
+    - "--output-dir"
+    - "/mnt/adapters/eval_v2"
+
+env:
+  HF_TOKEN: "${HF_TOKEN}"
+  HF_HOME: "/tmp/hf_cache"
+  PYTHONUNBUFFERED: "1"
+
+volumes:
+  - bucket: medisimplifier-adapters-v2
+    mount: /mnt/adapters
+    mode: rw
+
+timeout: 5h
