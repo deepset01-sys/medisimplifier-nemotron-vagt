@@ -20,19 +20,35 @@
 PHASE 1 — Teacher Data Generation (COMPLETE ✅):
   nemotron_training_references.json (9,999 records, 23 errors)
   chambul/medisimplifier-nemotron-dataset on HuggingFace ✅
-  ROUGE-L Claude vs Nemotron: 0.525
+  ROUGE-L Claude vs Nemotron: 0.525 (teacher_comparison.json)
 
-PHASE 2 — Fine-tuning (NEXT 🔜):
+PHASE 2 — Fine-tuning (RUNNING 🔄):
   Job: jobs/job_train_v2.yaml
-  Image: chambul/medisimplifier:train-v28@sha256:b34dca7f...
+  Image: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v29
+  Digest: sha256:bbbf6df1b1649c6dbd3828de8156a55970b541e0e0549cf3839df7dc6dd457f5
   Dataset: chambul/medisimplifier-nemotron-dataset
-  Bucket: medisimplifier-adapters-v2 ← MUST CREATE FIRST
+  Bucket: medisimplifier-adapters-v2 ✅ (exists)
+  Status: ~1.5/3 epochs complete
 
-PHASE 3 — Evaluation (PARTIAL ✅):
-  nemotron_calibration_full.json (708 samples, Nemotron Nano)
-  vagt_nemotron_results.txt (3-rater VAGT)
+PHASE 3 — Evaluation (PENDING):
+  Will run after Phase 2 completes
+  Compare ROUGE-L/SARI/BERTScore/FK-Grade: v1 vs v2
 
 PHASE 4 — Safe Endpoint v2 (PENDING)
+```
+
+---
+
+## CRITICAL — Docker Image Lessons Learned
+
+**train-v28 failed** — cryptography 49.0.0 broke pyOpenSSL 23.2.0
+**train-v29 fix** — Dockerfile post-install step:
+```dockerfile
+RUN pip install --no-cache-dir cryptography==48.0.1
+```
+**ALWAYS** verify SSL stack after build:
+```bash
+docker run --rm <image> python -c "from transformers import AutoTokenizer; print('OK')"
 ```
 
 ---
@@ -46,7 +62,6 @@ LLAMA          = "meta-llama/Llama-3.3-70B-Instruct"
 QWEN           = "Qwen/Qwen3-32B"
 BASE_URL       = "https://api.studio.nebius.ai/v1/"
 
-# CRITICAL: Reasoning model token budgets:
 # Nemotron Nano:  max_tokens=8000 minimum
 # Nemotron Super: max_tokens=16000 required
 # finish_reason=="length" = ERROR even if content non-empty
@@ -57,22 +72,22 @@ BASE_URL       = "https://api.studio.nebius.ai/v1/"
 ## Infrastructure Status
 
 ```
-Docker image: chambul/medisimplifier:train-v28
-Digest: sha256:b34dca7f8ac70ab57dc0c83cdc7b1cb408b16f518b8d1b896870caf93a56a777
+Docker image: chambul/medisimplifier:train-v29
+CR path: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v29
+Digest: sha256:bbbf6df1b1649c6dbd3828de8156a55970b541e0e0549cf3839df7dc6dd457f5
 HF Dataset: chambul/medisimplifier-nemotron-dataset
   train=7,983 / val=995 / test=998
-  columns: instruction, input, output (GuyDor007-compatible)
-  
-Bucket needed: medisimplifier-adapters-v2 ← CREATE BEFORE JOB
-Job YAML: jobs/job_train_v2.yaml ✅
+Bucket: medisimplifier-adapters-v2 ✅ (exists)
+Project ID: project-e00g1ev2pr00wjxv40r6ga
+Subnet ID: vpcsubnet-e00jsdqfjrz04ygxc0
 ```
 
 ---
 
 ## Nebius VM
-IP: 89.169.110.156
-SSH: `ssh -i C:\Users\User\.ssh\nebius_vm ubuntu@89.169.110.156`
-Usage: Docker builds only (no Docker locally)
+IP: 89.169.109.22 (current session)
+SSH: `ssh -i C:\Users\User\.ssh\nebius_vm ubuntu@89.169.109.22`
+Note: Host key changes on restart — run `ssh-keygen -R <old-ip>` first
 
 ---
 
@@ -91,70 +106,52 @@ LoraConfig(
 
 ---
 
-## Key Data Files
+## Key Commits (v2 repo)
 
-### v1 repo:
 ```
-results/nebius_evidence/
-  calibration_verdicts.json      # 708 samples, Llama+Qwen no-CoT
-  calibration_verdicts_cot.json  # CoT condition
-vagt_section.md, vagt_estimand.md, vagt_medsimplifier_demo.py
-calculate_kappa_ci.py, calibration_judge_cot.py
-power_simulation_v7.py
-```
-
-### v2 repo:
-```
-nemotron_calibration_full.json        # 708 samples, Nemotron Nano
-nemotron_references.json              # 708 JudgeBench Nemotron refs
-nemotron_training_references.json     # 9,999 training refs ✅
-teacher_comparison.json               # ROUGE-L 0.525
-vagt_nemotron_results.txt             # VAGT 3-rater analysis
-FINDINGS.md                           # All findings
-src/train.py                          # train with --dataset arg
-docker/Dockerfile.train               # v2 Docker build
-docker/requirements_train.txt         # Training deps
-docker/build_and_push.sh             # Build script (needs VM)
-jobs/job_train_v2.yaml               # Training job (digest-pinned)
-compare_teachers.py                   # ROUGE-L comparison
-prepare_hf_dataset.py                 # HF dataset builder
+4900aa8  CLAUDE_CODE_CONTEXT.md update
+09b7068  teacher_comparison.json (ROUGE-L 0.525)
+c938001  job_train_v2.yaml → train-v29 digest
+8af84fb  Dockerfile cryptography fix
+4571a12  requirements_train.txt (reverted)
+4b436ea  job_train_v2.yaml → Nebius CR path
+4856464  digest-pin train-v28 (superseded by v29)
+d08d669  Docker build context + job_train_v2.yaml
+02af114  src/train.py --dataset arg
+10cf1b6  prepare_hf_dataset.py
+d603c45  compare_teachers.py
+31f146a  nemotron_training_data.py
+fa20d87  708 JudgeBench references
+fc4e8c2  nemotron_teacher.py
+fcd44cb  FINDINGS.md
+7d2134e  full calibration + VAGT 3-rater
 ```
 
 ---
 
-## Next Tasks (in order)
+## Next Tasks (after Phase 2 completes)
 
-1. **Security** (URGENT):
-   - Rotate Nebius API key
-   - Rotate HuggingFace token
+1. **Get adapter from bucket:**
+   Check medisimplifier-adapters-v2/output/adapter/
 
-2. **Create bucket** on Nebius:
+2. **Run evaluation job** (same pattern as v1):
    ```
-   nebius storage bucket create \
-     --name medisimplifier-adapters-v2 \
-     --parent-id ${NEBIUS_PROJECT_ID}
-   ```
-
-3. **Commit pending artifacts**:
-   ```
-   git add nemotron_training_references.json teacher_comparison.json
-   git commit -m "feat: 9,999 Nemotron training references + ROUGE-L 0.525 vs Claude"
-   git push
+   Name: medisimplifier-v2-evaluate
+   Image: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v29
+   Command: python evaluate.py --model openbio 
+     --adapter-path /mnt/adapters/output/adapter
+     --split test --output-dir /mnt/adapters/eval_v2
+   Volume: medisimplifier-adapters-v2 → /mnt/adapters (rw)
+   Timeout: 2h
    ```
 
-4. **Submit training job**:
-   ```
-   nebius ai job create --config jobs/job_train_v2.yaml
-   ```
+3. **Compare results:**
+   v1: ROUGE-L=0.6638, SARI=73.49, BERTScore=0.9460, FK-Grade=7.33
+   v2: [TBD]
 
-5. **After training**:
-   - Evaluate v2 vs v1 (ROUGE-L, SARI, BERTScore, FK-Grade)
-   - 3-judge safety panel
-   - VAGT analysis
-   - Safe Endpoint v2
-   - Update README PLACEHOLDERs
+4. **Update README PLACEHOLDERs** with real numbers
 
-6. **Demo video** (< 3 min, YouTube)
+5. **Safe Endpoint v2** — OpenBioLLM v2 + Nemotron Nano
 
 ---
 
@@ -164,14 +161,6 @@ prepare_hf_dataset.py                 # HF dataset builder
 3. Estimate cost before large runs — always
 4. Commit after each meaningful step
 5. Check v1 repo before writing new code
-6. Parallel workers (12) for Token Factory
-7. Checkpoint every 50 records
-8. max_tokens=16000 for Super, 8000+ for Nano
-
----
-
-## Git Identity
-```
-user.name  = deepset01-sys
-user.email = deepset01@gmail.com
-```
+6. READ CONTEXT FILES before every session
+7. Pin ALL dependencies — learned from train-v28 failure
+8. Verify image with import test before submitting job
