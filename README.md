@@ -19,7 +19,7 @@ MediSimplifier simplifies medical discharge summaries to a 6th-grade reading lev
 - **Judge** — Nemotron Nano is added as a third, calibrated safety judge alongside Llama-3.3-70B and Qwen3-32B.
 - **Measurement** — VAGT decomposes judge behavior into ground-truth signal (σ²_τ), shared blind-spot bias (σ²_B), rater bias (σ²_R), and noise (σ²_N), yielding a veridicality-anchored dependability coefficient Φ_V that consensus statistics (Cohen's κ, PABAK, Krippendorff α) cannot produce.
 
-> **What's carried from v1 vs new here:** The dataset, the fine-tuning task, the dual-judge safety design, and the perturbation benchmark (MedSimp-JudgeBench, 708 samples) are from v1. New in v2: **Nemotron Super as teacher**, **Nemotron Nano as a third calibrated judge**, and the **VAGT framework** with its 3-rater decomposition. Fine-tuning a student on Nemotron references is in progress — see [PLACEHOLDER] rows below.
+> **What's carried from v1 vs new here:** The dataset, the fine-tuning task, the dual-judge safety design, and the perturbation benchmark (MedSimp-JudgeBench, 708 samples) are from v1. New in v2: **Nemotron Super as teacher**, **Nemotron Nano as a third calibrated judge**, and the **VAGT framework** with its 3-rater decomposition. Fine-tuning a student on Nemotron references is complete — see [v2 Evaluation Results](#v2-evaluation-results--v1-claude-teacher-vs-v2-nemotron-teacher) below.
 
 ## What's new in v2 (vs v1)
 
@@ -29,9 +29,9 @@ MediSimplifier simplifies medical discharge summaries to a 6th-grade reading lev
 | Safety judges | Llama-3.3-70B + Qwen3-32B | **+ Nemotron Nano** (`Nemotron-3-Nano-30B-A3B`) — 3rd, calibrated |
 | Calibration measurement | Cohen's κ only | VAGT 3-rater + Nemotron Nano |
 | Judge benchmark | MedSimp-JudgeBench (708, dual-judge) | Same set, **3-judge decomposition** |
-| Training references | Claude Opus (9,999 records) | **Nemotron Super** (9,999 records) — `[PLACEHOLDER — run in progress]` |
-| Fine-tuned student | OpenBioLLM-8B, ROUGE-L 0.6638 | `[PLACEHOLDER — Nemotron-taught student]` |
-| Serving | vLLM + dual-judge guardrail | `[PLACEHOLDER — Nemotron-in-the-loop endpoint]` |
+| Training references | Claude Opus (9,999 records) | **Nemotron Super** (9,999 records — 9,976 valid / 23 errored) ✅ |
+| Fine-tuned student | OpenBioLLM-8B, ROUGE-L 0.6638 | **OpenBioLLM-8B**, ROUGE-L **0.5254** (Nemotron-taught) ✅ |
+| Serving | vLLM + dual-judge guardrail | *(planned — Nemotron-in-the-loop endpoint)* |
 
 > **Note on calibration history:** PABAK, Gwet AC1, Krippendorff α, and VAGT (2-rater) were developed as part of v1's post-challenge analysis ([github.com/deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius)); v2 extends VAGT to a 3-rater panel with Nemotron Nano.
 
@@ -48,11 +48,26 @@ MediSimplifier simplifies medical discharge summaries to a 6th-grade reading lev
 | VAGT inversion (diagnosis) | Fleiss κ **0.076 → −0.088** while Φ_V **0.404 → 0.476** | ✅ |
 | Shared blind-spot bias reduction (diagnosis) | σ²_B **0.347 → 0.229** when Nemotron is added | ✅ |
 | Nemotron Super teacher — JudgeBench references | 708 records, **0 errors**, avg 1,743 chars | ✅ |
-| Nemotron Super vs Claude Opus — reference ROUGE-L | `[PLACEHOLDER]` | ⏳ |
-| Nemotron Super — full training references (9,999) | `[PLACEHOLDER — run in progress]` | ⏳ |
-| Nemotron-taught student — ROUGE-L / SARI / FK-Grade | `[PLACEHOLDER]` | ⏳ |
+| Nemotron Super vs Claude Opus — reference ROUGE-L | **0.525** (mean over 9,976 pairs) | ✅ |
+| Nemotron Super — full training references (9,999) | **9,976 valid / 23 errored** | ✅ |
+| Nemotron-taught student — ROUGE-L / SARI / FK-Grade | **0.5254 / 60.36 / 8.87** (v1: 0.6638 / 73.49 / 7.33) | ✅ n=1,001 |
 
-> Verified rows are computed from committed artifacts ([`nemotron_calibration_full.json`](nemotron_calibration_full.json), [`vagt_nemotron_results.txt`](vagt_nemotron_results.txt)) and reproducible via the scripts in [Reproduce](#reproduce-step-by-step). `[PLACEHOLDER]` rows depend on runs not yet complete — no numbers are invented.
+> Verified rows are computed from committed artifacts ([`nemotron_calibration_full.json`](nemotron_calibration_full.json), [`vagt_nemotron_results.txt`](vagt_nemotron_results.txt), [`results/eval_v2_results.json`](results/eval_v2_results.json)) and reproducible via the scripts/jobs in [Reproduce](#reproduce-step-by-step) — no numbers are invented.
+
+## v2 Evaluation Results — v1 (Claude teacher) vs v2 (Nemotron teacher)
+
+The Nemotron-taught student was evaluated on the **same GuyDor007 test set (n=1,001, Claude references)** as v1 — an apples-to-apples yardstick. Full metrics in [`results/eval_v2_results.json`](results/eval_v2_results.json).
+
+| Metric | v1 (Claude teacher) | v2 (Nemotron teacher) |
+|--|--|--|
+| ROUGE-L | 0.6638 | **0.5254** |
+| SARI | 73.49 | **60.36** |
+| BERTScore | 0.9460 | **0.9113** |
+| FK-Grade | 7.33 | **8.87** |
+
+**Training run:** LoRA (r=32, all_attn, 3 epochs) on 7,983 train / 995 val / 998 test — ~2.4 hours (8,523 s) on 1×H100, ~$25–30. Teacher references agree with Claude's at ROUGE-L **0.525** ([`teacher_comparison.json`](teacher_comparison.json)).
+
+> **Honest interpretation:** v2 ROUGE-L reflects **style divergence from Claude references, not a quality failure** — Nemotron Super produces *less* simplified references (FK-Grade **8.87** vs Claude's implied ~7.0), and the student model faithfully learned this style. The lower ROUGE-L/SARI is the student matching a *different teacher's style*, scored against Claude's references; it is not evidence the v2 outputs are worse, only that they are less Claude-like (and at a slightly higher reading level). Note the ~0.525 student↔Claude ROUGE-L closely tracks the ~0.525 teacher↔teacher ROUGE-L — the student inherited exactly the teacher gap.
 
 ## How it runs on Nebius
 
@@ -67,7 +82,7 @@ Pipeline:
         generate reference simplification per record  ->  nemotron_training_references.json
         |                                                  (claude_output + nemotron_output side by side)
         v
-    [PLACEHOLDER] Nebius Job: LoRA fine-tune student on Nemotron references (H100)
+    Nebius Job: LoRA fine-tune student on Nemotron references (H100, r=32 all_attn, 3 epochs)  ->  adapter (bucket)
         |
         v
     Token Factory: 3-judge safety evaluation  (nemotron_judge_test.py)
@@ -78,7 +93,7 @@ Pipeline:
         {sigma_tau, sigma_B, sigma_R, sigma_N, Phi_V} + Fleiss/Krippendorff  ->  vagt_nemotron_results.txt
         |
         v
-    [PLACEHOLDER] Nebius Endpoint: Nemotron-in-the-loop Safe Simplification
+    (planned) Nebius Endpoint: Nemotron-in-the-loop Safe Simplification
 
 > **Why Token Factory?** Nemotron Super, Nano, and Ultra are all served per-token with zero idle cost. The teacher run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min; the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
 
@@ -98,7 +113,7 @@ Pipeline:
 
 **Status.**
 - **JudgeBench references (708):** complete — 519 unique calls fanned out to 708 records, **0 errors**, avg 1,743 chars, ~21 min. ([`nemotron_references.json`](nemotron_references.json))
-- **Full training references (9,999):** `[PLACEHOLDER — run in progress]`. Emits `{split, index, input, claude_output, nemotron_output, error}` per record so Claude and Nemotron outputs are directly comparable. Resume-capable (skips completed inputs).
+- **Full training references (9,999):** complete — **9,976 valid, 23 errored**. Emits `{split, index, input, claude_output, nemotron_output, error}` per record so Claude and Nemotron outputs are directly comparable. Resume-capable (skips completed inputs). Published as [`chambul/medisimplifier-nemotron-dataset`](https://huggingface.co/datasets/chambul/medisimplifier-nemotron-dataset).
 
 **Qualitative example** (train/0):
 
@@ -110,7 +125,7 @@ Pipeline:
 
 **Preserved:** section structure, all measurements (20/100, 4 mmHg, 20/70). **Note:** Nemotron removed the blank lines between sections (the prompt asks for no empty lines) — closer to the guideline than the Claude reference.
 
-> **Honest caveat:** Nemotron occasionally adds a soft clause not in the source ("…improved to 20/70, *allowing better daily function*"). Not a medical-fact hallucination, but a mild elaboration that bends the "do not add information" guideline. Frequency across the full set: `[PLACEHOLDER]`. ROUGE-L of Nemotron references against the Claude references: `[PLACEHOLDER]`.
+> **Honest caveat:** Nemotron occasionally adds a soft clause not in the source ("…improved to 20/70, *allowing better daily function*"). Not a medical-fact hallucination, but a mild elaboration that bends the "do not add information" guideline. Frequency across the full set was not separately quantified. ROUGE-L of Nemotron references vs the Claude references: **0.525** (mean over 9,976 pairs; median 0.524, see [`teacher_comparison.json`](teacher_comparison.json)).
 
 ## VAGT: When Agreement Misleads — the inversion
 
@@ -168,16 +183,16 @@ Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qw
 
 ## Hardware and cost
 
-`[PLACEHOLDER — populated as runs complete]`
+Measured where available; rows marked *(est.)* are estimates, not billing.
 
 | Step | Service | Calls / GPU | Wall-clock | Approx. cost |
 |--|--|--|--|--|
 | 3-judge calibration (Nemotron Nano, n=708) | Token Factory | 708 | ~32 min | ~$0.60 † |
 | Teacher references — JudgeBench (Nemotron Super) | Token Factory | 519 unique | ~21 min | ~$1.7 |
-| Teacher references — full training set (9,999) | Token Factory | 9,999 | `[PLACEHOLDER]` | `[PLACEHOLDER ~$20–33]` |
-| LoRA fine-tune on Nemotron references | Nebius Job (H100) | — | `[PLACEHOLDER]` | `[PLACEHOLDER]` |
-| Student evaluation (ROUGE-L/SARI/BERTScore/FK) | Nebius Job (H100) | 1,001 | `[PLACEHOLDER]` | `[PLACEHOLDER]` |
-| **Total** | | | | `[PLACEHOLDER]` |
+| Teacher references — full training set (9,999) | Token Factory | 9,971 valid | ~6–7 h *(est.)* | ~$20–33 *(est.)* |
+| LoRA fine-tune on Nemotron references | Nebius Job (H100) | 3 epochs | ~2.4 h (8,523 s) | ~$25–30 |
+| Student evaluation (ROUGE-L/SARI/BERTScore/FK) | Nebius Job (H100) | 1,001 | ~45 min *(est.)* | ~$3 *(est.)* |
+| **Total** | | | | **~$50–65** *(est.)* |
 
 > **† Judge calibration cost basis:** input tokens are *measured* — 868,486 total (mean 1,227/call), reconstructed from the exact judge prompts over the 708 records. Output tokens were **not logged** by the run; estimated at ~2.8–3.0M from the observed ~3.7–4.0k reasoning tokens/call (Nano is a reasoning model). At Nemotron Nano rates (~$0.05/1M input, ~$0.20/1M output) this gives ~$0.60. The teacher JudgeBench run (~$1.7) is likewise input-measured; Super's higher per-token rate and 16k budget dominate its cost.
 > Remaining rows reflect **actual Nebius billing** once each run completes — no estimate is presented as measured.
@@ -224,7 +239,11 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
     nemotron_training_data.py      Nemotron Super teacher — full 9,999-record training set (imports teacher prompt; resume-capable)
     nemotron_calibration_full.json 708-sample 3-judge verdicts (Llama + Qwen + Nemotron Nano)
     nemotron_references.json       708 JudgeBench reference simplifications (Nemotron Super)
-    nemotron_training_references.json  9,999 training references, claude_output + nemotron_output   [PLACEHOLDER — in progress]
+    results/eval_v2_results.json       v2 student eval on GuyDor007 test (ROUGE-L 0.5254 / SARI 60.36 / BERTScore 0.9113 / FK 8.87)
+    jobs/job_train_v2.yaml             v2 fine-tuning job (train-v30, Nemotron dataset, adapters-v2 bucket)
+    jobs/job_eval_v2.yaml              v2 evaluation job (train-v30, GuyDor007 test)
+    src/train.py · src/evaluate.py     LoRA training (--dataset) · metrics eval
+    nemotron_training_references.json  9,999 training refs (58MB, gitignored — on HuggingFace)
     vagt_nemotron_results.txt      VAGT decomposition output (per-feature, both rater sets)
     FINDINGS.md                    Full findings write-up (calibration + VAGT, with caveats)
     CLAUDE_CODE_CONTEXT.md         Implementation context (model strings, methodology, next tasks)
