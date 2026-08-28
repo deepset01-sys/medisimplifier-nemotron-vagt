@@ -95,3 +95,6 @@ credentials.json
 
 # Smoke-test scratch output (the full calibration file IS tracked)
 nemotron_judge_test_results.json
+
+# 58MB training references — data lives on HuggingFace (chambul/medisimplifier-nemotron-dataset)
+nemotron_training_references.json
