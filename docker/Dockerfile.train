@@ -9,6 +9,13 @@ RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 COPY docker/requirements_train.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Post-install pin: the -r install drifts cryptography to 49.0.0, which removed the
+# GEN_EMAIL binding pyOpenSSL 23.2.0 needs (crashes the transformers import chain).
+# Force cryptography 48.0.1 (has GEN_EMAIL) as a SEPARATE step so pip tolerates
+# pyOpenSSL's <42 metadata cap as a warning — reproducing the working v27 combo.
+# (Pinning both in requirements.txt is ResolutionImpossible; this is the only clean way.)
+RUN pip install --no-cache-dir cryptography==48.0.1
+
 COPY src/ .
 
 ARG GIT_SHA=unknown
