@@ -20,10 +20,10 @@ from typing import Optional
 
 from safety_gate import evaluate_safety
 
-app = FastAPI(title="MediSimplifier Safe Endpoint", version="1.0")
+app = FastAPI(title="MediSimplifier Safe Endpoint", version="2.0")
 
 VLLM_URL   = "http://127.0.0.1:8001/v1/completions"
-MODEL_NAME = "chambul/MediSimplifier-OpenBioLLM-merged"
+MODEL_NAME = "chambul/MediSimplifier-OpenBioLLM-v2-merged"
 
 SIMPLIFY_PROMPT = """Simplify the following medical discharge summary in plain language for patients with no medical background.
 
