@@ -9,7 +9,7 @@ resources:
   subnet_id: ${NEBIUS_SUBNET_ID}
 
 docker:
-  image: chambul/medisimplifier:train-v28
+  image: chambul/medisimplifier:train-v28@sha256:b34dca7f8ac70ab57dc0c83cdc7b1cb408b16f518b8d1b896870caf93a56a777
   command: python
   args:
     - "train.py"
