@@ -347,21 +347,39 @@ curl -X POST http://<your-endpoint>:8000/v1/simplify \
 
 ## Project structure
 
-    nemotron_judge_test.py         Nemotron Nano as safety judge (3-judge calibration, concurrent, checkpointed)
-    vagt_nemotron_analysis.py      VAGT 3-rater decomposition (σ²_τ/σ²_B/σ²_R/σ²_N/Φ_V + Fleiss/Krippendorff, bootstrap CIs)
-    nemotron_teacher.py            Nemotron Super teacher — JudgeBench references (verbatim Technion prompt)
-    nemotron_training_data.py      Nemotron Super teacher — full 9,999-record training set (imports teacher prompt; resume-capable)
-    nemotron_calibration_full.json 708-sample 3-judge verdicts (Llama + Qwen + Nemotron Nano)
-    nemotron_references.json       708 JudgeBench reference simplifications (Nemotron Super)
-    results/eval_v2_results.json       v2 student eval on GuyDor007 test (ROUGE-L 0.5254 / SARI 60.36 / BERTScore 0.9113 / FK 8.87)
-    jobs/job_train_v2.yaml             v2 fine-tuning job (train-v30, Nemotron dataset, adapters-v2 bucket)
-    jobs/job_eval_v2.yaml              v2 evaluation job (train-v30, GuyDor007 test)
-    src/train.py · src/evaluate.py     LoRA training (--dataset) · metrics eval
-    nemotron_training_references.json  9,999 training refs (58MB, gitignored — on HuggingFace)
-    vagt_nemotron_results.txt      VAGT decomposition output (per-feature, both rater sets)
-    FINDINGS.md                    Full findings write-up (calibration + VAGT, with caveats)
-    CLAUDE_CODE_CONTEXT.md         Implementation context (model strings, methodology, next tasks)
-    requirements.txt               openai · numpy · requests · tqdm · datasets
+```
+src/
+  train.py                       LoRA training — runs as Nebius Job (--dataset flag added for v2)
+  evaluate.py                    Metrics: ROUGE-L, SARI, BERTScore, FK-Grade
+  merge_adapter.py               Merge LoRA adapter into base model → HuggingFace publish
+  safe_endpoint.py               Safe Simplification Endpoint v2 — FastAPI: vLLM + 3-judge gate
+  safety_gate.py                 VAGT-calibrated 3-judge safety gate (Llama + Qwen + Nemotron Nano)
+  serve_vllm.py                  vLLM inference server (legacy standalone)
+docker/
+  Dockerfile.train               Training/eval/merge image (train-v31, cryptography==48.0.1 pinned)
+  Dockerfile.endpoint            Safe Endpoint v2 image (endpoint-v3)
+jobs/
+  job_train_v2.yaml              v2 fine-tuning job (train-v31, Nemotron dataset, adapters-v2 bucket)
+  job_eval_v2.yaml               v2 evaluation job (train-v31, GuyDor007 test)
+  job_merge_v2.yaml              v2 merge job (train-v31, adapter → bucket → HuggingFace)
+  safe_endpoint_v2.yaml          Safe Endpoint v2 deployment config (endpoint-v3)
+scripts/
+  start_endpoint.sh              Boot vLLM + Safe Endpoint v2 API (inside endpoint-v3 image)
+nemotron_judge_test.py           Nemotron Nano as safety judge (3-judge calibration, checkpointed)
+nemotron_teacher.py              Nemotron Super teacher — JudgeBench references
+nemotron_training_data.py        Nemotron Super teacher — full 9,999-record training set (resume-capable)
+vagt_nemotron_analysis.py        VAGT 3-rater decomposition (σ²_τ/σ²_B/σ²_R/σ²_N/Φ_V + bootstrap CIs)
+compare_teachers.py              ROUGE-L comparison: Claude Opus vs Nemotron Super references
+nemotron_calibration_full.json   708-sample 3-judge verdicts (Llama + Qwen + Nemotron Nano)
+nemotron_references.json         708 JudgeBench references (Nemotron Super)
+teacher_comparison.json          ROUGE-L 0.525 Claude vs Nemotron (9,976 pairs)
+results/eval_v2_results.json     v2 eval: ROUGE-L 0.5254 / SARI 60.36 / BERTScore 0.9113 / FK 8.87
+vagt_nemotron_results.txt        VAGT decomposition output (per-feature, both rater sets)
+FINDINGS.md                      Full findings write-up (calibration + VAGT + caveats)
+requirements.txt                 openai · numpy · requests · tqdm · datasets
+```
+
+Note: `nemotron_training_references.json` (58MB) is gitignored — data available as `chambul/medisimplifier-nemotron-dataset` on HuggingFace.
 
 ## Dataset and models
 
