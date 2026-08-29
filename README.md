@@ -417,6 +417,15 @@ docker push chambul/medisimplifier:train-v31
 docker push cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v31
 ```
 
+```bash
+# Rebuild endpoint-v3
+docker build -t chambul/medisimplifier:endpoint-v3 \
+             -t cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint-v3 \
+             -f docker/Dockerfile.endpoint .
+docker push chambul/medisimplifier:endpoint-v3
+docker push cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint-v3
+```
+
 Note: `docker/requirements_train.txt` pins `cryptography==48.0.1` via a Dockerfile post-install step — resolves the pyOpenSSL/cryptography drift that broke train-v28.
 
 ## Dataset and models
