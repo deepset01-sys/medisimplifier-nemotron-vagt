@@ -1,0 +1,21 @@
+name: medisimplifier-safe-endpoint-v2
+description: "Safe Simplification Endpoint v2 — vLLM + three-judge (Llama + Qwen + Nemotron Nano) Token Factory safety gate, VAGT-calibrated"
+parent_id: ${NEBIUS_PROJECT_ID}
+
+resources:
+  platform: gpu-h100-sxm
+  preset: 1gpu-16vcpu-200gb
+  disk_size: 250Gi
+  subnet_id: ${NEBIUS_SUBNET_ID}
+
+docker:
+  image: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint-v3@sha256:9d950d839497e9ee35c1676b5e75424016b52efa6827930c34f171300ae38795
+  command: /start.sh
+
+env:
+  HF_TOKEN: "${HF_TOKEN}"
+  HF_HOME: "/tmp/hf_cache"
+  NEBIUS_API_KEY: "${NEBIUS_API_KEY}"
+  PYTHONUNBUFFERED: "1"
+
+timeout: 24h
