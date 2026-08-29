@@ -453,6 +453,16 @@ Note: `docker/requirements_train.txt` pins `cryptography==48.0.1` via a Dockerfi
 
 Apache 2.0 — see [LICENSE](LICENSE).
 
+## Public Artifacts
+
+* Merged model v2: [chambul/MediSimplifier-OpenBioLLM-v2-merged](https://huggingface.co/chambul/MediSimplifier-OpenBioLLM-v2-merged) — Built with Meta Llama 3 (base: aaditya/Llama3-OpenBioLLM-8B). Released under [Llama 3 Community License](https://llama.meta.com/llama3/license/).
+* Nemotron training dataset: [chambul/medisimplifier-nemotron-dataset](https://huggingface.co/datasets/chambul/medisimplifier-nemotron-dataset) — 9,976 Nemotron Super references (CC-BY-NC-SA-4.0)
+* Judge Calibration Benchmark: [chambul/MedSimp-JudgeBench](https://huggingface.co/datasets/chambul/MedSimp-JudgeBench) — 708 samples, 4 error types, 3-judge verdicts including Nemotron Nano (CC-BY-NC-SA-4.0)
+* Docker (training/eval/merge): [chambul/medisimplifier:train-v31](https://hub.docker.com/r/chambul/medisimplifier)
+* Docker (Safe Endpoint v2): [chambul/medisimplifier:endpoint-v3](https://hub.docker.com/r/chambul/medisimplifier) — vLLM + VAGT-calibrated 3-judge gate
+* Source dataset: [GuyDor007/medisimplifier-dataset](https://huggingface.co/datasets/GuyDor007/medisimplifier-dataset) — original Claude references (evaluation yardstick)
+* v1 project: [deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius) 🥇
+
 ## Future Work & Limitations
 
 **Deployment Posture:** MediSimplifier v2 is a research prototype — not validated for clinical use. The Safe Simplification Endpoint v2 is unauthenticated demo infrastructure — do not route real patient data through it. Nemotron Super references in the training set are LLM-generated, not clinician-validated. ROUGE-L measures similarity to these LLM-generated references, not to human-expert output quality.
