@@ -1,0 +1,32 @@
+name: medisimplifier-v2-merge
+description: "Merge v2 LoRA adapter into OpenBioLLM-8B and upload merged model to bucket"
+parent_id: ${NEBIUS_PROJECT_ID}
+
+resources:
+  platform: gpu-h100-sxm
+  preset: 1gpu-16vcpu-200gb
+  disk_size: 250Gi
+  subnet_id: ${NEBIUS_SUBNET_ID}
+
+docker:
+  image: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v31@sha256:9d832391f85130114534a36881b8e5acab895d36ceed522126c86fbef02f728f
+  command: python
+  args:
+    - "merge_adapter.py"
+    - "--model"
+    - "openbio"
+
+env:
+  AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+  AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+  AWS_DEFAULT_REGION: "eu-north1"
+  HF_TOKEN: "${HF_TOKEN}"
+  HF_HOME: "/tmp/hf_cache"
+  PYTHONUNBUFFERED: "1"
+
+volumes:
+  - bucket: medisimplifier-adapters-v2
+    mount: /mnt/adapters
+    mode: rw
+
+timeout: 2h
