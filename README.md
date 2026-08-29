@@ -452,3 +452,17 @@ Note: `docker/requirements_train.txt` pins `cryptography==48.0.1` via a Dockerfi
 ## License
 
 Apache 2.0 — see [LICENSE](LICENSE).
+
+## Future Work & Limitations
+
+**Deployment Posture:** MediSimplifier v2 is a research prototype — not validated for clinical use. The Safe Simplification Endpoint v2 is unauthenticated demo infrastructure — do not route real patient data through it. Nemotron Super references in the training set are LLM-generated, not clinician-validated. ROUGE-L measures similarity to these LLM-generated references, not to human-expert output quality.
+
+| Area | Limitation | Future Work |
+|------|-----------|-------------|
+| Teacher | Nemotron Super references not expert-reviewed | Human-expert validation of teacher quality |
+| Training | No ablation on Nemotron dataset — used v1 winner config directly | Ablation study on Nemotron-taught dataset |
+| Safety | Nemotron Nano: 35.2% FP on clean text — threshold/prompt calibration needed | Threshold calibration to separate recall from over-flagging |
+| Safety | Scale/family confound in judge disagreement (Qwen-72B unavailable on Token Factory) | Scale-matched judge comparison |
+| Safety | Diagnosis-drop partially addressed (Nemotron 68% vs 14%/7% v1 judges) | Human-anchored calibration study |
+| VAGT | Bootstrap CIs are 95% point estimates (seed=42) — not full power analysis | Full power simulation (developed post-v1, see v1 repo) |
+| VAGT | 3-rater empirical application only — formal estimand developed post-v1 submission | Formal publication of VAGT estimand |
