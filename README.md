@@ -203,6 +203,17 @@ Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qw
 > **Interpretation:** Nemotron Nano is a **high-sensitivity, low-specificity** judge. It catches errors the incumbents miss — dramatically so on diagnosis drops — but over-flags ~1 in 3 clean references. On *balanced* accuracy Qwen still edges ahead (77.7%) on near-perfect specificity. Nemotron is not a drop-in calibrated judge as-is; its recall edge and its over-flagging are two sides of one low threshold, and it needs threshold/prompt calibration to separate them.
 > **Carried from v1:** on the free-text safety set, CoT *amplified* judge disagreement (κ 0.11 → 0.04) — see the v1 README.
 
+**VAGT-calibrated decision rule (safety_gate.py):**
+- Nemotron SAFE + Qwen SAFE → SAFE
+- Nemotron UNSAFE + Qwen UNSAFE → UNSAFE
+- Qwen UNSAFE → UNSAFE (trust Qwen's 0.5% FP specificity)
+- Nemotron UNSAFE + Qwen SAFE → DISAGREE + "diagnosis-drop risk"
+- ERROR in Nemotron or Qwen → ERROR (fail-safe, blocks in block mode)
+
+All three judges run in parallel (ThreadPoolExecutor, max_workers=3) via Nebius Token Factory — latency ≈ max(judges) not sum (~73s total).
+
+**Live demonstration (endpoint test):** A one-sentence input produced an output with fabricated content not in the source (added follow-up instructions, lifestyle changes). Nemotron flagged UNSAFE; Llama and Qwen both passed SAFE. Consensus: DISAGREE + "diagnosis-drop risk" warning — the VAGT-calibrated rule fired correctly.
+
 ## Hardware and cost
 
 Measured where available; rows marked *(est.)* are estimates, not billing.
