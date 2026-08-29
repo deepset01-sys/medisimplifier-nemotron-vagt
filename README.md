@@ -269,19 +269,21 @@ All three judges run in parallel (ThreadPoolExecutor, max_workers=3) via Nebius 
 
 ## Hardware and cost
 
-Measured where available; rows marked *(est.)* are estimates, not billing.
+Actual Nebius billing for v2 (all figures from Nebius Console):
 
-| Step | Service | Calls / GPU | Wall-clock | Approx. cost |
-|--|--|--|--|--|
-| 3-judge calibration (Nemotron Nano, n=708) | Token Factory | 708 | ~32 min | ~$0.60 † |
-| Teacher references — JudgeBench (Nemotron Super) | Token Factory | 519 unique | ~21 min | ~$1.7 |
-| Teacher references — full training set (9,999) | Token Factory | 9,971 valid | ~6–7 h *(est.)* | ~$20–33 *(est.)* |
-| LoRA fine-tune on Nemotron references | Nebius Job (H100) | 3 epochs | ~2.4 h (8,523 s) | ~$25–30 |
-| Student evaluation (ROUGE-L/SARI/BERTScore/FK) | Nebius Job (H100) | 1,001 | ~45 min *(est.)* | ~$3 *(est.)* |
-| **Total** | | | | **~$50–65** *(est.)* |
+| Step | Service | Usage | Cost |
+|------|---------|-------|------|
+| Nemotron Super teacher (9,999 calls) | Token Factory | 81.23M output tokens | $75.19 |
+| Nemotron Nano calibration (708 × 3 judges) | Token Factory | 3.48M output tokens | $0.90 |
+| Llama + Qwen (endpoint smoke tests) | Token Factory | — | $0.43 |
+| H100 NVLink (training + eval + merge) | Jobs | 5.55 GPU hours | $21.36 |
+| CPU + RAM | Jobs | 211.95 vCPU / 847.80 GiB hours | $5.25 |
+| Disk (Network SSD + Object Storage) | Storage | 75,000 GiB hours | $7.29 |
+| **Total v2** | | | **$110.42** |
 
-> **† Judge calibration cost basis:** input tokens are *measured* — 868,486 total (mean 1,227/call), reconstructed from the exact judge prompts over the 708 records. Output tokens were **not logged** by the run; estimated at ~2.8–3.0M from the observed ~3.7–4.0k reasoning tokens/call (Nano is a reasoning model). At Nemotron Nano rates (~$0.05/1M input, ~$0.20/1M output) this gives ~$0.60. The teacher JudgeBench run (~$1.7) is likewise input-measured; Super's higher per-token rate and 16k budget dominate its cost.
-> Remaining rows reflect **actual Nebius billing** once each run completes — no estimate is presented as measured.
+H100 NVLink rate: ~$3.85/hr on Nebius eu-north1.
+Training: ~2.4h (8,523s), 3 epochs, seed=42.
+Token Factory dominates cost (93%) — Nemotron Super's 16,000-token reasoning budget drives the teacher generation cost. Zero idle cost — all on Nebius Serverless, no reserved instances.
 
 ## Reproduce step by step
 
