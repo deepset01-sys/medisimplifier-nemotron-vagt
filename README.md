@@ -319,6 +319,32 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
 
 > **Reasoning-model reminder:** all Nemotron generation uses `--max-tokens 16000` (Super) / `8000+` (Nano). Too small a budget returns empty output — the scripts flag and retry, never save a truncated result. Runs checkpoint every 50 records; `nemotron_training_data.py` resumes from the output file.
 
+### Nebius Jobs (Console)
+
+Submit each job via Nebius Console → AI Services → Jobs → Create Job:
+
+| Job | Config file | Expected output |
+|-----|-------------|-----------------|
+| Training | `jobs/job_train_v2.yaml` | adapter in `medisimplifier-adapters-v2/adapter/` |
+| Evaluation | `jobs/job_eval_v2.yaml` | `rouge_l: 0.5254` in `eval_v2/results.json` |
+| Merge | `jobs/job_merge_v2.yaml` | merged model in bucket + published to HF |
+| Endpoint | `jobs/safe_endpoint_v2.yaml` | `/health` → `{"ready": true}` |
+
+Merge job requires: `AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY` (Nebius S3 keys — create at IAM → Service Accounts → Access keys).
+
+The merged model is publicly available — no training required to test the endpoint:
+`chambul/MediSimplifier-OpenBioLLM-v2-merged`
+
+```bash
+# Test the endpoint
+curl -X POST http://<your-endpoint>:8000/v1/simplify \
+  -H "Content-Type: application/json" \
+  -d '{
+    "text": "Patient presented with acute myocardial infarction.",
+    "safety_mode": "flag"
+  }'
+```
+
 ## Project structure
 
     nemotron_judge_test.py         Nemotron Nano as safety judge (3-judge calibration, concurrent, checkpointed)
