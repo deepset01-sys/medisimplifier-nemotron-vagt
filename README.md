@@ -377,6 +377,10 @@ results/eval_v2_results.json     v2 eval: ROUGE-L 0.5254 / SARI 60.36 / BERTScor
 vagt_nemotron_results.txt        VAGT decomposition output (per-feature, both rater sets)
 FINDINGS.md                      Full findings write-up (calibration + VAGT + caveats)
 requirements.txt                 openai · numpy · requests · tqdm · datasets
+CLAUDE_CODE_CONTEXT.md           Implementation context for Claude Code (model strings, paths)
+prepare_hf_dataset.py            Prepare and publish HuggingFace dataset
+docker/build_and_push.sh         Build and push Docker images to both registries
+docker/requirements_train.txt    Pinned training dependencies (cryptography==48.0.1)
 ```
 
 Note: `nemotron_training_references.json` (58MB) is gitignored — data available as `chambul/medisimplifier-nemotron-dataset` on HuggingFace.
