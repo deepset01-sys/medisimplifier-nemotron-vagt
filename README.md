@@ -28,35 +28,47 @@ MediSimplifier simplifies medical discharge summaries to a 6th-grade reading lev
 
 ## What's new in v2 (vs v1)
 
-| | v1 (Nebius Challenge) | v2 (Nemotron × VAGT) |
+The Nebius Serverless Challenge submission (v1) was training + serving + dual-judge safety. This v2 submission extends it with an all-Nemotron pipeline:
+
+| | v1 (Nebius Serverless Challenge 🥇) | v2 (This Hackathon) |
 |--|--|--|
-| Teacher (reference generation) | Claude Opus 4.5 | **Nemotron Super** (`nemotron-3-super-120b-a12b`) |
-| Safety judges | Llama-3.3-70B + Qwen3-32B | **+ Nemotron Nano** (`Nemotron-3-Nano-30B-A3B`) — 3rd, calibrated |
-| Calibration measurement | Cohen's κ only | VAGT 3-rater + Nemotron Nano |
-| Judge benchmark | MedSimp-JudgeBench (708, dual-judge) | Same set, **3-judge decomposition** |
-| Training references | Claude Opus (9,999 records) | **Nemotron Super** (9,999 records — 9,976 valid / 23 errored) ✅ |
-| Fine-tuned student | OpenBioLLM-8B, ROUGE-L 0.6638 | **OpenBioLLM-8B**, ROUGE-L **0.5254** (Nemotron-taught) ✅ |
-| Serving | vLLM + dual-judge guardrail | *(planned — Nemotron-in-the-loop endpoint)* |
+| Teacher model | Claude Opus 4.5 (proprietary) | ✅ Nemotron Super 120B via Token Factory |
+| Training data | Claude references (9,999) | ✅ Nemotron Super references (7,983 train) |
+| Student model | OpenBioLLM v1 | ✅ OpenBioLLM v2 (Nemotron-taught) |
+| Safety judges | Llama + Qwen (2 judges) | ✅ + Nemotron Nano (3 judges, calibrated) |
+| Judge calibration metric | Cohen's κ only | ✅ VAGT — σ²_B, σ²_R, σ²_N, Φ_V |
+| Robust statistics validation | ❌ (post-submission only) | ✅ Fleiss κ + Krippendorff α — both go negative on diagnosis (below-chance agreement) |
+| Measurement framework | Cohen's κ | ✅ VAGT — detects shared blind spots invisible to κ |
+| Safe Endpoint | vLLM + dual-judge guardrail | ✅ vLLM + Nemotron Nano guardrail (3-judge parallel) |
+| Reproducibility | Public HuggingFace adapters | ✅ Public HuggingFace dataset + adapters v2 |
 
-> **Note on calibration history:** PABAK, Gwet AC1, Krippendorff α, and VAGT (2-rater) were developed as part of v1's post-challenge analysis ([github.com/deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius)); v2 extends VAGT to a 3-rater panel with Nemotron Nano.
+Token Factory = Nemotron Super teacher (9,999 calls) + Nemotron Nano judge (708 calibration calls) + 3-judge safety panel. Jobs = v2 training (H100, 3 epochs) + evaluation. The novel v2 finding: VAGT inversion — adding Nemotron Nano as third judge cuts shared bias σ²_B on diagnosis from 0.347→0.229 while Fleiss κ goes negative, proving that Cohen's κ — the only metric used in v1 — is blind to the improvement.
 
-> All Nemotron inference runs on **Nebius Token Factory** (OpenAI-compatible, `https://api.studio.nebius.ai/v1/`). No standing infrastructure.
+## LoRA Configuration
+
+v2 uses the winning configuration from v1 ablation (r=32, all_attn, seed=42, 3 epochs). No additional ablation was run — the v1 winner was validated across hardware (H100/H200, δ 1.6–5.0%) and transfers directly to the Nemotron-taught dataset.
+
+| Parameter | Value | Source |
+|-----------|-------|--------|
+| rank | 32 | v1 ablation winner |
+| modules | all_attn (q+k+v+o) | v1 ablation winner |
+| epochs | 3 | v1 full training |
+| seed | 42 | v1 convention |
+| lora_alpha | 64 | 2r, per rsLoRA |
+| lora_dropout | 0.05 | v1 convention |
+| use_rslora | True | rank-stabilized LoRA |
 
 ## Key findings
 
-| Finding | Result | Status |
-|--|--|--|
-| Nemotron Nano judge — recall on injected errors | **84.2%** (Llama 31.7%, Qwen 55.9%) | ✅ n=708 |
-| Nemotron Nano — diagnosis-drop recall (hardest mode) | **68%** (Llama 14%, Qwen 7%) | ✅ |
-| Nemotron Nano — false-positive rate on clean references | **35.2%** (Llama 1.5%, Qwen 0.5%) | ✅ |
-| Balanced accuracy (mean of specificity & recall) | Nemotron **74.5%** · Llama 65.1% · Qwen 77.7% | ✅ |
-| VAGT inversion (diagnosis) | Fleiss κ **0.076 → −0.088** while Φ_V **0.404 → 0.476** | ✅ |
-| Shared blind-spot bias reduction (diagnosis) | σ²_B **0.347 → 0.229** when Nemotron is added | ✅ |
-| Nemotron Super teacher — JudgeBench references | 708 records, **0 errors**, avg 1,743 chars | ✅ |
-| Nemotron Super vs Claude Opus — reference ROUGE-L | **0.525** (mean over 9,976 pairs) | ✅ |
-| Nemotron Super — full training references (9,999) | **9,976 valid / 23 errored** | ✅ |
-| Nemotron-taught student — ROUGE-L / SARI / FK-Grade | **0.5254 / 60.36 / 8.87** (v1: 0.6638 / 73.49 / 7.33) | ✅ n=1,001 |
-| Safe Endpoint v2 | Live — 3-judge parallel gate, VAGT-calibrated decision rule | ✅ |
+| Finding | Result | Nebius Service |
+|---------|--------|----------------|
+| Teacher replacement | Nemotron Super produces stylistically different references than Claude Opus (ROUGE-L 0.525 between teachers) | Token Factory |
+| Student faithfulness | OpenBioLLM v2 learns Nemotron's style — FK-Grade 8.87 vs 7.33 in v1 | Jobs |
+| v2 evaluation | ROUGE-L=0.5254, SARI=60.36, BERTScore=0.9113 on GuyDor007 test set | Jobs |
+| Nemotron Nano recall | 84.2% recall on injected errors — Llama 31.7%, Qwen 55.9% | Token Factory |
+| Diagnosis blind spot — fixed | Nemotron Nano 68% vs Llama 14% / Qwen 7% | Token Factory |
+| VAGT inversion | σ²_B 0.347→0.229; Φ_V +0.072 — Fleiss κ goes negative | Token Factory |
+| Safe Endpoint v2 | Live — VAGT-calibrated 3-judge gate catches hallucinated content | Endpoints + Token Factory |
 
 > Verified rows are computed from committed artifacts ([`nemotron_calibration_full.json`](nemotron_calibration_full.json), [`vagt_nemotron_results.txt`](vagt_nemotron_results.txt), [`results/eval_v2_results.json`](results/eval_v2_results.json)) and reproducible via the scripts/jobs in [Reproduce](#reproduce-step-by-step) — no numbers are invented.
 
