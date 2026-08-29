@@ -176,7 +176,7 @@ Consensus statistics (Cohen's κ, PABAK, Krippendorff α) measure whether judges
 | lateral | 0.697 | 0.745 | +0.047 | 0.077 | 0.050 | −0.027 |
 | **diagnosis** | **0.404** | **0.476** | **+0.072** | **0.347** | **0.229** | **−0.118** |
 
-**The inversion (diagnosis).** Llama and Qwen share a blind spot: both almost never flag a silently dropped diagnosis (UNSAFE rates 7% / 3%). Adding Nemotron (47% UNSAFE on diagnosis) cuts shared bias by a third and raises Φ_V most — **yet Fleiss κ and Krippendorff α go *negative* (0.076 → −0.088).** By every agreement metric the panel looks *worse*; by veridicality it moved *closer to truth*. That is precisely the failure mode VAGT exists to expose.
+**The inversion (diagnosis).** Llama and Qwen share a blind spot: both almost never flag a silently dropped diagnosis (UNSAFE rates 7% / 3%). Adding Nemotron (47% UNSAFE on diagnosis) cuts shared bias by a third and raises Φ_V most — **yet Fleiss κ goes *negative* (0.076 → −0.088; Krippendorff α ≈ same).** By every agreement metric the panel looks *worse*; by veridicality it moved *closer to truth*. That is precisely the failure mode VAGT exists to expose.
 
 > **Honest caveats:**
 > - **Not a free win everywhere.** On `dose` ΔΦ_V = −0.010 (a slight loss): Llama+Qwen weren't badly blind there, so Nemotron's added rater noise outweighs the small bias gain. The panel benefits most exactly where the incumbents share a blind spot.
