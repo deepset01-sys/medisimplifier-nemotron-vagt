@@ -326,7 +326,7 @@ Submit each job via Nebius Console → AI Services → Jobs → Create Job:
 | Job | Config file | Expected output |
 |-----|-------------|-----------------|
 | Training | `jobs/job_train_v2.yaml` | adapter in `medisimplifier-adapters-v2/adapter/` |
-| Evaluation | `jobs/job_eval_v2.yaml` | `rouge_l: 0.5254` in `eval_v2/results.json` |
+| Evaluation | `jobs/job_eval_v2.yaml` | `rouge_l: 0.5254` in `results/eval_v2_results.json` |
 | Merge | `jobs/job_merge_v2.yaml` | merged model in bucket + published to HF |
 | Endpoint | `jobs/safe_endpoint_v2.yaml` | `/health` → `{"ready": true}` |
 
