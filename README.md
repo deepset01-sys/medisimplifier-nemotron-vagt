@@ -385,6 +385,40 @@ docker/requirements_train.txt    Pinned training dependencies (cryptography==48.
 
 Note: `nemotron_training_references.json` (58MB) is gitignored — data available as `chambul/medisimplifier-nemotron-dataset` on HuggingFace.
 
+## Container Images
+
+Training/eval/merge image — available on two registries:
+
+**Docker Hub (public):**
+```bash
+docker pull chambul/medisimplifier:train-v31
+```
+
+**Nebius Container Registry (used in job configs):**
+
+    cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v31
+
+Digest: `sha256:9d832391f85130114534a36881b8e5acab895d36ceed522126c86fbef02f728f`
+
+Safe Endpoint v2 image:
+```bash
+docker pull chambul/medisimplifier:endpoint-v3
+```
+Digest: `sha256:9d950d839497e9ee35c1676b5e75424016b52efa6827930c34f171300ae38795`
+
+Built from `docker/Dockerfile.train` and `docker/Dockerfile.endpoint`.
+To rebuild:
+```bash
+cd ~/medisimplifier-nemotron-vagt && git pull
+docker build -t chambul/medisimplifier:train-v31 \
+             -t cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v31 \
+             -f docker/Dockerfile.train .
+docker push chambul/medisimplifier:train-v31
+docker push cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v31
+```
+
+Note: `docker/requirements_train.txt` pins `cryptography==48.0.1` via a Dockerfile post-install step — resolves the pyOpenSSL/cryptography drift that broke train-v28.
+
 ## Dataset and models
 
 | Resource | Link / string |
