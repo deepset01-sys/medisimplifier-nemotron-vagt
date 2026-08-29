@@ -107,6 +107,12 @@ Pipeline:
     Nebius Job: LoRA fine-tune student on Nemotron references (H100, r=32 all_attn, 3 epochs)  ->  adapter (bucket)
         |
         v
+    Nebius Job: Evaluation (ROUGE-L=0.5254, SARI=60.36, BERTScore=0.9113, FK-Grade=8.87)
+        |
+        v
+    Nebius Job: Merge adapter → chambul/MediSimplifier-OpenBioLLM-v2-merged (HuggingFace)
+        |
+        v
     Token Factory: 3-judge safety evaluation  (nemotron_judge_test.py)
         Llama-3.3-70B + Qwen3-32B + Nemotron Nano  ->  nemotron_calibration_full.json
         |
@@ -115,7 +121,9 @@ Pipeline:
         {sigma_tau, sigma_B, sigma_R, sigma_N, Phi_V} + Fleiss/Krippendorff  ->  vagt_nemotron_results.txt
         |
         v
-    (planned) Nebius Endpoint: Nemotron-in-the-loop Safe Simplification
+    Nebius Endpoint: Safe Simplification Endpoint v2
+        POST /v1/simplify → vLLM + VAGT-calibrated 3-judge gate
+        (tested live — see safe_endpoint_v2.yaml to redeploy)
 
 > **Why Token Factory?** Nemotron Super, Nano, and Ultra are all served per-token with zero idle cost. The teacher run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min; the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
 
