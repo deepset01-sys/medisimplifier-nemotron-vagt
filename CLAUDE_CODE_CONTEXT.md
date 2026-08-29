@@ -11,7 +11,7 @@
    Blog: `BLOG_POST_MEDIUM.md` in v1 repo
 
 2. **Pin ALL dependencies** — cryptography drift broke train-v28
-   Always add: `RUN pip install --no-cache-dir cryptography==48.0.1`
+   Always: `RUN pip install --no-cache-dir cryptography==48.0.1`
 
 3. **Adapter/bucket path — VERIFIED:**
    Training writes: `/output/adapter/` → bucket root `adapter/`
@@ -35,68 +35,27 @@
 
 ---
 
-## v2 Architecture Status
+## v2 Pipeline — ALL PHASES COMPLETE ✅
 
 ```
-PHASE 1 — Teacher Data Generation (COMPLETE ✅):
-  chambul/medisimplifier-nemotron-dataset ✅
-  ROUGE-L Claude vs Nemotron: 0.525
-
-PHASE 2 — Fine-tuning (COMPLETE ✅):
-  Image: train-v29 (cryptography==48.0.1 pinned)
-  Adapter: medisimplifier-adapters-v2/adapter/
-  train_loss=0.780, eval_loss=0.861, epochs=3
-
-PHASE 3 — Evaluation (COMPLETE ✅):
-  Image: train-v30 (has evaluate.py)
-  ROUGE-L=0.5254, SARI=60.36, BERTScore=0.9113, FK-Grade=8.87
-  Results: results/eval_v2_results.json
-
-PHASE 4 — Safe Endpoint v2 (IN PROGRESS 🔄):
-  Code: ALL FILES UPDATED ✅
-  Pending: merge job → HF publish → build image → deploy
+PHASE 1 — Teacher (COMPLETE ✅)
+PHASE 2 — Fine-tuning (COMPLETE ✅)
+PHASE 3 — Evaluation (COMPLETE ✅)
+PHASE 4 — Safe Endpoint v2 (COMPLETE ✅ LIVE)
 ```
 
 ---
 
-## Safe Endpoint v2 — File Status
+## Live Endpoint
 
-| File | Status | Key change |
-|------|--------|------------|
-| src/safety_gate.py | ✅ 81b8b5c | 3-judge parallel + VAGT rule |
-| src/merge_adapter.py | ✅ a004b78 | v2 adapter path + bucket |
-| src/safe_endpoint.py | ✅ e41fcfe | v2 model + version 2.0 |
-| scripts/start_endpoint.sh | ✅ 82763ee | v2 model |
-| docker/Dockerfile.endpoint | ✅ 5bdd795 | copied from v1 |
-| src/serve_vllm.py | ✅ 5bdd795 | copied (legacy, not in endpoint path) |
-
-**Target HF model:** `chambul/MediSimplifier-OpenBioLLM-v2-merged` (NOT YET PUBLISHED)
-
----
-
-## Next Steps for Endpoint v2
-
-1. **Merge job** — run as Nebius Job:
-   ```
-   Name: medisimplifier-v2-merge
-   Image: train-v30 (has merge_adapter.py)
-   Command: python merge_adapter.py --model openbio
-   Volume: medisimplifier-adapters-v2 → /mnt/adapters rw
-   Env: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY (Nebius S3 keys)
-        HF_TOKEN, HF_HOME=/tmp/hf_cache
-   ```
-   Output: /tmp/merged_openbio_v2 → uploaded to bucket
-
-2. **Publish to HF:**
-   Push merged model to `chambul/MediSimplifier-OpenBioLLM-v2-merged`
-
-3. **Build endpoint image:**
-   Dockerfile.endpoint → chambul/medisimplifier:endpoint-v2
-   (needs VM + Docker)
-
-4. **Deploy Nebius Endpoint**
-
-5. **Smoke test Nemotron judge** at max_tokens=8000
+```
+URL: https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud
+Health: GET /health → {"vllm": true, "token_factory": true, "ready": true}
+Simplify: POST /v1/simplify
+  body: {"text": "...", "safety_mode": "flag"|"block"}
+  response: {simplified_text, llama_verdict, qwen_verdict, 
+             nemotron_verdict, consensus, warning, blocked, latency_ms}
+```
 
 ---
 
@@ -106,11 +65,48 @@ PHASE 4 — Safe Endpoint v2 (IN PROGRESS 🔄):
 train-v28: BROKEN — cryptography 49.0.0 drift
 train-v29: ✅ training (cryptography==48.0.1 fixed)
 train-v30: ✅ training + evaluate.py
+train-v31: ✅ training + evaluate.py + endpoint files
+endpoint-v3: ✅ Safe Endpoint v2 (vLLM + 3-judge gate)
+
 CR: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:<tag>
 DH: chambul/medisimplifier:<tag>
+
 train-v29 digest: sha256:bbbf6df1...
 train-v30 digest: sha256:6c3cd4cd...
+train-v31 digest: sha256:9d832391...
+endpoint-v3 digest: sha256:9d950d83...
 ```
+
+---
+
+## HuggingFace Assets
+
+```
+Dataset: chambul/medisimplifier-nemotron-dataset (public)
+  train=7,983 / val=995 / test=998
+  columns: instruction, input, output
+
+Model (v1): chambul/MediSimplifier-OpenBioLLM-merged
+Model (v2): chambul/MediSimplifier-OpenBioLLM-v2-merged (public)
+JudgeBench: chambul/MedSimp-JudgeBench (708 samples)
+```
+
+---
+
+## Infrastructure
+
+```
+Project ID: project-e00g1ev2pr00wjxv40r6ga
+Subnet ID: vpcsubnet-e00jsdqfjrz04ygxc0
+Bucket v2: medisimplifier-adapters-v2
+  adapter/          ← v2 LoRA adapter
+  merged_openbio_v2/ ← merged model (also on HF)
+  eval_v2/          ← evaluation results
+```
+
+## Nebius VM
+SSH: `ssh -i C:\Users\User\.ssh\nebius_vm ubuntu@<IP>`
+Note: Host key changes on restart — run `ssh-keygen -R <old-ip>` first
 
 ---
 
@@ -130,30 +126,23 @@ BASE_URL       = "https://api.studio.nebius.ai/v1/"
 
 ---
 
-## Infrastructure
+## Safe Endpoint v2 — Decision Rule (VAGT-informed)
 
-```
-Project ID: project-e00g1ev2pr00wjxv40r6ga
-Subnet ID: vpcsubnet-e00jsdqfjrz04ygxc0
-Bucket v2: medisimplifier-adapters-v2
-HF Dataset: chambul/medisimplifier-nemotron-dataset
-```
-
-## Nebius VM
-SSH: `ssh -i C:\Users\User\.ssh\nebius_vm ubuntu@<IP>`
-Note: Host key changes on restart — run `ssh-keygen -R <old-ip>` first
-
----
-
-## v1 LoRA Config (identical for v2)
 ```python
-LoraConfig(r=32, lora_alpha=64,
-    target_modules=["q_proj","k_proj","v_proj","o_proj"],
-    lora_dropout=0.05, bias="none",
-    task_type="CAUSAL_LM", use_rslora=True)
-# Epochs: 3, seed=42
-# save_safetensors=False (FUSE bucket — training only)
-# merge_adapter.py uses safe_serialization=True (writes to /tmp first)
+# Nemotron: recall=84.2%, FP=35.2%
+# Qwen: recall=55.9%, FP=0.5%
+# Llama: recall=31.7%, FP=1.5% (informational only)
+
+if nemotron=="SAFE" and qwen=="SAFE": → SAFE
+if nemotron=="UNSAFE" and qwen=="UNSAFE": → UNSAFE
+if qwen=="UNSAFE": → UNSAFE
+if nemotron=="UNSAFE" and qwen=="SAFE":
+    → DISAGREE + "diagnosis-drop risk"
+elif "ERROR" in (nemotron, qwen): → ERROR
+else: → DISAGREE
+
+# Parallel calls: ThreadPoolExecutor(max_workers=3)
+# Latency: ~73s (dominated by Nemotron reasoning)
 ```
 
 ---
@@ -161,20 +150,42 @@ LoraConfig(r=32, lora_alpha=64,
 ## Key Commits (v2 repo)
 
 ```
-82763ee  start_endpoint.sh v2 model
+1fb8381  README — endpoint live, four services
+462c89f  safe_endpoint_v2.yaml
+bd57c3e  job_merge_v2.yaml
+82763ee  start_endpoint.sh v2
 e41fcfe  safe_endpoint.py v2
-a004b78  merge_adapter.py v2 defaults
+a004b78  merge_adapter.py v2
 81b8b5c  safety_gate.py 3-judge parallel + VAGT
-5bdd795  endpoint files copied from v1
-976b87e  README opening (hackathon header, executive summary)
-501ebfe  eval results + README updated
+5bdd795  endpoint files from v1
+976b87e  README opening
+501ebfe  eval results + README
 85bf26c  job_eval_v2.yaml
-de1d6b1  evaluate.py added
+de1d6b1  evaluate.py
 8af84fb  Dockerfile cryptography fix
 c938001  job_train_v2.yaml → train-v29
 fcd44cb  FINDINGS.md
 7d2134e  full calibration + VAGT 3-rater
 ```
+
+---
+
+## Next Tasks
+
+1. **VAGT integration** — bring from v1:
+   vagt_section.md, vagt_estimand.md,
+   vagt_medsimplifier_demo.py, calculate_kappa_ci.py,
+   calibration_judge_cot.py, power_simulation_v7.py
+
+2. **README remaining sections:**
+   - How it runs (pipeline diagram)
+   - Hardware and cost (real numbers)
+   - Reproduce step by step
+   - Project structure
+
+3. **Demo video** (< 3 min, YouTube)
+
+4. **Devpost submission** — complete all fields
 
 ---
 
