@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-08-29 (Session: README complete)
+# Last updated: 2026-08-30 (Session: README complete + First Opus 4.7 Review)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -31,13 +31,27 @@
 | SARI v2 | 60.36 | results/eval_v2_results.json |
 | BERTScore v2 | 0.9113 | results/eval_v2_results.json |
 | FK-Grade v2 | 8.87 | results/eval_v2_results.json |
+| FK-Grade v1 | 7.33 | v1 repo |
 | Teacher ROUGE-L | 0.525 | teacher_comparison.json |
 | n_samples eval | 1,001 | results/eval_v2_results.json |
 | Training samples | 7,983 | chambul/medisimplifier-nemotron-dataset |
+| Training time | 8,523s (~2.4h) | Nebius job logs |
 | Total cost v2 | $110.41 | Nebius Console actual billing |
 | H100 hours | 5.55 | Nebius Console |
 | Nemotron Super cost | $75.19 | Nebius Console Token Factory |
 | Nemotron Nano cost | $0.90 | Nebius Console Token Factory |
+
+---
+
+## DIAGNOSIS RECALL NUMBERS — RECONCILIATION (CRITICAL)
+
+Three numbers that appear in README — all correct but need clear denominators:
+- **84.2%** = Nemotron overall recall across ALL 4 error types (508 corrupted samples)
+- **68%** = Nemotron recall on diagnosis-corrupted SUBSET ONLY (n≈127)
+- **47%** = Nemotron UNSAFE rate across ALL 708 (including 200 clean controls)
+
+Source: nemotron_calibration_full.json
+TODO: Add footnote in README reconciling these three numbers explicitly.
 
 ---
 
@@ -63,6 +77,7 @@ Fleiss κ on diagnosis: 0.076 → −0.088 (Krippendorff α ≈ same)
 | Qwen3-32B | 55.9% | 0.5% | 77.7% |
 
 Nemotron diagnosis recall: 68% vs Llama 14% / Qwen 7%
+Verdict distribution (n=708): 208 SAFE / 491 UNSAFE / 9 ERROR = 69.4% UNSAFE rate
 
 ---
 
@@ -146,57 +161,148 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ## README STATUS — COMPLETE ✅
 
-All sections committed. Key commits this session:
-```
-898c5df  key findings v2, what nebius added v2, LoRA config
-ed54a6b  evaluation results complete
-2194131  pipeline → eval + merge + endpoint
-5c1e7e3  safety gate decision rule + live demo
-280ed5a  VAGT precision fix
-d547b51  Merge & Deploy v2
-7a181a0  Adapter Storage Flow
-3478f07  hardware and cost ($110.41)
-5fd96aa  reproduce → Nebius Jobs table
-12a8c3d  fix eval results path
-6a1f932  project structure (29 files)
-ab08bdb  4 missing files
-2515f8e  endpoint-v3 rebuild recipe
-882fea9  Container Images
-fe17b98  Dataset and models
-d21d586  dataset split counts
-86d87e1  Public Artifacts
-9f440eb  Future Work & Limitations
-```
+All sections committed. Last commit: 86d87e1 (Public Artifacts)
 
 ---
 
-## PENDING TASKS
+## FIRST OPUS 4.7 REVIEW — COMPLETE ✅
 
-### SECURITY — URGENT:
+**Score: 33/40 — "Submission-ready and competitive for a top-tier finish"**
+
+| Criterion | Score |
+|-----------|-------|
+| Technological Implementation | 9/10 |
+| Design | 8/10 |
+| Potential Impact | 7/10 |
+| Quality of the Idea | 9/10 |
+
+**What reviewer praised:**
+- VAGT inversion — "strongest intellectual contribution"
+- max_tokens finding — "real engineering, generalizes beyond this project"
+- Cost transparency — "unusually honest"
+- Limitation table — rare in hackathon submissions
+- Honest ROUGE-L reframing cross-validated by teacher↔teacher 0.525
+
+**Review file:** review_output_v2_opus47.txt (in repo)
+
+---
+
+## TOP 3 FIXES FROM REVIEW
+
+### Fix #1 — Reconcile diagnosis numbers (EASY)
+Add footnote in Medical Safety Evaluation:
+- 84.2% = overall recall across all 4 error types (n=508 corrupted)
+- 68% = recall on diagnosis-corrupted subset only (n≈127)
+- 47% = UNSAFE rate across ALL 708 (including 200 clean controls)
+Cite: nemotron_calibration_full.json
+
+### Fix #2 — Commit live demo JSON (EASY)
+We have the live endpoint response. Commit as docs/live_demo.json:
+- Llama: SAFE, Qwen: SAFE, Nemotron: UNSAFE
+- consensus: DISAGREE + "diagnosis-drop risk"
+- latency: total_ms ~73,392
+OR reframe as "reproducible via safe_endpoint_v2.yaml" and drop "tested live"
+
+### Fix #3 — Inline job YAML + training log (MEDIUM)
+Show job_train_v2.yaml inline (image train-v31, sha256:9d832..., H100)
+Add 10 lines of training log proving 8,523s / 3 epochs / seed=42
+This could push Technological Implementation from 9 → 10
+
+---
+
+## ADDITIONAL README FIXES IDENTIFIED
+
+- [ ] VAGT framing: change "originates in v1" → "developed between submissions, directly from κ=0.11 finding"
+- [ ] FK-Grade 8.87 tension: add sentence → "v2's primary contribution is the judge-panel research (VAGT); for patient-facing deployment v1 remains more readable"
+- [ ] Remove "Blog Post: [coming soon]" placeholder
+- [ ] Trim σ²_B repetition — appears 4 times → reduce to 2
+- [ ] Document safety_mode request/response contract inline
+
+---
+
+## VAGT FRAMING — CRITICAL NOTE
+
+VAGT did NOT originate in v1 submission. Correct narrative:
+- v1 submitted July 15 — found κ=0.11
+- Six weeks post-v1: developed VAGT (calculate_kappa_ci.py, vagt_estimand.md,
+  calibration_judge_cot.py, power_simulation_v7.py, vagt_section.md etc.)
+- These files are in v1 REPO but NOT part of v1 SUBMISSION
+- v2 submission period opens August 26
+- v2 is VAGT's first empirical application
+
+Files developed between submissions (in v1 repo, NOT v1 submission):
+- calculate_kappa_ci.py
+- calibration_judge_cot.py
+- judge_accuracy_cot_vs_nocot.txt
+- kappa_robustness_check.txt
+- power_simulation_v7.py / power_simulation_v7.txt
+- vagt_estimand.md
+- vagt_medsimplifier_demo.py
+- vagt_section.md
+
+---
+
+## PENDING TASKS (PRIORITY ORDER)
+
+### 🔴 SECURITY — URGENT:
 - [ ] Rotate Nebius API key (exposed in transcript)
 - [ ] Rotate HuggingFace token (exposed in transcript)
 
-### Next Priority:
-- [ ] First review with Claude Opus 4.7
-- [ ] VAGT files integration from v1 repo:
-      vagt_section.md, vagt_estimand.md, vagt_medsimplifier_demo.py,
-      calculate_kappa_ci.py, calibration_judge_cot.py,
-      power_simulation_v7.py, power_simulation_v7.txt,
-      kappa_robustness_check.txt, judge_accuracy_cot_vs_nocot.txt
-      NOTE: These were developed POST-v1 submission, NOT part of v1 submission
-- [ ] Novel Finding section — VAGT Inversion placement in README
-- [ ] Blog post v2 (Medium)
+### 🔴 Top 3 Review Fixes (next session):
+- [ ] Fix #1: Reconcile 47%/68%/84.2% — footnote
+- [ ] Fix #2: Commit docs/live_demo.json OR reframe endpoint claim
+- [ ] Fix #3: Inline job_train_v2.yaml + training log excerpt
+- [ ] Run second Opus 4.7 review — target 36+/40
+
+### 🟡 README Polish:
+- [ ] VAGT framing fix ("developed between submissions")
+- [ ] FK-Grade 8.87 tension — add clarifying sentence
+- [ ] Remove "Blog Post: coming soon"
+- [ ] Trim σ²_B repetition
+- [ ] Document safety_mode contract
+- [ ] Update CLAUDE_CODE_CONTEXT.md in repo
+
+### 🟡 VAGT Integration:
+- [ ] Discuss narrative integration of v1 post-submission VAGT files into v2
+- [ ] Novel Finding section placement
+
+### 🟢 Deliverables:
+- [ ] Blog post v2 (Medium) — "From Finding to Framework"
 - [ ] Demo video (< 3 min, YouTube)
 - [ ] Devpost submission fields
-- [ ] Update CLAUDE_CODE_CONTEXT.md in repo (uncommitted local edits)
-- [ ] License already exists ✅
 
 ### IRL Event:
 - Tel Aviv, September 15 (City Winner Award $500 possible)
 
 ---
 
-## ACCURACY CATCHES THIS SESSION
+## SCHEDULE
+
+```
+September 1-7:
+  - Top 3 fixes (1 hour)
+  - VAGT framing + FK-Grade tension (1 hour)
+  - Second Opus review — target 36+/40
+
+September 8-15:
+  - Blog post v2 (Medium)
+  - IRL Event Tel Aviv (September 15)
+  - VAGT files integration from v1
+
+September 16-30:
+  - Demo video
+  - Devpost submission fields
+  - Security — rotate keys
+
+October 1-29:
+  - Final Opus review iterations
+  - Polish to maximum score
+  - Final submission
+```
+
+---
+
+## ACCURACY CATCHES (ALL SESSIONS)
 
 1. PABAK/Gwet AC1 overclaim → corrected to Fleiss κ + Krippendorff α
 2. "ERROR in any judge" → corrected to "ERROR in Nemotron or Qwen"
@@ -208,9 +314,11 @@ d21d586  dataset split counts
 
 ## IMPORTANT NOTES
 
-- v1 repo: github.com/deepset01-sys/medisimplifier-nebius (🥇 First Place)
+- v1 repo: github.com/deepset01-sys/medisimplifier-nebius (🥇 First Place, $320.20)
 - VAGT post-v1 files are in v1 repo but NOT part of v1 submission
-- "From Finding to Framework" narrative belongs in blog post / Devpost, NOT README
-- Nemotron Nano threshold: "ERROR" in (nemotron, qwen) → Llama NOT in consensus logic
+- "From Finding to Framework" narrative → blog post / Devpost, NOT README
+- Nemotron Nano: "ERROR" in (nemotron, qwen) → Llama NOT in consensus logic
 - Test set for eval: GuyDor007 test (1,001) → NOT Nemotron dataset test (998)
 - 9,999 source records → 9,976 valid Nemotron references (23 errored)
+- FK-Grade 8.87 > v1 7.33 → v2 LESS readable for patients; v2's value = VAGT research
+- σ²_B 0.347→0.229 appears 4x in README — needs trimming to 2x
