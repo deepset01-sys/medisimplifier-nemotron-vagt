@@ -23,6 +23,36 @@
 
 ---
 
+## SESSION August 30, 2026 — 6 commits landed
+
+```
+591428a - Training log committed + .gitignore whitelist
+6313d2a - Per-stage image tags corrected (v29/v30/v31) + excerpt
+61ee5bf - Endpoint reframe (~27s) + smoke-test + models_verified
+29c745d - VAGT origin framing reconciled
+18cf994 - README polish (4 items)
+c239d3c - Fix #3 scaffolding (job + scripts + evaluate.py patch)
+```
+
+### FIX #3 STATUS — SCAFFOLDED, NOT YET EXECUTED
+- jobs/job_eval_v2_nemotron_refs.yaml committed (needs train-v32)
+- src/eval_vs_nemotron_refs.py committed
+- src/evaluate.py patched with --save-predictions
+- NEXT STEP: build train-v32, submit job, score results
+
+### CRITICAL — HOW TO BUILD NEXT IMAGE (train-v32)
+Before building, check git log or ask how train-v29/v30/v31 were actually built in this project.
+
+### ENDPOINT
+- URL: https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud
+- Latency: ~27s (corrected from ~73s in README)
+- Live Nebius serverless endpoint — permanent URL, scales to zero, wakes on request (~27s cold start)
+
+### SECURITY — URGENT
+Rotate Nebius API key + HF token before next session.
+
+---
+
 ## KEY NUMBERS (ALL VERIFIED)
 
 | Metric | Value | Source |
@@ -100,9 +130,10 @@ CR path: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:<tag>
 | Tag | Digest | Purpose |
 |-----|--------|---------|
 | train-v29 | sha256:bbbf6df1... | training only |
-| train-v30 | sha256:6c3cd4cd... | evaluation only |
+| train-v30 | sha256:6c3cd4cd... | evaluation (OLD, no --save-predictions) |
 | train-v31 | sha256:9d832391... | merge only |
 | endpoint-v3 | sha256:9d950d83... | Safe Endpoint v2 |
+| train-v32 | TBD | evaluation with --save-predictions (needs build) |
 
 **Critical:** cryptography==48.0.1 pinned via post-install step in Dockerfile.train
 

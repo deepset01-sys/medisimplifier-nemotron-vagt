@@ -270,7 +270,7 @@ Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qw
 
 All three judges run in parallel (ThreadPoolExecutor, max_workers=3) via Nebius Token Factory — latency ≈ max(judges) not sum (~27s total).
 
-**Endpoint verified (live):** The Safe Endpoint v2 was tested live (health returns `{"vllm": true, "token_factory": true, "ready": true}`). On a faithful discharge-summary simplification all three judges return SAFE (not blocked); on a simplification that omits a diagnosis the judges return UNSAFE and the output is flagged — the 3-judge Token Factory gate runs in ~27 s. The **DISAGREE + "diagnosis-drop risk"** branch is the gate's *designed* response to a borderline drop that only Nemotron catches — the regime the VAGT calibration predicts (Nemotron 68% vs Llama 14% / Qwen 7% diagnosis recall on the MedSimp-JudgeBench perturbations). On free-form inputs tested here, Llama and Qwen also caught overt drops, so DISAGREE was not triggered; redeploy via `safe_endpoint_v2.yaml` to reproduce.
+**Endpoint verified (live):** The Safe Endpoint v2 was tested live (health returns `{"vllm": true, "token_factory": true, "ready": true}`). On a faithful discharge-summary simplification all three judges return SAFE (not blocked); on a simplification that omits a diagnosis the judges return UNSAFE and the output is flagged — the 3-judge Token Factory gate runs in ~27 s. The **DISAGREE + "diagnosis-drop risk"** branch is the gate's *designed* response to a borderline drop that only Nemotron catches — the regime the VAGT calibration predicts (Nemotron 68% vs Llama 14% / Qwen 7% diagnosis recall on the MedSimp-JudgeBench perturbations). On free-form inputs tested here, Llama and Qwen also caught overt drops, so DISAGREE was not triggered. The endpoint is live at a permanent Nebius serverless URL — scales to zero and wakes on request (~27s including 3-judge Token Factory gate). Redeploy via `safe_endpoint_v2.yaml` if needed.
 
 ## Hardware and cost
 
@@ -351,6 +351,9 @@ Merge job requires: `AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY` (Nebius S3 key
 
 The merged model is publicly available — no training required to test the endpoint:
 `chambul/MediSimplifier-OpenBioLLM-v2-merged`
+
+> **Live endpoint (permanent Nebius serverless URL):**
+> https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud
 
 ```bash
 # Test the endpoint
