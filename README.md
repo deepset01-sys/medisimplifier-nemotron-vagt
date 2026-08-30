@@ -251,6 +251,13 @@ Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qw
 | lateral (side swap) | 97% | 43% | 85% |
 | negation (flip) | 82% | 30% | 55% |
 
+> **Note on Nemotron Nano recall figures:** Three numbers appear across this README — all correct but from different denominators:
+> - **84.2%** = overall recall across all 4 error types (421 of 500 non-ERROR corrupted; 508 corrupted total)
+> - **68%** = recall on the diagnosis-corrupted subset (100 of 147 non-ERROR; 150 diagnosis-corrupted total)
+> - **47%** = Nemotron UNSAFE rate on the VAGT diagnosis stratum (complete-case n=333, ~41% corrupted) — see `vagt_nemotron_results.txt`; this is not the all-708 UNSAFE rate, which is 69.4% (491/708)
+>
+> Sources: `nemotron_calibration_full.json` (recall), `vagt_nemotron_results.txt` (stratum rate)
+
 **Verdict distribution (n=708):** Nemotron 208 SAFE / 491 UNSAFE / 9 ERROR. Inter-judge agreement: Nemotron↔Llama 47.6% (κ=0.139), Nemotron↔Qwen 68.7% (κ=0.421).
 
 > **Interpretation:** Nemotron Nano is a **high-sensitivity, low-specificity** judge. It catches errors the incumbents miss — dramatically so on diagnosis drops — but over-flags ~1 in 3 clean references. On *balanced* accuracy Qwen still edges ahead (77.7%) on near-perfect specificity. Nemotron is not a drop-in calibrated judge as-is; its recall edge and its over-flagging are two sides of one low threshold, and it needs threshold/prompt calibration to separate them.
