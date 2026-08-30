@@ -288,6 +288,18 @@ Actual Nebius billing for v2 (all figures from Nebius Console):
 | Disk (Network SSD + Object Storage) | Storage | 75,000 GiB hours | $7.29 |
 | **Total v2** | | | **$110.42** |
 
+**Training run (verified from `logs/train_v2.json.gz`, Nebius Job `aijob-e00rwxv72fe81f54we`):**
+
+```
+2026-08-28 13:45:40  MediSimplifier Training — openbio
+                     LoRA: r=32, modules=all_attn, rsLoRA=True
+                     Epochs: 3 | Trainable params: 27,262,976 (0.60%)
+2026-08-28 14:42:51  epoch 1.0 | eval_loss 0.8496
+2026-08-28 15:30:09  epoch 2.0 | eval_loss 0.8378
+2026-08-28 16:17:32  epoch 3.0 | eval_loss 0.8610
+2026-08-28 16:17:35  train_runtime 8523.36s | train_loss 0.7803
+```
+
 H100 NVLink rate: ~$3.85/hr on Nebius eu-north1.
 Training: ~2.4h (8,523s), 3 epochs, seed=42.
 Token Factory dominates cost (93%) — Nemotron Super's 16,000-token reasoning budget drives the teacher generation cost. Zero idle cost — all on Nebius Serverless, no reserved instances.
@@ -363,12 +375,12 @@ src/
   safety_gate.py                 VAGT-calibrated 3-judge safety gate (Llama + Qwen + Nemotron Nano)
   serve_vllm.py                  vLLM inference server (legacy standalone)
 docker/
-  Dockerfile.train               Training/eval/merge image (train-v31, cryptography==48.0.1 pinned)
+  Dockerfile.train               Builds train-v29/v30/v31 (cryptography==48.0.1 pinned)
   Dockerfile.endpoint            Safe Endpoint v2 image (endpoint-v3)
 jobs/
-  job_train_v2.yaml              v2 fine-tuning job (train-v31, Nemotron dataset, adapters-v2 bucket)
-  job_eval_v2.yaml               v2 evaluation job (train-v31, GuyDor007 test)
-  job_merge_v2.yaml              v2 merge job (train-v31, adapter → bucket → HuggingFace)
+  job_train_v2.yaml              v2 fine-tuning job (train-v29, sha256:bbbf6df1..., Nemotron dataset, adapters-v2 bucket)
+  job_eval_v2.yaml               v2 evaluation job (train-v30, sha256:6c3cd4cd..., GuyDor007 test)
+  job_merge_v2.yaml              v2 merge job (train-v31, sha256:9d832391..., adapter → bucket → HuggingFace)
   safe_endpoint_v2.yaml          Safe Endpoint v2 deployment config (endpoint-v3)
 scripts/
   start_endpoint.sh              Boot vLLM + Safe Endpoint v2 API (inside endpoint-v3 image)
@@ -394,18 +406,31 @@ Note: `nemotron_training_references.json` (58MB) is gitignored — data availabl
 
 ## Container Images
 
-Training/eval/merge image — available on two registries:
+The v2 Jobs pipeline uses **three images**, all built from `docker/Dockerfile.train` — one per stage:
+
+| Image | Used by | Digest |
+|--|--|--|
+| `train-v29` | training (`job_train_v2.yaml`) | `sha256:bbbf6df1...` |
+| `train-v30` | evaluation (`job_eval_v2.yaml`) | `sha256:6c3cd4cd...` |
+| `train-v31` | merge (`job_merge_v2.yaml`) | `sha256:9d832391...` |
 
 **Docker Hub (public):**
 ```bash
-docker pull chambul/medisimplifier:train-v31
+docker pull chambul/medisimplifier:train-v29   # training
+docker pull chambul/medisimplifier:train-v30   # evaluation
+docker pull chambul/medisimplifier:train-v31   # merge
 ```
 
 **Nebius Container Registry (used in job configs):**
 
-    cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v31
+    cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v29   (training)
+    cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v30   (evaluation)
+    cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v31   (merge)
 
-Digest: `sha256:9d832391f85130114534a36881b8e5acab895d36ceed522126c86fbef02f728f`
+Full digests:
+- `train-v29` — `sha256:bbbf6df1b1649c6dbd3828de8156a55970b541e0e0549cf3839df7dc6dd457f5`
+- `train-v30` — `sha256:6c3cd4cd99480ced3fd4dfe1977a1f4fd42e0ff18f970a5cc3fe08ca7aa70cd6`
+- `train-v31` — `sha256:9d832391f85130114534a36881b8e5acab895d36ceed522126c86fbef02f728f`
 
 Safe Endpoint v2 image:
 ```bash
@@ -423,6 +448,8 @@ docker build -t chambul/medisimplifier:train-v31 \
 docker push chambul/medisimplifier:train-v31
 docker push cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v31
 ```
+
+Note: train-v29 and train-v30 use the same Dockerfile.train — rebuild with the appropriate tag (e.g., train-v29 for training, train-v30 for evaluation).
 
 ```bash
 # Rebuild endpoint-v3

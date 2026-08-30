@@ -99,7 +99,9 @@ CR path: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:<tag>
 
 | Tag | Digest | Purpose |
 |-----|--------|---------|
-| train-v31 | sha256:9d832391... | training + eval + merge |
+| train-v29 | sha256:bbbf6df1... | training only |
+| train-v30 | sha256:6c3cd4cd... | evaluation only |
+| train-v31 | sha256:9d832391... | merge only |
 | endpoint-v3 | sha256:9d950d83... | Safe Endpoint v2 |
 
 **Critical:** cryptography==48.0.1 pinned via post-install step in Dockerfile.train
@@ -204,7 +206,7 @@ We have the live endpoint response. Commit as docs/live_demo.json:
 OR reframe as "reproducible via safe_endpoint_v2.yaml" and drop "tested live"
 
 ### Fix #3 — Inline job YAML + training log (MEDIUM)
-Show job_train_v2.yaml inline (image train-v31, sha256:9d832..., H100)
+Show job_train_v2.yaml inline (image train-v29, sha256:bbbf6df1..., H100)
 Add 10 lines of training log proving 8,523s / 3 epochs / seed=42
 This could push Technological Implementation from 9 → 10
 
