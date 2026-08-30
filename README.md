@@ -12,9 +12,7 @@
 
 **Executive Summary:** 9,999 Nemotron Super teacher calls via Token Factory → training on H100 (3 epochs, ~2.4h) → Nemotron Nano joins Llama + Qwen as calibrated third judge → 708-sample VAGT 3-rater analysis → Safe Simplification Endpoint v2 — zero standing infrastructure, $0 idle cost.
 
-**Key findings:** (1) Nemotron Super as teacher produces stylistically different references than Claude Opus (ROUGE-L 0.525 between teachers) — student faithfully learns Nemotron's style (FK-Grade 8.87 vs 7.33 in v1); (2) Nemotron Nano catches diagnosis omissions at 68% recall vs Llama's 14% and Qwen's 7% — the clinical blind spot both v1 judges shared; (3) VAGT inversion — adding Nemotron as third judge cuts shared bias σ²_B on diagnosis from 0.347→0.229 while Fleiss κ goes negative, proving consensus statistics are blind to the improvement. Four Nebius services: Token Factory, Jobs, Object Storage, Serverless Endpoints.
-
-**Blog Post:** [coming soon]
+**Key findings:** (1) Nemotron Super as teacher produces stylistically different references than Claude Opus (ROUGE-L 0.525 between teachers) — student faithfully learns Nemotron's style (FK-Grade 8.87 vs 7.33 in v1); (2) Nemotron Nano catches diagnosis omissions at 68% recall vs Llama's 14% and Qwen's 7% — the clinical blind spot both v1 judges shared; (3) VAGT inversion — adding Nemotron as third judge cuts the shared blind-spot bias on diagnosis while Fleiss κ goes negative, proving consensus statistics are blind to the improvement. Four Nebius services: Token Factory, Jobs, Object Storage, Serverless Endpoints.
 
 ## What this project does
 
@@ -67,7 +65,7 @@ v2 uses the winning configuration from v1 ablation (r=32, all_attn, seed=42, 3 e
 | v2 evaluation | ROUGE-L=0.5254, SARI=60.36, BERTScore=0.9113 on GuyDor007 test set | Jobs |
 | Nemotron Nano recall | 84.2% recall on injected errors — Llama 31.7%, Qwen 55.9% | Token Factory |
 | Diagnosis blind spot — fixed | Nemotron Nano 68% vs Llama 14% / Qwen 7% | Token Factory |
-| VAGT inversion | σ²_B 0.347→0.229; Φ_V +0.072 — Fleiss κ goes negative | Token Factory |
+| VAGT inversion | Φ_V +0.072 — Fleiss κ goes negative | Token Factory |
 | Safe Endpoint v2 | Live — VAGT-calibrated 3-judge gate catches hallucinated content | Endpoints + Token Factory |
 
 > Verified rows are computed from committed artifacts ([`nemotron_calibration_full.json`](nemotron_calibration_full.json), [`vagt_nemotron_results.txt`](vagt_nemotron_results.txt), [`results/eval_v2_results.json`](results/eval_v2_results.json)) and reproducible via the scripts/jobs in [Reproduce](#reproduce-step-by-step) — no numbers are invented.
@@ -85,7 +83,7 @@ The Nemotron-taught student was evaluated on the **same GuyDor007 test set (n=1,
 
 **Training run:** LoRA (r=32, all_attn, 3 epochs) on 7,983 train / 995 val / 998 test — ~2.4 hours (8,523 s) on 1×H100, ~$25–30. Teacher references agree with Claude's at ROUGE-L **0.525** ([`teacher_comparison.json`](teacher_comparison.json)).
 
-> **Honest interpretation:** v2 ROUGE-L reflects **style divergence from Claude references, not a quality failure** — Nemotron Super produces *less* simplified references (FK-Grade **8.87** vs Claude's implied ~7.0), and the student model faithfully learned this style. The lower ROUGE-L/SARI is the student matching a *different teacher's style*, scored against Claude's references; it is not evidence the v2 outputs are worse, only that they are less Claude-like (and at a slightly higher reading level). Note the ~0.525 student↔Claude ROUGE-L closely tracks the ~0.525 teacher↔teacher ROUGE-L — the student inherited exactly the teacher gap.
+> **Honest interpretation:** v2 ROUGE-L reflects **style divergence from Claude references, not a quality failure** — Nemotron Super produces *less* simplified references (FK-Grade **8.87** vs Claude's implied ~7.0), and the student model faithfully learned this style. The lower ROUGE-L/SARI is the student matching a *different teacher's style*, scored against Claude's references; it is not evidence the v2 outputs are worse, only that they are less Claude-like (and at a slightly higher reading level). Note the ~0.525 student↔Claude ROUGE-L closely tracks the ~0.525 teacher↔teacher ROUGE-L — the student inherited exactly the teacher gap. v2's primary contribution is the VAGT research and Nemotron pipeline; v1 remains more readable for patients (FK-Grade 7.33).
 
 > **Evaluation:** 1,001 test samples (GuyDor007/medisimplifier-dataset), greedy decoding, seed=42.
 
@@ -362,6 +360,30 @@ curl -X POST http://<your-endpoint>:8000/v1/simplify \
     "text": "Patient presented with acute myocardial infarction.",
     "safety_mode": "flag"
   }'
+```
+
+**`safety_mode` values:**
+- `"flag"` (default) — returns simplified text even if UNSAFE; adds `warning` field
+- `"block"` — sets `blocked: true` and nulls `simplified_text` when consensus is UNSAFE or ERROR
+
+**Response contract:**
+```json
+{
+  "simplified_text": "...",
+  "blocked": false,
+  "safety": {
+    "llama_verdict": "SAFE|UNSAFE|ERROR",
+    "qwen_verdict": "SAFE|UNSAFE|ERROR",
+    "nemotron_verdict": "SAFE|UNSAFE|ERROR",
+    "blocked": false,
+    "consensus": "SAFE|UNSAFE|DISAGREE|ERROR",
+    "warning": null
+  },
+  "latency_ms": {
+    "vllm_ms": 428,
+    "total_ms": 26975
+  }
+}
 ```
 
 ## Project structure
