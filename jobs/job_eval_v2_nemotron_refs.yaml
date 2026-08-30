@@ -9,9 +9,8 @@ resources:
   subnet_id: ${NEBIUS_SUBNET_ID}
 
 docker:
-  # NOTE: requires an image rebuilt WITH the --save-predictions addition to evaluate.py.
-  # train-v30 (below) has the OLD evaluate.py — bump this to the rebuilt tag (e.g. train-v32) before running.
-  image: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v30@sha256:6c3cd4cd99480ced3fd4dfe1977a1f4fd42e0ff18f970a5cc3fe08ca7aa70cd6
+  # train-v32: rebuilt from docker/Dockerfile.train at HEAD e894c4a — includes evaluate.py --save-predictions.
+  image: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v32@sha256:2c95dfef0a298ce258f094fa5d5647b0d7c84e297850bff8b7daba5a719694dc
   command: python
   args:
     - "evaluate.py"
