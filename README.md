@@ -270,9 +270,9 @@ Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qw
 - Nemotron UNSAFE + Qwen SAFE → DISAGREE + "diagnosis-drop risk"
 - ERROR in Nemotron or Qwen → ERROR (fail-safe, blocks in block mode)
 
-All three judges run in parallel (ThreadPoolExecutor, max_workers=3) via Nebius Token Factory — latency ≈ max(judges) not sum (~73s total).
+All three judges run in parallel (ThreadPoolExecutor, max_workers=3) via Nebius Token Factory — latency ≈ max(judges) not sum (~27s total).
 
-**Endpoint verified:** The Safe Endpoint v2 was tested live during development. A fabricated-content input triggered Nemotron UNSAFE while Llama and Qwen passed SAFE — consensus DISAGREE + "diagnosis-drop risk" — confirming the VAGT-calibrated rule fires on the exact blind spot the calibration predicted. The endpoint is not currently hosted; redeploy via safe_endpoint_v2.yaml to reproduce.
+**Endpoint verified (live):** The Safe Endpoint v2 was tested live (health returns `{"vllm": true, "token_factory": true, "ready": true}`). On a faithful discharge-summary simplification all three judges return SAFE (not blocked); on a simplification that omits a diagnosis the judges return UNSAFE and the output is flagged — the 3-judge Token Factory gate runs in ~27 s. The **DISAGREE + "diagnosis-drop risk"** branch is the gate's *designed* response to a borderline drop that only Nemotron catches — the regime the VAGT calibration predicts (Nemotron 68% vs Llama 14% / Qwen 7% diagnosis recall on the MedSimp-JudgeBench perturbations). On free-form inputs tested here, Llama and Qwen also caught overt drops, so DISAGREE was not triggered; redeploy via `safe_endpoint_v2.yaml` to reproduce.
 
 ## Hardware and cost
 
