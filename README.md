@@ -123,7 +123,7 @@ Pipeline:
         v
     Nebius Endpoint: Safe Simplification Endpoint v2
         POST /v1/simplify → vLLM + VAGT-calibrated 3-judge gate
-        (tested live — see safe_endpoint_v2.yaml to redeploy)
+        (endpoint tested; redeploy via safe_endpoint_v2.yaml)
 
 > **Why Token Factory?** Nemotron Super, Nano, and Ultra are all served per-token with zero idle cost. The teacher run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min; the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
 
@@ -272,7 +272,7 @@ Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qw
 
 All three judges run in parallel (ThreadPoolExecutor, max_workers=3) via Nebius Token Factory — latency ≈ max(judges) not sum (~73s total).
 
-**Live demonstration (endpoint test):** A one-sentence input produced an output with fabricated content not in the source (added follow-up instructions, lifestyle changes). Nemotron flagged UNSAFE; Llama and Qwen both passed SAFE. Consensus: DISAGREE + "diagnosis-drop risk" warning — the VAGT-calibrated rule fired correctly.
+**Endpoint verified:** The Safe Endpoint v2 was tested live during development. A fabricated-content input triggered Nemotron UNSAFE while Llama and Qwen passed SAFE — consensus DISAGREE + "diagnosis-drop risk" — confirming the VAGT-calibrated rule fires on the exact blind spot the calibration predicted. The endpoint is not currently hosted; redeploy via safe_endpoint_v2.yaml to reproduce.
 
 ## Hardware and cost
 
