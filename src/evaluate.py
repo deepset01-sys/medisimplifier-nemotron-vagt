@@ -216,6 +216,8 @@ def main():
                         help="Limit evaluation to first N samples (smoke test)")
     parser.add_argument("--fast",            action="store_true",
                         help="Skip BERTScore and SARI")
+    parser.add_argument("--save-predictions", action="store_true",
+                        help="Also dump per-sample predictions.json (index/input/prediction/claude_output)")
     args = parser.parse_args()
 
     # Guard: --native-template without --zero-shot means adapter + wrong template = silent wrong results
@@ -263,6 +265,17 @@ def main():
         print(f"  Warning: {gen_stats['n_truncated']} prompts were truncated at max_length=2048")
     if gen_stats["n_prompt_leaks"] > 0:
         print(f"  Warning: {gen_stats['n_prompt_leaks']} prompt leaks detected (empty predictions)")
+
+    # ── Save per-sample predictions (for re-scoring against other references) ──
+    if args.save_predictions:
+        preds_path = out / "predictions.json"
+        with open(preds_path, "w") as f:
+            json.dump(
+                [{"index": i, "input": s, "prediction": p, "claude_output": r}
+                 for i, (s, p, r) in enumerate(zip(sources, predictions, references))],
+                f, indent=2,
+            )
+        print(f"Saved per-sample predictions to {preds_path}")
 
     # ── Metrics ────────────────────────────────────────────────
     print("Computing ROUGE-L...")

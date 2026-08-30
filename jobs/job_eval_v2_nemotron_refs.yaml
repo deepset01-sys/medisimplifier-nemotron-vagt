@@ -1,0 +1,38 @@
+name: medisimplifier-v2-eval-nemotron-refs
+description: "Regenerate v2 student predictions on test split and save per-sample predictions to bucket (for scoring vs Nemotron references)"
+parent_id: ${NEBIUS_PROJECT_ID}
+
+resources:
+  platform: gpu-h100-sxm
+  preset: 1gpu-16vcpu-200gb
+  disk_size: 250Gi
+  subnet_id: ${NEBIUS_SUBNET_ID}
+
+docker:
+  # NOTE: requires an image rebuilt WITH the --save-predictions addition to evaluate.py.
+  # train-v30 (below) has the OLD evaluate.py — bump this to the rebuilt tag (e.g. train-v32) before running.
+  image: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v30@sha256:6c3cd4cd99480ced3fd4dfe1977a1f4fd42e0ff18f970a5cc3fe08ca7aa70cd6
+  command: python
+  args:
+    - "evaluate.py"
+    - "--model"
+    - "openbio"
+    - "--adapter-path"
+    - "/mnt/adapters/adapter"
+    - "--split"
+    - "test"
+    - "--output-dir"
+    - "/mnt/adapters/eval_v2_nemotron"
+    - "--save-predictions"
+
+env:
+  HF_TOKEN: "${HF_TOKEN}"
+  HF_HOME: "/tmp/hf_cache"
+  PYTHONUNBUFFERED: "1"
+
+volumes:
+  - bucket: medisimplifier-adapters-v2
+    mount: /mnt/adapters
+    mode: rw
+
+timeout: 5h
