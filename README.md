@@ -8,7 +8,7 @@
 
 > **Nebius x NVIDIA Global AI Hackathon submission by Shmulik Avraham.**
 > Built on top of [MediSimplifier-Nebius](https://github.com/deepset01-sys/medisimplifier-nebius) — 🥇 First Place winner of the Nebius Serverless AI Builders Challenge.
-> The Nemotron teacher pipeline, 3-judge calibration panel, VAGT measurement framework, and v2 training infrastructure were built independently for this hackathon.
+> The Nemotron teacher pipeline, 3-judge calibration panel, VAGT measurement framework (developed in the six weeks between submissions, from the κ=0.11 finding), and v2 training infrastructure were built for this hackathon.
 
 **Executive Summary:** 9,999 Nemotron Super teacher calls via Token Factory → training on H100 (3 epochs, ~2.4h) → Nemotron Nano joins Llama + Qwen as calibrated third judge → 708-sample VAGT 3-rater analysis → Safe Simplification Endpoint v2 — zero standing infrastructure, $0 idle cost.
 
@@ -24,7 +24,7 @@ MediSimplifier simplifies medical discharge summaries to a 6th-grade reading lev
 - **Judge** — Nemotron Nano is added as a third, calibrated safety judge alongside Llama-3.3-70B and Qwen3-32B.
 - **Measurement** — VAGT decomposes judge behavior into ground-truth signal (σ²_τ), shared blind-spot bias (σ²_B), rater bias (σ²_R), and noise (σ²_N), yielding a veridicality-anchored dependability coefficient Φ_V that consensus statistics (Cohen's κ, PABAK, Krippendorff α) cannot produce.
 
-> **What's carried from v1 vs new here:** The dataset, the fine-tuning task, the dual-judge safety design, and the perturbation benchmark (MedSimp-JudgeBench, 708 samples) are from v1. New in v2: **Nemotron Super as teacher**, **Nemotron Nano as a third calibrated judge**, and the **VAGT framework** with its 3-rater decomposition. Fine-tuning a student on Nemotron references is complete — see [v2 Evaluation Results](#v2-evaluation-results--v1-claude-teacher-vs-v2-nemotron-teacher) below.
+> **What's carried from v1 vs new here:** The dataset, the fine-tuning task, the dual-judge safety design, and the perturbation benchmark (MedSimp-JudgeBench, 708 samples) are from v1. New in v2: **Nemotron Super as teacher**, **Nemotron Nano as a third calibrated judge**, and the **first empirical application of VAGT** (developed post-v1 from the κ=0.11 finding). Fine-tuning a student on Nemotron references is complete — see [v2 Evaluation Results](#v2-evaluation-results--v1-claude-teacher-vs-v2-nemotron-teacher) below.
 
 ## What's new in v2 (vs v1)
 
@@ -227,7 +227,7 @@ Consensus statistics (Cohen's κ, PABAK, Krippendorff α) measure whether judges
 > - **Not a free win everywhere.** On `dose` ΔΦ_V = −0.010 (a slight loss): Llama+Qwen weren't badly blind there, so Nemotron's added rater noise outweighs the small bias gain. The panel benefits most exactly where the incumbents share a blind spot.
 > - Adding a diverging rater **raises σ²_R and σ²_N** (printed per feature) — the cost side of the ledger. Φ_V nets the two effects.
 > - **Complete-case:** rows where any judge returned ERROR are dropped (9–18 per feature). Counts reported in [`vagt_nemotron_results.txt`](vagt_nemotron_results.txt).
-> - The VAGT framework and its formal estimand originate in v1 (`vagt_section.md`, `vagt_estimand.md`); v2 contributes the 3-rater empirical application with Nemotron.
+> - VAGT was developed in the six weeks between submissions — after v1's κ=0.11 finding (July 15) and before the v2 window opened (August 26). The framework files (`vagt_section.md`, `vagt_estimand.md`) live in the v1 repo but were not part of the v1 submission. v2 is VAGT's first empirical application, with Nemotron Nano as the third rater that makes the 3-rater decomposition possible.
 
 ## Medical Safety Evaluation (3 judges)
 
