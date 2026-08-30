@@ -36,7 +36,7 @@
 | n_samples eval | 1,001 | results/eval_v2_results.json |
 | Training samples | 7,983 | chambul/medisimplifier-nemotron-dataset |
 | Training time | 8,523s (~2.4h) | Nebius job logs |
-| Total cost v2 | $110.41 | Nebius Console actual billing |
+| Total cost v2 | $110.42 | Nebius Console actual billing |
 | H100 hours | 5.55 | Nebius Console |
 | Nemotron Super cost | $75.19 | Nebius Console Token Factory |
 | Nemotron Nano cost | $0.90 | Nebius Console Token Factory |
@@ -155,7 +155,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 | H100 NVLink | 5.55 GPU hours | $21.36 |
 | CPU + RAM | 211.95 vCPU / 847.80 GiB hours | $5.25 |
 | Disk + Object Storage | 75,000 GiB hours | $7.29 |
-| **Total v2** | | **$110.41** |
+| **Total v2** | | **$110.42** |
 
 ---
 
@@ -308,7 +308,7 @@ October 1-29:
 2. "ERROR in any judge" → corrected to "ERROR in Nemotron or Qwen"
 3. Fleiss κ vs Krippendorff α attribution → precision fix
 4. eval path eval_v2/results.json → results/eval_v2_results.json
-5. Total cost $110.42 → $110.41
+5. Total cost $110.42 confirmed correct (matches line-item sum); earlier "$110.42 → $110.41" catch was itself wrong and has been reverted
 
 ---
 
