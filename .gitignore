@@ -83,6 +83,7 @@ adapters/
 outputs/
 runs/
 logs/
+!logs/train_v2.json.gz
 wandb/
 mlruns/
 *.log
