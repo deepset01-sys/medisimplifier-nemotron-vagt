@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-08-31 (Session: Fix #3 executed + v4 Opus review 34/40 — all review fixes landed)
+# Last updated: 2026-08-31 (Session: VAGT bootstrap CIs + "The finding" reframe; v5 review + /v1/audit_panel spec)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -23,7 +23,7 @@
 
 ---
 
-## SESSION August 30–31, 2026 — review fixes + Fix #3 executed (HEAD = c2cc0a4)
+## SESSION August 30–31, 2026 — review fixes, Fix #3, VAGT CIs, reframe (HEAD = 1a4f52c)
 
 ```
 591428a - Training log committed + .gitignore whitelist
@@ -37,6 +37,9 @@ fd36ae2 - Nemotron-reference eval companion table + results artifact
 a76f426 - Model-recommendation callout [v4 fix #2]
 cbd32ad - max_tokens=16000 engineering-finding callout [v4 fix #3]
 c2cc0a4 - Real live-endpoint SAFE curl + gate-level UNSAFE trace [v4 fix #1]
+23c1afe - CLAUDE_CODE_CONTEXT refresh (Fix #3 complete, v4 review, corrected denominators)
+88085fe - paired bootstrap CIs on VAGT deltas (ΔΦ_V +0.071 [+0.055,+0.087] on diagnosis)
+1a4f52c - "The finding" lead paragraph (VAGT inversion first) [v5 fix]
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -92,16 +95,18 @@ Sources: nemotron_calibration_full.json (recall) + vagt_nemotron_results.txt (47
 
 ---
 
-## VAGT RESULTS (from vagt_nemotron_results.txt)
+## VAGT RESULTS (from vagt_nemotron_results.txt; paired-Δ 95% CIs committed in vagt_bootstrap_cis.json, 88085fe)
 
 | Feature | Φ_V (L+Q) | Φ_V (+Nemo) | ΔΦ_V | σ²_B (L+Q) | σ²_B (+Nemo) | Δσ²_B |
 |---------|-----------|-------------|------|------------|--------------|-------|
-| dose | 0.743 | 0.733 | −0.010 | 0.054 | 0.047 | −0.007 |
-| negation | 0.578 | 0.618 | +0.040 | 0.145 | 0.104 | −0.041 |
-| lateral | 0.697 | 0.745 | +0.047 | 0.077 | 0.050 | −0.027 |
-| diagnosis | 0.404 | 0.476 | +0.072 | 0.347 | 0.229 | −0.118 |
+| dose | 0.743 | 0.733 | −0.013 [−0.055, +0.021] (n.s.) | 0.054 | 0.047 | −0.007 |
+| negation | 0.578 | 0.618 | +0.043 [+0.011, +0.070] | 0.145 | 0.104 | −0.041 |
+| lateral | 0.697 | 0.745 | +0.048 [+0.019, +0.074] | 0.077 | 0.050 | −0.027 |
+| diagnosis | 0.404 | 0.476 | +0.071 [+0.055, +0.087] | 0.347 | 0.229 | −0.115 [−0.141, −0.090] |
 
-Fleiss κ on diagnosis: 0.076 → −0.088 (Krippendorff α ≈ same)
+ΔΦ_V column = paired bootstrap (3-rater − 2-rater on same complete-case items, 1000 iters, seed=42), 95% CI.
+Fleiss κ on diagnosis: 0.076 → −0.088 (Krippendorff α ≈ same); paired ΔFleiss κ = −0.163 [−0.305, −0.045] (CI excludes 0).
+Diagnosis inversion is significant on both axes (Φ_V up, κ down, CIs exclude 0); dose is the lone dip and is n.s.
 
 ---
 
@@ -204,12 +209,16 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = c2cc0a4)
+## README STATUS — COMPLETE ✅ (HEAD = 1a4f52c)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
 - v4 Fix #2: "Which model to deploy" callout — v1 for readability, v2 for research/safety (a76f426)
 - v4 Fix #3: max_tokens=16000 engineering-finding callout in exec block (cbd32ad)
+
+Plus v5-driven rigor + framing:
+- Paired bootstrap CIs on VAGT deltas + surfaced in the README VAGT table (88085fe)
+- "The finding" — README now leads with the VAGT inversion before the exec summary (1a4f52c)
 
 Earlier fixes landed: VAGT origin framing, recall-denominator footnote, per-stage image tags,
 cost $110.42, training-log evidence, blog placeholder removed, σ²_B trimmed to 2×, safety_mode
@@ -224,11 +233,18 @@ contract documented, Nemotron-reference eval (companion table).
 | v2 (review_output_v2_opus47.txt) | 33/40 | "Submission-ready and competitive for a top-tier finish" (Impact 7) |
 | v3 (post first fixes) | 33/40 | "Submission-ready and competitive for a top placement" |
 | v4 (all fixes landed) | 34/40 | "Submission-ready and competitive for a top prize" (Impact 8) |
+| v5 (with bonus prompt) | 32/40 | scores non-deterministic across runs (range 31–34) |
 
 v4 per-criterion: Technological 9 / Design 8 / Impact 8 / Idea 9.
-Review outputs: review_output_v2/v3/v4_opus47.txt + run_review.py + review_prompt.txt
-— **UNTRACKED (not committed to repo)**; decide before final submission.
-v4 top-3 (all done): real live-URL curl, model-recommendation callout, max_tokens elevation.
+v5 bonus answers: "borderline top-5, not top-3 as submitted"; single biggest lever from competitive → first place =
+the **/v1/audit_panel** "win move" — turn VAGT into a reusable Nebius-native judge-panel calibration tool.
+v5 top-3: (1) lead with the finding ✅ done (1a4f52c), (2) demonstrate DISAGREE end-to-end via curl — OPEN
+(student doesn't self-drop reliably; needs a crafted case), (3) commit bootstrap CIs ✅ done (88085fe).
+
+Review outputs (all UNTRACKED — decide before final submission):
+- review_output_v2_opus47.txt, review_output_v3_opus47.txt, review_output_v4_opus47.txt, review_output_v5_opus47.txt
+- run_review.py (now supports --model / --prompt), review_prompt.txt, review_prompt_with_bonus.txt
+- audit_panel_clarification_prompt.txt, audit_panel_clarification_response.txt
 
 ---
 
@@ -259,6 +275,15 @@ Files developed between submissions (in v1 repo, NOT v1 submission):
 ### 🔴 SECURITY — URGENT
 - [ ] Rotate Nebius API key (exposed in transcript) → then redeploy endpoint with new key so live URL survives
 - [ ] Rotate HuggingFace token (exposed in transcript)
+
+### 🟡 Strategic decision — /v1/audit_panel ("win move")
+- Implementation spec exists: audit_panel_clarification_response.txt. FastAPI route on the existing endpoint
+  container, pre-computed verdicts (no live judge calls), curated ~6-model pool, worst-stratum ΔΦ_V selector
+  with paired bootstrap CI, <2s CPU response. ~1–2 days build + ~$1 / ~1h to generate the pool's verdict files.
+- Honest scope (per the spec's own walk-back): audits MedSimp-JudgeBench + pooled candidates only — not
+  "any judge, any benchmark." Reuses vagt_nemotron_analysis.py as vagt_core.py (no new statistics).
+- [ ] Decision: build /v1/audit_panel before or after the Opus 4.8 reviews?
+- [ ] Next: run Opus 4.8 reviews (no bonus first) to re-baseline the score.
 
 ### 🟢 Deliverables (remaining)
 - [ ] Blog post v2 (Medium) — "From Finding to Framework"
@@ -297,6 +322,7 @@ Late September – October:
 7. Endpoint latency: ~73s → ~27s (measured live, 26,975–28,719 ms)
 8. Per-stage image tags: train=v29 / eval=v30 / merge=v31 (README had said v31 for all three)
 9. Abandoned the un-reproducible DISAGREE endpoint claim (total_ms ~73,392) — could not reproduce across 5 tests; committed honest SAFE smoke test (26,975 ms) instead
+10. VAGT Δ was unpaired (2- and 3-rater bootstrapped on different item sets); added paired bootstrap → diagnosis ΔΦ_V +0.071 [+0.055,+0.087] (matches unpaired +0.072 within rounding), CI excludes 0
 
 ---
 
@@ -312,3 +338,5 @@ Late September – October:
 - σ²_B 0.347→0.229 now appears 2× in README (VAGT table + one narrative) — trim complete
 - Endpoint is PUBLIC + unauthenticated in README (live curl advertised) — each call spends Token Factory tokens; consider rate-limit / take-down after judging
 - FK-Grade version note: local textstat (newer) gives 9.91; train-v32 image textstat gives 8.87 (comparable to baseline) — always score in-image for comparable numbers
+- VAGT deltas are CI-backed (paired bootstrap, seed=42, vagt_bootstrap_cis.json): diagnosis ΔΦ_V +0.071 [+0.055,+0.087] & ΔFleiss κ −0.163 [−0.305,−0.045] both exclude 0; dose ΔΦ_V −0.013 [−0.055,+0.021] not significant
+- Next reviews: use Opus 4.8 (run_review.py --model claude-opus-4-8), no-bonus first to re-baseline
