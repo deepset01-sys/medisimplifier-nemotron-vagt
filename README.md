@@ -81,6 +81,17 @@ The Nemotron-taught student was evaluated on the **same GuyDor007 test set (n=1,
 | BERTScore | 0.9460 | **0.9113** |
 | FK-Grade | 7.33 | **8.87** |
 
+**Same v2 student, scored against each teacher's references** — measured against the Nemotron references it was actually trained on, every similarity metric is higher ([`results/eval_v2_nemotron_results.json`](results/eval_v2_nemotron_results.json)):
+
+| Metric | vs Claude refs (n=1,001) | vs Nemotron refs (n=998) | Δ |
+|--|--|--|--|
+| ROUGE-L | 0.5254 | **0.6010** | **+0.076** |
+| BERTScore | 0.9113 | **0.9321** | **+0.021** |
+| SARI | 60.36 | **64.18** | **+3.82** |
+| FK-Grade | 8.87 | 8.87 | ~0 |
+
+> FK-Grade is prediction-only (reference-independent); Δ~0 confirms library consistency.
+
 **Training run:** LoRA (r=32, all_attn, 3 epochs) on 7,983 train / 995 val / 998 test — ~2.4 hours (8,523 s) on 1×H100, ~$25–30. Teacher references agree with Claude's at ROUGE-L **0.525** ([`teacher_comparison.json`](teacher_comparison.json)).
 
 > **Honest interpretation:** v2 ROUGE-L reflects **style divergence from Claude references, not a quality failure** — Nemotron Super produces *less* simplified references (FK-Grade **8.87** vs Claude's implied ~7.0), and the student model faithfully learned this style. The lower ROUGE-L/SARI is the student matching a *different teacher's style*, scored against Claude's references; it is not evidence the v2 outputs are worse, only that they are less Claude-like (and at a slightly higher reading level). Note the ~0.525 student↔Claude ROUGE-L closely tracks the ~0.525 teacher↔teacher ROUGE-L — the student inherited exactly the teacher gap. v2's primary contribution is the VAGT research and Nemotron pipeline; v1 remains more readable for patients (FK-Grade 7.33).
