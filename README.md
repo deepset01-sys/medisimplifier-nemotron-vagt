@@ -14,6 +14,8 @@
 
 **Key findings:** (1) Nemotron Super as teacher produces stylistically different references than Claude Opus (ROUGE-L 0.525 between teachers) — student faithfully learns Nemotron's style (FK-Grade 8.87 vs 7.33 in v1); (2) Nemotron Nano catches diagnosis omissions at 68% recall vs Llama's 14% and Qwen's 7% — the clinical blind spot both v1 judges shared; (3) VAGT inversion — adding Nemotron as third judge cuts the shared blind-spot bias on diagnosis while Fleiss κ goes negative, proving consensus statistics are blind to the improvement. Four Nebius services: Token Factory, Jobs, Object Storage, Serverless Endpoints.
 
+**Engineering finding (reusable):** Nemotron-3 reasoning models *think* before answering, so the teacher call must budget for the hidden reasoning trace. At Opus's `max_tokens=1024`, Nemotron Super spends the entire budget reasoning and returns empty output (`content=None` / `finish_reason="length"`); **`max_tokens=16000` is required**, and neither `enable_thinking:false` nor a "detailed thinking off" directive disables it. The generator treats empty/truncated responses as errors and retries — it never saves a truncated reference. (Full detail: [Nemotron as Teacher](#nemotron-as-teacher--the-experiment).)
+
 ## What this project does
 
 MediSimplifier simplifies medical discharge summaries to a 6th-grade reading level while preserving all critical medical information. **v2** re-tools the pipeline around NVIDIA Nemotron and adds a calibration measurement layer:
