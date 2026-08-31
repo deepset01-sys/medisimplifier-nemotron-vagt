@@ -61,6 +61,7 @@ N_BOOT = 1000
 SEED = 42
 VAGT_METRICS = ["sigma_tau", "sigma_B", "sigma_R", "sigma_N", "phi_v"]
 CONSENSUS_METRICS = ["fleiss", "kripp"]
+DELTA_METRICS = ["phi_v", "sigma_B", "fleiss", "kripp"]   # reported as 3-rater − 2-rater
 
 
 # ── consensus (rater-to-rater) statistics — generalized to R raters ──────────
@@ -159,6 +160,36 @@ def bootstrap_cis(X, tau, rng, metrics, n_boot=N_BOOT):
     return cis
 
 
+def paired_delta(X3, tau3):
+    """Δ = 3-rater − 2-rater on the SAME items (the 3-rater complete-case stratum).
+    2-rater panel = Llama+Qwen (first two columns, n_r=2); 3-rater = all three (n_r=3).
+    Pairing on identical items is what makes a CI on the difference valid — unlike the
+    per-panel CIs above, which resample the (differently-sized) 2- and 3-rater strata
+    independently and so cannot be differenced."""
+    s2 = all_stats(X3[:, :2], tau3)
+    s3 = all_stats(X3, tau3)
+    return {m: s3[m] - s2[m] for m in DELTA_METRICS}
+
+
+def paired_delta_cis(X3, tau3, rng, n_boot=N_BOOT):
+    """95% percentile CI on each Δ metric via a PAIRED item bootstrap: resample the
+    items ONCE per iteration and compute both panels on that same resample."""
+    n = X3.shape[0]
+    acc = {m: np.empty(n_boot) for m in DELTA_METRICS}
+    for i in range(n_boot):
+        idx = rng.integers(0, n, n)
+        d = paired_delta(X3[idx], tau3[idx])
+        for m in DELTA_METRICS:
+            acc[m][i] = d[m]
+    point = paired_delta(X3, tau3)
+    cis = {}
+    for m in DELTA_METRICS:
+        arr = acc[m][np.isfinite(acc[m])]
+        cis[m] = ((float(np.percentile(arr, 2.5)), float(np.percentile(arr, 97.5)))
+                  if arr.size else (float("nan"), float("nan")))
+    return point, cis
+
+
 def stratum(records, feature, rater_keys):
     """Corrupted-`feature` items (τ=1) + all clean controls (τ=0), keeping only
     rows where EVERY rater in `rater_keys` returned a valid SAFE/UNSAFE verdict.
@@ -184,6 +215,7 @@ def main():
     recs = json.loads(DATA.read_text(encoding="utf-8"))
     per_sample = recs["per_sample"] if isinstance(recs, dict) else recs
     rng = np.random.default_rng(SEED)
+    rng_delta = np.random.default_rng(SEED)  # dedicated stream → level-CI bootstrap above stays bit-identical on re-run
 
     two_keys = ["llama_verdict", "qwen_verdict"]
     three_keys = ["llama_verdict", "qwen_verdict", "nemotron_verdict"]
@@ -197,6 +229,7 @@ def main():
     print("Two panels per feature: 2-rater {Llama,Qwen} baseline vs 3-rater {+Nemotron}.\n")
 
     summary = {}
+    delta_out = {}
     for f in FEATURES:
         X2, tau2, drop2 = stratum(per_sample, f, two_keys)
         X3, tau3, drop3 = stratum(per_sample, f, three_keys)
@@ -236,6 +269,16 @@ def main():
         print(f"  Δ adding Nemotron:  ΔΦ_V={d_phi:+.3f}   Δσ²_B={d_sB:+.3f}   "
               f"({'blind spot reduced' if d_sB < 0 else 'shared bias up'}; "
               f"{'dependability up' if d_phi > 0 else 'dependability down'})")
+        # Paired-bootstrap CI on Δ = 3-rater − 2-rater (same items; 2-rater = Llama+Qwen)
+        dpoint, dcis = paired_delta_cis(X3, tau3, rng_delta)
+        print(f"  Δ paired 95% CI:    "
+              f"ΔΦ_V={dpoint['phi_v']:+.3f} [{dcis['phi_v'][0]:+.3f}, {dcis['phi_v'][1]:+.3f}]   "
+              f"Δσ²_B={dpoint['sigma_B']:+.3f} [{dcis['sigma_B'][0]:+.3f}, {dcis['sigma_B'][1]:+.3f}]   "
+              f"ΔFleiss κ={dpoint['fleiss']:+.3f} [{dcis['fleiss'][0]:+.3f}, {dcis['fleiss'][1]:+.3f}]")
+        delta_out[f] = {"n": int(X3.shape[0]),
+                        **{f"delta_{m}": {"point": round(dpoint[m], 4),
+                                          "ci95": [round(dcis[m][0], 4), round(dcis[m][1], 4)]}
+                           for m in DELTA_METRICS}}
         print()
         summary[f] = dict(phi2=s2["phi_v"], phi3=s3["phi_v"], sB2=s2["sigma_B"],
                           sB3=s3["sigma_B"], dphi=d_phi, dsB=d_sB)
@@ -261,6 +304,16 @@ def main():
     print("  ground truth on features where Llama+Qwen share a blind spot (shrinking σ²_B),")
     print("  but its divergence raises rater variance σ²_R. Φ_V nets these effects; a")
     print("  positive ΔΦ_V means the veridicality gain outweighs the added rater noise.")
+
+    # ── Emit paired-delta 95% CIs as a committable artifact ──────────────────
+    out_path = HERE / "vagt_bootstrap_cis.json"
+    out_path.write_text(json.dumps({
+        "meta": {"source": DATA.name, "n_boot": N_BOOT, "seed": SEED,
+                 "method": ("paired item bootstrap; Delta = 3-rater minus 2-rater on the "
+                            "3-rater complete-case stratum; 2-rater panel = Llama+Qwen")},
+        "features": delta_out,
+    }, indent=2), encoding="utf-8")
+    print(f"\n  Wrote paired-delta 95% CIs -> {out_path.name}", file=sys.stderr)
 
 
 if __name__ == "__main__":

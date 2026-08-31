@@ -1,0 +1,134 @@
+{
+  "meta": {
+    "source": "nemotron_calibration_full.json",
+    "n_boot": 1000,
+    "seed": 42,
+    "method": "paired item bootstrap; Delta = 3-rater minus 2-rater on the 3-rater complete-case stratum; 2-rater panel = Llama+Qwen"
+  },
+  "features": {
+    "dose": {
+      "n": 280,
+      "delta_phi_v": {
+        "point": -0.0127,
+        "ci95": [
+          -0.0552,
+          0.0208
+        ]
+      },
+      "delta_sigma_B": {
+        "point": -0.0061,
+        "ci95": [
+          -0.0178,
+          0.0053
+        ]
+      },
+      "delta_fleiss": {
+        "point": -0.1664,
+        "ci95": [
+          -0.2649,
+          -0.0722
+        ]
+      },
+      "delta_kripp": {
+        "point": -0.1665,
+        "ci95": [
+          -0.2648,
+          -0.0724
+        ]
+      }
+    },
+    "negation": {
+      "n": 295,
+      "delta_phi_v": {
+        "point": 0.0425,
+        "ci95": [
+          0.0105,
+          0.0695
+        ]
+      },
+      "delta_sigma_B": {
+        "point": -0.0419,
+        "ci95": [
+          -0.0638,
+          -0.0221
+        ]
+      },
+      "delta_fleiss": {
+        "point": -0.183,
+        "ci95": [
+          -0.2983,
+          -0.0741
+        ]
+      },
+      "delta_kripp": {
+        "point": -0.1832,
+        "ci95": [
+          -0.2983,
+          -0.0745
+        ]
+      }
+    },
+    "lateral": {
+      "n": 341,
+      "delta_phi_v": {
+        "point": 0.0478,
+        "ci95": [
+          0.0191,
+          0.0744
+        ]
+      },
+      "delta_sigma_B": {
+        "point": -0.0275,
+        "ci95": [
+          -0.0422,
+          -0.0153
+        ]
+      },
+      "delta_fleiss": {
+        "point": -0.0655,
+        "ci95": [
+          -0.1446,
+          0.0088
+        ]
+      },
+      "delta_kripp": {
+        "point": -0.0658,
+        "ci95": [
+          -0.1447,
+          0.0085
+        ]
+      }
+    },
+    "diagnosis": {
+      "n": 333,
+      "delta_phi_v": {
+        "point": 0.0706,
+        "ci95": [
+          0.0552,
+          0.0866
+        ]
+      },
+      "delta_sigma_B": {
+        "point": -0.115,
+        "ci95": [
+          -0.1411,
+          -0.0902
+        ]
+      },
+      "delta_fleiss": {
+        "point": -0.1629,
+        "ci95": [
+          -0.3046,
+          -0.0446
+        ]
+      },
+      "delta_kripp": {
+        "point": -0.1632,
+        "ci95": [
+          -0.3047,
+          -0.0451
+        ]
+      }
+    }
+  }
+}

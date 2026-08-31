@@ -225,19 +225,21 @@ Consensus statistics (Cohen's κ, PABAK, Krippendorff α) measure whether judges
     noise       ε   = X − c − α ;   σ²_N = mean ε²
     Φ_V = σ²_τ / (σ²_τ + σ²_B + (σ²_R + σ²_N)/n_r)          (higher = more dependable vs truth)
 
-**Adding Nemotron Nano as a third rater** (n_r: 2 → 3), per injected error type (95% bootstrap point estimates, seed=42):
+**Adding Nemotron Nano as a third rater** (n_r: 2 → 3), per injected error type (1000-item bootstrap, seed=42; ΔΦ_V shows the **paired** Δ with 95% CI — see note):
 
-| Feature | Φ_V (Llama+Qwen) | Φ_V (+Nemotron) | ΔΦ_V | σ²_B (L+Q) | σ²_B (+Nemo) | Δσ²_B |
+| Feature | Φ_V (Llama+Qwen) | Φ_V (+Nemotron) | ΔΦ_V (paired, 95% CI) | σ²_B (L+Q) | σ²_B (+Nemo) | Δσ²_B |
 |--|--|--|--|--|--|--|
-| dose | 0.743 | 0.733 | −0.010 | 0.054 | 0.047 | −0.007 |
-| negation | 0.578 | 0.618 | +0.040 | 0.145 | 0.104 | −0.041 |
-| lateral | 0.697 | 0.745 | +0.047 | 0.077 | 0.050 | −0.027 |
-| **diagnosis** | **0.404** | **0.476** | **+0.072** | **0.347** | **0.229** | **−0.118** |
+| dose | 0.743 | 0.733 | −0.013 [−0.055, +0.021] † | 0.054 | 0.047 | −0.007 |
+| negation | 0.578 | 0.618 | +0.043 [+0.011, +0.070] | 0.145 | 0.104 | −0.041 |
+| lateral | 0.697 | 0.745 | +0.048 [+0.019, +0.074] | 0.077 | 0.050 | −0.027 |
+| **diagnosis** | **0.404** | **0.476** | **+0.071 [+0.055, +0.087]** | **0.347** | **0.229** | **−0.115 [−0.141, −0.090]** |
 
-**The inversion (diagnosis).** Llama and Qwen share a blind spot: both almost never flag a silently dropped diagnosis (UNSAFE rates 7% / 3%). Adding Nemotron (47% UNSAFE on diagnosis in the VAGT stratum, n=333) cuts shared bias by a third and raises Φ_V most — **yet Fleiss κ goes *negative* (0.076 → −0.088; Krippendorff α ≈ same).** By every agreement metric the panel looks *worse*; by veridicality it moved *closer to truth*. That is precisely the failure mode VAGT exists to expose.
+> **On the Δ values:** the **ΔΦ_V** column (and the diagnosis **Δσ²_B**) are **paired** bootstrap Δ — 3-rater − 2-rater on the *same* complete-case items (1000 resamples, seed=42) — with 95% CI; the valid way to put an interval on a difference. They differ trivially from subtracting the displayed level estimates (each on its own complete-case set): 0.476 − 0.404 ≈ +0.072 while the paired ΔΦ_V is +0.071. Full Δ CIs (ΔΦ_V, Δσ²_B, ΔFleiss κ, ΔKripp α) for all four features: [`vagt_bootstrap_cis.json`](vagt_bootstrap_cis.json). **† dose** ΔΦ_V's CI straddles zero → the lone apparent loss is **not statistically significant**; the three gains (diagnosis, lateral, negation) all have ΔΦ_V CIs strictly above zero.
+
+**The inversion (diagnosis).** Llama and Qwen share a blind spot: both almost never flag a silently dropped diagnosis (UNSAFE rates 7% / 3%). Adding Nemotron (47% UNSAFE on diagnosis in the VAGT stratum, n=333) cuts shared bias by a third and raises Φ_V most — **yet Fleiss κ goes *negative* (0.076 → −0.088; Krippendorff α ≈ same; paired ΔFleiss κ = −0.163 [−0.305, −0.045], CI excludes 0).** By every agreement metric the panel looks *worse*; by veridicality it moved *closer to truth*. That is precisely the failure mode VAGT exists to expose.
 
 > **Honest caveats:**
-> - **Not a free win everywhere.** On `dose` ΔΦ_V = −0.010 (a slight loss): Llama+Qwen weren't badly blind there, so Nemotron's added rater noise outweighs the small bias gain. The panel benefits most exactly where the incumbents share a blind spot.
+> - **Not a free win everywhere.** On `dose` ΔΦ_V = −0.013 [−0.055, +0.021] (a slight, not statistically significant dip): Llama+Qwen weren't badly blind there, so Nemotron's added rater noise outweighs the small bias gain. The panel benefits most exactly where the incumbents share a blind spot.
 > - Adding a diverging rater **raises σ²_R and σ²_N** (printed per feature) — the cost side of the ledger. Φ_V nets the two effects.
 > - **Complete-case:** rows where any judge returned ERROR are dropped (9–18 per feature). Counts reported in [`vagt_nemotron_results.txt`](vagt_nemotron_results.txt).
 > - VAGT was developed in the six weeks between submissions — after v1's κ=0.11 finding (July 15) and before the v2 window opened (August 26). The framework files (`vagt_section.md`, `vagt_estimand.md`) live in the v1 repo but were not part of the v1 submission. v2 is VAGT's first empirical application, with Nemotron Nano as the third rater that makes the 3-rater decomposition possible.
