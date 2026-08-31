@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-08-30 (Session: README complete + First Opus 4.7 Review)
+# Last updated: 2026-08-31 (Session: Fix #3 executed + v4 Opus review 34/40 — all review fixes landed)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -23,33 +23,38 @@
 
 ---
 
-## SESSION August 30, 2026 — 6 commits landed
+## SESSION August 30–31, 2026 — review fixes + Fix #3 executed (HEAD = c2cc0a4)
 
 ```
 591428a - Training log committed + .gitignore whitelist
 6313d2a - Per-stage image tags corrected (v29/v30/v31) + excerpt
 61ee5bf - Endpoint reframe (~27s) + smoke-test + models_verified
 29c745d - VAGT origin framing reconciled
-18cf994 - README polish (4 items)
-c239d3c - Fix #3 scaffolding (job + scripts + evaluate.py patch)
+18cf994 - README polish (blog removed, FK-Grade, σ²_B trim, safety_mode)
+c239d3c - Fix #3 scaffolding (job + scripts + evaluate.py --save-predictions)
+70318dc - Pin eval-nemotron job to train-v32
+fd36ae2 - Nemotron-reference eval companion table + results artifact
+a76f426 - Model-recommendation callout [v4 fix #2]
+cbd32ad - max_tokens=16000 engineering-finding callout [v4 fix #3]
+c2cc0a4 - Real live-endpoint SAFE curl + gate-level UNSAFE trace [v4 fix #1]
 ```
 
-### FIX #3 STATUS — SCAFFOLDED, NOT YET EXECUTED
-- jobs/job_eval_v2_nemotron_refs.yaml committed (needs train-v32)
-- src/eval_vs_nemotron_refs.py committed
-- src/evaluate.py patched with --save-predictions
-- NEXT STEP: build train-v32, submit job, score results
-
-### CRITICAL — HOW TO BUILD NEXT IMAGE (train-v32)
-Before building, check git log or ask how train-v29/v30/v31 were actually built in this project.
+### FIX #3 STATUS — COMPLETE ✅
+- train-v32 built + pushed: sha256:2c95dfef0a29... (includes evaluate.py --save-predictions)
+- Eval job ran → predictions.json written to bucket eval_v2_nemotron/
+- Scored vs Nemotron refs with train-v32 libraries (version-consistent):
+  ROUGE-L 0.601 / BERTScore 0.9321 / SARI 64.18 (n=998; 3 errored Nemotron refs skipped)
+- results/eval_v2_nemotron_results.json + README companion table committed (fd36ae2)
 
 ### ENDPOINT
 - URL: https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud
-- Latency: ~27s (corrected from ~73s in README)
+- Latency: ~27s (3-judge Token Factory gate; corrected from ~73s)
 - Live Nebius serverless endpoint — permanent URL, scales to zero, wakes on request (~27s cold start)
+- Real SAFE call + response in README (Reproduce) and results/endpoint_smoke_test.json
 
 ### SECURITY — URGENT
-Rotate Nebius API key + HF token before next session.
+Rotate Nebius API key + HF token (both exposed in transcripts). Endpoint uses NEBIUS_API_KEY →
+rotate, then redeploy endpoint with the new key so the live URL keeps working.
 
 ---
 
@@ -62,10 +67,13 @@ Rotate Nebius API key + HF token before next session.
 | BERTScore v2 | 0.9113 | results/eval_v2_results.json |
 | FK-Grade v2 | 8.87 | results/eval_v2_results.json |
 | FK-Grade v1 | 7.33 | v1 repo |
+| ROUGE-L v2 vs Nemotron refs | 0.6010 | results/eval_v2_nemotron_results.json |
+| BERTScore v2 vs Nemotron refs | 0.9321 | results/eval_v2_nemotron_results.json |
+| SARI v2 vs Nemotron refs | 64.18 | results/eval_v2_nemotron_results.json |
 | Teacher ROUGE-L | 0.525 | teacher_comparison.json |
 | n_samples eval | 1,001 | results/eval_v2_results.json |
 | Training samples | 7,983 | chambul/medisimplifier-nemotron-dataset |
-| Training time | 8,523s (~2.4h) | Nebius job logs |
+| Training time | 8,523s (~2.4h) | logs/train_v2.json.gz (train_runtime) |
 | Total cost v2 | $110.42 | Nebius Console actual billing |
 | H100 hours | 5.55 | Nebius Console |
 | Nemotron Super cost | $75.19 | Nebius Console Token Factory |
@@ -73,15 +81,14 @@ Rotate Nebius API key + HF token before next session.
 
 ---
 
-## DIAGNOSIS RECALL NUMBERS — RECONCILIATION (CRITICAL)
+## DIAGNOSIS RECALL NUMBERS — RECONCILIATION
 
-Three numbers that appear in README — all correct but need clear denominators:
-- **84.2%** = Nemotron overall recall across ALL 4 error types (508 corrupted samples)
-- **68%** = Nemotron recall on diagnosis-corrupted SUBSET ONLY (n≈127)
-- **47%** = Nemotron UNSAFE rate across ALL 708 (including 200 clean controls)
+Three numbers appear in README — all correct, different denominators (see README footnote in Medical Safety Evaluation):
+- **84.2%** = Nemotron overall recall across all 4 error types (421 of 500 non-ERROR corrupted; 508 corrupted total)
+- **68%** = Nemotron recall on the diagnosis-corrupted subset (100 of 147 non-ERROR; 150 diagnosis-corrupted total)
+- **47%** = Nemotron UNSAFE rate on the VAGT diagnosis stratum (complete-case n=333, ~41% corrupted) — NOT the all-708 rate (which is 69.4%)
 
-Source: nemotron_calibration_full.json
-TODO: Add footnote in README reconciling these three numbers explicitly.
+Sources: nemotron_calibration_full.json (recall) + vagt_nemotron_results.txt (47% stratum rate)
 
 ---
 
@@ -119,8 +126,10 @@ Subnet ID: vpcsubnet-e00jsdqfjrz04ygxc0
 Bucket v2: medisimplifier-adapters-v2
   adapter/              → v2 LoRA adapter
   merged_openbio_v2/    → merged model
-  eval_v2/              → evaluation results
+  eval_v2/              → evaluation results (Claude refs)
+  eval_v2_nemotron/     → predictions.json + results.json (Fix #3 run)
 CR path: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:<tag>
+Build host: VM ubuntu@195.242.30.65 (nebius_vm key); has nebius CLI + boto3 + ~/.aws/credentials
 ```
 
 ---
@@ -130,12 +139,13 @@ CR path: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:<tag>
 | Tag | Digest | Purpose |
 |-----|--------|---------|
 | train-v29 | sha256:bbbf6df1... | training only |
-| train-v30 | sha256:6c3cd4cd... | evaluation (OLD, no --save-predictions) |
+| train-v30 | sha256:6c3cd4cd... | evaluation (OLD, pre --save-predictions) |
 | train-v31 | sha256:9d832391... | merge only |
+| train-v32 | sha256:2c95dfef0a298ce258f094fa5d5647b0d7c84e297850bff8b7daba5a719694dc | evaluation with --save-predictions |
 | endpoint-v3 | sha256:9d950d83... | Safe Endpoint v2 |
-| train-v32 | TBD | evaluation with --save-predictions (needs build) |
 
 **Critical:** cryptography==48.0.1 pinned via post-install step in Dockerfile.train
+**Build method:** manual `docker build` dual-tagged to Docker Hub + Nebius CR, tag bumped per version (build_and_push.sh is STALE — hardcodes v28, Docker-Hub only). CR login: `nebius iam get-access-token | docker login cr.eu-north1.nebius.cloud --username iam --password-stdin`.
 
 ---
 
@@ -150,6 +160,8 @@ CR path: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:<tag>
 | Base model | aaditya/Llama3-OpenBioLLM-8B | Student (gated — requires HF access) |
 | Token Factory base URL | https://api.studio.nebius.ai/v1/ | |
 
+Model strings verified live via /v1/models → results/models_verified.json (31 models; both nvidia strings present).
+
 ---
 
 ## SAFE ENDPOINT v2 DECISION RULE (safety_gate.py)
@@ -160,7 +172,7 @@ if nemotron=="UNSAFE" and qwen=="UNSAFE": → UNSAFE
 if qwen=="UNSAFE": → UNSAFE  # trust 0.5% FP specificity
 if nemotron=="UNSAFE" and qwen=="SAFE": → DISAGREE + "diagnosis-drop risk"
 elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
-# Parallel: ThreadPoolExecutor(max_workers=3), ~73s total
+# Parallel: ThreadPoolExecutor(max_workers=3), ~27s total
 ```
 
 ---
@@ -192,64 +204,31 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅
+## README STATUS — COMPLETE ✅ (HEAD = c2cc0a4)
 
-All sections committed. Last commit: 86d87e1 (Public Artifacts)
+All sections committed. All v4 review fixes landed:
+- v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
+- v4 Fix #2: "Which model to deploy" callout — v1 for readability, v2 for research/safety (a76f426)
+- v4 Fix #3: max_tokens=16000 engineering-finding callout in exec block (cbd32ad)
 
----
-
-## FIRST OPUS 4.7 REVIEW — COMPLETE ✅
-
-**Score: 33/40 — "Submission-ready and competitive for a top-tier finish"**
-
-| Criterion | Score |
-|-----------|-------|
-| Technological Implementation | 9/10 |
-| Design | 8/10 |
-| Potential Impact | 7/10 |
-| Quality of the Idea | 9/10 |
-
-**What reviewer praised:**
-- VAGT inversion — "strongest intellectual contribution"
-- max_tokens finding — "real engineering, generalizes beyond this project"
-- Cost transparency — "unusually honest"
-- Limitation table — rare in hackathon submissions
-- Honest ROUGE-L reframing cross-validated by teacher↔teacher 0.525
-
-**Review file:** review_output_v2_opus47.txt (in repo)
+Earlier fixes landed: VAGT origin framing, recall-denominator footnote, per-stage image tags,
+cost $110.42, training-log evidence, blog placeholder removed, σ²_B trimmed to 2×, safety_mode
+contract documented, Nemotron-reference eval (companion table).
 
 ---
 
-## TOP 3 FIXES FROM REVIEW
+## OPUS 4.7 REVIEW HISTORY
 
-### Fix #1 — Reconcile diagnosis numbers (EASY)
-Add footnote in Medical Safety Evaluation:
-- 84.2% = overall recall across all 4 error types (n=508 corrupted)
-- 68% = recall on diagnosis-corrupted subset only (n≈127)
-- 47% = UNSAFE rate across ALL 708 (including 200 clean controls)
-Cite: nemotron_calibration_full.json
+| Review | Score | Verdict |
+|--------|-------|---------|
+| v2 (review_output_v2_opus47.txt) | 33/40 | "Submission-ready and competitive for a top-tier finish" (Impact 7) |
+| v3 (post first fixes) | 33/40 | "Submission-ready and competitive for a top placement" |
+| v4 (all fixes landed) | 34/40 | "Submission-ready and competitive for a top prize" (Impact 8) |
 
-### Fix #2 — Commit live demo JSON (EASY)
-We have the live endpoint response. Commit as docs/live_demo.json:
-- Llama: SAFE, Qwen: SAFE, Nemotron: UNSAFE
-- consensus: DISAGREE + "diagnosis-drop risk"
-- latency: total_ms ~73,392
-OR reframe as "reproducible via safe_endpoint_v2.yaml" and drop "tested live"
-
-### Fix #3 — Inline job YAML + training log (MEDIUM)
-Show job_train_v2.yaml inline (image train-v29, sha256:bbbf6df1..., H100)
-Add 10 lines of training log proving 8,523s / 3 epochs / seed=42
-This could push Technological Implementation from 9 → 10
-
----
-
-## ADDITIONAL README FIXES IDENTIFIED
-
-- [ ] VAGT framing: change "originates in v1" → "developed between submissions, directly from κ=0.11 finding"
-- [ ] FK-Grade 8.87 tension: add sentence → "v2's primary contribution is the judge-panel research (VAGT); for patient-facing deployment v1 remains more readable"
-- [ ] Remove "Blog Post: [coming soon]" placeholder
-- [ ] Trim σ²_B repetition — appears 4 times → reduce to 2
-- [ ] Document safety_mode request/response contract inline
+v4 per-criterion: Technological 9 / Design 8 / Impact 8 / Idea 9.
+Review outputs: review_output_v2/v3/v4_opus47.txt + run_review.py + review_prompt.txt
+— **UNTRACKED (not committed to repo)**; decide before final submission.
+v4 top-3 (all done): real live-URL curl, model-recommendation callout, max_tokens elevation.
 
 ---
 
@@ -277,34 +256,16 @@ Files developed between submissions (in v1 repo, NOT v1 submission):
 
 ## PENDING TASKS (PRIORITY ORDER)
 
-### 🔴 SECURITY — URGENT:
-- [ ] Rotate Nebius API key (exposed in transcript)
+### 🔴 SECURITY — URGENT
+- [ ] Rotate Nebius API key (exposed in transcript) → then redeploy endpoint with new key so live URL survives
 - [ ] Rotate HuggingFace token (exposed in transcript)
 
-### 🔴 Top 3 Review Fixes (next session):
-- [ ] Fix #1: Reconcile 47%/68%/84.2% — footnote
-- [ ] Fix #2: Commit docs/live_demo.json OR reframe endpoint claim
-- [ ] Fix #3: Inline job_train_v2.yaml + training log excerpt
-- [ ] Run second Opus 4.7 review — target 36+/40
-
-### 🟡 README Polish:
-- [ ] VAGT framing fix ("developed between submissions")
-- [ ] FK-Grade 8.87 tension — add clarifying sentence
-- [ ] Remove "Blog Post: coming soon"
-- [ ] Trim σ²_B repetition
-- [ ] Document safety_mode contract
-- [ ] Update CLAUDE_CODE_CONTEXT.md in repo
-
-### 🟡 VAGT Integration:
-- [ ] Discuss narrative integration of v1 post-submission VAGT files into v2
-- [ ] Novel Finding section placement
-
-### 🟢 Deliverables:
+### 🟢 Deliverables (remaining)
 - [ ] Blog post v2 (Medium) — "From Finding to Framework"
 - [ ] Demo video (< 3 min, YouTube)
 - [ ] Devpost submission fields
 
-### IRL Event:
+### IRL Event
 - Tel Aviv, September 15 (City Winner Award $500 possible)
 
 ---
@@ -312,25 +273,15 @@ Files developed between submissions (in v1 repo, NOT v1 submission):
 ## SCHEDULE
 
 ```
-September 1-7:
-  - Top 3 fixes (1 hour)
-  - VAGT framing + FK-Grade tension (1 hour)
-  - Second Opus review — target 36+/40
-
-September 8-15:
+September (remaining):
+  - Rotate keys + redeploy endpoint
   - Blog post v2 (Medium)
   - IRL Event Tel Aviv (September 15)
-  - VAGT files integration from v1
 
-September 16-30:
-  - Demo video
+Late September – October:
+  - Demo video (< 3 min, YouTube)
   - Devpost submission fields
-  - Security — rotate keys
-
-October 1-29:
-  - Final Opus review iterations
-  - Polish to maximum score
-  - Final submission
+  - Final Opus review iterations → final submission (deadline Oct 30)
 ```
 
 ---
@@ -341,7 +292,11 @@ October 1-29:
 2. "ERROR in any judge" → corrected to "ERROR in Nemotron or Qwen"
 3. Fleiss κ vs Krippendorff α attribution → precision fix
 4. eval path eval_v2/results.json → results/eval_v2_results.json
-5. Total cost $110.42 confirmed correct (matches line-item sum); earlier "$110.42 → $110.41" catch was itself wrong and has been reverted
+5. Total cost $110.42 confirmed correct (matches line-item sum); earlier "$110.42 → $110.41" catch was itself wrong and reverted
+6. Recall denominators: 68% = diagnosis-corrupted n=150 (not n≈127); 47% = VAGT stratum n=333 (not all-708) — README footnote committed
+7. Endpoint latency: ~73s → ~27s (measured live, 26,975–28,719 ms)
+8. Per-stage image tags: train=v29 / eval=v30 / merge=v31 (README had said v31 for all three)
+9. Abandoned the un-reproducible DISAGREE endpoint claim (total_ms ~73,392) — could not reproduce across 5 tests; committed honest SAFE smoke test (26,975 ms) instead
 
 ---
 
@@ -353,5 +308,7 @@ October 1-29:
 - Nemotron Nano: "ERROR" in (nemotron, qwen) → Llama NOT in consensus logic
 - Test set for eval: GuyDor007 test (1,001) → NOT Nemotron dataset test (998)
 - 9,999 source records → 9,976 valid Nemotron references (23 errored)
-- FK-Grade 8.87 > v1 7.33 → v2 LESS readable for patients; v2's value = VAGT research
-- σ²_B 0.347→0.229 appears 4x in README — needs trimming to 2x
+- FK-Grade 8.87 > v1 7.33 → v2 LESS readable for patients; v2's value = VAGT research + safety gate
+- σ²_B 0.347→0.229 now appears 2× in README (VAGT table + one narrative) — trim complete
+- Endpoint is PUBLIC + unauthenticated in README (live curl advertised) — each call spends Token Factory tokens; consider rate-limit / take-down after judging
+- FK-Grade version note: local textstat (newer) gives 9.91; train-v32 image textstat gives 8.87 (comparable to baseline) — always score in-image for comparable numbers
