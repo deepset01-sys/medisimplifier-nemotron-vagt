@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-08-31 (Session: VAGT bootstrap CIs + "The finding" reframe; v5 review + /v1/audit_panel spec)
+# Last updated: 2026-09-01 (Session: Opus 4.8 reviews v1/v2 34/40 + DISAGREE-capture spec & self-correction; CLI bucket-mount verified unworkable)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -23,7 +23,7 @@
 
 ---
 
-## SESSION August 30–31, 2026 — review fixes, Fix #3, VAGT CIs, reframe (HEAD = 1a4f52c)
+## SESSION August 30 – September 1, 2026 — review fixes, Fix #3, VAGT CIs, reframe, 4.8 reviews (HEAD = 87d719c)
 
 ```
 591428a - Training log committed + .gitignore whitelist
@@ -40,6 +40,11 @@ c2cc0a4 - Real live-endpoint SAFE curl + gate-level UNSAFE trace [v4 fix #1]
 23c1afe - CLAUDE_CODE_CONTEXT refresh (Fix #3 complete, v4 review, corrected denominators)
 88085fe - paired bootstrap CIs on VAGT deltas (ΔΦ_V +0.071 [+0.055,+0.087] on diagnosis)
 1a4f52c - "The finding" lead paragraph (VAGT inversion first) [v5 fix]
+bfa7240 - CLAUDE_CODE_CONTEXT refresh (prior — recorded HEAD 1a4f52c, v5 review + /v1/audit_panel decision)
+957fcdf - README line 11: VAGT framed as direct response to v1 κ=0.11 finding [4.8 fix]
+f20cd2e - Nemotron-refs eval trail documented (job + train-v32 + run id + full digest) [4.8 fix]
+6debd43 - Project Structure: all committed results/ artifacts + vagt_bootstrap_cis.json [4.8 fix]
+87d719c - Endpoint cold-start wake note + digest table '(full list below)' pointer [4.8 fix]
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -209,7 +214,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 1a4f52c)
+## README STATUS — COMPLETE ✅ (HEAD = 87d719c)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -219,6 +224,10 @@ All sections committed. All v4 review fixes landed:
 Plus v5-driven rigor + framing:
 - Paired bootstrap CIs on VAGT deltas + surfaced in the README VAGT table (88085fe)
 - "The finding" — README now leads with the VAGT inversion before the exec summary (1a4f52c)
+
+Plus 4.8-review doc fixes (all landed): VAGT-as-response-to-κ framing (957fcdf), Nemotron-refs eval trail
+(f20cd2e), all results/ artifacts listed in Project Structure (6debd43), endpoint cold-start note + digest
+pointer (87d719c).
 
 Earlier fixes landed: VAGT origin framing, recall-denominator footnote, per-stage image tags,
 cost $110.42, training-log evidence, blog placeholder removed, σ²_B trimmed to 2×, safety_mode
@@ -245,6 +254,33 @@ Review outputs (all UNTRACKED — decide before final submission):
 - review_output_v2_opus47.txt, review_output_v3_opus47.txt, review_output_v4_opus47.txt, review_output_v5_opus47.txt
 - run_review.py (now supports --model / --prompt), review_prompt.txt, review_prompt_with_bonus.txt
 - audit_panel_clarification_prompt.txt, audit_panel_clarification_response.txt
+- review_output_v1_opus48.txt, review_output_v2_opus48.txt, review_output_v3_opus48.txt (bonus)
+- disagree_capture_clarification_prompt.txt, disagree_capture_clarification_response.txt
+
+---
+
+## OPUS 4.8 REVIEW HISTORY
+
+| Review | Score | Verdict |
+|--------|-------|---------|
+| v1 (review_output_v1_opus48.txt)        | 34/40 | "Submission-ready and competitive" |
+| v2 (review_output_v2_opus48.txt)        | 34/40 | stable — no new substantive findings vs v1 |
+| v3 (review_output_v3_opus48.txt, bonus) | 34/40 | "credibly top-3 capable … not yet a locked first place" |
+
+Per-criterion (stable across all three runs): Technological 9 / Design 8 / Impact 8 / Idea 9.
+
+**Bonus ("the one thing to win"):** make the DISAGREE branch witnessable + reframe around the safety layer.
+Shared diagnosis of both bonus runs: the killer finding (only Nemotron catches a silent diagnosis drop) is
+never shown live — "proven on paper but never witnessed."
+
+**Self-correction (disagree_capture_clarification_response.txt):** Opus 4.8 REVERSED its own hero-slot advice.
+A crafted DISAGREE is a *synthetic gate test*, not live product output (our model preserves diagnoses), so it
+must NOT sit at the top as "The finding" (that would overclaim). Correct placement = an honestly-labeled
+gate-level worked example inside Medical Safety Evaluation; real evaluate_safety gate; no curl/hero framing;
+committed only if the panel actually splits. Top-of-README finding stays the VAGT inversion.
+
+False positive to ignore (both 4.8 runs): "future-dated 2026-08-28 training log" — 2026-08-28 is a real PAST
+date; the flag is a model knowledge-cutoff artifact. Timestamp is correct — do NOT change it.
 
 ---
 
@@ -252,8 +288,9 @@ Review outputs (all UNTRACKED — decide before final submission):
 
 VAGT did NOT originate in v1 submission. Correct narrative:
 - v1 submitted July 15 — found κ=0.11
-- Six weeks post-v1: developed VAGT (calculate_kappa_ci.py, vagt_estimand.md,
+- Post-v1: developed VAGT (calculate_kappa_ci.py, vagt_estimand.md,
   calibration_judge_cot.py, power_simulation_v7.py, vagt_section.md etc.)
+  — commit-verified: VAGT files created Aug 16, 2026 (after v1 submission July 15, before v2 window opens Aug 26)
 - These files are in v1 REPO but NOT part of v1 SUBMISSION
 - v2 submission period opens August 26
 - v2 is VAGT's first empirical application
@@ -268,6 +305,9 @@ Files developed between submissions (in v1 repo, NOT v1 submission):
 - vagt_medsimplifier_demo.py
 - vagt_section.md
 
+README line 11 reframed (commit 957fcdf): VAGT = "a direct response to v1's κ=0.11 finding, first applied
+empirically in v2." The deeper-history mention later in the README was left untouched.
+
 ---
 
 ## PENDING TASKS (PRIORITY ORDER)
@@ -276,14 +316,26 @@ Files developed between submissions (in v1 repo, NOT v1 submission):
 - [ ] Rotate Nebius API key (exposed in transcript) → then redeploy endpoint with new key so live URL survives
 - [ ] Rotate HuggingFace token (exposed in transcript)
 
-### 🟡 Strategic decision — /v1/audit_panel ("win move")
-- Implementation spec exists: audit_panel_clarification_response.txt. FastAPI route on the existing endpoint
-  container, pre-computed verdicts (no live judge calls), curated ~6-model pool, worst-stratum ΔΦ_V selector
-  with paired bootstrap CI, <2s CPU response. ~1–2 days build + ~$1 / ~1h to generate the pool's verdict files.
+### 🟡 NEXT — DISAGREE gate-level worked example (hours)
+- Spec ready: disagree_capture_clarification_response.txt (Opus 4.8, self-corrected).
+- Hand-author a simplification that silently drops a SUBTLE secondary diagnosis; run the REAL evaluate_safety
+  gate (real Token Factory calls). Commit results/disagree_case_gate.json ONLY if the panel actually splits
+  (Llama SAFE + Qwen SAFE + Nemotron UNSAFE → consensus DISAGREE, "diagnosis-drop risk").
+- Placement: honest gate-level worked example in Medical Safety Evaluation — NOT the hero slot, no curl
+  overclaim. Label plainly as synthetic-input / real-gate (defense-in-depth vs a downstream simplifier).
+- If no crafted drop splits the panel after honest attempts: report that as a finding, lean on the VAGT
+  inversion, do NOT force it.
+
+### 🟡 THEN — /v1/audit_panel ("win move", 1–2 days)
+- Spec ready: audit_panel_clarification_response.txt. FastAPI route on the existing endpoint container,
+  pre-computed verdicts (no live judge calls), curated ~6-model pool, worst-stratum ΔΦ_V selector with paired
+  bootstrap CI, <2s CPU response. ~1–2 days build + ~$1 / ~1h to generate the pool's verdict files.
 - Honest scope (per the spec's own walk-back): audits MedSimp-JudgeBench + pooled candidates only — not
   "any judge, any benchmark." Reuses vagt_nemotron_analysis.py as vagt_core.py (no new statistics).
-- [ ] Decision: build /v1/audit_panel before or after the Opus 4.8 reviews?
-- [ ] Next: run Opus 4.8 reviews (no bonus first) to re-baseline the score.
+
+### 🟡 THEN — Fable 5 review
+- Re-run both prompts on Fable 5 (run_review.py --model claude-fable-5): review_prompt.txt then
+  review_prompt_with_bonus.txt. Both items ready.
 
 ### 🟢 Deliverables (remaining)
 - [ ] Blog post v2 (Medium) — "From Finding to Framework"
@@ -339,4 +391,9 @@ Late September – October:
 - Endpoint is PUBLIC + unauthenticated in README (live curl advertised) — each call spends Token Factory tokens; consider rate-limit / take-down after judging
 - FK-Grade version note: local textstat (newer) gives 9.91; train-v32 image textstat gives 8.87 (comparable to baseline) — always score in-image for comparable numbers
 - VAGT deltas are CI-backed (paired bootstrap, seed=42, vagt_bootstrap_cis.json): diagnosis ΔΦ_V +0.071 [+0.055,+0.087] & ΔFleiss κ −0.163 [−0.305,−0.045] both exclude 0; dose ΔΦ_V −0.013 [−0.055,+0.021] not significant
-- Next reviews: use Opus 4.8 (run_review.py --model claude-opus-4-8), no-bonus first to re-baseline
+- CLI reproduction: `nebius ai job create --volume` does NOT work for the bucket mounts these jobs use — bare
+  bucket → "unsupported volume source type"; `s3://BUCKET:/path:rw` → "s3_config.endpoint: value is required"
+  (needs an S3 endpoint + creds profile the native YAML `bucket:` mount supplies automatically). Verified twice
+  on VM 195.242.10.164; no job created either time (zero GPU spend). VERIFIED reproduction path = Nebius
+  Console + committed YAMLs. Decision (Option 1): do NOT put unverified CLI commands in the README.
+- Reviews done: Opus 4.8 v1/v2 34/40 (no-bonus) + v3 bonus + DISAGREE self-correction. Next: Fable 5 (both prompts).
