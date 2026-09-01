@@ -456,7 +456,11 @@ nemotron_calibration_full.json   708-sample 3-judge verdicts (Llama + Qwen + Nem
 nemotron_references.json         708 JudgeBench references (Nemotron Super)
 teacher_comparison.json          ROUGE-L 0.525 Claude vs Nemotron (9,976 pairs)
 results/eval_v2_results.json     v2 eval: ROUGE-L 0.5254 / SARI 60.36 / BERTScore 0.9113 / FK 8.87
+results/eval_v2_nemotron_results.json  v2 eval vs Nemotron refs: ROUGE-L 0.6010 / BERTScore 0.9321 / SARI 64.18 (n=998)
+results/endpoint_smoke_test.json       live endpoint SAFE capture (~27s, all-SAFE verdict)
+results/models_verified.json           both Nemotron model strings verified via /v1/models
 vagt_nemotron_results.txt        VAGT decomposition output (per-feature, both rater sets)
+vagt_bootstrap_cis.json               paired-Δ 95% CIs: ΔΦ_V +0.071 [+0.055,+0.087] on diagnosis
 FINDINGS.md                      Full findings write-up (calibration + VAGT + caveats)
 requirements.txt                 openai · numpy · requests · tqdm · datasets
 CLAUDE_CODE_CONTEXT.md           Implementation context for Claude Code (model strings, paths)
