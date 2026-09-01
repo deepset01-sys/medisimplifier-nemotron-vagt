@@ -363,6 +363,7 @@ Submit each job via Nebius Console → AI Services → Jobs → Create Job:
 |-----|-------------|-----------------|
 | Training | `jobs/job_train_v2.yaml` | adapter in `medisimplifier-adapters-v2/adapter/` |
 | Evaluation | `jobs/job_eval_v2.yaml` | `rouge_l: 0.5254` in `results/eval_v2_results.json` |
+| Nemotron-refs eval | `jobs/job_eval_v2_nemotron_refs.yaml` | `rouge_l: 0.6010` in `results/eval_v2_nemotron_results.json` |
 | Merge | `jobs/job_merge_v2.yaml` | merged model in bucket + published to HF |
 | Endpoint | `jobs/safe_endpoint_v2.yaml` | `/health` → `{"ready": true}` |
 
@@ -441,6 +442,7 @@ docker/
 jobs/
   job_train_v2.yaml              v2 fine-tuning job (train-v29, sha256:bbbf6df1..., Nemotron dataset, adapters-v2 bucket)
   job_eval_v2.yaml               v2 evaluation job (train-v30, sha256:6c3cd4cd..., GuyDor007 test)
+  job_eval_v2_nemotron_refs.yaml v2 Nemotron-refs eval job (train-v32, sha256:2c95dfef..., aijob-e00gz7bez5pwq35fze)
   job_merge_v2.yaml              v2 merge job (train-v31, sha256:9d832391..., adapter → bucket → HuggingFace)
   safe_endpoint_v2.yaml          Safe Endpoint v2 deployment config (endpoint-v3)
 scripts/
@@ -467,19 +469,21 @@ Note: `nemotron_training_references.json` (58MB) is gitignored — data availabl
 
 ## Container Images
 
-The v2 Jobs pipeline uses **three images**, all built from `docker/Dockerfile.train` — one per stage:
+The v2 Jobs pipeline uses **four images**, all built from `docker/Dockerfile.train` — one per stage:
 
 | Image | Used by | Digest |
 |--|--|--|
 | `train-v29` | training (`job_train_v2.yaml`) | `sha256:bbbf6df1...` |
 | `train-v30` | evaluation (`job_eval_v2.yaml`) | `sha256:6c3cd4cd...` |
 | `train-v31` | merge (`job_merge_v2.yaml`) | `sha256:9d832391...` |
+| `train-v32` | Nemotron-refs eval / --save-predictions (`job_eval_v2_nemotron_refs.yaml`) | `sha256:2c95dfef...` |
 
 **Docker Hub (public):**
 ```bash
 docker pull chambul/medisimplifier:train-v29   # training
 docker pull chambul/medisimplifier:train-v30   # evaluation
 docker pull chambul/medisimplifier:train-v31   # merge
+docker pull chambul/medisimplifier:train-v32   # Nemotron-refs eval (--save-predictions)
 ```
 
 **Nebius Container Registry (used in job configs):**
@@ -487,11 +491,13 @@ docker pull chambul/medisimplifier:train-v31   # merge
     cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v29   (training)
     cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v30   (evaluation)
     cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v31   (merge)
+    cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v32   (Nemotron-refs eval)
 
 Full digests:
 - `train-v29` — `sha256:bbbf6df1b1649c6dbd3828de8156a55970b541e0e0549cf3839df7dc6dd457f5`
 - `train-v30` — `sha256:6c3cd4cd99480ced3fd4dfe1977a1f4fd42e0ff18f970a5cc3fe08ca7aa70cd6`
 - `train-v31` — `sha256:9d832391f85130114534a36881b8e5acab895d36ceed522126c86fbef02f728f`
+- `train-v32` — `sha256:2c95dfef0a298ce258f094fa5d5647b0d7c84e297850bff8b7daba5a719694dc`
 
 Safe Endpoint v2 image:
 ```bash
