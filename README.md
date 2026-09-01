@@ -374,6 +374,7 @@ The merged model is publicly available — no training required to test the endp
 
 > **Live endpoint (permanent Nebius serverless URL):**
 > https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud
+> First request wakes the endpoint (~27s including judge calls); if no response in 60s, retry once.
 
 **SAFE case** — live call to the hosted Safe Endpoint v2 (real response below):
 ```bash
@@ -475,7 +476,7 @@ Note: `nemotron_training_references.json` (58MB) is gitignored — data availabl
 
 The v2 Jobs pipeline uses **four images**, all built from `docker/Dockerfile.train` — one per stage:
 
-| Image | Used by | Digest |
+| Image | Used by | Digest (full list below) |
 |--|--|--|
 | `train-v29` | training (`job_train_v2.yaml`) | `sha256:bbbf6df1...` |
 | `train-v30` | evaluation (`job_eval_v2.yaml`) | `sha256:6c3cd4cd...` |
