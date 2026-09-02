@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-01 (Session: Opus 4.8 reviews v1/v2 34/40 + DISAGREE-capture spec & self-correction; CLI bucket-mount verified unworkable)
+# Last updated: 2026-09-02 (Session: DISAGREE gate-level worked example committed; /v1/audit_panel Steps 1-4 built offline, 13/13 tests green)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -23,7 +23,7 @@
 
 ---
 
-## SESSION August 30 – September 1, 2026 — review fixes, Fix #3, VAGT CIs, reframe, 4.8 reviews (HEAD = 87d719c)
+## SESSION August 30 – September 2, 2026 — review fixes, VAGT CIs, reframe, 4.8 reviews, DISAGREE capture, audit_panel Steps 1-4 (HEAD = 8c20382)
 
 ```
 591428a - Training log committed + .gitignore whitelist
@@ -45,6 +45,12 @@ bfa7240 - CLAUDE_CODE_CONTEXT refresh (prior — recorded HEAD 1a4f52c, v5 revie
 f20cd2e - Nemotron-refs eval trail documented (job + train-v32 + run id + full digest) [4.8 fix]
 6debd43 - Project Structure: all committed results/ artifacts + vagt_bootstrap_cis.json [4.8 fix]
 87d719c - Endpoint cold-start wake note + digest table '(full list below)' pointer [4.8 fix]
+76710f9 - CLAUDE_CODE_CONTEXT refresh (prior — recorded HEAD 87d719c, 4.8 reviews + DISAGREE spec)
+9fe9fa3 - DISAGREE gate-level worked example — idx 146 (Parkinson+depression) splits panel live + capture JSON + script
+4f8688a - audit_panel Step 1: vagt_core.py (generalized, bit-identical to README) + regression tests (4/4)
+72b9dd7 - audit_panel Step 2: audit_pool data (ground_truth + 3 verdicts); lossless reshape (diag ΔΦ_V=0.0706 ✓)
+fa1000d - audit_panel Step 3: pool_loader + selector (reproduces receipt) — 9/9 tests
+8c20382 - audit_panel Step 4: schemas + router + mount; /v1/audit_panel live — 13/13 tests
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -214,7 +220,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 87d719c)
+## README STATUS — COMPLETE ✅ (HEAD = 8c20382)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -310,28 +316,56 @@ empirically in v2." The deeper-history mention later in the README was left unto
 
 ---
 
+## AUDIT_PANEL BUILD (/v1/audit_panel — the "win move")
+
+Spec: audit_panel_clarification_response.txt (Opus 4.7). Turns VAGT into a reusable Nebius-native
+judge-panel calibration tool: given an incumbent panel + candidate pool, recommend the third rater that
+best raises Φ_V on the panel's blindest stratum, with a paired-bootstrap CI receipt.
+
+### Steps 1-4 — COMPLETE ✅ (offline, no key, no cost; 13/13 tests green)
+- Step 1 (4f8688a): src/audit_panel/vagt_core.py — generalized VAGT (arbitrary panel size); estimators
+  copied VERBATIM from vagt_nemotron_analysis.py (same SEED=42, same bias correction). + tests.
+- Step 2 (72b9dd7): audit_pool/ground_truth.json + verdicts/{Llama-3.3-70B, Qwen3-32B, Nemotron-Nano}.json.
+  Reshape validated LOSSLESS via build_pool.py (join key = row_id, NOT idx — idx is only 519/708 unique).
+- Step 3 (fa1000d): pool_loader.py + selector.py (worst-stratum ΔΦ_V; bootstrap CI on recommended only).
+- Step 4 (8c20382): schemas.py + router.py + mount in safe_endpoint.py (graceful try/except; health field).
+- RECEIPT REPRODUCED OFFLINE — POST /v1/audit_panel (Llama+Qwen incumbent, Nemotron candidate) returns:
+  recommendation=Nemotron Nano, target_blind_spot=diagnosis, expected_Phi_V_lift=0.0706 (+0.071),
+  ci_95=[0.0552, 0.0866] (= README [+0.055,+0.087], bit-for-bit), caveat="dose ΔΦ_V=-0.013 n.s.".
+  Pure CPU — no live judge calls.
+- CI convention: selector mirrors vagt_nemotron_analysis.py (one rng, canonical stratum order) so the
+  endpoint can never drift from the committed vagt_bootstrap_cis.json / README numbers.
+
+### Steps 5-8 — PENDING (need key rotation + a deploy)
+- Step 5: audit_pool/candidates.yaml (pool manifest — offline; can do anytime).
+- Step 6 🔴: generate 708-row verdicts for ~3 more pool models (Token Factory, ~$1/~1h) — NEEDS key
+  rotation first. NOTE: Llama-3.1-8B / Qwen2.5-72B are NOT in results/models_verified.json; use verified-live
+  models (DeepSeek-V4-Flash, gemma-3-27b-it, nemotron-super).
+- Step 7: rebuild endpoint image (endpoint-v4; COPY audit_pool/ + src/audit_panel/) + redeploy; live smoke test.
+- Step 8: README /v1/audit_panel section + public artifacts + CCC refresh.
+
+Prompt-consistency rule: verdict files carry prompt_provenance. The 3 committed models preserve the EXACT
+verdicts behind the published +0.071 receipt (Llama/Qwen = v1 no-CoT; Nemotron = JSON-CoT); new models must
+document their generating prompt.
+
+---
+
 ## PENDING TASKS (PRIORITY ORDER)
 
 ### 🔴 SECURITY — URGENT
 - [ ] Rotate Nebius API key (exposed in transcript) → then redeploy endpoint with new key so live URL survives
 - [ ] Rotate HuggingFace token (exposed in transcript)
 
-### 🟡 NEXT — DISAGREE gate-level worked example (hours)
-- Spec ready: disagree_capture_clarification_response.txt (Opus 4.8, self-corrected).
-- Hand-author a simplification that silently drops a SUBTLE secondary diagnosis; run the REAL evaluate_safety
-  gate (real Token Factory calls). Commit results/disagree_case_gate.json ONLY if the panel actually splits
-  (Llama SAFE + Qwen SAFE + Nemotron UNSAFE → consensus DISAGREE, "diagnosis-drop risk").
-- Placement: honest gate-level worked example in Medical Safety Evaluation — NOT the hero slot, no curl
-  overclaim. Label plainly as synthetic-input / real-gate (defense-in-depth vs a downstream simplifier).
-- If no crafted drop splits the panel after honest attempts: report that as a finding, lean on the VAGT
-  inversion, do NOT force it.
+### ✅ DONE — DISAGREE gate-level worked example (9fe9fa3)
+- idx 146 (Parkinson + depression drop) splits the panel LIVE (Llama SAFE + Qwen SAFE + Nemotron UNSAFE →
+  DISAGREE). Committed results/disagree_case_gate.json + README worked example (honest gate-level scope, no
+  hero slot). idx 21 (primary) did NOT reproduce → disclosed (calibration verdicts ≠ live-gate verbatim).
 
-### 🟡 THEN — /v1/audit_panel ("win move", 1–2 days)
-- Spec ready: audit_panel_clarification_response.txt. FastAPI route on the existing endpoint container,
-  pre-computed verdicts (no live judge calls), curated ~6-model pool, worst-stratum ΔΦ_V selector with paired
-  bootstrap CI, <2s CPU response. ~1–2 days build + ~$1 / ~1h to generate the pool's verdict files.
-- Honest scope (per the spec's own walk-back): audits MedSimp-JudgeBench + pooled candidates only — not
-  "any judge, any benchmark." Reuses vagt_nemotron_analysis.py as vagt_core.py (no new statistics).
+### ✅ DONE — /v1/audit_panel Steps 1-4 (offline, 13/13 green) — see AUDIT_PANEL BUILD above
+
+### 🟡 NEXT — /v1/audit_panel Steps 5-8 (after key rotation)
+- Step 5 candidates.yaml (offline) → Step 6 generate ~3 more models' verdicts (needs key) →
+  Step 7 endpoint-v4 rebuild + redeploy → Step 8 README + public artifacts.
 
 ### 🟡 THEN — Fable 5 review
 - Re-run both prompts on Fable 5 (run_review.py --model claude-fable-5): review_prompt.txt then

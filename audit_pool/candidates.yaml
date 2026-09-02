@@ -1,0 +1,31 @@
+# audit_pool/candidates.yaml — the /v1/audit_panel candidate pool manifest.
+#
+# A model is scorable ONLY if it has a committed verdict file at
+# audit_pool/verdicts/<slug>.json. "pending" models are roadmap entries and
+# are NOT scorable until their 708-row verdicts are generated (Step 6).
+benchmark: MedSimp-JudgeBench
+
+pooled:            # committed verdict file exists -> scorable now (Steps 1-4)
+  - slug: Llama-3.3-70B-Instruct
+    model: meta-llama/Llama-3.3-70B-Instruct
+    prompt_provenance: v1 v2/no-CoT safety run (safety_eval_v2.py)
+  - slug: Qwen3-32B
+    model: Qwen/Qwen3-32B
+    prompt_provenance: v1 v2/no-CoT safety run (safety_eval_v2.py)
+  - slug: NVIDIA-Nemotron-3-Nano-30B-A3B
+    model: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+    prompt_provenance: nemotron_judge_test.py JSON-CoT prompt (max_tokens=8000)
+
+pending:           # require Step-6 verdict generation before scorable (all verified-live)
+  - slug: gemma-3-27b-it
+    model: google/gemma-3-27b-it
+    status: pending verdict generation
+    availability: verified live in results/models_verified.json
+  - slug: nemotron-3-super-120b-a12b
+    model: nvidia/nemotron-3-super-120b-a12b
+    status: pending verdict generation
+    availability: verified live in results/models_verified.json
+  - slug: DeepSeek-V4-Flash
+    model: deepseek-ai/DeepSeek-V4-Flash
+    status: pending verdict generation
+    availability: verified live in results/models_verified.json
