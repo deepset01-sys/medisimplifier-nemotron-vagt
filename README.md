@@ -452,6 +452,8 @@ jobs/
   safe_endpoint_v2.yaml          Safe Endpoint v2 deployment config (endpoint-v3)
 scripts/
   start_endpoint.sh              Boot vLLM + Safe Endpoint v2 API (inside endpoint-v3 image)
+logs/
+  train_v2.json.gz               v2 training log — Nebius Job aijob-e00rwxv72fe81f54we, 8,523s, per-epoch eval_loss
 nemotron_judge_test.py           Nemotron Nano as safety judge (3-judge calibration, checkpointed)
 nemotron_teacher.py              Nemotron Super teacher — JudgeBench references
 nemotron_training_data.py        Nemotron Super teacher — full 9,999-record training set (resume-capable)
@@ -464,6 +466,7 @@ results/eval_v2_results.json     v2 eval: ROUGE-L 0.5254 / SARI 60.36 / BERTScor
 results/eval_v2_nemotron_results.json  v2 eval vs Nemotron refs: ROUGE-L 0.6010 / BERTScore 0.9321 / SARI 64.18 (n=998)
 results/endpoint_smoke_test.json       live endpoint SAFE capture (~27s, all-SAFE verdict)
 results/models_verified.json           both Nemotron model strings verified via /v1/models
+results/disagree_case_gate.json        gate-level DISAGREE capture — JudgeBench idx 146, Nemotron UNSAFE / Llama+Qwen SAFE
 vagt_nemotron_results.txt        VAGT decomposition output (per-feature, both rater sets)
 vagt_bootstrap_cis.json               paired-Δ 95% CIs: ΔΦ_V +0.071 [+0.055,+0.087] on diagnosis
 FINDINGS.md                      Full findings write-up (calibration + VAGT + caveats)
