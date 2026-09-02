@@ -140,7 +140,7 @@ Pipeline:
         POST /v1/simplify → vLLM + VAGT-calibrated 3-judge gate
         (endpoint tested; redeploy via safe_endpoint_v2.yaml)
 
-> **Why Token Factory?** Nemotron Super, Nano, and Ultra are all served per-token with zero idle cost. The teacher run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min; the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
+> **Why Token Factory?** Nemotron Super, Nano, and Ultra are all served per-token with zero idle cost. The teacher JudgeBench-reference run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min; the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
 
 ## Merge & Deploy (v2)
 
