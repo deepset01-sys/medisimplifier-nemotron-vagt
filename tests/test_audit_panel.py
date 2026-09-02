@@ -103,3 +103,41 @@ def test_diagnosis_delta_ci_excludes_zero():
     _point, cis = vc.paired_delta_cis(X, tau, n_incumbent=len(INCUMBENT), rng=rng)
     lo, hi = cis["phi_v"]
     assert lo > 0, f"diagnosis dPhi_V 95% CI [{lo:.4f}, {hi:.4f}] should exclude 0"
+
+
+# ── endpoint via TestClient (in-process; no server, no vLLM, no key) ──────────
+def _client():
+    sys.path.insert(0, str(REPO / "src"))
+    from fastapi.testclient import TestClient
+    import safe_endpoint
+    return TestClient(safe_endpoint.app)
+
+
+def test_endpoint_audit_receipt():
+    body = {"incumbent_panel": INCUMBENT, "candidate_pool": [NEMOTRON]}
+    r = _client().post("/v1/audit_panel", json=body)
+    assert r.status_code == 200, r.text
+    data = r.json()
+    assert data["recommendation"]["model"] == NEMOTRON
+    assert data["recommendation"]["target_blind_spot"] == "diagnosis"
+    assert abs(data["recommendation"]["expected_Phi_V_lift"] - 0.071) <= 1e-3
+    assert data["recommendation"]["ci_95"] == [0.0552, 0.0866]
+
+
+def test_endpoint_rejects_unknown_benchmark():
+    body = {"incumbent_panel": INCUMBENT, "candidate_pool": [NEMOTRON], "benchmark": "Other"}
+    r = _client().post("/v1/audit_panel", json=body)
+    assert r.status_code == 422
+
+
+def test_endpoint_unseen_candidate():
+    body = {"incumbent_panel": INCUMBENT, "candidate_pool": [NEMOTRON, "x/Not-Pooled-7B"]}
+    r = _client().post("/v1/audit_panel", json=body)
+    assert r.status_code == 200, r.text
+    assert "x/Not-Pooled-7B" in r.json()["unseen_candidates"]
+
+
+def test_health_has_audit_panel_field():
+    r = _client().get("/health")
+    assert r.status_code == 200
+    assert r.json().get("audit_panel") is True

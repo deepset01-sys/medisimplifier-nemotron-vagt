@@ -12,7 +12,10 @@ Or locally with Docker:
 """
 
 import os
+import sys
 import time
+from pathlib import Path
+
 import httpx
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -21,6 +24,16 @@ from typing import Optional
 from safety_gate import evaluate_safety
 
 app = FastAPI(title="MediSimplifier Safe Endpoint", version="2.0")
+
+# ── Mount the /v1/audit_panel router. Graceful: a missing/broken audit_pool
+# disables it but leaves /v1/simplify fully working; /health reports the status. ──
+sys.path.insert(0, str(Path(__file__).resolve().parent / "audit_panel"))
+try:
+    from router import audit_router
+    app.include_router(audit_router, prefix="/v1")
+    AUDIT_OK = True
+except Exception:
+    AUDIT_OK = False
 
 VLLM_URL   = "http://127.0.0.1:8001/v1/completions"
 MODEL_NAME = "chambul/MediSimplifier-OpenBioLLM-v2-merged"
@@ -64,7 +77,8 @@ async def health():
             vllm_ok = r.status_code == 200
     except Exception:
         pass
-    return {"vllm": vllm_ok, "token_factory": tf_ok, "ready": vllm_ok and tf_ok}
+    return {"vllm": vllm_ok, "token_factory": tf_ok, "ready": vllm_ok and tf_ok,
+            "audit_panel": AUDIT_OK}
 
 
 @app.post("/v1/simplify", response_model=SimplifyResponse)
