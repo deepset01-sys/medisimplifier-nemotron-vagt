@@ -14,7 +14,7 @@
 
 **Executive Summary:** 9,999 Nemotron Super teacher calls via Token Factory → training on H100 (3 epochs, ~2.4h) → Nemotron Nano joins Llama + Qwen as calibrated third judge → 708-sample VAGT 3-rater analysis → Safe Simplification Endpoint v2 — zero standing infrastructure, $0 idle cost.
 
-**Key findings:** (1) Nemotron Super as teacher produces stylistically different references than Claude Opus (ROUGE-L 0.525 between teachers) — student faithfully learns Nemotron's style (FK-Grade 8.87 vs 7.33 in v1); (2) Nemotron Nano catches diagnosis omissions at 68% recall vs Llama's 14% and Qwen's 7% — the clinical blind spot both v1 judges shared; (3) VAGT inversion — adding Nemotron as third judge cuts the shared blind-spot bias on diagnosis while Fleiss κ goes negative, proving consensus statistics are blind to the improvement. Four Nebius services: Token Factory, Jobs, Object Storage, Serverless Endpoints.
+**Key findings:** (1) Nemotron Super as teacher produces stylistically different references than Claude Opus (ROUGE-L 0.525 between teachers) — student faithfully learns Nemotron's style (FK-Grade 8.87 vs 7.33 in v1); (2) Nemotron Nano catches diagnosis omissions at 68% recall vs Llama's 14% and Qwen's 7% — the clinical blind spot both v1 judges shared; (3) VAGT inversion — adding Nemotron as third judge cuts the shared blind-spot bias on diagnosis while Fleiss κ goes negative, demonstrating on MedSimp-JudgeBench that consensus statistics can move the wrong way. Four Nebius services: Token Factory, Jobs, Object Storage, Serverless Endpoints.
 
 **Engineering finding (reusable):** Nemotron-3 reasoning models *think* before answering, so the teacher call must budget for the hidden reasoning trace. At Opus's `max_tokens=1024`, Nemotron Super spends the entire budget reasoning and returns empty output (`content=None` / `finish_reason="length"`); **`max_tokens=16000` is required**, and neither `enable_thinking:false` nor a "detailed thinking off" directive disables it. The generator treats empty/truncated responses as errors and retries — it never saves a truncated reference. (Full detail: [Nemotron as Teacher](#nemotron-as-teacher--the-experiment).)
 
@@ -44,7 +44,7 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 | Safe Endpoint | vLLM + dual-judge guardrail | ✅ vLLM + Nemotron Nano guardrail (3-judge parallel) |
 | Reproducibility | Public HuggingFace adapters | ✅ Public HuggingFace dataset + adapters v2 |
 
-Token Factory = Nemotron Super teacher (9,999 calls) + Nemotron Nano judge (708 calibration calls) + 3-judge safety panel. Jobs = v2 training (H100, 3 epochs) + evaluation. The novel v2 finding: VAGT inversion — adding Nemotron Nano as third judge cuts shared bias σ²_B on diagnosis from 0.347→0.229 while Fleiss κ goes negative, proving that Cohen's κ — the only metric used in v1 — is blind to the improvement.
+Token Factory = Nemotron Super teacher (9,999 calls) + Nemotron Nano judge (708 calibration calls) + 3-judge safety panel. Jobs = v2 training (H100, 3 epochs) + evaluation. The novel v2 finding: VAGT inversion — adding Nemotron Nano as third judge cuts shared bias σ²_B on diagnosis from 0.347→0.229 while Fleiss κ goes negative, demonstrating that Cohen's κ — the only metric used in v1 — moves in the wrong direction here.
 
 ## LoRA Configuration
 
