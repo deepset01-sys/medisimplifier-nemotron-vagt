@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-02 (Session: DISAGREE gate-level worked example committed; /v1/audit_panel Steps 1-4 built offline, 13/13 tests green)
+# Last updated: 2026-09-02 (Session: audit_panel Steps 1-5 + DISAGREE example; Fable 5 review 28/40 — 7 fixes landed)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -23,7 +23,7 @@
 
 ---
 
-## SESSION August 30 – September 2, 2026 — review fixes, VAGT CIs, reframe, 4.8 reviews, DISAGREE capture, audit_panel Steps 1-4 (HEAD = 8c20382)
+## SESSION August 30 – September 2, 2026 — review fixes, VAGT CIs, reframe, 4.8 reviews, DISAGREE capture, audit_panel Steps 1-5, Fable 5 review (HEAD = fec2193)
 
 ```
 591428a - Training log committed + .gitignore whitelist
@@ -51,6 +51,15 @@ f20cd2e - Nemotron-refs eval trail documented (job + train-v32 + run id + full d
 72b9dd7 - audit_panel Step 2: audit_pool data (ground_truth + 3 verdicts); lossless reshape (diag ΔΦ_V=0.0706 ✓)
 fa1000d - audit_panel Step 3: pool_loader + selector (reproduces receipt) — 9/9 tests
 8c20382 - audit_panel Step 4: schemas + router + mount; /v1/audit_panel live — 13/13 tests
+cd97aa1 - audit_pool/candidates.yaml (Step 5) + CCC refresh (recorded HEAD 8c20382)
+a6c04c4 - README line 143: disambiguate JudgeBench-ref run (~$1.7) vs full training run ($75.19) [4.8 v4]
+f423b99 - README: +0.072→+0.071 consistency (A) + "hallucinated"→"omitted" (B) [Fable 5]
+ca0bfba - billing → $134.81 total / 10.22 GPU hrs (README + CCC sweep) [Fable 5 Fix C]
+a72cfc8 - README Project Structure: + logs/train_v2.json.gz + results/disagree_case_gate.json [Fable 5]
+d707bc4 - README: judge-params table + 4-bit NF4 QLoRA + epoch-2 best-checkpoint disclosure [Fable 5]
+b2d37e3 - README: DISAGREE rate 203/708 (28.7%) + calibration caveat [Fable 5]
+9afd50b - README: "proving"→"demonstrating on MedSimp-JudgeBench" (lines 17+47) [Fable 5]
+fec2193 - README: patient-facing value prop before "The finding" [Fable 5]
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -220,7 +229,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 8c20382)
+## README STATUS — COMPLETE ✅ (HEAD = fec2193)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -290,6 +299,34 @@ date; the flag is a model knowledge-cutoff artifact. Timestamp is correct — do
 
 ---
 
+## FABLE 5 REVIEW HISTORY
+
+| Review | Score | Verdict |
+|--------|-------|---------|
+| v1 (review_output_v1_fable5.txt, no bonus) | 28/40 | "Strong, honest, technically real … submit after the fixes, not before" |
+
+Per-criterion: Technological 8 / Design 7 / Impact 6 / Idea 7. Harsher + more forensic than Opus 4.8 (33-34) —
+grader temperament, not a regression. Run: run_review.py --model claude-fable-5-1, MAX_TOKENS=16000 (needed —
+used 14,514 output tokens; truncates at 8000).
+
+7 fixes landed (all committed this session):
+1. A+B (f423b99): Key-findings +0.072→+0.071; "hallucinated"→"omitted" (all demonstrated catches are omissions)
+2. C (ca0bfba): billing → $134.81 / 10.22 GPU hrs (README table + CCC swept; six line items sum EXACTLY)
+3. Tree (a72cfc8): + logs/train_v2.json.gz + results/disagree_case_gate.json (safety_eval_v2.py left out — v1 ref)
+4. Disclosures (d707bc4): judge-params table (temp 0 / thinking off / mt 2000·2000·8000); 4-bit NF4 QLoRA base
+   (merge loads fp16); epoch-2 best-checkpoint (load_best_model_at_end, NOT epoch-3 overfit 0.8610)
+5. DISAGREE rate (b2d37e3): 203/708 (28.7%) = 136 catches + 67 clean false alarms (~1-in-3 spurious)
+6. Overclaim (9afd50b): "proving … blind" → "demonstrating on MedSimp-JudgeBench … moves the wrong way"
+7. Value prop (fec2193): patient-facing sentence before "The finding"
+
+REMAINING (needs key): calibration≠gate re-run — the 68%/14%/7% and 203/708 numbers come from the CALIBRATION
+prompt (Nemotron JSON-CoT + Llama/Qwen v1 no-CoT), NOT safety_gate.py's one-word gate prompt. A full 708-item
+re-run through the gate prompt would let the README describe the DEPLOYED gate directly. (Subjective/deferred:
+larger "lead with patient value prop" restructure — partially addressed by fec2193.)
+Note: Fable did NOT flag the 2026-date false positive that Opus keeps raising.
+
+---
+
 ## VAGT FRAMING — CRITICAL NOTE
 
 VAGT did NOT originate in v1 submission. Correct narrative:
@@ -336,8 +373,9 @@ best raises Φ_V on the panel's blindest stratum, with a paired-bootstrap CI rec
 - CI convention: selector mirrors vagt_nemotron_analysis.py (one rng, canonical stratum order) so the
   endpoint can never drift from the committed vagt_bootstrap_cis.json / README numbers.
 
-### Steps 5-8 — PENDING (need key rotation + a deploy)
-- Step 5: audit_pool/candidates.yaml (pool manifest — offline; can do anytime).
+### Step 5 — COMPLETE ✅ (offline); Steps 6-8 — PENDING (need key rotation + a deploy)
+- Step 5 (cd97aa1): audit_pool/candidates.yaml committed — 3 pooled + 3 pending, all verified-live
+  (gemma-3-27b-it, nemotron-super, DeepSeek-V4-Flash).
 - Step 6 🔴: generate 708-row verdicts for ~3 more pool models (Token Factory, ~$1/~1h) — NEEDS key
   rotation first. NOTE: Llama-3.1-8B / Qwen2.5-72B are NOT in results/models_verified.json; use verified-live
   models (DeepSeek-V4-Flash, gemma-3-27b-it, nemotron-super).
@@ -361,15 +399,16 @@ document their generating prompt.
   DISAGREE). Committed results/disagree_case_gate.json + README worked example (honest gate-level scope, no
   hero slot). idx 21 (primary) did NOT reproduce → disclosed (calibration verdicts ≠ live-gate verbatim).
 
-### ✅ DONE — /v1/audit_panel Steps 1-4 (offline, 13/13 green) — see AUDIT_PANEL BUILD above
+### ✅ DONE — /v1/audit_panel Steps 1-5 (offline, 13/13 green) — see AUDIT_PANEL BUILD above
 
-### 🟡 NEXT — /v1/audit_panel Steps 5-8 (after key rotation)
-- Step 5 candidates.yaml (offline) → Step 6 generate ~3 more models' verdicts (needs key) →
-  Step 7 endpoint-v4 rebuild + redeploy → Step 8 README + public artifacts.
+### ✅ DONE — Fable 5 review v1 (no-bonus, 28/40) — 7 fixes landed; see FABLE 5 REVIEW HISTORY
 
-### 🟡 THEN — Fable 5 review
-- Re-run both prompts on Fable 5 (run_review.py --model claude-fable-5): review_prompt.txt then
-  review_prompt_with_bonus.txt. Both items ready.
+### 🟡 NEXT (all gated on 🔴 key rotation above)
+- Fable 5 BONUS review: run_review.py --prompt review_prompt_with_bonus.txt --model claude-fable-5-1.
+- /v1/audit_panel Steps 6-8: generate ~3 more models' verdicts (Token Factory, needs key) →
+  endpoint-v4 rebuild + redeploy → README /v1/audit_panel section + public artifacts.
+- calibration≠gate re-run: 708 items through safety_gate.py's exact prompt → recompute recall/VAGT/DISAGREE
+  on the DEPLOYED gate (closes the last Fable finding). Needs key.
 
 ### 🟢 Deliverables (remaining)
 - [ ] Blog post v2 (Medium) — "From Finding to Framework"
@@ -430,4 +469,4 @@ Late September – October:
   (needs an S3 endpoint + creds profile the native YAML `bucket:` mount supplies automatically). Verified twice
   on VM 195.242.10.164; no job created either time (zero GPU spend). VERIFIED reproduction path = Nebius
   Console + committed YAMLs. Decision (Option 1): do NOT put unverified CLI commands in the README.
-- Reviews done: Opus 4.8 v1/v2 34/40 (no-bonus) + v3 bonus + DISAGREE self-correction. Next: Fable 5 (both prompts).
+- Reviews done: Opus 4.8 v1/v2/v4 33-34 + v3 bonus; Fable 5 v1 28/40 (no-bonus, 7 fixes landed). Next: Fable 5 bonus (after key rotation).
