@@ -69,8 +69,8 @@ v2 uses the winning configuration from v1 ablation (r=32, all_attn, seed=42, 3 e
 | v2 evaluation | ROUGE-L=0.5254, SARI=60.36, BERTScore=0.9113 on GuyDor007 test set | Jobs |
 | Nemotron Nano recall | 84.2% recall on injected errors — Llama 31.7%, Qwen 55.9% | Token Factory |
 | Diagnosis blind spot — fixed | Nemotron Nano 68% vs Llama 14% / Qwen 7% | Token Factory |
-| VAGT inversion | Φ_V +0.072 — Fleiss κ goes negative | Token Factory |
-| Safe Endpoint v2 | Live — VAGT-calibrated 3-judge gate catches hallucinated content | Endpoints + Token Factory |
+| VAGT inversion | Φ_V +0.071 — Fleiss κ goes negative | Token Factory |
+| Safe Endpoint v2 | Live — VAGT-calibrated 3-judge gate catches omitted content | Endpoints + Token Factory |
 
 > Verified rows are computed from committed artifacts ([`nemotron_calibration_full.json`](nemotron_calibration_full.json), [`vagt_nemotron_results.txt`](vagt_nemotron_results.txt), [`results/eval_v2_results.json`](results/eval_v2_results.json)) and reproducible via the scripts/jobs in [Reproduce](#reproduce-step-by-step) — no numbers are invented.
 
