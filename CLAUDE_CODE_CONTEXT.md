@@ -88,8 +88,8 @@ rotate, then redeploy endpoint with the new key so the live URL keeps working.
 | n_samples eval | 1,001 | results/eval_v2_results.json |
 | Training samples | 7,983 | chambul/medisimplifier-nemotron-dataset |
 | Training time | 8,523s (~2.4h) | logs/train_v2.json.gz (train_runtime) |
-| Total cost v2 | $110.42 | Nebius Console actual billing |
-| H100 hours | 5.55 | Nebius Console |
+| Total cost v2 | $134.81 | Nebius Console actual billing |
+| H100 hours | 10.22 | Nebius Console |
 | Nemotron Super cost | $75.19 | Nebius Console Token Factory |
 | Nemotron Nano cost | $0.90 | Nebius Console Token Factory |
 
@@ -213,10 +213,10 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 | Nemotron Super teacher | 81.23M output tokens | $75.19 |
 | Nemotron Nano calibration | 3.48M output tokens | $0.90 |
 | Llama + Qwen endpoint tests | — | $0.43 |
-| H100 NVLink | 5.55 GPU hours | $21.36 |
-| CPU + RAM | 211.95 vCPU / 847.80 GiB hours | $5.25 |
-| Disk + Object Storage | 75,000 GiB hours | $7.29 |
-| **Total v2** | | **$110.42** |
+| H100 NVLink | 10.22 GPU hours | $39.34 |
+| CPU + RAM | 452.60 vCPU / 1,810.39 GiB hours | $11.22 |
+| Disk + Object Storage | 76,053.72 GiB hours | $7.73 |
+| **Total v2** | | **$134.81** |
 
 ---
 
@@ -236,7 +236,7 @@ Plus 4.8-review doc fixes (all landed): VAGT-as-response-to-κ framing (957fcdf)
 pointer (87d719c).
 
 Earlier fixes landed: VAGT origin framing, recall-denominator footnote, per-stage image tags,
-cost $110.42, training-log evidence, blog placeholder removed, σ²_B trimmed to 2×, safety_mode
+cost $134.81, training-log evidence, blog placeholder removed, σ²_B trimmed to 2×, safety_mode
 contract documented, Nemotron-reference eval (companion table).
 
 ---
@@ -403,7 +403,7 @@ Late September – October:
 2. "ERROR in any judge" → corrected to "ERROR in Nemotron or Qwen"
 3. Fleiss κ vs Krippendorff α attribution → precision fix
 4. eval path eval_v2/results.json → results/eval_v2_results.json
-5. Total cost $110.42 confirmed correct (matches line-item sum); earlier "$110.42 → $110.41" catch was itself wrong and reverted
+5. Total cost $110.42 confirmed correct (matches line-item sum); earlier "$110.42 → $110.41" catch was itself wrong and reverted — SUPERSEDED 2026-09-02: billing updated to $134.81 as endpoint/eval GPU+CPU+disk usage grew (10.22 GPU hrs; line items re-verified to sum exactly; see NEBIUS BILLING)
 6. Recall denominators: 68% = diagnosis-corrupted n=150 (not n≈127); 47% = VAGT stratum n=333 (not all-708) — README footnote committed
 7. Endpoint latency: ~73s → ~27s (measured live, 26,975–28,719 ms)
 8. Per-stage image tags: train=v29 / eval=v30 / merge=v31 (README had said v31 for all three)

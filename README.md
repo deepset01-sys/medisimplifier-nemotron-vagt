@@ -304,10 +304,10 @@ Actual Nebius billing for v2 (all figures from Nebius Console):
 | Nemotron Super teacher (9,999 calls) | Token Factory | 81.23M output tokens | $75.19 |
 | Nemotron Nano calibration (708 × 3 judges) | Token Factory | 3.48M output tokens | $0.90 |
 | Llama + Qwen (endpoint smoke tests) | Token Factory | — | $0.43 |
-| H100 NVLink (training + eval + merge) | Jobs | 5.55 GPU hours | $21.36 |
-| CPU + RAM | Jobs | 211.95 vCPU / 847.80 GiB hours | $5.25 |
-| Disk (Network SSD + Object Storage) | Storage | 75,000 GiB hours | $7.29 |
-| **Total v2** | | | **$110.42** |
+| H100 NVLink (training + eval + merge) | Jobs | 10.22 GPU hours | $39.34 |
+| CPU + RAM | Jobs | 452.60 vCPU / 1,810.39 GiB hours | $11.22 |
+| Disk (Network SSD + Object Storage) | Storage | 76,053.72 GiB hours | $7.73 |
+| **Total v2** | | | **$134.81** |
 
 **Training run (verified from `logs/train_v2.json.gz`, Nebius Job `aijob-e00rwxv72fe81f54we`):**
 
