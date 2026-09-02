@@ -10,6 +10,8 @@
 > Built on top of [MediSimplifier-Nebius](https://github.com/deepset01-sys/medisimplifier-nebius) — 🥇 First Place winner of the Nebius Serverless AI Builders Challenge.
 > The Nemotron teacher pipeline, 3-judge calibration panel, VAGT measurement framework (developed as a direct response to v1's κ=0.11 finding, first applied empirically in v2), and v2 training infrastructure were built for this hackathon.
 
+MediSimplifier simplifies medical discharge summaries to a 6th-grade reading level — v2 adds a Nemotron-powered safety gate that catches the diagnosis drops a two-judge consensus panel misses.
+
 **The finding.** On silently-dropped diagnoses in discharge summaries, Llama-3.3-70B catches 14% and Qwen3-32B catches 7% — they share a clinical blind spot. Adding NVIDIA Nemotron Nano as a third judge lifts recall to 68% and raises ground-truth-anchored dependability Φ_V by **+0.071 [+0.055, +0.087]** — *while* Fleiss κ goes *negative* (0.076 → −0.088). Consensus statistics say the panel got **worse**; measured against ground truth, it moved **closer to truth** — the exact failure mode this submission's VAGT framework exists to expose.
 
 **Executive Summary:** 9,999 Nemotron Super teacher calls via Token Factory → training on H100 (3 epochs, ~2.4h) → Nemotron Nano joins Llama + Qwen as calibrated third judge → 708-sample VAGT 3-rater analysis → Safe Simplification Endpoint v2 — zero standing infrastructure, $0 idle cost.
