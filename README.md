@@ -254,6 +254,8 @@ Consensus statistics (Cohen's κ, PABAK, Krippendorff α) measure whether judges
 
 Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qwen3-32B (cross-family) as a third safety judge, all via Token Factory. Judge prompt is the v1 4-step CoT-with-anti-sycophancy prompt (`safety_eval_v2.py`), reused verbatim.
 
+> **Note on the Qwen judge.** `Qwen/Qwen3-32B` was removed from Nebius Token Factory during the project window. The gate has been updated to `Qwen/Qwen3-30B-A3B-Instruct-2507` for operational continuity. All calibration, VAGT, and recall numbers in this README describe the original Qwen3-32B panel.
+
 **Ground-truth accuracy on MedSimp-JudgeBench (n=708; 200 clean controls, 508 corrupted):**
 
 | Metric vs ground truth | Nemotron Nano | Llama-3.3-70B | Qwen3-32B |
