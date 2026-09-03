@@ -12,7 +12,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 LLAMA = "meta-llama/Llama-3.3-70B-Instruct"
-QWEN  = "Qwen/Qwen3-32B"
+QWEN  = "Qwen/Qwen3-30B-A3B-Instruct-2507"
 NEMOTRON_NANO = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
 NEBIUS_API_URL = "https://api.studio.nebius.ai/v1/chat/completions"
 
