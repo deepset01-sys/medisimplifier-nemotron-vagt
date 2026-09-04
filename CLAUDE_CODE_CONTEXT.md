@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-02 (Session: audit_panel Steps 1-5 + DISAGREE example; Fable 5 review 28/40 — 7 fixes landed)
+# Last updated: 2026-09-03 (Session: Qwen3-32B removed from Token Factory → gate swap; Fable 5 v2 27/40 — 3 self-inflicted inconsistencies found)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -23,7 +23,7 @@
 
 ---
 
-## SESSION August 30 – September 2, 2026 — review fixes, VAGT CIs, reframe, 4.8 reviews, DISAGREE capture, audit_panel Steps 1-5, Fable 5 review (HEAD = fec2193)
+## SESSION August 30 – September 3, 2026 — review fixes, VAGT CIs, reframe, 4.8 reviews, DISAGREE capture, audit_panel Steps 1-5, Fable 5 (v1+v2), Qwen removal + gate swap (HEAD = a83bfb8)
 
 ```
 591428a - Training log committed + .gitignore whitelist
@@ -60,6 +60,9 @@ d707bc4 - README: judge-params table + 4-bit NF4 QLoRA + epoch-2 best-checkpoint
 b2d37e3 - README: DISAGREE rate 203/708 (28.7%) + calibration caveat [Fable 5]
 9afd50b - README: "proving"→"demonstrating on MedSimp-JudgeBench" (lines 17+47) [Fable 5]
 fec2193 - README: patient-facing value prop before "The finding" [Fable 5]
+973b0e7 - CLAUDE_CODE_CONTEXT refresh (recorded HEAD fec2193, Fable 5 v1 + 7 fixes)
+8ec5e73 - fix: Qwen judge → Qwen3-30B-A3B-Instruct-2507 (Qwen3-32B removed from Token Factory)
+a83bfb8 - docs: README honest note on Qwen3-32B removal; gate updated
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -181,7 +184,7 @@ Build host: VM ubuntu@195.242.30.65 (nebius_vm key); has nebius CLI + boto3 + ~/
 | Nemotron Super | nvidia/nemotron-3-super-120b-a12b | Teacher |
 | Nemotron Nano | nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B | Safety judge |
 | Llama | meta-llama/Llama-3.3-70B-Instruct | Safety judge |
-| Qwen | Qwen/Qwen3-32B | Safety judge |
+| Qwen | Qwen/Qwen3-32B (calibration; deployed gate now Qwen/Qwen3-30B-A3B-Instruct-2507 — 32B removed from TF) | Safety judge |
 | Base model | aaditya/Llama3-OpenBioLLM-8B | Student (gated — requires HF access) |
 | Token Factory base URL | https://api.studio.nebius.ai/v1/ | |
 
@@ -229,7 +232,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = fec2193)
+## README STATUS — COMPLETE ✅ (HEAD = a83bfb8)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -304,6 +307,7 @@ date; the flag is a model knowledge-cutoff artifact. Timestamp is correct — do
 | Review | Score | Verdict |
 |--------|-------|---------|
 | v1 (review_output_v1_fable5.txt, no bonus) | 28/40 | "Strong, honest, technically real … submit after the fixes, not before" |
+| v2 (review_output_v2_fable5.txt, no bonus, post-7-fixes) | 27/40 | "submission-ready in substance, not yet in presentation or gate integrity" |
 
 Per-criterion: Technological 8 / Design 7 / Impact 6 / Idea 7. Harsher + more forensic than Opus 4.8 (33-34) —
 grader temperament, not a regression. Run: run_review.py --model claude-fable-5-1, MAX_TOKENS=16000 (needed —
@@ -324,6 +328,26 @@ prompt (Nemotron JSON-CoT + Llama/Qwen v1 no-CoT), NOT safety_gate.py's one-word
 re-run through the gate prompt would let the README describe the DEPLOYED gate directly. (Subjective/deferred:
 larger "lead with patient value prop" restructure — partially addressed by fec2193.)
 Note: Fable did NOT flag the 2026-date false positive that Opus keeps raising.
+
+### v2 (27/40) — after the 7 fixes: score DOWN 1, new internal-consistency issues (Design 7→6)
+Per-criterion: Tech 8 / Design 6 / Impact 6 / Idea 7. The 7 fixes didn't raise the score — Fable surfaced NEW
+contradictions, two of them SELF-INFLICTED by this session's edits.
+
+Three confirmed rule-#2 inconsistencies (must fix, offline):
+  #1 "Token Factory dominates cost (93%)" (README:346) → WRONG; actual ≈57% (76.52/134.81). Our billing update
+     ($110.42→$134.81) made it worse (was 69% at old total). Never 93%.
+  #2 "~$25–30" training cost (README:103) → still unfixed; 2.37h×$3.85≈$9, or the $39.34 GPU line (train+eval+merge).
+  #3 judge-params table (README:301) still says "Qwen3-32B" — stale after the gate swap to Qwen3-30B-A3B
+     (SELF-INFLICTED). The calibration recall table (README:261) correctly STAYS Qwen3-32B (historical).
+
+Two framing decisions pending (not arithmetic):
+  #4 "3-judge gate" but Llama is NOT in the decision rule (safety_gate.py branches only nemotron/qwen; Llama
+     called+billed+returned but not consulted) → drop Llama (2-judge) or add it to the rule.
+  #5 "permanent Nebius serverless URL — scales to zero" (README:314,399) vs the actual dev tunnel
+     (…tunnel.applications.eu-north1.nebius.cloud) launched via a Job → describe hosting accurately.
+
+Minor (flagged, unfixed): Krippendorff α value never printed; "Claude implied ~7.0" FK unsourced; "Ultra"
+mentioned but unused; "δ 1.6–5.0%" hardware-transfer unsourced.
 
 ---
 
@@ -388,6 +412,26 @@ document their generating prompt.
 
 ---
 
+## QWEN JUDGE REMOVAL (Token Factory catalog change, 2026-09-03)
+
+`Qwen/Qwen3-32B` was REMOVED from Nebius Token Factory mid-project (catalog shrank 31→26; `/v1/models` now
+404s on that id). Impact + handling:
+- Gate fix (8ec5e73): safety_gate.py QWEN → `Qwen/Qwen3-30B-A3B-Instruct-2507` (nearest live instruct model).
+  Smoke-tested: all 3 judges return valid verdicts (no ERROR). Endpoint functional again.
+- Honest note (a83bfb8): README Medical Safety Evaluation discloses the removal + swap; states ALL
+  calibration/VAGT/recall numbers describe the ORIGINAL Qwen3-32B panel.
+- The new Qwen is UNCALIBRATED vs the published 68%/14%/7%/VAGT numbers (different model = different verdicts).
+- Gate re-run (run_gate_calibration.py → results/gate_calibration_full.json): 708/708 attempted but INVALID —
+  first ~450 ran clean while Qwen3-32B still existed, then 146 Qwen ERRORs (all Qwen) as the model was removed
+  mid-run. Raw DISAGREE 100/708 (14.1%), complete-case 100/562 (17.8%) — CONTAMINATED, not usable.
+  (Also: earlier an 8h hang at 450 → killed PID + resumed from checkpoint; resume worked.)
+- Provenance records correctly KEEP Qwen3-32B (do NOT sweep): audit_pool/verdicts/Qwen3-32B.json,
+  build_pool.py, tests/test_audit_panel.py, results/models_verified.json (now a stale snapshot).
+- RE-CALIBRATION DECISION: DEFERRED — (a) regenerate the full panel with the new Qwen (big: new verdicts +
+  VAGT + README), or (b) keep historical Qwen3-32B numbers behind the disclosure note (already in place).
+
+---
+
 ## PENDING TASKS (PRIORITY ORDER)
 
 ### 🔴 SECURITY — URGENT
@@ -403,12 +447,18 @@ document their generating prompt.
 
 ### ✅ DONE — Fable 5 review v1 (no-bonus, 28/40) — 7 fixes landed; see FABLE 5 REVIEW HISTORY
 
-### 🟡 NEXT (all gated on 🔴 key rotation above)
-- Fable 5 BONUS review: run_review.py --prompt review_prompt_with_bonus.txt --model claude-fable-5-1.
-- /v1/audit_panel Steps 6-8: generate ~3 more models' verdicts (Token Factory, needs key) →
-  endpoint-v4 rebuild + redeploy → README /v1/audit_panel section + public artifacts.
-- calibration≠gate re-run: 708 items through safety_gate.py's exact prompt → recompute recall/VAGT/DISAGREE
-  on the DEPLOYED gate (closes the last Fable finding). Needs key.
+### 🟡 NEXT — fix Fable 5 v2 inconsistencies (offline, no key)
+- #1 cost "93%" → ~57% (README:346); #2 "~$25–30" training → ~$9 / cite $39.34 GPU line (README:103);
+  #3 judge-params table Qwen3-32B → deployed Qwen3-30B-A3B (README:301; keep calibration table 261 as-is).
+
+### 🟠 DECISIONS PENDING
+- #4 Llama in the gate: keep "3-judge" (add Llama to the rule) or relabel 2-judge (drop the Llama call)?
+- #5 endpoint framing: "permanent serverless" → describe the actual Job+tunnel hosting.
+- Re-calibration with new Qwen (Qwen3-30B-A3B): regenerate panel, or keep historical + disclosure note?
+
+### 🟡 THEN (gated on 🔴 key rotation)
+- Fable 5 BONUS review (--prompt review_prompt_with_bonus.txt --model claude-fable-5-1) — after fixes land.
+- /v1/audit_panel Steps 6-8: generate ~3 more models' verdicts → endpoint-v4 rebuild + redeploy → README section.
 
 ### 🟢 Deliverables (remaining)
 - [ ] Blog post v2 (Medium) — "From Finding to Framework"
@@ -469,4 +519,4 @@ Late September – October:
   (needs an S3 endpoint + creds profile the native YAML `bucket:` mount supplies automatically). Verified twice
   on VM 195.242.10.164; no job created either time (zero GPU spend). VERIFIED reproduction path = Nebius
   Console + committed YAMLs. Decision (Option 1): do NOT put unverified CLI commands in the README.
-- Reviews done: Opus 4.8 v1/v2/v4 33-34 + v3 bonus; Fable 5 v1 28/40 (no-bonus, 7 fixes landed). Next: Fable 5 bonus (after key rotation).
+- Reviews done: Opus 4.8 v1/v2/v4 33-34 + v3 bonus; Fable 5 v1 28/40, v2 27/40 (no-bonus). Next: fix v2 inconsistencies, then Fable 5 bonus.
