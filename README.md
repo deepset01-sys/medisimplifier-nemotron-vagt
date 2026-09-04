@@ -104,7 +104,7 @@ The Nemotron-taught student was evaluated on the **same GuyDor007 test set (n=1,
 
 > **Honest interpretation:** v2 ROUGE-L reflects **style divergence from Claude references, not a quality failure** — Nemotron Super produces *less* simplified references — measured FK-Grade **10.1** (Nemotron refs) vs **7.2** (Claude refs), Δ **+2.9** grade levels, both on textstat 0.7.13 over 9,976 pairs — and the student model faithfully learned this style. (The student's published FK-Grade 8.87 is a separate measurement — student output, scored with the train-v32 image's textstat — so it is not directly comparable to these reference figures.) The lower ROUGE-L/SARI is the student matching a *different teacher's style*, scored against Claude's references; it is not evidence the v2 outputs are worse, only that they are less Claude-like (and at a slightly higher reading level). Note the ~0.525 student↔Claude ROUGE-L closely tracks the ~0.525 teacher↔teacher ROUGE-L — the student inherited exactly the teacher gap.
 
-> **Which model to deploy:** v1 remains the recommended model for patient-facing readability (FK-Grade 7.33). v2's contribution is the VAGT research pipeline and the diagnosis-drop safety gate, not a readability improvement.
+> **What the endpoint serves:** The Safe Endpoint v2 serves the v2 (Nemotron-taught) student behind the safety gate (diagnosis-drop detection) — v2's contribution is the VAGT research pipeline and the safety gate, **not a readability improvement**. For maximum readability the v1 student is simpler (FK-Grade 7.33 vs v2's 8.87); but v2's endpoint is the research/safety demo, and that is what is served.
 
 > **Evaluation:** 1,001 test samples (GuyDor007/medisimplifier-dataset), greedy decoding, seed=42.
 
@@ -156,7 +156,7 @@ The LoRA adapter is merged into the base model before serving:
 2. Publish to HuggingFace:
    `chambul/MediSimplifier-OpenBioLLM-v2-merged` (public — no bucket credentials required to reproduce)
 
-3. Deploy Safe Endpoint v2 (Nebius Serverless Endpoint):
+3. Deploy Safe Endpoint v2 (Nebius GPU Endpoint):
    `jobs/safe_endpoint_v2.yaml` — vLLM loads model from HuggingFace, Token Factory judges via `NEBIUS_API_KEY`
 
 ```bash
