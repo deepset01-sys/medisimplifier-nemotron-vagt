@@ -50,7 +50,7 @@ Token Factory = Nemotron Super teacher (9,999 calls) + Nemotron Nano judge (708 
 
 ## LoRA Configuration
 
-v2 uses the winning configuration from v1 ablation (r=32, all_attn, seed=42, 3 epochs). No additional ablation was run — the v1 winner was validated across hardware (H100/H200, δ 1.6–5.0%) and transfers directly to the Nemotron-taught dataset.
+v2 uses the winning configuration from v1 ablation (r=32, all_attn, seed=42, 3 epochs). No additional ablation was run — the v1 winner reproduced on **Nebius H100 within a ROUGE-L delta of 1.6–5.0%** of the original **Technion H200** runs (across 3 v1 models: OpenBioLLM −1.6%, Mistral-7B −3.7%, BioMistral −5.0%; see the [v1 reproduction table](https://github.com/deepset01-sys/medisimplifier-nebius)) and transfers directly to the Nemotron-taught dataset.
 
 Base model loaded in **4-bit NF4 QLoRA** (`BitsAndBytesConfig`: `load_in_4bit=True`, `bnb_4bit_quant_type='nf4'`, double-quant, `compute_dtype=bfloat16`). The merge step loads the base **unquantized (fp16)** — not 4-bit — for merge fidelity.
 
