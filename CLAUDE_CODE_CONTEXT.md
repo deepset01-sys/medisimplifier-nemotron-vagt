@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-04 (Session: Fable 5 v2 numbers fixes landed — #5/#6/#8/#9/#11 ✅; #7/#10/#12 deferred; HEAD = 9cb472a)
+# Last updated: 2026-09-04 (Session: Fable 5 v2 — numbers #5/#6/#8/#9/#11 ✅ + endpoint framing #15 ✅ + Ultra #17 ✅; HEAD = fc88332)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -70,6 +70,8 @@ a83bfb8 - docs: README honest note on Qwen3-32B removal; gate updated
 cf3e45f - fix #8: README Krippendorff α values printed 0.077→−0.086 (line 245)
 ad0b508 - fix #9: README FK measured 7.2 (Claude) / 10.1 (Nemotron) refs, Δ+2.9 (line 105)
 9cb472a - fix #11: README δ 1.6–5.0% defined as ROUGE-L H200→H100 reproduction delta + cited v1 (line 53)
+58ab53c - fix #15: README endpoint framing — persistent GPU Endpoint, not serverless/scales-to-zero (lines 17/314/399)
+fc88332 - fix #17: README remove unused "Ultra" from Token Factory model list (line 147)
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -239,7 +241,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 9cb472a)
+## README STATUS — COMPLETE ✅ (HEAD = fc88332)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -499,10 +501,10 @@ Reconstructed from this session's verified findings — not a verbatim prior lis
 ### 🔴 README STRUCTURAL REDESIGN
 13. Split Research (VAGT finding) vs Product (safety gate) into distinct sections.
 14. DECISION: remove "v1 remains the recommended model" (contradicts the endpoint serving v2).
-15. Fix endpoint framing → persistent GPU Endpoint (endpoint create --public), stopped between demos; only the
-    Token Factory judges are serverless. Drop "scales to zero / $0 idle / permanent."
+15. ✅ (58ab53c + 1a9f72c) Endpoint framing fixed at all 4 spots (17/314/346/399): persistent GPU Endpoint,
+    stopped between demos; ~27s = judge-gate latency not a serverless wake; only Token Factory judges serverless.
 16. Consolidate the 3× "Key findings" restatements.
-17. Remove the unused "Ultra" mention.
+17. ✅ (fc88332) Removed the unused "Ultra" mention (README:147).
 18. Reconcile "6th-grade reading level" goal vs FK 8.87 (v2) / 7.33 (v1).
 
 ### 🟡 MEDIUM — Artifacts
@@ -535,10 +537,12 @@ Reconstructed from this session's verified findings — not a verbatim prior lis
 ### ✅ DONE — Fable 5 review v1 (no-bonus, 28/40) — 7 fixes landed; see FABLE 5 REVIEW HISTORY
 
 ### 🟡 NEXT — remaining offline work (no key)
-- Numbers batch: #5 #6 #8 #9 #11 ✅ landed (5 commits 1a9f72c→9cb472a). Remaining #7/#10/#12 need external actions.
-- #15 endpoint framing at README:314/399 — "permanent serverless / scales to zero" → persistent GPU Endpoint
-  (the cost-line half is already done in #5/1a9f72c).
-- #13-18 README structural redesign — split Research vs Product; remove "v1 recommended" (#14); Ultra/reading-level/repetition.
+- Surgical fixes DONE: #5 #6 #8 #9 #11 (numbers) + #15 (endpoint framing) + #17 (Ultra) + #21 (ref FK). Deferred: #7 #10 #12.
+- Remaining = editorial/decision items in the STRUCTURAL REDESIGN block:
+  · #14 DECISION — remove "v1 remains the recommended model" (contradicts the endpoint serving v2).
+  · #13 — split Research (VAGT finding) vs Product (safety gate) into distinct sections (structural).
+  · #16 — de-duplicate the 3× "Key findings" restatements.
+  · #18 — reconcile "6th-grade reading level" goal vs FK 8.87 (v2) / 7.33 (v1).
 
 ### 🟠 THEN (needs key / external)
 - Self-host Qwen3-32B on Nebius (Job + vLLM) → then revert safety_gate.py + un-defer #7.
