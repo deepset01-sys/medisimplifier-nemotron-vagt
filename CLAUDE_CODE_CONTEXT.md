@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-04 (Session: Fable 5 v2 deep read + endpoint-architecture forensics; MASTER ACTION LIST assembled — no code commits, HEAD stays 7c6721a)
+# Last updated: 2026-09-04 (Session: Fable 5 v2 numbers fixes landed — #5/#6/#8/#9/#11 ✅; #7/#10/#12 deferred; HEAD = 9cb472a)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -63,6 +63,13 @@ fec2193 - README: patient-facing value prop before "The finding" [Fable 5]
 973b0e7 - CLAUDE_CODE_CONTEXT refresh (recorded HEAD fec2193, Fable 5 v1 + 7 fixes)
 8ec5e73 - fix: Qwen judge → Qwen3-30B-A3B-Instruct-2507 (Qwen3-32B removed from Token Factory)
 a83bfb8 - docs: README honest note on Qwen3-32B removal; gate updated
+7c6721a - CLAUDE_CODE_CONTEXT refresh (recorded HEAD a83bfb8, Fable 5 v2 27/40, Qwen removal saga)
+8eff2f9 - CLAUDE_CODE_CONTEXT — Fable 5 v2 deep read + MASTER ACTION LIST + endpoint forensics (no code change)
+1a9f72c - fix #5+#15: README cost share 93%→57% + accurate hosting (line 346)
+6e916f2 - fix #6: README training cost ~$25-30 → ~$9 (line 103)
+cf3e45f - fix #8: README Krippendorff α values printed 0.077→−0.086 (line 245)
+ad0b508 - fix #9: README FK measured 7.2 (Claude) / 10.1 (Nemotron) refs, Δ+2.9 (line 105)
+9cb472a - fix #11: README δ 1.6–5.0% defined as ROUGE-L H200→H100 reproduction delta + cited v1 (line 53)
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -232,7 +239,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = a83bfb8)
+## README STATUS — COMPLETE ✅ (HEAD = 9cb472a)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -480,14 +487,14 @@ Reconstructed from this session's verified findings — not a verbatim prior lis
 4. Rename "VAGT-calibrated gate" → recall/specificity-informed (Φ_V never set thresholds).
 
 ### 🔴 RULE #2 — Numbers
-5. "93%" TF cost share → ~57% (README:346).
-6. "~$25–30" training cost → ~$9 (2.37h×$3.85) / cite $39.34 GPU line (README:103).
-7. Judge-params table Qwen3-32B → deployed Qwen3-30B-A3B (README:301; keep calibration table 261 historical).
-8. Print Krippendorff α values (claimed negative, never shown).
-9. "Claude implied ~7.0" FK — measure & commit or delete.
-10. "~$1.7 / ~21 min" JudgeBench teacher run — add to cost table or caveat (no artifact).
-11. "δ 1.6–5.0%" hardware-transfer — define/source or remove.
-12. Commit a Nebius billing export/screenshot backing $134.81.
+5. ✅ (1a9f72c) "93%" TF cost share → 57% (README:346).
+6. ✅ (6e916f2) "~$25–30" training cost → ~$9; cite $39.34 GPU line (README:103).
+7. ⏸ DEFERRED (self-host Qwen3-32B) — judge-params table stays Qwen3-32B until the self-hosted judge is live.
+8. ✅ (cf3e45f) Krippendorff α printed: diagnosis 0.077→−0.086, ΔKripp −0.163 [−0.305,−0.045] (README:245).
+9. ✅ (ad0b508) FK measured: Claude refs 7.2 / Nemotron refs 10.1 (textstat 0.7.13), Δ+2.9; fixed the 8.87 conflation (README:105).
+10. ⏸ DEFERRED (bundle with #12) — "$1.7/21min" JudgeBench run unsourced + absent from cost table (true total ≈$136.5).
+11. ✅ (9cb472a) "δ 1.6–5.0%" defined = ROUGE-L H200→H100 reproduction delta (3 v1 models) + cited v1 table (README:53).
+12. ⏸ PENDING — commit a Nebius billing export/screenshot backing $134.81 (needs Console; do #10 in the same pass).
 
 ### 🔴 README STRUCTURAL REDESIGN
 13. Split Research (VAGT finding) vs Product (safety gate) into distinct sections.
@@ -501,7 +508,7 @@ Reconstructed from this session's verified findings — not a verbatim prior lis
 ### 🟡 MEDIUM — Artifacts
 19. Raw API captures for the two Nemotron claims (empty output @1024; enable_thinking ineffective).
 20. Independent v2 quality measure (3-judge safety pass rate v2 vs v1) to support "not a quality failure."
-21. Measured FK-Grade of the Claude & Nemotron reference sets.
+21. ✅ (via #9) Measured FK-Grade of the reference sets: Claude 7.2 / Nemotron 10.1 (textstat 0.7.13, n=9,976).
 22. Changelog for train-v29/v30/v31/v32 image differences.
 23. Disclose DISAGREE selection: how many items tried before idx 146.
 
@@ -527,12 +534,16 @@ Reconstructed from this session's verified findings — not a verbatim prior lis
 
 ### ✅ DONE — Fable 5 review v1 (no-bonus, 28/40) — 7 fixes landed; see FABLE 5 REVIEW HISTORY
 
-### 🟡 NEXT — per user's roadmap (this session)
-- 1) Self-host Qwen3-32B on Nebius (Job + vLLM on the open weights) to restore the EXACT calibrated judge —
-     heaviest item (GPU/serving), needs key. [alternative to re-calibrating with Qwen3-30B-A3B]
-- 2) README structural redesign — split Research vs Product (MASTER ACTION LIST 13-18).
-- 3) Numbers fixes — MASTER ACTION LIST 5-12 (offline, no key).
-- 4) Fable 5 BONUS review — only AFTER the above land.
+### 🟡 NEXT — remaining offline work (no key)
+- Numbers batch: #5 #6 #8 #9 #11 ✅ landed (5 commits 1a9f72c→9cb472a). Remaining #7/#10/#12 need external actions.
+- #15 endpoint framing at README:314/399 — "permanent serverless / scales to zero" → persistent GPU Endpoint
+  (the cost-line half is already done in #5/1a9f72c).
+- #13-18 README structural redesign — split Research vs Product; remove "v1 recommended" (#14); Ultra/reading-level/repetition.
+
+### 🟠 THEN (needs key / external)
+- Self-host Qwen3-32B on Nebius (Job + vLLM) → then revert safety_gate.py + un-defer #7.
+- #12 billing export (Console) → then #10 (add the $1.7 JudgeBench run, reconcile the total).
+- Fable 5 BONUS review — after all the above land.
 
 ### 🟠 DECISIONS PENDING
 - #4 Llama in the gate: keep "3-judge" (add Llama to the rule) or relabel 2-judge (drop the Llama call)?
