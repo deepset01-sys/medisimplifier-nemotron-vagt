@@ -44,6 +44,39 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 
 Token Factory = Nemotron Super teacher (9,999 calls) + Nemotron Nano judge (708 calibration calls) + 3-judge safety panel. Jobs = v2 training (H100, 3 epochs) + evaluation. The novel v2 finding: VAGT inversion — adding Nemotron Nano as third judge cuts shared bias σ²_B on diagnosis from 0.347→0.229 while Fleiss κ goes negative, demonstrating that Cohen's κ — the only metric used in v1 — moves in the wrong direction here.
 
+## Choose your track
+
+This README is organized into two tracks — read whichever fits:
+
+- **[Track A — Research Design](#track-a--research-design)** — the estimand, MedSimp-JudgeBench, judge protocol, the VAGT framework, per-judge calibration, the inversion, and threats to validity. *(For the statistician.)*
+- **[Track B — Product Design](#track-b--product-design)** — the `POST /v1/simplify` contract, the safety-gate decision rule, measured operating characteristics, the model card, Nebius deployment, and known issues. *(For the developer / hackathon judge.)*
+
+> **Under construction:** the two tracks are being populated incrementally; detailed content currently lives in the sections below and is being relocated into A1-A9 / B1-B9.
+
+## Track A — Research Design
+
+### A1. Question & estimand
+### A2. Benchmark — MedSimp-JudgeBench
+### A3. Judge panel & protocol
+### A4. Measurement — VAGT
+### A5. Results I — judge calibration vs ground truth
+### A6. Results II — the inversion
+### A7. Results III — Nemotron Super as teacher
+### A8. Threats to validity
+### A9. Reproduce the analysis
+
+## Track B — Product Design
+
+### B1. What you get & who it's for
+### B2. Quickstart
+### B3. API contract
+### B4. The safety gate — how a verdict is produced
+### B5. Operating characteristics
+### B6. Model card — the served student
+### B7. Deployment on Nebius
+### B8. Known issues & operating caveats
+### B9. Reproduce the deployment
+
 ## LoRA Configuration
 
 v2 uses the winning configuration from v1 ablation (r=32, all_attn, seed=42, 3 epochs). No additional ablation was run — the v1 winner reproduced on **Nebius H100 within a ROUGE-L delta of 1.6–5.0%** of the original **Technion H200** runs (across 3 v1 models: OpenBioLLM −1.6%, Mistral-7B −3.7%, BioMistral −5.0%; see the [v1 reproduction table](https://github.com/deepset01-sys/medisimplifier-nebius)) and transfers directly to the Nemotron-taught dataset.
