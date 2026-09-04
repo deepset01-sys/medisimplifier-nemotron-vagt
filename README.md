@@ -343,7 +343,7 @@ Actual Nebius billing for v2 (all figures from Nebius Console):
 
 H100 NVLink rate: ~$3.85/hr on Nebius eu-north1.
 Training: ~2.4h (8,523s), 3 epochs, seed=42.
-Token Factory dominates cost (93%) — Nemotron Super's 16,000-token reasoning budget drives the teacher generation cost. Zero idle cost — all on Nebius Serverless, no reserved instances.
+Token Factory is the largest cost line (57%) — Nemotron Super's 16,000-token reasoning budget drives the teacher generation cost. Token Factory judges are per-token serverless (no standing infrastructure); the vLLM + 3-judge gate host is a persistent Nebius GPU Endpoint, stopped between demos.
 
 ## Reproduce step by step
 
