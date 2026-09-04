@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-03 (Session: Qwen3-32B removed from Token Factory → gate swap; Fable 5 v2 27/40 — 3 self-inflicted inconsistencies found)
+# Last updated: 2026-09-04 (Session: Fable 5 v2 deep read + endpoint-architecture forensics; MASTER ACTION LIST assembled — no code commits, HEAD stays 7c6721a)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -349,6 +349,26 @@ Two framing decisions pending (not arithmetic):
 Minor (flagged, unfixed): Krippendorff α value never printed; "Claude implied ~7.0" FK unsourced; "Ultra"
 mentioned but unused; "δ 1.6–5.0%" hardware-transfer unsourced.
 
+### v2 DEEP READ — cross-referenced findings (this session)
+Per-criterion (v2): Tech 8 / Design 6 / Impact 6 / Idea 7 → 27/40. Deep-read insights, each verified against
+committed code / both repos:
+- **Research vs Product are two different stories in one README.** Fable's Design hit (6/10): the VAGT
+  research finding and the shippable product need separate sections; the "v1 is what to deploy" note collides
+  with the endpoint serving v2.
+- **Llama is not in the decision rule** (verified safety_gate.py:122-135) — called+billed+returned, never
+  consulted. Origin: v1 was Llama+Qwen deciding; v2 rewrite (81b8b5c) swapped Nemotron into Llama's DISAGREE
+  slot (68% vs 14% diagnosis recall). Code comment documents it ("weakest recall — informational").
+  ACTION: add Llama to the rule OR relabel a 2-judge gate and drop the call.
+- **Endpoint framing wrong.** v1 blog + v1 README describe a *persistent* Nebius Endpoint
+  (`nebius ai endpoint create --public --container-port 8000`, "stays up"); the v1 blog reserves "serverless"
+  for Token Factory only. v2 README's "permanent serverless URL — scales to zero — $0 idle" is inaccurate for
+  the self-hosted vLLM+gate host (bills H100 GPU-h while up; ~27s is judge latency, not cold-start wake).
+- **Qwen3-32B removal is permanent** (retested: still 404 via API on both .ai/.com TLDs). To reproduce the
+  EXACT model, self-host the open weights ON Nebius (Job+vLLM) — NOT a third-party API (would break the
+  Nebius-native premise and still wouldn't match the original serving stack).
+- **API catalog is volatile**: /v1/models shrank 31→26→22 mid-session (Qwen3-Next also vanished). Real
+  reproducibility caveat. NOTE: only the API was checked — the Nebius console/UI was NOT inspected.
+
 ---
 
 ## VAGT FRAMING — CRITICAL NOTE
@@ -432,6 +452,66 @@ document their generating prompt.
 
 ---
 
+## ENDPOINT ARCHITECTURE (v1 vs v2 — forensics this session)
+- v1 (VERIFIED): deployed via `nebius ai endpoint create --public --container-port 8000` — a PERSISTENT Nebius
+  Endpoint ("stays up and answers requests", per the v1 blog). Image endpoint-v2, /start.sh (vLLM :8001 +
+  FastAPI gate :8000), H100.
+- v2 (COMMITTED): jobs/safe_endpoint_v2.yaml is a **Job** (nebius ai job create shape; timeout 24h; NO public
+  port / NO --public). Same container (endpoint-v3, /start.sh, H100).
+- GAP: the committed v2 Job YAML does NOT declare the public port, so as written it would not produce the live
+  URL (port8000-…tunnel.applications.eu-north1.nebius.cloud). How the live v2 endpoint was actually deployed is
+  UNVERIFIED from committed files — likely `endpoint create --public` like v1.
+- ACTION: correct safe_endpoint_v2.yaml to the Endpoint form (match v1 + the live URL), OR document the true
+  deploy command. Target = persistent Nebius Endpoint, NOT "permanent serverless / scales to zero."
+- Genuinely serverless = the Token Factory JUDGES (per-token, no standing infra). The vLLM+gate HOST is a
+  self-hosted GPU container (bills H100 GPU-h while up; stopped between demos).
+
+---
+
+## MASTER ACTION LIST (assembled from Fable 5 v2 + endpoint forensics — REVIEW/ADJUST)
+Reconstructed from this session's verified findings — not a verbatim prior list. Priority order:
+
+### 🔴 CRITICAL — Gate integrity
+1. Llama in the rule: add it, or relabel "2-judge gate" + drop the Llama call.
+2. Deployed Qwen uncalibrated: gate runs Qwen3-30B-A3B but all recall/VAGT numbers describe Qwen3-32B; the
+   "trust Qwen 0.5% FP" branch rationale no longer holds for the live model.
+3. calibration≠gate prompt: 68%/14%/7% & 203/708 are from the JSON-CoT calibration prompt, not the one-word
+   gate prompt — re-run 708 through safety_gate.py (needs a live Qwen).
+4. Rename "VAGT-calibrated gate" → recall/specificity-informed (Φ_V never set thresholds).
+
+### 🔴 RULE #2 — Numbers
+5. "93%" TF cost share → ~57% (README:346).
+6. "~$25–30" training cost → ~$9 (2.37h×$3.85) / cite $39.34 GPU line (README:103).
+7. Judge-params table Qwen3-32B → deployed Qwen3-30B-A3B (README:301; keep calibration table 261 historical).
+8. Print Krippendorff α values (claimed negative, never shown).
+9. "Claude implied ~7.0" FK — measure & commit or delete.
+10. "~$1.7 / ~21 min" JudgeBench teacher run — add to cost table or caveat (no artifact).
+11. "δ 1.6–5.0%" hardware-transfer — define/source or remove.
+12. Commit a Nebius billing export/screenshot backing $134.81.
+
+### 🔴 README STRUCTURAL REDESIGN
+13. Split Research (VAGT finding) vs Product (safety gate) into distinct sections.
+14. DECISION: remove "v1 remains the recommended model" (contradicts the endpoint serving v2).
+15. Fix endpoint framing → persistent GPU Endpoint (endpoint create --public), stopped between demos; only the
+    Token Factory judges are serverless. Drop "scales to zero / $0 idle / permanent."
+16. Consolidate the 3× "Key findings" restatements.
+17. Remove the unused "Ultra" mention.
+18. Reconcile "6th-grade reading level" goal vs FK 8.87 (v2) / 7.33 (v1).
+
+### 🟡 MEDIUM — Artifacts
+19. Raw API captures for the two Nemotron claims (empty output @1024; enable_thinking ineffective).
+20. Independent v2 quality measure (3-judge safety pass rate v2 vs v1) to support "not a quality failure."
+21. Measured FK-Grade of the Claude & Nemotron reference sets.
+22. Changelog for train-v29/v30/v31/v32 image differences.
+23. Disclose DISAGREE selection: how many items tried before idx 146.
+
+### 🟠 DECISIONS
+24. Re-calibration path: self-host Qwen3-32B on Nebius (exact) vs re-calibrate with Qwen3-30B-A3B vs keep
+    historical numbers behind the disclosure note.
+25. Catalog volatility: document reproducibility caveat; decide whether to pin judges via self-hosting.
+
+---
+
 ## PENDING TASKS (PRIORITY ORDER)
 
 ### 🔴 SECURITY — URGENT
@@ -447,9 +527,12 @@ document their generating prompt.
 
 ### ✅ DONE — Fable 5 review v1 (no-bonus, 28/40) — 7 fixes landed; see FABLE 5 REVIEW HISTORY
 
-### 🟡 NEXT — fix Fable 5 v2 inconsistencies (offline, no key)
-- #1 cost "93%" → ~57% (README:346); #2 "~$25–30" training → ~$9 / cite $39.34 GPU line (README:103);
-  #3 judge-params table Qwen3-32B → deployed Qwen3-30B-A3B (README:301; keep calibration table 261 as-is).
+### 🟡 NEXT — per user's roadmap (this session)
+- 1) Self-host Qwen3-32B on Nebius (Job + vLLM on the open weights) to restore the EXACT calibrated judge —
+     heaviest item (GPU/serving), needs key. [alternative to re-calibrating with Qwen3-30B-A3B]
+- 2) README structural redesign — split Research vs Product (MASTER ACTION LIST 13-18).
+- 3) Numbers fixes — MASTER ACTION LIST 5-12 (offline, no key).
+- 4) Fable 5 BONUS review — only AFTER the above land.
 
 ### 🟠 DECISIONS PENDING
 - #4 Llama in the gate: keep "3-judge" (add Llama to the rule) or relabel 2-judge (drop the Llama call)?
