@@ -521,7 +521,12 @@ Reconstructed from this session's verified findings — not a verbatim prior lis
     historical numbers behind the disclosure note.
 25. Catalog volatility: document reproducibility caveat; decide whether to pin judges via self-hosting.
 
----
+### 🟡 DOCUMENTATION (Track B)
+26. Document block-mode behavior on DISAGREE. `block` mode + consensus=="DISAGREE" → NOT blocked (flag-only,
+    warning returned). Code (safety_gate.py:137): `blocked = safety_mode == "block" and consensus in ("UNSAFE",
+    "ERROR")` — DISAGREE is not in the tuple, so it passes through. Decision is DELIBERATE (Qwen=SAFE is the
+    high-specificity anchor; blocking DISAGREE would block ~1-in-3 false alarms) but UNDOCUMENTED. Goes in:
+    B3 (API contract — define block behavior for all consensus classes) + B8 (known issues). Verified 2026-09-05.
 
 ## PENDING TASKS (PRIORITY ORDER)
 
@@ -541,7 +546,7 @@ Reconstructed from this session's verified findings — not a verbatim prior lis
 ### 🟡 NEXT — Fable 5 BONUS review
 - All surgical + decision fixes landed: #5 #6 #8 #9 #11 #14 #15 #17 #21 ✅. Deferred (external): #7 #10 #12.
 - #13 (Research vs Product split), #16 (de-dup Key findings), #18 (reading-level vs FK): BLUEPRINT READY —
-  Fable 5's two-track restructure plan is in readme_restructure_response.txt (UNTRACKED; Track A Research A1-A9
+  Fable 5's two-track restructure plan is in readme_restructure_response.txt (UNTRACKED, READ IN FULL this session; Track A Research A1-A9
   / Track B Product B1-B9, + §5 remove/consolidate tables + a proposed opening 3 paragraphs). Prompt =
   readme_restructure_prompt.txt (also untracked). ACTION: use the plan as the blueprint; implement the A/B
   tracks INCREMENTALLY, show-first (not one giant rewrite).
