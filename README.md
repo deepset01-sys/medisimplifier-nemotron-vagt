@@ -60,20 +60,6 @@ Base model loaded in **4-bit NF4 QLoRA** (`BitsAndBytesConfig`: `load_in_4bit=Tr
 | lora_dropout | 0.05 | v1 convention |
 | use_rslora | True | rank-stabilized LoRA |
 
-## Key findings
-
-| Finding | Result | Nebius Service |
-|---------|--------|----------------|
-| Teacher replacement | Nemotron Super produces stylistically different references than Claude Opus (ROUGE-L 0.525 between teachers) | Token Factory |
-| Student faithfulness | OpenBioLLM v2 learns Nemotron's style — FK-Grade 8.87 vs 7.33 in v1 | Jobs |
-| v2 evaluation | ROUGE-L=0.5254, SARI=60.36, BERTScore=0.9113 on GuyDor007 test set | Jobs |
-| Nemotron Nano recall | 84.2% recall on injected errors — Llama 31.7%, Qwen 55.9% | Token Factory |
-| Diagnosis blind spot — fixed | Nemotron Nano 68% vs Llama 14% / Qwen 7% | Token Factory |
-| VAGT inversion | Φ_V +0.071 — Fleiss κ goes negative | Token Factory |
-| Safe Endpoint v2 | Live — VAGT-calibrated 3-judge gate catches omitted content | Endpoints + Token Factory |
-
-> Verified rows are computed from committed artifacts ([`nemotron_calibration_full.json`](nemotron_calibration_full.json), [`vagt_nemotron_results.txt`](vagt_nemotron_results.txt), [`results/eval_v2_results.json`](results/eval_v2_results.json)) and reproducible via the scripts/jobs in [Reproduce](#reproduce-step-by-step) — no numbers are invented.
-
 ## v2 Evaluation Results — v1 (Claude teacher) vs v2 (Nemotron teacher)
 
 The Nemotron-taught student was evaluated on the **same GuyDor007 test set (n=1,001, Claude references)** as v1 — an apples-to-apples yardstick. Full metrics in [`results/eval_v2_results.json`](results/eval_v2_results.json).
