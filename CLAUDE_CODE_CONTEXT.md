@@ -540,8 +540,11 @@ Reconstructed from this session's verified findings — not a verbatim prior lis
 
 ### 🟡 NEXT — Fable 5 BONUS review
 - All surgical + decision fixes landed: #5 #6 #8 #9 #11 #14 #15 #17 #21 ✅. Deferred (external): #7 #10 #12.
-- #13 (Research vs Product split), #16 (de-dup Key findings), #18 (reading-level vs FK) DEFERRED to the Fable 5
-  bonus review — larger editorial restructuring, better done with fresh reviewer signal on what still needs it.
+- #13 (Research vs Product split), #16 (de-dup Key findings), #18 (reading-level vs FK): BLUEPRINT READY —
+  Fable 5's two-track restructure plan is in readme_restructure_response.txt (UNTRACKED; Track A Research A1-A9
+  / Track B Product B1-B9, + §5 remove/consolidate tables + a proposed opening 3 paragraphs). Prompt =
+  readme_restructure_prompt.txt (also untracked). ACTION: use the plan as the blueprint; implement the A/B
+  tracks INCREMENTALLY, show-first (not one giant rewrite).
 - RUN: run_review.py --prompt review_prompt_with_bonus.txt --model claude-fable-5-1 (MAX_TOKENS=16000).
   Open item flagged this session (not yet in the list): "Serverless Endpoints" in the "Four Nebius services"
   line (README:19) — decide "Endpoints" vs keep, when addressing #13.
