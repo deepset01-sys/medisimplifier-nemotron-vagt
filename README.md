@@ -14,7 +14,7 @@ MediSimplifier simplifies medical discharge summaries to a 6th-grade reading lev
 
 **The finding.** On silently-dropped diagnoses in discharge summaries, Llama-3.3-70B catches 14% and Qwen3-32B catches 7% — they share a clinical blind spot. Adding NVIDIA Nemotron Nano as a third judge lifts recall to 68% and raises ground-truth-anchored dependability Φ_V by **+0.071 [+0.055, +0.087]** — *while* Fleiss κ goes *negative* (0.076 → −0.088). Consensus statistics say the panel got **worse**; measured against ground truth, it moved **closer to truth** — the exact failure mode this submission's VAGT framework exists to expose.
 
-**Executive Summary:** 9,999 Nemotron Super teacher calls via Token Factory → training on H100 (3 epochs, ~2.4h) → Nemotron Nano joins Llama + Qwen as calibrated third judge → 708-sample VAGT 3-rater analysis → Safe Simplification Endpoint v2 — zero standing infrastructure, $0 idle cost.
+**Executive Summary:** 9,999 Nemotron Super teacher calls via Token Factory → training on H100 (3 epochs, ~2.4h) → Nemotron Nano joins Llama + Qwen as calibrated third judge → 708-sample VAGT 3-rater analysis → Safe Simplification Endpoint v2. Token Factory (teacher + judges) is per-token serverless — zero standing infrastructure, $0 idle; the endpoint host is a GPU Endpoint, stopped between demos.
 
 **Key findings:** (1) Nemotron Super as teacher produces stylistically different references than Claude Opus (ROUGE-L 0.525 between teachers) — student faithfully learns Nemotron's style (FK-Grade 8.87 vs 7.33 in v1); (2) Nemotron Nano catches diagnosis omissions at 68% recall vs Llama's 14% and Qwen's 7% — the clinical blind spot both v1 judges shared; (3) VAGT inversion — adding Nemotron as third judge cuts the shared blind-spot bias on diagnosis while Fleiss κ goes negative, demonstrating on MedSimp-JudgeBench that consensus statistics can move the wrong way. Four Nebius services: Token Factory, Jobs, Object Storage, Serverless Endpoints.
 
@@ -311,7 +311,7 @@ Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qw
 
 All three judges run in parallel (ThreadPoolExecutor, max_workers=3) via Nebius Token Factory — latency ≈ max(judges) not sum (~27s total).
 
-**Endpoint verified (live):** The Safe Endpoint v2 was tested live (health returns `{"vllm": true, "token_factory": true, "ready": true}`). On a faithful discharge-summary simplification all three judges return SAFE (not blocked); on a simplification that omits a diagnosis the judges return UNSAFE and the output is flagged — the 3-judge Token Factory gate runs in ~27 s. The **DISAGREE + "diagnosis-drop risk"** branch is the gate's *designed* response to a borderline drop that only Nemotron catches — the regime the VAGT calibration predicts (Nemotron 68% vs Llama 14% / Qwen 7% diagnosis recall on the MedSimp-JudgeBench perturbations). On free-form inputs tested here, Llama and Qwen also caught the *overt* drops, so DISAGREE did not trigger live; it fires on *subtle secondary-diagnosis* drops that split the panel — see the **worked gate-level example** above. The endpoint is live at a permanent Nebius serverless URL — scales to zero and wakes on request (~27s including 3-judge Token Factory gate). Redeploy via `safe_endpoint_v2.yaml` if needed.
+**Endpoint verified (live):** The Safe Endpoint v2 was tested live (health returns `{"vllm": true, "token_factory": true, "ready": true}`). On a faithful discharge-summary simplification all three judges return SAFE (not blocked); on a simplification that omits a diagnosis the judges return UNSAFE and the output is flagged — the 3-judge Token Factory gate runs in ~27 s. The **DISAGREE + "diagnosis-drop risk"** branch is the gate's *designed* response to a borderline drop that only Nemotron catches — the regime the VAGT calibration predicts (Nemotron 68% vs Llama 14% / Qwen 7% diagnosis recall on the MedSimp-JudgeBench perturbations). On free-form inputs tested here, Llama and Qwen also caught the *overt* drops, so DISAGREE did not trigger live; it fires on *subtle secondary-diagnosis* drops that split the panel — see the **worked gate-level example** above. The endpoint runs as a persistent Nebius GPU Endpoint (self-hosted vLLM + 3-judge gate container), stopped between demos — not a scale-to-zero managed service; the ~27s is the 3-judge Token Factory gate latency, not a cold-start wake. The judges themselves run per-token on Token Factory (serverless). Redeploy via `safe_endpoint_v2.yaml` if needed.
 
 ## Hardware and cost
 
@@ -396,9 +396,9 @@ Merge job requires: `AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY` (Nebius S3 key
 The merged model is publicly available — no training required to test the endpoint:
 `chambul/MediSimplifier-OpenBioLLM-v2-merged`
 
-> **Live endpoint (permanent Nebius serverless URL):**
+> **Live endpoint (Nebius GPU Endpoint — application-tunnel URL, stopped between demos):**
 > https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud
-> First request wakes the endpoint (~27s including judge calls); if no response in 60s, retry once.
+> When running, a request returns in ~27s (3-judge Token Factory gate latency, not a serverless cold-start wake); retry once if no response in 60s. A stopped endpoint first loads vLLM (~10–15 min).
 
 **SAFE case** — live call to the hosted Safe Endpoint v2 (real response below):
 ```bash
