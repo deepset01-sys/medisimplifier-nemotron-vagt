@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-04 (Session: Fable 5 v2 — #5/#6/#8/#9/#11 + #14/#15/#17/#21 ✅; #13/#16/#18 → Fable bonus; HEAD = 2ce4086)
+# Last updated: 2026-09-05 (Session: README restructure BEGUN — opening → Fable §6 3 paragraphs; #18 ✅, #16 partial; HEAD = 7e3f088)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -73,6 +73,7 @@ ad0b508 - fix #9: README FK measured 7.2 (Claude) / 10.1 (Nemotron) refs, Δ+2.9
 58ab53c - fix #15: README endpoint framing — persistent GPU Endpoint, not serverless/scales-to-zero (lines 17/314/399)
 fc88332 - fix #17: README remove unused "Ultra" from Token Factory model list (line 147)
 2ce4086 - fix #14 + #15 straggler: reframe "deploy v1" → "what the endpoint serves" (line 107); Serverless→GPU Endpoint (line 159)
+7e3f088 - restructure BEGIN: opening block → Fable §6 3 paragraphs (8th-grade, full CIs, Track A/B nav) + line-25 reading-level fix [#18 ✅, #16 partial]
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -242,7 +243,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 2ce4086)
+## README STATUS — COMPLETE ✅ (HEAD = 7e3f088)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -505,9 +506,17 @@ Reconstructed from this session's verified findings — not a verbatim prior lis
     — removed the deploy-v1 instruction, kept the honest "v2 = research/safety, not a readability improvement".
 15. ✅ (58ab53c + 1a9f72c + 2ce4086) Endpoint framing fixed at ALL 5 spots (17/314/346/399 + 159): persistent GPU
     Endpoint, stopped between demos; ~27s = judge-gate latency not a serverless wake; only Token Factory serverless.
-16. Consolidate the 3× "Key findings" restatements.
+16. ⏳ PARTIAL (7e3f088) — removed the front-matter "Key findings" PROSE paragraph (folded into the new opening
+    ¶2). REMAINING: the "## Key findings" TABLE (README:63-72) still restates the finding and carries overclaims
+    (`Diagnosis blind spot — fixed` → "narrowed"; bare `Φ_V +0.071` should pair recall with FP). Remove or rework.
 17. ✅ (fc88332) Removed the unused "Ultra" mention (README:147).
-18. Reconcile "6th-grade reading level" goal vs FK 8.87 (v2) / 7.33 (v1).
+18. ✅ (7e3f088) Reconciled reading-level: opening + line 25 now "targets 6th-grade; v2 achieves ~8th-grade
+    (FK 8.87, train-v32 image textstat)". Only one "6th-grade" mention remains (the honest one). NOTE: 8.87 is
+    the train-v32 textstat value, NOT local 0.7.13 (which gives 9.91) — do not relabel it 0.7.13.
+
+⚠️ LIVE DEBT (from 7e3f088): the new opening ¶3 references "Track A — Research Design" and "Track B — Product
+Design" sections that DO NOT EXIST YET. The README below is not yet organized into named tracks. Next steps must
+build/label the A/B sections so the opening isn't over-promising. #13 (structure) is now IN PROGRESS, not deferred.
 
 ### 🟡 MEDIUM — Artifacts
 19. Raw API captures for the two Nemotron claims (empty output @1024; enable_thinking ineffective).
@@ -543,16 +552,14 @@ Reconstructed from this session's verified findings — not a verbatim prior lis
 
 ### ✅ DONE — Fable 5 review v1 (no-bonus, 28/40) — 7 fixes landed; see FABLE 5 REVIEW HISTORY
 
-### 🟡 NEXT — Fable 5 BONUS review
-- All surgical + decision fixes landed: #5 #6 #8 #9 #11 #14 #15 #17 #21 ✅. Deferred (external): #7 #10 #12.
-- #13 (Research vs Product split), #16 (de-dup Key findings), #18 (reading-level vs FK): BLUEPRINT READY —
-  Fable 5's two-track restructure plan is in readme_restructure_response.txt (UNTRACKED, READ IN FULL this session; Track A Research A1-A9
-  / Track B Product B1-B9, + §5 remove/consolidate tables + a proposed opening 3 paragraphs). Prompt =
-  readme_restructure_prompt.txt (also untracked). ACTION: use the plan as the blueprint; implement the A/B
-  tracks INCREMENTALLY, show-first (not one giant rewrite).
-- RUN: run_review.py --prompt review_prompt_with_bonus.txt --model claude-fable-5-1 (MAX_TOKENS=16000).
-  Open item flagged this session (not yet in the list): "Serverless Endpoints" in the "Four Nebius services"
-  line (README:19) — decide "Endpoints" vs keep, when addressing #13.
+### 🟡 NEXT — continue README restructure (blueprint = readme_restructure_response.txt, UNTRACKED)
+- Restructure BEGUN (7e3f088): opening done (#18 ✅). Incremental, show-first (Fable's two-track plan A1-A9 / B1-B9).
+- 1) Complete #16: remove or rework the "## Key findings" TABLE (README:63-72) — overclaims ("fixed"→"narrowed";
+     pair recall with FP). It now duplicates the new opening ¶2.
+- 2) Build/label Track A (Research) + Track B (Product) sections so the opening ¶3 forward-reference resolves.
+- 3) THEN self-host Qwen3-32B (gate integrity #7 → revert safety_gate.py). Deferred (external): #10 #12; #26 doc.
+- (Fable 5 BONUS review = later, after the structure lands.) "Serverless Endpoints" (old README:19) already
+  resolved by the opening rewrite — no longer pending.
 
 ### 🟠 THEN (needs key / external)
 - Self-host Qwen3-32B on Nebius (Job + vLLM) → then revert safety_gate.py + un-defer #7.
