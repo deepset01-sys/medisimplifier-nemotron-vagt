@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-05 (Session: README restructure BEGUN — opening → Fable §6 3 paragraphs; #18 ✅, #16 partial; HEAD = 7e3f088)
+# Last updated: 2026-09-05 (Session: README restructure — opening ✅, Key-findings table removed; #16 ✅ #18 ✅; NEXT = #13 Track A/B; HEAD = e8a8e31)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -74,6 +74,7 @@ ad0b508 - fix #9: README FK measured 7.2 (Claude) / 10.1 (Nemotron) refs, Δ+2.9
 fc88332 - fix #17: README remove unused "Ultra" from Token Factory model list (line 147)
 2ce4086 - fix #14 + #15 straggler: reframe "deploy v1" → "what the endpoint serves" (line 107); Serverless→GPU Endpoint (line 159)
 7e3f088 - restructure BEGIN: opening block → Fable §6 3 paragraphs (8th-grade, full CIs, Track A/B nav) + line-25 reading-level fix [#18 ✅, #16 partial]
+e8a8e31 - restructure: remove "## Key findings" table + orphaned footnote (redundant with opening ¶2; overclaims gone) [#16 ✅]
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -243,7 +244,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 7e3f088)
+## README STATUS — COMPLETE ✅ (HEAD = e8a8e31)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -506,9 +507,9 @@ Reconstructed from this session's verified findings — not a verbatim prior lis
     — removed the deploy-v1 instruction, kept the honest "v2 = research/safety, not a readability improvement".
 15. ✅ (58ab53c + 1a9f72c + 2ce4086) Endpoint framing fixed at ALL 5 spots (17/314/346/399 + 159): persistent GPU
     Endpoint, stopped between demos; ~27s = judge-gate latency not a serverless wake; only Token Factory serverless.
-16. ⏳ PARTIAL (7e3f088) — removed the front-matter "Key findings" PROSE paragraph (folded into the new opening
-    ¶2). REMAINING: the "## Key findings" TABLE (README:63-72) still restates the finding and carries overclaims
-    (`Diagnosis blind spot — fixed` → "narrowed"; bare `Φ_V +0.071` should pair recall with FP). Remove or rework.
+16. ✅ (7e3f088 prose + e8a8e31 table) — both "Key findings" restatements removed. The table's overclaims
+    (`Diagnosis blind spot — fixed`, `Safe Endpoint v2 Live — VAGT-calibrated`, bare `Φ_V +0.071`, recall-without-FP)
+    and the "no numbers are invented" editorializing are gone with it. Finding now lives once (opening ¶2).
 17. ✅ (fc88332) Removed the unused "Ultra" mention (README:147).
 18. ✅ (7e3f088) Reconciled reading-level: opening + line 25 now "targets 6th-grade; v2 achieves ~8th-grade
     (FK 8.87, train-v32 image textstat)". Only one "6th-grade" mention remains (the honest one). NOTE: 8.87 is
@@ -552,14 +553,13 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
 
 ### ✅ DONE — Fable 5 review v1 (no-bonus, 28/40) — 7 fixes landed; see FABLE 5 REVIEW HISTORY
 
-### 🟡 NEXT — continue README restructure (blueprint = readme_restructure_response.txt, UNTRACKED)
-- Restructure BEGUN (7e3f088): opening done (#18 ✅). Incremental, show-first (Fable's two-track plan A1-A9 / B1-B9).
-- 1) Complete #16: remove or rework the "## Key findings" TABLE (README:63-72) — overclaims ("fixed"→"narrowed";
-     pair recall with FP). It now duplicates the new opening ¶2.
-- 2) Build/label Track A (Research) + Track B (Product) sections so the opening ¶3 forward-reference resolves.
-- 3) THEN self-host Qwen3-32B (gate integrity #7 → revert safety_gate.py). Deferred (external): #10 #12; #26 doc.
-- (Fable 5 BONUS review = later, after the structure lands.) "Serverless Endpoints" (old README:19) already
-  resolved by the opening rewrite — no longer pending.
+### 🟡 NEXT — #13 build Track A/B sections (blueprint = readme_restructure_response.txt, UNTRACKED)
+- Done so far (incremental, show-first): opening #18 ✅ (7e3f088), Key-findings dedup #16 ✅ (7e3f088 + e8a8e31).
+- NOW: #13 — build/label Track A (Research: A1-A9) + Track B (Product: B1-B9) sections so the opening ¶3
+  forward-reference resolves. This is the big structural chunk — propose a section-mapping plan first, then
+  reorganize incrementally (map existing sections into A/B, don't rewrite from scratch).
+- THEN: self-host Qwen3-32B (gate integrity #7 → revert safety_gate.py). Deferred (external): #10 #12; #26 doc.
+  Fable 5 BONUS review = after the structure lands.
 
 ### 🟠 THEN (needs key / external)
 - Self-host Qwen3-32B on Nebius (Job + vLLM) → then revert safety_gate.py + un-defer #7.
