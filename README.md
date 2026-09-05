@@ -108,6 +108,40 @@ Note (three denominators) — three Nemotron recall numbers appear across this R
 ### A8. Threats to validity
 ### A9. Reproduce the analysis
 
+**Environment:** Python 3.12 · `pip install -r requirements.txt` (openai, numpy, requests, tqdm, datasets).
+**Auth:** `export NEBIUS_API_KEY=<your-token-factory-key>`
+
+```bash
+git clone https://github.com/deepset01-sys/medisimplifier-nemotron-vagt.git
+cd medisimplifier-nemotron-vagt
+pip install -r requirements.txt
+
+# 0. Confirm the Nemotron model strings are live on your account
+python nemotron_judge_test.py --list-models
+
+# 1. Nemotron Nano as a safety judge (smoke test, then full 708)
+python nemotron_judge_test.py --n 20                       # smoke
+python nemotron_judge_test.py --n 708 --workers 12 \
+       --output nemotron_calibration_full.json             # full 3-judge set
+
+# 2. VAGT 3-rater decomposition (reads the calibration file above)
+python vagt_nemotron_analysis.py > vagt_nemotron_results.txt
+
+# 3. Nemotron Super teacher — JudgeBench references (519 unique -> 708 records)
+python nemotron_teacher.py --list-models                   # verify Super string
+python nemotron_teacher.py --limit 5 --max-tokens 16000    # smoke
+python nemotron_teacher.py --workers 12 --max-tokens 16000 \
+       --output nemotron_references.json
+
+# 4. Nemotron Super teacher — full training set (9,999, resume-capable)
+python nemotron_training_data.py --limit 5                 # smoke
+python nemotron_training_data.py --workers 12              # full run (resumes on restart)
+```
+
+> **Reasoning-model reminder:** all Nemotron generation uses `--max-tokens 16000` (Super) / `8000+` (Nano). Too small a budget returns empty output — the scripts flag and retry, never save a truncated result. Runs checkpoint every 50 records; `nemotron_training_data.py` resumes from the output file.
+
+**Expected cost:** $0.90 calibration (708×3 judges), ~$1.7 JudgeBench refs (519 calls), $75.19 full teacher run (9,999 calls).
+
 ## Track B — Product Design
 
 ### B1. What you get & who it's for
@@ -197,6 +231,83 @@ Note: Judges reproducing the endpoint load directly from `chambul/MediSimplifier
 
 1. **Qwen judge swap.** `Qwen/Qwen3-32B` was removed from Nebius Token Factory during the project window; the gate now runs `Qwen/Qwen3-30B-A3B-Instruct-2507` for operational continuity. Every published calibration, VAGT, and recall number describes the original Qwen3-32B panel, and the rule's "trust Qwen's 0.5% FP" justification is anchored to the retired model. Status: uncalibrated — action: rerun the 708-item calibration on the replacement.
 ### B9. Reproduce the deployment
+
+**Environment:** Python 3.12 · `pip install -r requirements.txt` (openai, numpy, requests, tqdm, datasets).
+**Auth:** `export NEBIUS_API_KEY=<your-token-factory-key>`
+
+#### Nebius Jobs (Console)
+
+Submit each job via Nebius Console → AI Services → Jobs → Create Job:
+
+| Job | Config file | Expected output |
+|-----|-------------|-----------------|
+| Training | `jobs/job_train_v2.yaml` | adapter in `medisimplifier-adapters-v2/adapter/` |
+| Evaluation | `jobs/job_eval_v2.yaml` | `rouge_l: 0.5254` in `results/eval_v2_results.json` |
+| Nemotron-refs eval | `jobs/job_eval_v2_nemotron_refs.yaml` | `rouge_l: 0.6010` in `results/eval_v2_nemotron_results.json` |
+| Merge | `jobs/job_merge_v2.yaml` | merged model in bucket + published to HF |
+| Endpoint | `jobs/safe_endpoint_v2.yaml` | `/health` → `{"ready": true}` |
+
+Merge job requires: `AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY` (Nebius S3 keys — create at IAM → Service Accounts → Access keys).
+
+The merged model is publicly available — no training required to test the endpoint:
+`chambul/MediSimplifier-OpenBioLLM-v2-merged`
+
+> **Live endpoint (Nebius GPU Endpoint — application-tunnel URL, stopped between demos):**
+> https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud
+> When running, a request returns in ~27s (3-judge Token Factory gate latency, not a serverless cold-start wake); retry once if no response in 60s. A stopped endpoint first loads vLLM (~10–15 min).
+
+**SAFE case** — live call to the hosted Safe Endpoint v2 (real response below):
+```bash
+curl -X POST https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud/v1/simplify \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Patient presented with acute myocardial infarction. Prescribed metformin 1000mg BID and lisinopril 10mg QD. Diagnosis of type 2 diabetes mellitus confirmed. Follow up in 2 weeks.", "safety_mode": "flag"}'
+```
+Response (captured live; also committed at [`results/endpoint_smoke_test.json`](results/endpoint_smoke_test.json)):
+```json
+{
+  "simplified_text": "The patient came in with a heart attack. The patient was given metformin 1000mg twice a day and lisinopril 10mg once a day. The patient was found to have type 2 diabetes. The patient should come back in 2 weeks for a checkup.",
+  "blocked": false,
+  "safety": {"llama_verdict": "SAFE", "qwen_verdict": "SAFE", "nemotron_verdict": "SAFE", "blocked": false, "consensus": "SAFE", "warning": null},
+  "latency_ms": {"vllm_ms": 428, "total_ms": 26975}
+}
+```
+
+**UNSAFE case — gate-level test (crafted dropped-diagnosis input).** `/v1/simplify` judges the model's *own* output, which faithfully preserves diagnoses — so to exercise the UNSAFE path, call the gate directly with a simplification that drops a diagnosis:
+```python
+from src.safety_gate import evaluate_safety   # requires NEBIUS_API_KEY
+original   = "Patient has acute MI, type 2 diabetes mellitus, and hypertension. HbA1c 9.2%."
+simplified = "Patient had a heart attack and high blood pressure. Follow up in 2 weeks."  # diabetes + HbA1c dropped
+print(evaluate_safety(original, simplified))
+# → {'llama_verdict': 'UNSAFE', 'qwen_verdict': 'UNSAFE', 'nemotron_verdict': 'UNSAFE',
+#    'blocked': False, 'consensus': 'UNSAFE', 'warning': None}
+```
+All three judges catch the dropped diagnosis → consensus **UNSAFE**. (This drop is overt enough that all three flag it; the **DISAGREE** branch fires on subtler drops only Nemotron catches — see [the safety gate (B4)](#b4-the-safety-gate--how-a-verdict-is-produced).)
+
+> **Note:** The full API contract (request schema, `safety_mode`, response fields, error semantics) consolidates into **B3. API contract** in Step 4; the `safety_mode` and response-contract blocks below are provisional here.
+
+**`safety_mode` values:**
+- `"flag"` (default) — returns simplified text even if UNSAFE; adds `warning` field
+- `"block"` — sets `blocked: true` and nulls `simplified_text` when consensus is UNSAFE or ERROR
+
+**Response contract:**
+```json
+{
+  "simplified_text": "...",
+  "blocked": false,
+  "safety": {
+    "llama_verdict": "SAFE|UNSAFE|ERROR",
+    "qwen_verdict": "SAFE|UNSAFE|ERROR",
+    "nemotron_verdict": "SAFE|UNSAFE|ERROR",
+    "blocked": false,
+    "consensus": "SAFE|UNSAFE|DISAGREE|ERROR",
+    "warning": null
+  },
+  "latency_ms": {
+    "vllm_ms": 428,
+    "total_ms": 26975
+  }
+}
+```
 
 ## v2 Evaluation Results — v1 (Claude teacher) vs v2 (Nemotron teacher)
 
@@ -358,112 +469,6 @@ Actual Nebius billing for v2 (all figures from Nebius Console):
 H100 NVLink rate: ~$3.85/hr on Nebius eu-north1.
 Training: ~2.4h (8,523s), 3 epochs, seed=42.
 Token Factory is the largest cost line (57%) — Nemotron Super's 16,000-token reasoning budget drives the teacher generation cost. Token Factory judges are per-token serverless (no standing infrastructure); the vLLM + 3-judge gate host is a persistent Nebius GPU Endpoint, stopped between demos.
-
-## Reproduce step by step
-
-**Environment:** Python 3.12 · `pip install -r requirements.txt` (openai, numpy, requests, tqdm, datasets).
-**Auth:** `export NEBIUS_API_KEY=<your-token-factory-key>`
-
-```bash
-git clone https://github.com/deepset01-sys/medisimplifier-nemotron-vagt.git
-cd medisimplifier-nemotron-vagt
-pip install -r requirements.txt
-
-# 0. Confirm the Nemotron model strings are live on your account
-python nemotron_judge_test.py --list-models
-
-# 1. Nemotron Nano as a safety judge (smoke test, then full 708)
-python nemotron_judge_test.py --n 20                       # smoke
-python nemotron_judge_test.py --n 708 --workers 12 \
-       --output nemotron_calibration_full.json             # full 3-judge set
-
-# 2. VAGT 3-rater decomposition (reads the calibration file above)
-python vagt_nemotron_analysis.py > vagt_nemotron_results.txt
-
-# 3. Nemotron Super teacher — JudgeBench references (519 unique -> 708 records)
-python nemotron_teacher.py --list-models                   # verify Super string
-python nemotron_teacher.py --limit 5 --max-tokens 16000    # smoke
-python nemotron_teacher.py --workers 12 --max-tokens 16000 \
-       --output nemotron_references.json
-
-# 4. Nemotron Super teacher — full training set (9,999, resume-capable)
-python nemotron_training_data.py --limit 5                 # smoke
-python nemotron_training_data.py --workers 12              # full run (resumes on restart)
-```
-
-> **Reasoning-model reminder:** all Nemotron generation uses `--max-tokens 16000` (Super) / `8000+` (Nano). Too small a budget returns empty output — the scripts flag and retry, never save a truncated result. Runs checkpoint every 50 records; `nemotron_training_data.py` resumes from the output file.
-
-### Nebius Jobs (Console)
-
-Submit each job via Nebius Console → AI Services → Jobs → Create Job:
-
-| Job | Config file | Expected output |
-|-----|-------------|-----------------|
-| Training | `jobs/job_train_v2.yaml` | adapter in `medisimplifier-adapters-v2/adapter/` |
-| Evaluation | `jobs/job_eval_v2.yaml` | `rouge_l: 0.5254` in `results/eval_v2_results.json` |
-| Nemotron-refs eval | `jobs/job_eval_v2_nemotron_refs.yaml` | `rouge_l: 0.6010` in `results/eval_v2_nemotron_results.json` |
-| Merge | `jobs/job_merge_v2.yaml` | merged model in bucket + published to HF |
-| Endpoint | `jobs/safe_endpoint_v2.yaml` | `/health` → `{"ready": true}` |
-
-Merge job requires: `AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY` (Nebius S3 keys — create at IAM → Service Accounts → Access keys).
-
-The merged model is publicly available — no training required to test the endpoint:
-`chambul/MediSimplifier-OpenBioLLM-v2-merged`
-
-> **Live endpoint (Nebius GPU Endpoint — application-tunnel URL, stopped between demos):**
-> https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud
-> When running, a request returns in ~27s (3-judge Token Factory gate latency, not a serverless cold-start wake); retry once if no response in 60s. A stopped endpoint first loads vLLM (~10–15 min).
-
-**SAFE case** — live call to the hosted Safe Endpoint v2 (real response below):
-```bash
-curl -X POST https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud/v1/simplify \
-  -H "Content-Type: application/json" \
-  -d '{"text": "Patient presented with acute myocardial infarction. Prescribed metformin 1000mg BID and lisinopril 10mg QD. Diagnosis of type 2 diabetes mellitus confirmed. Follow up in 2 weeks.", "safety_mode": "flag"}'
-```
-Response (captured live; also committed at [`results/endpoint_smoke_test.json`](results/endpoint_smoke_test.json)):
-```json
-{
-  "simplified_text": "The patient came in with a heart attack. The patient was given metformin 1000mg twice a day and lisinopril 10mg once a day. The patient was found to have type 2 diabetes. The patient should come back in 2 weeks for a checkup.",
-  "blocked": false,
-  "safety": {"llama_verdict": "SAFE", "qwen_verdict": "SAFE", "nemotron_verdict": "SAFE", "blocked": false, "consensus": "SAFE", "warning": null},
-  "latency_ms": {"vllm_ms": 428, "total_ms": 26975}
-}
-```
-
-**UNSAFE case — gate-level test (crafted dropped-diagnosis input).** `/v1/simplify` judges the model's *own* output, which faithfully preserves diagnoses — so to exercise the UNSAFE path, call the gate directly with a simplification that drops a diagnosis:
-```python
-from src.safety_gate import evaluate_safety   # requires NEBIUS_API_KEY
-original   = "Patient has acute MI, type 2 diabetes mellitus, and hypertension. HbA1c 9.2%."
-simplified = "Patient had a heart attack and high blood pressure. Follow up in 2 weeks."  # diabetes + HbA1c dropped
-print(evaluate_safety(original, simplified))
-# → {'llama_verdict': 'UNSAFE', 'qwen_verdict': 'UNSAFE', 'nemotron_verdict': 'UNSAFE',
-#    'blocked': False, 'consensus': 'UNSAFE', 'warning': None}
-```
-All three judges catch the dropped diagnosis → consensus **UNSAFE**. (This drop is overt enough that all three flag it; the **DISAGREE** branch fires on subtler drops only Nemotron catches — see [the safety gate (B4)](#b4-the-safety-gate--how-a-verdict-is-produced).)
-
-**`safety_mode` values:**
-- `"flag"` (default) — returns simplified text even if UNSAFE; adds `warning` field
-- `"block"` — sets `blocked: true` and nulls `simplified_text` when consensus is UNSAFE or ERROR
-
-**Response contract:**
-```json
-{
-  "simplified_text": "...",
-  "blocked": false,
-  "safety": {
-    "llama_verdict": "SAFE|UNSAFE|ERROR",
-    "qwen_verdict": "SAFE|UNSAFE|ERROR",
-    "nemotron_verdict": "SAFE|UNSAFE|ERROR",
-    "blocked": false,
-    "consensus": "SAFE|UNSAFE|DISAGREE|ERROR",
-    "warning": null
-  },
-  "latency_ms": {
-    "vllm_ms": 428,
-    "total_ms": 26975
-  }
-}
-```
 
 ## Project structure
 
