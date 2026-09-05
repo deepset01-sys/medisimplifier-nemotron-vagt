@@ -274,6 +274,51 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
 ### B1. What you get & who it's for
 ### B2. Quickstart
 ### B3. API contract
+
+**`POST /v1/simplify`** — request body (JSON):
+
+| Field | Type | Required | Default | Notes |
+|--|--|--|--|--|
+| `text` | string | yes | — | the medical text to simplify |
+| `safety_mode` | string | no | `"flag"` | `"flag"` or `"block"` — see below |
+
+Maximum input length and input language are **not formally constrained** in the current implementation.
+
+**`safety_mode` values:**
+- `"flag"` (default) — returns simplified text even if UNSAFE; adds `warning` field
+- `"block"` — sets `blocked: true` and nulls `simplified_text` when consensus is UNSAFE or ERROR
+
+**Block mode does NOT block DISAGREE** — a DISAGREE verdict returns `blocked: false` with the `warning` field set; only **UNSAFE** and **ERROR** are blocked. A caller relying on `block` to suppress every non-SAFE output must handle DISAGREE explicitly: it is a defense-in-depth flag, not a hard block (see B8). *(#26)*
+
+**Response contract:**
+```json
+{
+  "simplified_text": "...",
+  "blocked": false,
+  "safety": {
+    "llama_verdict": "SAFE|UNSAFE|ERROR",
+    "qwen_verdict": "SAFE|UNSAFE|ERROR",
+    "nemotron_verdict": "SAFE|UNSAFE|ERROR",
+    "blocked": false,
+    "consensus": "SAFE|UNSAFE|DISAGREE|ERROR",
+    "warning": null
+  },
+  "latency_ms": {
+    "vllm_ms": 428,
+    "total_ms": 26975
+  }
+}
+```
+
+**`GET /health`** — readiness probe. Returns:
+```json
+{"vllm": true, "token_factory": true, "ready": true}
+```
+
+**Error semantics:**
+- **`consensus: "ERROR"`** — a Token Factory judge call failed or timed out (each judge bounds its HTTP call at 60 s with 3 retries, then returns `ERROR`).
+- **Fail-safe:** an `ERROR` consensus blocks in `block` mode (same as UNSAFE).
+- **`warning`** — set only on a DISAGREE verdict (`"diagnosis-drop risk"`); `null` for every other verdict.
 ### B4. The safety gate — how a verdict is produced
 
 The three judges are called via Token Factory; the verdict follows a **calibration-informed decision rule** (`safety_gate.py`) over the Qwen and Nemotron verdicts:
@@ -303,7 +348,6 @@ A dropped diagnosis a two-judge panel would have shipped; the third judge catche
 
 All three judges run in parallel (ThreadPoolExecutor, max_workers=3) via Nebius Token Factory — latency ≈ max(judges) not sum (~27s total).
 
-**Endpoint verified (live):** The Safe Endpoint v2 was tested live (health returns `{"vllm": true, "token_factory": true, "ready": true}`). On a faithful discharge-summary simplification all three judges return SAFE (not blocked); on a simplification that omits a diagnosis the judges return UNSAFE and the output is flagged — the 3-judge Token Factory gate runs in ~27 s. The **DISAGREE + "diagnosis-drop risk"** branch is the gate's *designed* response to a borderline drop that only Nemotron catches — the regime the VAGT calibration predicts (Nemotron 68% vs Llama 14% / Qwen 7% diagnosis recall on the MedSimp-JudgeBench perturbations). On free-form inputs tested here, Llama and Qwen also caught the *overt* drops, so DISAGREE did not trigger live; it fires on *subtle secondary-diagnosis* drops that split the panel — see the **worked gate-level example** in B4. The endpoint runs as a persistent Nebius GPU Endpoint (self-hosted vLLM + 3-judge gate container), stopped between demos — not a scale-to-zero managed service; the ~27s is the 3-judge Token Factory gate latency, not a cold-start wake. The judges themselves run per-token on Token Factory (serverless). Redeploy via `safe_endpoint_v2.yaml` if needed.
 ### B6. Model card — the served student
 
 v2 uses the winning configuration from v1 ablation (r=32, all_attn, seed=42, 3 epochs). No additional ablation was run — the v1 winner reproduced on **Nebius H100 within a ROUGE-L delta of 1.6–5.0%** of the original **Technion H200** runs (across 3 v1 models: OpenBioLLM −1.6%, Mistral-7B −3.7%, BioMistral −5.0%; see the [v1 reproduction table](https://github.com/deepset01-sys/medisimplifier-nebius)) and transfers directly to the Nemotron-taught dataset.
@@ -413,32 +457,6 @@ print(evaluate_safety(original, simplified))
 #    'blocked': False, 'consensus': 'UNSAFE', 'warning': None}
 ```
 All three judges catch the dropped diagnosis → consensus **UNSAFE**. (This drop is overt enough that all three flag it; the **DISAGREE** branch fires on subtler drops only Nemotron catches — see [the safety gate (B4)](#b4-the-safety-gate--how-a-verdict-is-produced).)
-
-> **Note:** The full API contract (request schema, `safety_mode`, response fields, error semantics) consolidates into **B3. API contract** in Step 4; the `safety_mode` and response-contract blocks below are provisional here.
-
-**`safety_mode` values:**
-- `"flag"` (default) — returns simplified text even if UNSAFE; adds `warning` field
-- `"block"` — sets `blocked: true` and nulls `simplified_text` when consensus is UNSAFE or ERROR
-
-**Response contract:**
-```json
-{
-  "simplified_text": "...",
-  "blocked": false,
-  "safety": {
-    "llama_verdict": "SAFE|UNSAFE|ERROR",
-    "qwen_verdict": "SAFE|UNSAFE|ERROR",
-    "nemotron_verdict": "SAFE|UNSAFE|ERROR",
-    "blocked": false,
-    "consensus": "SAFE|UNSAFE|DISAGREE|ERROR",
-    "warning": null
-  },
-  "latency_ms": {
-    "vllm_ms": 428,
-    "total_ms": 26975
-  }
-}
-```
 
 ## How it runs on Nebius
 
