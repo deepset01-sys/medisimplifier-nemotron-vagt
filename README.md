@@ -341,6 +341,41 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
         POST /v1/simplify → vLLM + calibration-informed 3-judge gate
         (endpoint tested; redeploy via safe_endpoint_v2.yaml)
 ### B2. Quickstart
+
+Two ways to use it: call the hosted endpoint (**Path 1**), or run the safety gate directly on any `(original, simplified)` pair (**Path 2**).
+
+> **Live endpoint (Nebius GPU Endpoint — application-tunnel URL, stopped between demos):**
+> https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud
+> When running, a request returns in ~27s (3-judge Token Factory gate latency, not a serverless cold-start wake); retry once if no response in 60s. A stopped endpoint first loads vLLM (~10–15 min).
+
+**Path 1 — `POST /v1/simplify`.** Live call to the hosted Safe Endpoint v2 (real response below):
+```bash
+curl -X POST https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud/v1/simplify \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Patient presented with acute myocardial infarction. Prescribed metformin 1000mg BID and lisinopril 10mg QD. Diagnosis of type 2 diabetes mellitus confirmed. Follow up in 2 weeks.", "safety_mode": "flag"}'
+```
+Response (captured live; also committed at [`results/endpoint_smoke_test.json`](results/endpoint_smoke_test.json)):
+```json
+{
+  "simplified_text": "The patient came in with a heart attack. The patient was given metformin 1000mg twice a day and lisinopril 10mg once a day. The patient was found to have type 2 diabetes. The patient should come back in 2 weeks for a checkup.",
+  "blocked": false,
+  "safety": {"llama_verdict": "SAFE", "qwen_verdict": "SAFE", "nemotron_verdict": "SAFE", "blocked": false, "consensus": "SAFE", "warning": null},
+  "latency_ms": {"vllm_ms": 428, "total_ms": 26975}
+}
+```
+
+**Path 2 — gate-only quickstart.** The gate scores any `(original, simplified)` pair directly, without the endpoint. Here it flags a simplification that drops a diagnosis (the UNSAFE path):
+```python
+from src.safety_gate import evaluate_safety   # requires NEBIUS_API_KEY
+original   = "Patient has acute MI, type 2 diabetes mellitus, and hypertension. HbA1c 9.2%."
+simplified = "Patient had a heart attack and high blood pressure. Follow up in 2 weeks."  # diabetes + HbA1c dropped
+print(evaluate_safety(original, simplified))
+# → {'llama_verdict': 'UNSAFE', 'qwen_verdict': 'UNSAFE', 'nemotron_verdict': 'UNSAFE',
+#    'blocked': False, 'consensus': 'UNSAFE', 'warning': None}
+```
+All three judges catch the dropped diagnosis → consensus **UNSAFE**. (This drop is overt enough that all three flag it; the **DISAGREE** branch fires on subtler drops only Nemotron catches — see [the safety gate (B4)](#b4-the-safety-gate--how-a-verdict-is-produced).)
+
+> This is the gate's second product use case — evaluating a third-party simplifier's output, not just MediSimplifier's own.
 ### B3. API contract
 
 **`POST /v1/simplify`** — request body (JSON):
@@ -494,37 +529,6 @@ Merge job requires: `AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY` (Nebius S3 key
 
 The merged model is publicly available — no training required to test the endpoint:
 `chambul/MediSimplifier-OpenBioLLM-v2-merged`
-
-> **Live endpoint (Nebius GPU Endpoint — application-tunnel URL, stopped between demos):**
-> https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud
-> When running, a request returns in ~27s (3-judge Token Factory gate latency, not a serverless cold-start wake); retry once if no response in 60s. A stopped endpoint first loads vLLM (~10–15 min).
-
-**SAFE case** — live call to the hosted Safe Endpoint v2 (real response below):
-```bash
-curl -X POST https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud/v1/simplify \
-  -H "Content-Type: application/json" \
-  -d '{"text": "Patient presented with acute myocardial infarction. Prescribed metformin 1000mg BID and lisinopril 10mg QD. Diagnosis of type 2 diabetes mellitus confirmed. Follow up in 2 weeks.", "safety_mode": "flag"}'
-```
-Response (captured live; also committed at [`results/endpoint_smoke_test.json`](results/endpoint_smoke_test.json)):
-```json
-{
-  "simplified_text": "The patient came in with a heart attack. The patient was given metformin 1000mg twice a day and lisinopril 10mg once a day. The patient was found to have type 2 diabetes. The patient should come back in 2 weeks for a checkup.",
-  "blocked": false,
-  "safety": {"llama_verdict": "SAFE", "qwen_verdict": "SAFE", "nemotron_verdict": "SAFE", "blocked": false, "consensus": "SAFE", "warning": null},
-  "latency_ms": {"vllm_ms": 428, "total_ms": 26975}
-}
-```
-
-**UNSAFE case — gate-level test (crafted dropped-diagnosis input).** `/v1/simplify` judges the model's *own* output, which faithfully preserves diagnoses — so to exercise the UNSAFE path, call the gate directly with a simplification that drops a diagnosis:
-```python
-from src.safety_gate import evaluate_safety   # requires NEBIUS_API_KEY
-original   = "Patient has acute MI, type 2 diabetes mellitus, and hypertension. HbA1c 9.2%."
-simplified = "Patient had a heart attack and high blood pressure. Follow up in 2 weeks."  # diabetes + HbA1c dropped
-print(evaluate_safety(original, simplified))
-# → {'llama_verdict': 'UNSAFE', 'qwen_verdict': 'UNSAFE', 'nemotron_verdict': 'UNSAFE',
-#    'blocked': False, 'consensus': 'UNSAFE', 'warning': None}
-```
-All three judges catch the dropped diagnosis → consensus **UNSAFE**. (This drop is overt enough that all three flag it; the **DISAGREE** branch fires on subtler drops only Nemotron catches — see [the safety gate (B4)](#b4-the-safety-gate--how-a-verdict-is-produced).)
 
 ## How it runs on Nebius
 
