@@ -24,7 +24,7 @@ MediSimplifier targets 6th-grade reading level for discharge summaries; v2 achie
 - **Judge** — Nemotron Nano is added as a third, calibrated safety judge alongside Llama-3.3-70B and Qwen3-32B.
 - **Measurement** — VAGT decomposes judge behavior into ground-truth signal (σ²_τ), shared blind-spot bias (σ²_B), rater bias (σ²_R), and noise (σ²_N), yielding a veridicality-anchored dependability coefficient Φ_V that consensus statistics (Cohen's κ, PABAK, Krippendorff α) cannot produce.
 
-> **What's carried from v1 vs new here:** The dataset, the fine-tuning task, the dual-judge safety design, and the perturbation benchmark (MedSimp-JudgeBench, 708 samples) are from v1. New in v2: **Nemotron Super as teacher**, **Nemotron Nano as a third calibrated judge**, and the **first empirical application of VAGT** (developed post-v1 from the κ=0.11 finding). Fine-tuning a student on Nemotron references is complete — see [v2 Evaluation Results](#v2-evaluation-results--v1-claude-teacher-vs-v2-nemotron-teacher) below.
+> **What's carried from v1 vs new here:** The dataset, the fine-tuning task, the dual-judge safety design, and the perturbation benchmark (MedSimp-JudgeBench, 708 samples) are from v1. New in v2: **Nemotron Super as teacher**, **Nemotron Nano as a third calibrated judge**, and the **first empirical application of VAGT** (developed post-v1 from the κ=0.11 finding). Fine-tuning a student on Nemotron references is complete — see [A7. Results III](#a7-results-iii--nemotron-super-as-teacher).
 
 ## What's new in v2 (vs v1)
 
@@ -71,7 +71,7 @@ Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qw
 | Qwen3-32B | 0 | off | 2,000 |
 | Nemotron Nano | 0 | off* | 8,000 |
 
-> *`enable_thinking=False` is set, but Nemotron Nano reasons internally at inference regardless (see the reasoning-token-budget engineering finding — `max_tokens=16000`); Llama and Qwen do not.
+> *`enable_thinking=False` is set, but Nemotron Nano reasons internally at inference regardless (see the reasoning-token-budget finding in [A7](#a7-results-iii--nemotron-super-as-teacher) — `max_tokens=16000`); Llama and Qwen do not.
 
 > **Reasoning-budget confound.** Decoding budget is asymmetric: Nemotron Nano runs at `max_tokens=8000` and reasons internally, while Llama and Qwen run at 2,000 with thinking off. Part of Nemotron's recall edge may therefore reflect reasoning budget, not the model itself. A proper control — Llama/Qwen with CoT visible, or Nemotron with a truncated budget — is left as future work (see A8).
 ### A4. Measurement — VAGT
@@ -160,6 +160,60 @@ Adding Nemotron lowers inter-rater agreement on **3 of 4 features** (dose, negat
 > - **Complete-case:** rows where any judge returned ERROR are dropped (9–18 per feature). Counts reported in [`vagt_nemotron_results.txt`](vagt_nemotron_results.txt).
 > - VAGT was developed in the six weeks between submissions — after v1's κ=0.11 finding (July 15) and before the v2 window opened (August 26). The framework files (`vagt_section.md`, `vagt_estimand.md`) live in the v1 repo but were not part of the v1 submission. v2 is VAGT's first empirical application, with Nemotron Nano as the third rater that makes the 3-rater decomposition possible.
 ### A7. Results III — Nemotron Super as teacher
+
+**Question:** Can Nemotron Super replace Claude Opus 4.5 as the reference-simplification teacher, using the *same* prompt?
+
+**Method.** The teacher prompt is identical to the one used to generate the Claude Opus 4.5 reference simplifications in v1 ([github.com/deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius)) — a single user message with 9 simplification guidelines, no system prompt. Using the exact same prompt for both teachers ensures a fair comparison: any difference in output quality reflects the model, not the instructions. Only three things change from the Opus run:
+
+| Parameter | Opus (v1) | Nemotron Super (v2) |
+|--|--|--|
+| Model | `claude-opus-4-5-20251101` | `nvidia/nemotron-3-super-120b-a12b` |
+| `temperature` | API default | **0** (pinned for reproducibility) |
+| `max_tokens` | 1024 | **16000** (see reasoning-model note) |
+
+> **⚠️ Reasoning-model note (a real finding, not a footnote):** Nemotron Super *thinks* before answering and emits the simplification only after. At `max_tokens=1024` (Opus's value) it spends the entire budget reasoning and returns `content=None` / `finish_reason="length"` — an empty output. At 8000 it still truncates the longest notes mid-sentence. **16000 is required.** Neither `enable_thinking:false` nor a "detailed thinking off" directive disables reasoning on Nemotron-3 — token budget is the only lever. The generator treats both `content=None` and `finish_reason="length"` as errors and retries, never saving a truncated reference.
+
+**Status.**
+- **JudgeBench references (708):** complete — 519 unique calls fanned out to 708 records, **0 errors**, avg 1,743 chars, ~21 min. ([`nemotron_references.json`](nemotron_references.json))
+- **Full training references (9,999):** complete — **9,976 valid, 23 errored** (the 23 errored records were **dropped, not imputed**). Emits `{split, index, input, claude_output, nemotron_output, error}` per record so Claude and Nemotron outputs are directly comparable. Resume-capable (skips completed inputs). Published as [`chambul/medisimplifier-nemotron-dataset`](https://huggingface.co/datasets/chambul/medisimplifier-nemotron-dataset).
+
+**Qualitative example** (train/0):
+
+| | Original | Claude Opus | Nemotron Super |
+|--|--|--|--|
+| Diagnosis | Retinal detachment repair | Surgery to fix a detached retina (…back of the eye) | Surgery to fix a detached retina |
+| History | Congenital glaucoma | Glaucoma present since birth (…damages the eye nerve) | Glaucoma present from birth |
+| Procedure | pars plana vitrectomy (PPV) | small tools through the white of the eye | eye surgery to remove gel and fix a detached retina |
+
+**Preserved:** section structure, all measurements (20/100, 4 mmHg, 20/70). **Note:** Nemotron removed the blank lines between sections (the prompt asks for no empty lines) — closer to the guideline than the Claude reference.
+
+> **Honest caveat:** Nemotron occasionally adds a soft clause not in the source ("…improved to 20/70, *allowing better daily function*"). Not a medical-fact hallucination, but a mild elaboration that bends the "do not add information" guideline. Frequency across the full set is **unquantified — counting occurrences across all 9,976 refs is deferred to future work**. ROUGE-L of Nemotron references vs the Claude references: **0.525** (mean over 9,976 pairs; median 0.524, see [`teacher_comparison.json`](teacher_comparison.json)).
+
+The Nemotron-taught student was evaluated on the **same GuyDor007 test set (n=1,001, Claude references)** as v1 — an apples-to-apples yardstick. Full metrics in [`results/eval_v2_results.json`](results/eval_v2_results.json).
+
+| Metric | v1 (Claude teacher) | v2 (Nemotron teacher) |
+|--|--|--|
+| ROUGE-L | 0.6638 | **0.5254** |
+| SARI | 73.49 | **60.36** |
+| BERTScore | 0.9460 | **0.9113** |
+| FK-Grade | 7.33 | **8.87** |
+
+**Same v2 student, scored against each teacher's references** — measured against the Nemotron references it was actually trained on, every similarity metric is higher ([`results/eval_v2_nemotron_results.json`](results/eval_v2_nemotron_results.json)):
+
+| Metric | vs Claude refs (n=1,001) | vs Nemotron refs (n=998) | Δ |
+|--|--|--|--|
+| ROUGE-L | 0.5254 | **0.6010** | **+0.076** |
+| BERTScore | 0.9113 | **0.9321** | **+0.021** |
+| SARI | 60.36 | **64.18** | **+3.82** |
+| FK-Grade | 8.87 | 8.87 | ~0 |
+
+> FK-Grade is prediction-only (reference-independent); Δ~0 confirms library consistency.
+
+**Training run:** LoRA (r=32, all_attn, 3 epochs) on 7,983 train / 995 val / 998 test — ~2.4 hours (8,523 s) on 1×H100, ~$9 for training alone (combined train+eval+merge GPU cost: $39.34 — see cost table). Teacher references agree with Claude's at ROUGE-L **0.525** ([`teacher_comparison.json`](teacher_comparison.json)).
+
+> **Honest interpretation:** v2 ROUGE-L reflects **style divergence from Claude references, not a quality failure** — Nemotron Super produces *less* simplified references — measured FK-Grade **10.1** (Nemotron refs) vs **7.2** (Claude refs), Δ **+2.9** grade levels, both on textstat 0.7.13 over 9,976 pairs — and the student model faithfully learned this style. (The student's published FK-Grade 8.87 is a separate measurement — student output, scored with the train-v32 image's textstat — so it is not directly comparable to these reference figures.) The lower ROUGE-L/SARI is the student matching a *different teacher's style*, scored against Claude's references; it is not evidence the v2 outputs are worse, only that they are less Claude-like (and at a slightly higher reading level). Note the ~0.525 student↔Claude ROUGE-L closely tracks the ~0.525 teacher↔teacher ROUGE-L — the student inherited exactly the teacher gap.
+
+> **Evaluation:** 1,001 test samples (GuyDor007/medisimplifier-dataset), greedy decoding, seed=42.
 ### A8. Threats to validity
 ### A9. Reproduce the analysis
 
@@ -247,6 +301,10 @@ Base model loaded in **4-bit NF4 QLoRA** (`BitsAndBytesConfig`: `load_in_4bit=Tr
 | lora_alpha | 64 | 2r, per rsLoRA |
 | lora_dropout | 0.05 | v1 convention |
 | use_rslora | True | rank-stabilized LoRA |
+
+> **What the endpoint serves:** The Safe Endpoint v2 serves the v2 (Nemotron-taught) student behind the safety gate (diagnosis-drop detection) — v2's contribution is the VAGT research pipeline and the safety gate, **not a readability improvement**. For maximum readability the v1 student is simpler (FK-Grade 7.33 vs v2's 8.87); but v2's endpoint is the research/safety demo, and that is what is served.
+
+> **Adapter provenance:** `chambul/MediSimplifier-OpenBioLLM-v2-merged` merges the Nebius-trained LoRA adapter (`medisimplifier-adapters-v2/adapter/`, r=32, all_attn, 3 epochs) with the base model. ROUGE-L 0.5254 documented in [`results/eval_v2_results.json`](results/eval_v2_results.json).
 
 ### B7. Deployment on Nebius
 
@@ -364,38 +422,6 @@ All three judges catch the dropped diagnosis → consensus **UNSAFE**. (This dro
 }
 ```
 
-## v2 Evaluation Results — v1 (Claude teacher) vs v2 (Nemotron teacher)
-
-The Nemotron-taught student was evaluated on the **same GuyDor007 test set (n=1,001, Claude references)** as v1 — an apples-to-apples yardstick. Full metrics in [`results/eval_v2_results.json`](results/eval_v2_results.json).
-
-| Metric | v1 (Claude teacher) | v2 (Nemotron teacher) |
-|--|--|--|
-| ROUGE-L | 0.6638 | **0.5254** |
-| SARI | 73.49 | **60.36** |
-| BERTScore | 0.9460 | **0.9113** |
-| FK-Grade | 7.33 | **8.87** |
-
-**Same v2 student, scored against each teacher's references** — measured against the Nemotron references it was actually trained on, every similarity metric is higher ([`results/eval_v2_nemotron_results.json`](results/eval_v2_nemotron_results.json)):
-
-| Metric | vs Claude refs (n=1,001) | vs Nemotron refs (n=998) | Δ |
-|--|--|--|--|
-| ROUGE-L | 0.5254 | **0.6010** | **+0.076** |
-| BERTScore | 0.9113 | **0.9321** | **+0.021** |
-| SARI | 60.36 | **64.18** | **+3.82** |
-| FK-Grade | 8.87 | 8.87 | ~0 |
-
-> FK-Grade is prediction-only (reference-independent); Δ~0 confirms library consistency.
-
-**Training run:** LoRA (r=32, all_attn, 3 epochs) on 7,983 train / 995 val / 998 test — ~2.4 hours (8,523 s) on 1×H100, ~$9 for training alone (combined train+eval+merge GPU cost: $39.34 — see cost table). Teacher references agree with Claude's at ROUGE-L **0.525** ([`teacher_comparison.json`](teacher_comparison.json)).
-
-> **Honest interpretation:** v2 ROUGE-L reflects **style divergence from Claude references, not a quality failure** — Nemotron Super produces *less* simplified references — measured FK-Grade **10.1** (Nemotron refs) vs **7.2** (Claude refs), Δ **+2.9** grade levels, both on textstat 0.7.13 over 9,976 pairs — and the student model faithfully learned this style. (The student's published FK-Grade 8.87 is a separate measurement — student output, scored with the train-v32 image's textstat — so it is not directly comparable to these reference figures.) The lower ROUGE-L/SARI is the student matching a *different teacher's style*, scored against Claude's references; it is not evidence the v2 outputs are worse, only that they are less Claude-like (and at a slightly higher reading level). Note the ~0.525 student↔Claude ROUGE-L closely tracks the ~0.525 teacher↔teacher ROUGE-L — the student inherited exactly the teacher gap.
-
-> **What the endpoint serves:** The Safe Endpoint v2 serves the v2 (Nemotron-taught) student behind the safety gate (diagnosis-drop detection) — v2's contribution is the VAGT research pipeline and the safety gate, **not a readability improvement**. For maximum readability the v1 student is simpler (FK-Grade 7.33 vs v2's 8.87); but v2's endpoint is the research/safety demo, and that is what is served.
-
-> **Evaluation:** 1,001 test samples (GuyDor007/medisimplifier-dataset), greedy decoding, seed=42.
-
-> **Adapter provenance:** `chambul/MediSimplifier-OpenBioLLM-v2-merged` merges the Nebius-trained LoRA adapter (`medisimplifier-adapters-v2/adapter/`, r=32, all_attn, 3 epochs) with the base model. ROUGE-L 0.5254 documented in [`results/eval_v2_results.json`](results/eval_v2_results.json).
-
 ## How it runs on Nebius
 
 Every model call is a serverless Token Factory request — no reserved GPUs for the generation/judging pipeline.
@@ -433,36 +459,6 @@ Pipeline:
 > **Why Token Factory?** Nemotron Super and Nano are both served per-token with zero idle cost. The teacher JudgeBench-reference run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min; the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
 
 Full adapter storage flow → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
-
-## Nemotron as Teacher — the experiment
-
-**Question:** Can Nemotron Super replace Claude Opus 4.5 as the reference-simplification teacher, using the *same* prompt?
-
-**Method.** The teacher prompt is identical to the one used to generate the Claude Opus 4.5 reference simplifications in v1 ([github.com/deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius)) — a single user message with 9 simplification guidelines, no system prompt. Using the exact same prompt for both teachers ensures a fair comparison: any difference in output quality reflects the model, not the instructions. Only three things change from the Opus run:
-
-| Parameter | Opus (v1) | Nemotron Super (v2) |
-|--|--|--|
-| Model | `claude-opus-4-5-20251101` | `nvidia/nemotron-3-super-120b-a12b` |
-| `temperature` | API default | **0** (pinned for reproducibility) |
-| `max_tokens` | 1024 | **16000** (see reasoning-model note) |
-
-> **⚠️ Reasoning-model note (a real finding, not a footnote):** Nemotron Super *thinks* before answering and emits the simplification only after. At `max_tokens=1024` (Opus's value) it spends the entire budget reasoning and returns `content=None` / `finish_reason="length"` — an empty output. At 8000 it still truncates the longest notes mid-sentence. **16000 is required.** Neither `enable_thinking:false` nor a "detailed thinking off" directive disables reasoning on Nemotron-3 — token budget is the only lever. The generator treats both `content=None` and `finish_reason="length"` as errors and retries, never saving a truncated reference.
-
-**Status.**
-- **JudgeBench references (708):** complete — 519 unique calls fanned out to 708 records, **0 errors**, avg 1,743 chars, ~21 min. ([`nemotron_references.json`](nemotron_references.json))
-- **Full training references (9,999):** complete — **9,976 valid, 23 errored**. Emits `{split, index, input, claude_output, nemotron_output, error}` per record so Claude and Nemotron outputs are directly comparable. Resume-capable (skips completed inputs). Published as [`chambul/medisimplifier-nemotron-dataset`](https://huggingface.co/datasets/chambul/medisimplifier-nemotron-dataset).
-
-**Qualitative example** (train/0):
-
-| | Original | Claude Opus | Nemotron Super |
-|--|--|--|--|
-| Diagnosis | Retinal detachment repair | Surgery to fix a detached retina (…back of the eye) | Surgery to fix a detached retina |
-| History | Congenital glaucoma | Glaucoma present since birth (…damages the eye nerve) | Glaucoma present from birth |
-| Procedure | pars plana vitrectomy (PPV) | small tools through the white of the eye | eye surgery to remove gel and fix a detached retina |
-
-**Preserved:** section structure, all measurements (20/100, 4 mmHg, 20/70). **Note:** Nemotron removed the blank lines between sections (the prompt asks for no empty lines) — closer to the guideline than the Claude reference.
-
-> **Honest caveat:** Nemotron occasionally adds a soft clause not in the source ("…improved to 20/70, *allowing better daily function*"). Not a medical-fact hallucination, but a mild elaboration that bends the "do not add information" guideline. Frequency across the full set was not separately quantified. ROUGE-L of Nemotron references vs the Claude references: **0.525** (mean over 9,976 pairs; median 0.524, see [`teacher_comparison.json`](teacher_comparison.json)).
 
 ## Hardware and cost
 
