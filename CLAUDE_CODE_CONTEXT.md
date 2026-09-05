@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-05 (Session: README restructure — #13 Step 4: ALL STUBS POPULATED 🎉 Track A (A1-A9) ✅ Track B (B1-B9) ✅; Steps 1/2/3/16/18 ✅; NEXT = finishing touches (drop Under-construction note, B8 items 2-3, B5 translation, dissolve How-it-runs remnant); HEAD = c3b2e35)
+# Last updated: 2026-09-05 (Session: README restructure — #13 ALL STUBS POPULATED 🎉 + finishing touches: Under-construction ✅ + B8 items 2-3 ✅; Steps 1/2/3/16/18 ✅; NEXT = B5 translation (X calc from nemotron_calibration_full.json), then dissolve How-it-runs remnant; HEAD = b391f85)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -90,6 +90,8 @@ ab42383 - README: A1 Question & estimand (research Q, estimand-in-words, falsifi
 fbad377 - README: A2 Benchmark MedSimp-JudgeBench (708 items, per-type counts, silent-drop definition, provenance) [#13 Step 4 · A2]
 b371cda - README: B1 What ships (user story, pipeline diagram, what-it's-not) [#13 Step 4 · B1]
 c3b2e35 - README: B2 Quickstart (Path 1 endpoint + Path 2 gate-only, second product use case) [#13 Step 4 · B2 — LAST empty stub; all A/B stubs now populated]
+0234bb7 - README: drop "Under construction" note (all A/B stubs now populated) [#13 cleanup]
+b391f85 - README: B8 items 2-3 (prompt drift + DISAGREE defense-in-depth) [#13 finishing touches]
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -259,7 +261,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = c3b2e35)
+## README STATUS — COMPLETE ✅ (HEAD = b391f85)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -574,7 +576,7 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
 
 ### ✅ DONE — Fable 5 review v1 (no-bonus, 28/40) — 7 fixes landed; see FABLE 5 REVIEW HISTORY
 
-### 🟡 NEXT — #13 finishing touches (all stubs populated): drop "Under construction" note · B8 items 2-3 (prompt drift + DISAGREE defense-in-depth) · B5 user-facing translation · dissolve `## How it runs` remnant (show-first, blueprint = readme_restructure_response.txt)
+### 🟡 NEXT — #13 finishing touches: #1 "Under construction" ✅ (0234bb7) · #2 B8 items 2-3 ✅ (b391f85) · NEXT = #3 B5 user-facing translation (needs X = 2-judge SAFE-consensus miss-rate on corrupted items, from nemotron_calibration_full.json) · #4 dissolve `## How it runs` remnant · #5 old front-matter ## sections fate (show-first, blueprint = readme_restructure_response.txt)
 - Done: #18 ✅ (7e3f088), #16 ✅ (7e3f088 + e8a8e31), #13 Step 1/4 skeleton+nav ✅ (5ba67bf).
 - Step 2/4 ✅ COMPLETE — all 4 relocation sub-moves landed:
     · 2a LoRA Configuration → B6 (Model card) ✅ 5494437
