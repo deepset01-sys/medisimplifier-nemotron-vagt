@@ -215,6 +215,24 @@ The Nemotron-taught student was evaluated on the **same GuyDor007 test set (n=1,
 
 > **Evaluation:** 1,001 test samples (GuyDor007/medisimplifier-dataset), greedy decoding, seed=42.
 ### A8. Threats to validity
+
+Research-side threats to the VAGT and calibration findings. Product and operational caveats (the Qwen judge swap, DISAGREE as defense-in-depth) live in B8.
+
+1. **Reasoning-budget confound.** Nemotron Nano was decoded at `max_tokens=8000` with internal reasoning, while Llama and Qwen ran at 2,000 with thinking off. Part of Nemotron's recall edge — and thus the measured third-rater benefit — may reflect decoding budget rather than the model itself (see A3).
+
+2. **Scale/family confound.** The panel mixes a 70B same-family judge (Llama-3.3-70B) with a 32B cross-family judge (Qwen3-32B) and a 30B reasoning judge (Nemotron Nano); a same-scale cross-family control (a 72B-class Qwen) was not available on Token Factory. Effects attributed to *family diversity* may therefore be partly scale effects — direction of bias unclear.
+
+3. **Synthetic perturbations vs. real failures.** MedSimp-JudgeBench errors are programmatically injected (diagnosis drop, dose 10×, lateral swap, negation), not failures produced by a real simplifier. Recall and Φ_V measured on clean, isolated injections may not transfer to the subtler, correlated errors a deployed model makes — an external-validity limit (see B4).
+
+4. **LLM-generated references, no expert anchor.** The reference simplifications (Claude and Nemotron teacher outputs) are LLM-generated and never clinician-reviewed; there is no human-expert gold standard for "a good simplification." Every similarity metric (ROUGE-L, SARI) and the teacher-quality comparison measures closeness to a model's style, not to expert-validated quality — "faithful" means faithful to a model. Note: the ground-truth labels τ_i (corrupted/clean) are known by construction from the injected perturbations — a methodological strength; this reference-quality limit applies to the student evaluation metrics, not to the calibration ground truth.
+
+5. **Complete-case deletion.** Items where any judge returned ERROR are dropped (9–18 per feature), not imputed. If ERRORs concentrate on harder items, dropping them biases Φ_V and recall optimistically (see A6).
+
+6. **Single-seed bootstrap, no power analysis.** All confidence intervals come from one paired item bootstrap — 1000 resamples at seed=42 — with no pre-registered power or sample-size analysis. Intervals capture sampling variability of these items only; borderline results (e.g. lateral's ΔFleiss CI straddling zero) are not backed by a powered test.
+
+7. **Same-family judge.** Llama-3.3-70B shares a model family with the OpenBioLLM-8B student (both Llama-3-based). A same-family judge may share the student's blind spots, inflating the panel's apparent agreement with the student and overstating judge independence.
+
+8. **Calibration prompt ≠ gate prompt.** VAGT calibration used the v1 4-step CoT prompt; the deployed gate uses `safety_gate.py`'s prompt, and verdicts do not transfer item-for-item (idx 21). The reported calibration recall, Φ_V, and DISAGREE rates are therefore indicative, not the gate's live operating point (see B4/B8).
 ### A9. Reproduce the analysis
 
 **Environment:** Python 3.12 · `pip install -r requirements.txt` (openai, numpy, requests, tqdm, datasets).
