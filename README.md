@@ -506,6 +506,8 @@ Note: Judges reproducing the endpoint load directly from `chambul/MediSimplifier
 ### B8. Known issues & operating caveats
 
 1. **Qwen judge swap.** `Qwen/Qwen3-32B` was removed from Nebius Token Factory during the project window; the gate now runs `Qwen/Qwen3-30B-A3B-Instruct-2507` for operational continuity. Every published calibration, VAGT, and recall number describes the original Qwen3-32B panel, and the rule's "trust Qwen's 0.5% FP" justification is anchored to the retired model. Status: uncalibrated — action: rerun the 708-item calibration on the replacement.
+2. **Prompt drift.** Calibration used a different prompt than the deployed gate (idx 21 returned all-SAFE through the live gate despite UNSAFE in calibration — confirming verdicts do not transfer verbatim across prompts). The published recall / FP / DISAGREE rates are therefore calibration-prompt rates, not the gate's live operating point.
+3. **DISAGREE is defense-in-depth.** DISAGREE fires on benchmark perturbations fed to the gate directly, not on `/v1/simplify`'s own output (our model preserves diagnoses). It is therefore a defense-in-depth path against a third-party simplifier feeding the gate — not a routinely-triggered path on MediSimplifier's own output.
 ### B9. Reproduce the deployment
 
 **Environment:** Python 3.12 · `pip install -r requirements.txt` (openai, numpy, requests, tqdm, datasets).
