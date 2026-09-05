@@ -505,6 +505,10 @@ huggingface-cli upload \
 ```
 
 Note: Judges reproducing the endpoint load directly from `chambul/MediSimplifier-OpenBioLLM-v2-merged` on HuggingFace — no bucket credentials required.
+
+> **Why Token Factory?** Nemotron Super and Nano are both served per-token with zero idle cost. The teacher JudgeBench-reference run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min; the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
+
+Full adapter storage flow → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
 ### B8. Known issues & operating caveats
 
 1. **Qwen judge swap.** `Qwen/Qwen3-32B` was removed from Nebius Token Factory during the project window; the gate now runs `Qwen/Qwen3-30B-A3B-Instruct-2507` for operational continuity. Every published calibration, VAGT, and recall number describes the original Qwen3-32B panel, and the rule's "trust Qwen's 0.5% FP" justification is anchored to the retired model. Status: uncalibrated — action: rerun the 708-item calibration on the replacement.
@@ -531,14 +535,6 @@ Merge job requires: `AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY` (Nebius S3 key
 
 The merged model is publicly available — no training required to test the endpoint:
 `chambul/MediSimplifier-OpenBioLLM-v2-merged`
-
-## How it runs on Nebius
-
-Every model call is a serverless Token Factory request — no reserved GPUs for the generation/judging pipeline.
-
-> **Why Token Factory?** Nemotron Super and Nano are both served per-token with zero idle cost. The teacher JudgeBench-reference run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min; the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
-
-Full adapter storage flow → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
 
 ## Hardware and cost
 
