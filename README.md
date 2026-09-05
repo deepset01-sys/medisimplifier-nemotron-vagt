@@ -301,6 +301,45 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
 ## Track B — Product Design
 
 ### B1. What you get & who it's for
+
+**User story.** Send a discharge summary; receive a 6th–9th-grade rewrite and a three-judge safety verdict; choose whether unsafe outputs are flagged or blocked.
+
+**Intended user.** A developer wrapping or evaluating a medical text simplifier.
+
+**What it is *not*.**
+- **Not clinician-validated** — a research prototype, not a medical device.
+- **Not authenticated** — do not route real patient data through it.
+- **Not scale-to-zero** — the endpoint is a persistent Nebius GPU Endpoint, stopped between demos (not a serverless auto-waking service).
+
+**Pipeline.** Training/calibration pipeline: Token Factory (serverless, per-token). Deployed endpoint: persistent Nebius GPU Endpoint (see B7).
+
+    Dataset (HuggingFace: GuyDor007/medisimplifier-dataset — 9,999 discharge summaries)
+        |
+        v
+    Token Factory: Nemotron Super teacher  (nemotron_training_data.py)
+        generate reference simplification per record  ->  nemotron_training_references.json
+        |                                                  (claude_output + nemotron_output side by side)
+        v
+    Nebius Job: LoRA fine-tune student on Nemotron references (H100, r=32 all_attn, 3 epochs)  ->  adapter (bucket)
+        |
+        v
+    Nebius Job: Evaluation (full metrics in A7)
+        |
+        v
+    Nebius Job: Merge adapter → chambul/MediSimplifier-OpenBioLLM-v2-merged (HuggingFace)
+        |
+        v
+    Token Factory: 3-judge safety evaluation  (nemotron_judge_test.py)
+        Llama-3.3-70B + Qwen3-32B + Nemotron Nano  ->  nemotron_calibration_full.json
+        |
+        v
+    VAGT decomposition  (vagt_nemotron_analysis.py)
+        {sigma_tau, sigma_B, sigma_R, sigma_N, Phi_V} + Fleiss/Krippendorff  ->  vagt_nemotron_results.txt
+        |
+        v
+    Nebius Endpoint: Safe Simplification Endpoint v2
+        POST /v1/simplify → vLLM + calibration-informed 3-judge gate
+        (endpoint tested; redeploy via safe_endpoint_v2.yaml)
 ### B2. Quickstart
 ### B3. API contract
 
@@ -490,36 +529,6 @@ All three judges catch the dropped diagnosis → consensus **UNSAFE**. (This dro
 ## How it runs on Nebius
 
 Every model call is a serverless Token Factory request — no reserved GPUs for the generation/judging pipeline.
-
-Pipeline:
-
-    Dataset (HuggingFace: GuyDor007/medisimplifier-dataset — 9,999 discharge summaries)
-        |
-        v
-    Token Factory: Nemotron Super teacher  (nemotron_training_data.py)
-        generate reference simplification per record  ->  nemotron_training_references.json
-        |                                                  (claude_output + nemotron_output side by side)
-        v
-    Nebius Job: LoRA fine-tune student on Nemotron references (H100, r=32 all_attn, 3 epochs)  ->  adapter (bucket)
-        |
-        v
-    Nebius Job: Evaluation (ROUGE-L=0.5254, SARI=60.36, BERTScore=0.9113, FK-Grade=8.87)
-        |
-        v
-    Nebius Job: Merge adapter → chambul/MediSimplifier-OpenBioLLM-v2-merged (HuggingFace)
-        |
-        v
-    Token Factory: 3-judge safety evaluation  (nemotron_judge_test.py)
-        Llama-3.3-70B + Qwen3-32B + Nemotron Nano  ->  nemotron_calibration_full.json
-        |
-        v
-    VAGT decomposition  (vagt_nemotron_analysis.py)
-        {sigma_tau, sigma_B, sigma_R, sigma_N, Phi_V} + Fleiss/Krippendorff  ->  vagt_nemotron_results.txt
-        |
-        v
-    Nebius Endpoint: Safe Simplification Endpoint v2
-        POST /v1/simplify → vLLM + VAGT-calibrated 3-judge gate
-        (endpoint tested; redeploy via safe_endpoint_v2.yaml)
 
 > **Why Token Factory?** Nemotron Super and Nano are both served per-token with zero idle cost. The teacher JudgeBench-reference run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min; the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
 
