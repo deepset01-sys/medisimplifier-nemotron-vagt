@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-05 (Session: README restructure — #13 Step 1/4 (Track A/B skeleton + nav) done; #16 ✅ #18 ✅; NEXT = #13 Step 2 relocation; HEAD = 5ba67bf)
+# Last updated: 2026-09-05 (Session: README restructure — #13 Step 2/4 (all 4 relocation sub-moves) done; Steps 1/16/18 ✅; NEXT = #13 Step 3 (split multi-audience sections); HEAD = 9567320)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -76,6 +76,10 @@ fc88332 - fix #17: README remove unused "Ultra" from Token Factory model list (l
 7e3f088 - restructure BEGIN: opening block → Fable §6 3 paragraphs (8th-grade, full CIs, Track A/B nav) + line-25 reading-level fix [#18 ✅, #16 partial]
 e8a8e31 - restructure: remove "## Key findings" table + orphaned footnote (redundant with opening ¶2; overclaims gone) [#16 ✅]
 5ba67bf - README: Track A/B skeleton + "Choose your track" nav (opening ¶3 forward-ref now resolves) [#13 Step 1/4]
+5494437 - README: relocate LoRA Configuration → B6 (Model card) [#13 Step 2a]
+f6491b7 - README: relocate Merge & Deploy (v2) → B7 (Deployment on Nebius) [#13 Step 2b]
+36e7814 - README: relocate Container Images + Adapter Storage Flow → docs/REPRODUCIBILITY.md (new overflow file) [#13 Step 2c]
+9567320 - README: merge Public Artifacts into Dataset and models table (+License column) [#13 Step 2d]
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -245,7 +249,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 5ba67bf)
+## README STATUS — COMPLETE ✅ (HEAD = 9567320)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -503,10 +507,13 @@ Reconstructed from this session's verified findings — not a verbatim prior lis
 12. ⏸ PENDING — commit a Nebius billing export/screenshot backing $134.81 (needs Console; do #10 in the same pass).
 
 ### 🔴 README STRUCTURAL REDESIGN
-13. ⏳ IN PROGRESS (4-step). Step 1/4 ✅ (5ba67bf): Track A/B skeleton (empty A1-A9 / B1-B9 headers) + "Choose
-    your track" nav inserted — opening ¶3 forward-reference now resolves. TRANSITIONAL: empty headers sit above
-    the old sections ("Under construction" note visible). Steps 2-4 = relocate content into A/B slots + remove
-    old headers (mapping in readme_restructure_response.txt, UNTRACKED).
+13. ⏳ IN PROGRESS (4-step). Step 1/4 ✅ (5ba67bf): Track A/B skeleton + "Choose your track" nav.
+    Step 2/4 ✅ (5494437 / f6491b7 / 36e7814 / 9567320): all 4 clean-mapping sub-moves landed —
+    LoRA→B6, Merge&Deploy→B7, Container Images+Adapter Flow→docs/REPRODUCIBILITY.md (new overflow file),
+    Public Artifacts merged into Dataset&models table (+License column). Step 3/4 = NEXT: split
+    multi-audience sections (Medical Safety → A3/A5/B4/B5; Reproduce → A9/B9). Step 4/4 = write new
+    sections (A1/A2/A8/B2/B3/B5/B8 + #26 block-mode DISAGREE doc). Mapping in
+    readme_restructure_response.txt (UNTRACKED).
 14. ✅ (2ce4086) Reframed line 107 "Which model to deploy: v1 remains recommended" → "What the endpoint serves"
     — removed the deploy-v1 instruction, kept the honest "v2 = research/safety, not a readability improvement".
 15. ✅ (58ab53c + 1a9f72c + 2ce4086) Endpoint framing fixed at ALL 5 spots (17/314/346/399 + 159): persistent GPU
@@ -557,15 +564,15 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
 
 ### ✅ DONE — Fable 5 review v1 (no-bonus, 28/40) — 7 fixes landed; see FABLE 5 REVIEW HISTORY
 
-### 🟡 NEXT — #13 Step 2/4: relocate clean-mapping sections (show-first, blueprint = readme_restructure_response.txt)
+### 🟡 NEXT — #13 Step 3/4: split multi-audience sections (show-first, blueprint = readme_restructure_response.txt)
 - Done: #18 ✅ (7e3f088), #16 ✅ (7e3f088 + e8a8e31), #13 Step 1/4 skeleton+nav ✅ (5ba67bf).
-- Step 2 — relocate clean sections into the A/B slots (each a show-first diff):
-    · LoRA Configuration → B6 (Model card)
-    · Merge & Deploy (v2) → B7 (Deployment)
-    · Adapter Storage Flow + Container Images → docs/REPRODUCIBILITY.md (OVERFLOW)
-    · Dataset and models + Public Artifacts → merged Artifacts table (Shared tail)
-- Step 3 = split multi-audience sections (Medical Safety Evaluation → A3/A5/B4/B5; Reproduce → A9/B9).
-- Step 4 = write new/consolidation sections (A1/A2/A8/B2/B3/B5/B8).
+- Step 2/4 ✅ COMPLETE — all 4 relocation sub-moves landed:
+    · 2a LoRA Configuration → B6 (Model card) ✅ 5494437
+    · 2b Merge & Deploy (v2) → B7 (Deployment) ✅ f6491b7
+    · 2c Adapter Storage Flow + Container Images → docs/REPRODUCIBILITY.md (OVERFLOW, new file) ✅ 36e7814
+    · 2d Dataset and models + Public Artifacts → merged table (+License column) ✅ 9567320
+- Step 3 = NEXT: split multi-audience sections (Medical Safety Evaluation → A3/A5/B4/B5; Reproduce → A9/B9).
+- Step 4 = write new/consolidation sections (A1/A2/A8/B2/B3/B5/B8 + #26 block-mode DISAGREE doc).
 - THEN: self-host Qwen3-32B (gate integrity #7 → revert safety_gate.py). Deferred (external): #10 #12; #26 doc.
   Fable 5 BONUS review = after the structure lands.
 
