@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-05 (Session: README restructure — #13 Step 3a ✅ (Medical Safety split → A3/A5/B4/B5/B8); Steps 1/2/16/18 ✅; NEXT = #13 Step 3b (Reproduce → A9/B9); HEAD = ab3f1f2)
+# Last updated: 2026-09-05 (Session: README restructure — #13 Step 3 fully ✅ (3a Medical Safety + 3b Reproduce split); Steps 1/2/16/18 ✅; NEXT = #13 Step 4 (write new sections A1/A2/A8, B1/B2/B3, B5/B8); HEAD = c5ebee7)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -81,6 +81,7 @@ f6491b7 - README: relocate Merge & Deploy (v2) → B7 (Deployment on Nebius) [#1
 36e7814 - README: relocate Container Images + Adapter Storage Flow → docs/REPRODUCIBILITY.md (new overflow file) [#13 Step 2c]
 9567320 - README: merge Public Artifacts into Dataset and models table (+License column) [#13 Step 2d]
 ab3f1f2 - README: split Medical Safety Evaluation → A3/A5/B4/B5/B8 [#13 Step 3a]
+c5ebee7 - README: split Reproduce step by step → A9 (analysis) / B9 (deployment) [#13 Step 3b]
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -250,7 +251,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 9567320)
+## README STATUS — COMPLETE ✅ (HEAD = c5ebee7)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -565,15 +566,15 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
 
 ### ✅ DONE — Fable 5 review v1 (no-bonus, 28/40) — 7 fixes landed; see FABLE 5 REVIEW HISTORY
 
-### 🟡 NEXT — #13 Step 3b/4: Reproduce step by step → A9/B9 (show-first, blueprint = readme_restructure_response.txt)
+### 🟡 NEXT — #13 Step 4/4: write new/consolidation sections (show-first, blueprint = readme_restructure_response.txt)
 - Done: #18 ✅ (7e3f088), #16 ✅ (7e3f088 + e8a8e31), #13 Step 1/4 skeleton+nav ✅ (5ba67bf).
 - Step 2/4 ✅ COMPLETE — all 4 relocation sub-moves landed:
     · 2a LoRA Configuration → B6 (Model card) ✅ 5494437
     · 2b Merge & Deploy (v2) → B7 (Deployment) ✅ f6491b7
     · 2c Adapter Storage Flow + Container Images → docs/REPRODUCIBILITY.md (OVERFLOW, new file) ✅ 36e7814
     · 2d Dataset and models + Public Artifacts → merged table (+License column) ✅ 9567320
-- Step 3a ✅ (ab3f1f2): Medical Safety Evaluation → A3/A5/B4/B5/B8 (2×2 rule table, Llama-advisory, calibration-informed rename, 318 parked in B5). Step 3b = NEXT: Reproduce step by step → A9/B9.
-- Step 4 = write new/consolidation sections (A1/A2/A8/B2/B3/B5/B8 + #26 block-mode DISAGREE doc).
+- Step 3/4 ✅ COMPLETE — both splits landed: 3a (ab3f1f2) Medical Safety → A3/A5/B4/B5/B8 (2×2 rule table, Llama-advisory, calibration-informed rename, 318 parked in B5); 3b (c5ebee7) Reproduce → A9 (analysis) / B9 (deployment, +costs note, h4 Nebius Jobs, B3 forward-note).
+- Step 4 = NEXT: write new/consolidation sections — A1/A2/A8, B1/B2/B3, B5 (user-facing translation), B8 items 2-3 (prompt drift, defense-in-depth) + #26 block-mode DISAGREE doc in B3. Also fills A4/A6/A7 from VAGT + Nemotron-teacher sections (unsequenced). Trim parked 318 in B5 once B2/B3 exist; drop "Under construction" note when stubs filled.
 - THEN: self-host Qwen3-32B (gate integrity #7 → revert safety_gate.py). Deferred (external): #10 #12; #26 doc.
   Fable 5 BONUS review = after the structure lands.
 
