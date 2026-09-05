@@ -73,11 +73,6 @@ This README is organized into two tracks — read whichever fits:
 ### B4. The safety gate — how a verdict is produced
 ### B5. Operating characteristics
 ### B6. Model card — the served student
-### B7. Deployment on Nebius
-### B8. Known issues & operating caveats
-### B9. Reproduce the deployment
-
-## LoRA Configuration
 
 v2 uses the winning configuration from v1 ablation (r=32, all_attn, seed=42, 3 epochs). No additional ablation was run — the v1 winner reproduced on **Nebius H100 within a ROUGE-L delta of 1.6–5.0%** of the original **Technion H200** runs (across 3 v1 models: OpenBioLLM −1.6%, Mistral-7B −3.7%, BioMistral −5.0%; see the [v1 reproduction table](https://github.com/deepset01-sys/medisimplifier-nebius)) and transfers directly to the Nemotron-taught dataset.
 
@@ -92,6 +87,10 @@ Base model loaded in **4-bit NF4 QLoRA** (`BitsAndBytesConfig`: `load_in_4bit=Tr
 | lora_alpha | 64 | 2r, per rsLoRA |
 | lora_dropout | 0.05 | v1 convention |
 | use_rslora | True | rank-stabilized LoRA |
+
+### B7. Deployment on Nebius
+### B8. Known issues & operating caveats
+### B9. Reproduce the deployment
 
 ## v2 Evaluation Results — v1 (Claude teacher) vs v2 (Nemotron teacher)
 
