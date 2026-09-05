@@ -447,6 +447,8 @@ A dropped diagnosis a two-judge panel would have shipped; the third judge catche
 
 **DISAGREE rate (calibration verdicts).** The DISAGREE rule (Nemotron UNSAFE + Qwen SAFE) fires on **203/708 (28.7%)** of MedSimp-JudgeBench items — **136 genuine corrupted catches** (81 of them diagnosis drops) plus **67 clean false alarms**, so roughly **1-in-3 DISAGREEs is a spurious flag** on faithful text, consistent with Nemotron's 35.2% clean false-positive rate. This is the *calibration* rate (a different judge prompt than the deployed gate — cf. idx 21, see Scope note in B4); the gate's live rate would require a full 708-item re-run through `safety_gate.py`.
 
+**In plain terms:** on MedSimp-JudgeBench perturbations, the two-judge panel (Llama + Qwen) returns a SAFE consensus that is wrong ~34% of the time on corrupted items, and misses ~75% of silent diagnosis drops specifically. Adding Nemotron closes that gap; the cost is that a DISAGREE is a false alarm ~1-in-3 of the time (see DISAGREE rate above).
+
 All three judges run in parallel (ThreadPoolExecutor, max_workers=3) via Nebius Token Factory — latency ≈ max(judges) not sum (~27s total).
 
 ### B6. Model card — the served student
