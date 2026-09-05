@@ -509,36 +509,26 @@ Full container image digests and rebuild steps → [docs/REPRODUCIBILITY.md](doc
 
 > **Note on HuggingFace accounts:** The original dataset and Technion-era adapters are published under **GuyDor007** (Guy Dor, Technion co-author). All v2 artifacts are under **chambul / deepset01-sys** (Shmulik Avraham).
 
-| Resource | Link / string |
-|--|--|
-| Source dataset | [`GuyDor007/medisimplifier-dataset`](https://huggingface.co/datasets/GuyDor007/medisimplifier-dataset) — 9,999 samples (train 7,999 / val 999 / test 1,001), public (Claude references) |
-| Nemotron training dataset | [`chambul/medisimplifier-nemotron-dataset`](https://huggingface.co/datasets/chambul/medisimplifier-nemotron-dataset) — 7,983 train / 995 val / 998 test (9,976 valid after teacher filtering) |
-| Judge benchmark | [`chambul/MedSimp-JudgeBench`](https://huggingface.co/datasets/chambul/MedSimp-JudgeBench) — 708 samples, 4 error types, 3-judge verdicts |
-| Merged Model v2 | [`chambul/MediSimplifier-OpenBioLLM-v2-merged`](https://huggingface.co/chambul/MediSimplifier-OpenBioLLM-v2-merged) — OpenBioLLM-8B v2, ready for vLLM |
-| Merged Model v1 | [`chambul/MediSimplifier-OpenBioLLM-merged`](https://huggingface.co/chambul/MediSimplifier-OpenBioLLM-merged) — v1 baseline |
-| Adapters (Technion-era) | [`GuyDor007/MediSimplifier-LoRA-Adapters`](https://huggingface.co/GuyDor007/MediSimplifier-LoRA-Adapters) |
-| Teacher model | `nvidia/nemotron-3-super-120b-a12b` (Token Factory) |
-| Safety judge (new) | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` (Token Factory) |
-| Safety judges (v1) | `meta-llama/Llama-3.3-70B-Instruct` · `Qwen/Qwen3-32B` |
-| Token Factory endpoint | `https://api.studio.nebius.ai/v1/` |
-| v1 project | [github.com/deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius) 🥇 |
+| Resource | Link / string | License |
+|--|--|--|
+| Source dataset | [`GuyDor007/medisimplifier-dataset`](https://huggingface.co/datasets/GuyDor007/medisimplifier-dataset) — 9,999 samples (train 7,999 / val 999 / test 1,001), public (Claude references) | — |
+| Nemotron training dataset | [`chambul/medisimplifier-nemotron-dataset`](https://huggingface.co/datasets/chambul/medisimplifier-nemotron-dataset) — 7,983 train / 995 val / 998 test (9,976 valid after teacher filtering) | CC-BY-NC-SA-4.0 |
+| Judge benchmark | [`chambul/MedSimp-JudgeBench`](https://huggingface.co/datasets/chambul/MedSimp-JudgeBench) — 708 samples, 4 error types, 3-judge verdicts (incl. Nemotron Nano) | CC-BY-NC-SA-4.0 |
+| Merged Model v2 | [`chambul/MediSimplifier-OpenBioLLM-v2-merged`](https://huggingface.co/chambul/MediSimplifier-OpenBioLLM-v2-merged) — OpenBioLLM-8B v2 (base: `aaditya/Llama3-OpenBioLLM-8B`), ready for vLLM | [Llama 3 Community License](https://llama.meta.com/llama3/license/) |
+| Merged Model v1 | [`chambul/MediSimplifier-OpenBioLLM-merged`](https://huggingface.co/chambul/MediSimplifier-OpenBioLLM-merged) — v1 baseline | — |
+| Adapters (Technion-era) | [`GuyDor007/MediSimplifier-LoRA-Adapters`](https://huggingface.co/GuyDor007/MediSimplifier-LoRA-Adapters) | — |
+| Teacher model | `nvidia/nemotron-3-super-120b-a12b` (Token Factory) | — |
+| Safety judge (new) | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` (Token Factory) | — |
+| Safety judges (v1) | `meta-llama/Llama-3.3-70B-Instruct` · `Qwen/Qwen3-32B` | — |
+| Token Factory endpoint | `https://api.studio.nebius.ai/v1/` | — |
+| Docker images | Training/eval/merge + Safe Endpoint v2 → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) | — |
+| v1 project | [github.com/deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius) 🥇 | — |
 
 > Underlying clinical notes: [Asclepius-Synthetic-Clinical-Notes](https://huggingface.co/datasets/starmpcc/Asclepius-Synthetic-Clinical-Notes) (CC-BY-NC-SA-4.0) — anonymized synthetic notes, no real patient data. CC-BY-NC-SA-4.0 restricts commercial use and requires derivatives to share under the same license.
-> **Deployment posture:** research prototype, not clinician-validated. Nemotron references are LLM-generated, not expert-reviewed.
 
 ## License
 
 Apache 2.0 — see [LICENSE](LICENSE).
-
-## Public Artifacts
-
-* Merged model v2: [chambul/MediSimplifier-OpenBioLLM-v2-merged](https://huggingface.co/chambul/MediSimplifier-OpenBioLLM-v2-merged) — Built with Meta Llama 3 (base: aaditya/Llama3-OpenBioLLM-8B). Released under [Llama 3 Community License](https://llama.meta.com/llama3/license/).
-* Nemotron training dataset: [chambul/medisimplifier-nemotron-dataset](https://huggingface.co/datasets/chambul/medisimplifier-nemotron-dataset) — 9,976 Nemotron Super references (CC-BY-NC-SA-4.0)
-* Judge Calibration Benchmark: [chambul/MedSimp-JudgeBench](https://huggingface.co/datasets/chambul/MedSimp-JudgeBench) — 708 samples, 4 error types, 3-judge verdicts including Nemotron Nano (CC-BY-NC-SA-4.0)
-* Docker (training/eval/merge): [chambul/medisimplifier:train-v31](https://hub.docker.com/r/chambul/medisimplifier)
-* Docker (Safe Endpoint v2): [chambul/medisimplifier:endpoint-v3](https://hub.docker.com/r/chambul/medisimplifier) — vLLM + VAGT-calibrated 3-judge gate
-* Source dataset: [GuyDor007/medisimplifier-dataset](https://huggingface.co/datasets/GuyDor007/medisimplifier-dataset) — original Claude references (evaluation yardstick)
-* v1 project: [deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius) 🥇
 
 ## Future Work & Limitations
 
