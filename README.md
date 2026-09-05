@@ -56,6 +56,14 @@ This README is organized into two tracks — read whichever fits:
 ## Track A — Research Design
 
 ### A1. Question & estimand
+
+**Research question.** Do consensus statistics — Fleiss κ, Krippendorff α — detect when adding a third judge improves a panel's accuracy against ground truth?
+
+**Estimand.** For a panel of R raters scoring items with known ground-truth status τ ∈ {0,1} (here, whether a medical simplification was corrupted), **Φ_V** is the proportion of variance in the panel mean attributable to ground truth, after bias-correcting the raters' shared error. It answers "how much of what the panel agrees on is *truth* rather than *shared bias*" — a question κ and α cannot pose, because they never reference τ. The formal decomposition is in A4.
+
+**Falsifiable prediction.** Adding a rater that breaks a shared blind spot should **raise Φ_V** and **lower σ²_B** on the blind-spot stratum, and **may lower κ/α** — because the new rater necessarily disagrees with the two that share the blind spot. If instead κ/α tracked accuracy, they would *rise* whenever the panel got more accurate; VAGT predicts they can move the opposite way. A6 reports the test.
+
+**VAGT origin.** VAGT was developed in the six weeks between submissions — after v1's κ=0.11 finding (July 15) and before the v2 window opened (August 26). The framework files (`vagt_section.md`, `vagt_estimand.md`) live in the v1 repo but were not part of the v1 submission. v2 is VAGT's first empirical application, with Nemotron Nano as the third rater that makes the 3-rater decomposition possible.
 ### A2. Benchmark — MedSimp-JudgeBench
 ### A3. Judge panel & protocol
 
@@ -158,7 +166,6 @@ Adding Nemotron lowers inter-rater agreement on **3 of 4 features** (dose, negat
 > - **Not a free win everywhere.** On `dose` ΔΦ_V = −0.013 [−0.055, +0.021] (a slight, not statistically significant dip): Llama+Qwen weren't badly blind there, so Nemotron's added rater noise outweighs the small bias gain. The panel benefits most exactly where the incumbents share a blind spot.
 > - Adding a diverging rater **raises σ²_R and σ²_N** (see the Variance ledger above) — the cost side of the ledger. Φ_V nets the two effects.
 > - **Complete-case:** rows where any judge returned ERROR are dropped (9–18 per feature). Counts reported in [`vagt_nemotron_results.txt`](vagt_nemotron_results.txt).
-> - VAGT was developed in the six weeks between submissions — after v1's κ=0.11 finding (July 15) and before the v2 window opened (August 26). The framework files (`vagt_section.md`, `vagt_estimand.md`) live in the v1 repo but were not part of the v1 submission. v2 is VAGT's first empirical application, with Nemotron Nano as the third rater that makes the 3-rater decomposition possible.
 ### A7. Results III — Nemotron Super as teacher
 
 **Question:** Can Nemotron Super replace Claude Opus 4.5 as the reference-simplification teacher, using the *same* prompt?
