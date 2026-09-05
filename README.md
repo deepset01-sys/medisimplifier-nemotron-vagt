@@ -51,8 +51,6 @@ This README is organized into two tracks — read whichever fits:
 - **[Track A — Research Design](#track-a--research-design)** — the estimand, MedSimp-JudgeBench, judge protocol, the VAGT framework, per-judge calibration, the inversion, and threats to validity. *(For the statistician.)*
 - **[Track B — Product Design](#track-b--product-design)** — the `POST /v1/simplify` contract, the safety-gate decision rule, measured operating characteristics, the model card, Nebius deployment, and known issues. *(For the developer / hackathon judge.)*
 
-> **Under construction:** the two tracks are being populated incrementally; detailed content currently lives in the sections below and is being relocated into A1-A9 / B1-B9.
-
 ## Track A — Research Design
 
 ### A1. Question & estimand
