@@ -89,6 +89,39 @@ Base model loaded in **4-bit NF4 QLoRA** (`BitsAndBytesConfig`: `load_in_4bit=Tr
 | use_rslora | True | rank-stabilized LoRA |
 
 ### B7. Deployment on Nebius
+
+The LoRA adapter is merged into the base model before serving:
+
+1. Run merge job (Nebius Job):
+   `jobs/job_merge_v2.yaml` — reads from `medisimplifier-adapters-v2/adapter/`, writes merged model to bucket via `aws s3 cp`
+
+2. Publish to HuggingFace:
+   `chambul/MediSimplifier-OpenBioLLM-v2-merged` (public — no bucket credentials required to reproduce)
+
+3. Deploy Safe Endpoint v2 (Nebius GPU Endpoint):
+   `jobs/safe_endpoint_v2.yaml` — vLLM loads model from HuggingFace, Token Factory judges via `NEBIUS_API_KEY`
+
+```bash
+# Step 1: Merge (Nebius Job)
+# Submit jobs/job_merge_v2.yaml via Nebius Console
+
+# Step 1b: Download merged model from bucket
+aws s3 sync s3://medisimplifier-adapters-v2/merged_openbio_v2/ \
+  /tmp/merged_openbio_v2/ \
+  --endpoint-url https://storage.eu-north1.nebius.cloud \
+  --region eu-north1
+
+# Step 2: Publish to HuggingFace
+huggingface-cli upload \
+  chambul/MediSimplifier-OpenBioLLM-v2-merged \
+  /tmp/merged_openbio_v2/
+
+# Step 3: Deploy endpoint
+# Submit jobs/safe_endpoint_v2.yaml via Nebius Console
+# Requires: NEBIUS_API_KEY, HF_TOKEN
+```
+
+Note: Judges reproducing the endpoint load directly from `chambul/MediSimplifier-OpenBioLLM-v2-merged` on HuggingFace — no bucket credentials required.
 ### B8. Known issues & operating caveats
 ### B9. Reproduce the deployment
 
@@ -159,41 +192,6 @@ Pipeline:
         (endpoint tested; redeploy via safe_endpoint_v2.yaml)
 
 > **Why Token Factory?** Nemotron Super and Nano are both served per-token with zero idle cost. The teacher JudgeBench-reference run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min; the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
-
-## Merge & Deploy (v2)
-
-The LoRA adapter is merged into the base model before serving:
-
-1. Run merge job (Nebius Job):
-   `jobs/job_merge_v2.yaml` — reads from `medisimplifier-adapters-v2/adapter/`, writes merged model to bucket via `aws s3 cp`
-
-2. Publish to HuggingFace:
-   `chambul/MediSimplifier-OpenBioLLM-v2-merged` (public — no bucket credentials required to reproduce)
-
-3. Deploy Safe Endpoint v2 (Nebius GPU Endpoint):
-   `jobs/safe_endpoint_v2.yaml` — vLLM loads model from HuggingFace, Token Factory judges via `NEBIUS_API_KEY`
-
-```bash
-# Step 1: Merge (Nebius Job)
-# Submit jobs/job_merge_v2.yaml via Nebius Console
-
-# Step 1b: Download merged model from bucket
-aws s3 sync s3://medisimplifier-adapters-v2/merged_openbio_v2/ \
-  /tmp/merged_openbio_v2/ \
-  --endpoint-url https://storage.eu-north1.nebius.cloud \
-  --region eu-north1
-
-# Step 2: Publish to HuggingFace
-huggingface-cli upload \
-  chambul/MediSimplifier-OpenBioLLM-v2-merged \
-  /tmp/merged_openbio_v2/
-
-# Step 3: Deploy endpoint
-# Submit jobs/safe_endpoint_v2.yaml via Nebius Console
-# Requires: NEBIUS_API_KEY, HF_TOKEN
-```
-
-Note: Judges reproducing the endpoint load directly from `chambul/MediSimplifier-OpenBioLLM-v2-merged` on HuggingFace — no bucket credentials required.
 
 ## Adapter Storage Flow
 
