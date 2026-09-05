@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-05 (Session: README restructure — #13 Step 4 in progress: TRACK A fully populated (A1-A9 ✅) + B3 ✅; Steps 1/2/3/16/18 ✅; NEXT = B1 (What ships); HEAD = fbad377)
+# Last updated: 2026-09-05 (Session: README restructure — #13 Step 4 in progress: Track A ✅ + B1/B3-B7/B9 ✅; ONE empty stub left (B2); Steps 1/2/3/16/18 ✅; NEXT = B2 (Quickstart); HEAD = b371cda)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -88,6 +88,7 @@ eb37de6 - README: A7 (relocate Nemotron-as-Teacher + v2 Eval Results) + B6 model
 f7f8472 - README: B3 API contract (#26 block-mode DISAGREE, /health, error semantics) + trim parked 318 from B5 [#13 Step 4 · B3]
 ab42383 - README: A1 Question & estimand (research Q, estimand-in-words, falsifiable prediction) + absorb provenance note from A6 [#13 Step 4 · A1]
 fbad377 - README: A2 Benchmark MedSimp-JudgeBench (708 items, per-type counts, silent-drop definition, provenance) [#13 Step 4 · A2]
+b371cda - README: B1 What ships (user story, pipeline diagram, what-it's-not) [#13 Step 4 · B1]
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -257,7 +258,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = fbad377)
+## README STATUS — COMPLETE ✅ (HEAD = b371cda)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -572,7 +573,7 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
 
 ### ✅ DONE — Fable 5 review v1 (no-bonus, 28/40) — 7 fixes landed; see FABLE 5 REVIEW HISTORY
 
-### 🟡 NEXT — #13 Step 4/4: B1 (What ships), then B2, B5/B8 (show-first, blueprint = readme_restructure_response.txt)
+### 🟡 NEXT — #13 Step 4/4: B2 (Quickstart — LAST empty stub), then B5/B8 additions + cleanup (show-first, blueprint = readme_restructure_response.txt)
 - Done: #18 ✅ (7e3f088), #16 ✅ (7e3f088 + e8a8e31), #13 Step 1/4 skeleton+nav ✅ (5ba67bf).
 - Step 2/4 ✅ COMPLETE — all 4 relocation sub-moves landed:
     · 2a LoRA Configuration → B6 (Model card) ✅ 5494437
@@ -580,7 +581,7 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
     · 2c Adapter Storage Flow + Container Images → docs/REPRODUCIBILITY.md (OVERFLOW, new file) ✅ 36e7814
     · 2d Dataset and models + Public Artifacts → merged table (+License column) ✅ 9567320
 - Step 3/4 ✅ COMPLETE — both splits landed: 3a (ab3f1f2) Medical Safety → A3/A5/B4/B5/B8 (2×2 rule table, Llama-advisory, calibration-informed rename, 318 parked in B5); 3b (c5ebee7) Reproduce → A9 (analysis) / B9 (deployment, +costs note, h4 Nebius Jobs, B3 forward-note).
-- Step 4 IN PROGRESS: A4 ✅ A6 ✅ (e731fe9, VAGT split) · A7 ✅ (eb37de6, relocated `## Nemotron as Teacher` + `## v2 Evaluation Results`; "What the endpoint serves" + "Adapter provenance" → B6; new authoring 23-errored-dropped-not-imputed + elaboration-freq-future-work; A3 footnote + line-27 inbound re-pointed to A7). All relocation-style splits (A4/A6/A7) now done. A8 ✅ (8908a19). B3 ✅ (f7f8472, API contract — request schema + safety_mode + response contract + /health + error semantics + #26 block-mode-DISAGREE from safety_gate.py; forward-note removed; parked-318 TRIMMED from B5 — health payload now lives once in B3). A1 ✅ (ab42383, Question & estimand — research Q + estimand-in-words + falsifiable prediction; provenance note ABSORBED from A6, now lives once in A1). A2 ✅ (fbad377, Benchmark — 708 items = 200 clean + 508 corrupted [diagnosis 150 / lateral 150 / negation 113 / dose 95], all counts verified from nemotron_calibration_full.json; silent-drop def + τ coding + provenance). **TRACK A FULLY POPULATED (A1-A9 ✅).** NEXT = B1 (What ships — pull ASCII pipeline from `## How it runs on Nebius` + intended user + what-it-is-not). Remaining (authoring): B2, B5 (user-facing translation), B8 items 2-3 (prompt drift, defense-in-depth). Drop "Under construction" note when stubs filled.
+- Step 4 IN PROGRESS: A4 ✅ A6 ✅ (e731fe9, VAGT split) · A7 ✅ (eb37de6, relocated `## Nemotron as Teacher` + `## v2 Evaluation Results`; "What the endpoint serves" + "Adapter provenance" → B6; new authoring 23-errored-dropped-not-imputed + elaboration-freq-future-work; A3 footnote + line-27 inbound re-pointed to A7). All relocation-style splits (A4/A6/A7) now done. A8 ✅ (8908a19). B3 ✅ (f7f8472, API contract — request schema + safety_mode + response contract + /health + error semantics + #26 block-mode-DISAGREE from safety_gate.py; forward-note removed; parked-318 TRIMMED from B5 — health payload now lives once in B3). A1 ✅ (ab42383, Question & estimand — research Q + estimand-in-words + falsifiable prediction; provenance note ABSORBED from A6, now lives once in A1). A2 ✅ (fbad377, Benchmark — 708 items = 200 clean + 508 corrupted [diagnosis 150 / lateral 150 / negation 113 / dose 95], all counts verified from nemotron_calibration_full.json; silent-drop def + τ coding + provenance). **TRACK A FULLY POPULATED (A1-A9 ✅).** B1 ✅ (b371cda, What ships — user story + intended user + what-it's-not + pipeline diagram relocated from `## How it runs` [metrics trimmed → A7, VAGT-calibrated→calibration-informed, corrected serverless framing]). **ONE empty stub left: B2 (Quickstart).** NEXT = B2 (absorb SAFE-case curl + captured JSON from B9 + gate-only quickstart). Then: B5 (user-facing translation), B8 items 2-3 (prompt drift, defense-in-depth); dissolve `## How it runs` remnant (492 stale framing + 524 Why-TF→B7 + 526 pointer); drop "Under construction" note when B2 lands.
 - THEN: self-host Qwen3-32B (gate integrity #7 → revert safety_gate.py). Deferred (external): #10 #12; #26 doc.
   Fable 5 BONUS review = after the structure lands.
 
