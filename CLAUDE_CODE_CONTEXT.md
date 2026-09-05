@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-05 (Session: README restructure — #13 Step 4 in progress: A4 ✅ A6 ✅ (VAGT split); Steps 1/2/3/16/18 ✅; NEXT = A7 (relocate Nemotron-as-Teacher + v2 Eval Results); HEAD = e731fe9)
+# Last updated: 2026-09-05 (Session: README restructure — #13 Step 4 in progress: A4 ✅ A6 ✅ A7 ✅ (relocations done); Steps 1/2/3/16/18 ✅; NEXT = A8 (Threats to validity — consolidation); HEAD = eb37de6)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -83,6 +83,7 @@ f6491b7 - README: relocate Merge & Deploy (v2) → B7 (Deployment on Nebius) [#1
 ab3f1f2 - README: split Medical Safety Evaluation → A3/A5/B4/B5/B8 [#13 Step 3a]
 c5ebee7 - README: split Reproduce step by step → A9 (analysis) / B9 (deployment) [#13 Step 3b]
 e731fe9 - README: split VAGT → A4 (measurement + coding + σ²_τ) / A6 (results II + variance ledger + ΔFleiss/Kripp + reframe) [#13 Step 4 · A4/A6]
+eb37de6 - README: A7 (relocate Nemotron-as-Teacher + v2 Eval Results) + B6 model-card blockquotes [#13 Step 4 · A7]
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -252,7 +253,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = e731fe9)
+## README STATUS — COMPLETE ✅ (HEAD = eb37de6)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -567,7 +568,7 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
 
 ### ✅ DONE — Fable 5 review v1 (no-bonus, 28/40) — 7 fixes landed; see FABLE 5 REVIEW HISTORY
 
-### 🟡 NEXT — #13 Step 4/4: A7 (relocate Nemotron-as-Teacher + v2 Eval Results), then A1/A2/A8, B1/B2/B3, B5/B8 (show-first, blueprint = readme_restructure_response.txt)
+### 🟡 NEXT — #13 Step 4/4: A8 (Threats to validity — consolidation), then A1/A2, B1/B2/B3, B5/B8 (show-first, blueprint = readme_restructure_response.txt)
 - Done: #18 ✅ (7e3f088), #16 ✅ (7e3f088 + e8a8e31), #13 Step 1/4 skeleton+nav ✅ (5ba67bf).
 - Step 2/4 ✅ COMPLETE — all 4 relocation sub-moves landed:
     · 2a LoRA Configuration → B6 (Model card) ✅ 5494437
@@ -575,7 +576,7 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
     · 2c Adapter Storage Flow + Container Images → docs/REPRODUCIBILITY.md (OVERFLOW, new file) ✅ 36e7814
     · 2d Dataset and models + Public Artifacts → merged table (+License column) ✅ 9567320
 - Step 3/4 ✅ COMPLETE — both splits landed: 3a (ab3f1f2) Medical Safety → A3/A5/B4/B5/B8 (2×2 rule table, Llama-advisory, calibration-informed rename, 318 parked in B5); 3b (c5ebee7) Reproduce → A9 (analysis) / B9 (deployment, +costs note, h4 Nebius Jobs, B3 forward-note).
-- Step 4 IN PROGRESS: A4 ✅ A6 ✅ (e731fe9, VAGT split — variance ledger + ΔFleiss/Kripp table + reframe; all numbers from vagt_nemotron_results.txt / vagt_bootstrap_cis.json). NEXT = A7 (relocate `## Nemotron as Teacher` + `## v2 Evaluation Results`). Remaining: A1/A2/A8, B1/B2/B3, B5 (user-facing translation), B8 items 2-3 (prompt drift, defense-in-depth) + #26 block-mode DISAGREE doc in B3. Provenance note still in A6 caveats (→ A1 when A1 authored). Trim parked 318 in B5 once B2/B3 exist; drop "Under construction" note when stubs filled.
+- Step 4 IN PROGRESS: A4 ✅ A6 ✅ (e731fe9, VAGT split) · A7 ✅ (eb37de6, relocated `## Nemotron as Teacher` + `## v2 Evaluation Results`; "What the endpoint serves" + "Adapter provenance" → B6; new authoring 23-errored-dropped-not-imputed + elaboration-freq-future-work; A3 footnote + line-27 inbound re-pointed to A7). All relocation-style splits (A4/A6/A7) now done. NEXT = A8 (Threats to validity — consolidate reasoning-budget confound + idx-21 prompt-drift + synthetic-perturbation + complete-case + single-seed + same-family judge). Remaining (authoring): A1/A2, B1/B2/B3, B5 (user-facing translation), B8 items 2-3 (prompt drift, defense-in-depth) + #26 block-mode DISAGREE doc in B3. Provenance note still in A6 caveats (→ A1 when A1 authored). Trim parked 318 in B5 once B2/B3 exist; drop "Under construction" note when stubs filled.
 - THEN: self-host Qwen3-32B (gate integrity #7 → revert safety_gate.py). Deferred (external): #10 #12; #26 doc.
   Fable 5 BONUS review = after the structure lands.
 
