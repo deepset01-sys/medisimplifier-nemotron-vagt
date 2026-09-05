@@ -75,6 +75,20 @@ Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qw
 
 > **Reasoning-budget confound.** Decoding budget is asymmetric: Nemotron Nano runs at `max_tokens=8000` and reasons internally, while Llama and Qwen run at 2,000 with thinking off. Part of Nemotron's recall edge may therefore reflect reasoning budget, not the model itself. A proper control — Llama/Qwen with CoT visible, or Nemotron with a truncated budget — is left as future work (see A8).
 ### A4. Measurement — VAGT
+
+Consensus statistics (Cohen's κ, PABAK, Krippendorff α) measure whether judges *agree with each other*. They never measure whether judges agree with the *truth* — so they reward a shared blind spot and penalize the one judge that breaks it. **VAGT (Veridicality-Anchored G-Theory)** fixes this by anchoring to ground truth (the injected error type), decomposing each stratum into:
+
+    consensus  c_i = mean_r X_{ir}
+    shared bias b_i = c_i − τ_i ;  σ²_B = mean_i b_i² − σ²_N/R   (bias-corrected)
+    rater bias  α_r = X̄_{·r} − X̄ ;  σ²_R = mean_r α_r²
+    noise       ε   = X − c − α ;   σ²_N = mean ε²
+    Φ_V = σ²_τ / (σ²_τ + σ²_B + (σ²_R + σ²_N)/R)          (higher = more dependable vs truth)
+
+**Coding.** Each judge verdict is coded X_ir ∈ {0,1} with **UNSAFE = 1, SAFE = 0**; the ground-truth label is τ_i ∈ {0,1} with **corrupted = 1, clean = 0**. A stratum = the items corrupted on one feature (τ=1) plus the shared clean controls (τ=0). **R** is the number of raters (2 for Llama+Qwen, 3 with Nemotron).
+
+**σ²_τ (target variance).** For binary τ at corrupted-prevalence *p*, σ²_τ = *p*(1−*p*) — the signal each panel is asked to track (the numerator of Φ_V and its leading denominator term). On the diagnosis stratum (*p* = 0.41) this is **0.243 [0.231, 0.249]** measured, matching the theoretical 0.41 × 0.59 = **0.242**.
+
+**Estimation.** Φ_V is computed per stratum on **complete cases** (any-ERROR rows dropped): dose **n = 280**, negation **n = 295**, lateral **n = 341**, diagnosis **n = 333**. Every Δ and its 95% CI comes from a **paired item bootstrap** — 1000 resamples **over items, not raters**, seed = 42 — because the inference target is "another draw of benchmark items judged by this same panel," so items are the resampling unit.
 ### A5. Results I — judge calibration vs ground truth
 
 **Ground-truth accuracy on MedSimp-JudgeBench (n=708; 200 clean controls, 508 corrupted):**
@@ -104,6 +118,47 @@ Note (three denominators) — three Nemotron recall numbers appear across this R
 
 > **Future work:** 95% confidence intervals (Wilson) on recall and false-positive rates are not yet reported — a statistician will want them; deferred to future work. Llama/Qwen ERROR counts and confusion matrices likewise belong in an appendix.
 ### A6. Results II — the inversion
+
+**Adding Nemotron Nano as a third rater** (R: 2 → 3), per injected error type (1000-item bootstrap, seed=42; ΔΦ_V shows the **paired** Δ with 95% CI — see note):
+
+| Feature | Φ_V (Llama+Qwen) | Φ_V (+Nemotron) | ΔΦ_V (paired, 95% CI) | σ²_B (L+Q) | σ²_B (+Nemo) | Δσ²_B |
+|--|--|--|--|--|--|--|
+| dose | 0.743 | 0.733 | −0.013 [−0.055, +0.021] † | 0.054 | 0.047 | −0.007 |
+| negation | 0.578 | 0.618 | +0.043 [+0.011, +0.070] | 0.145 | 0.104 | −0.041 |
+| lateral | 0.697 | 0.745 | +0.048 [+0.019, +0.074] | 0.077 | 0.050 | −0.027 |
+| **diagnosis** | **0.404** | **0.476** | **+0.071 [+0.055, +0.087]** | **0.347** | **0.229** | **−0.115 [−0.141, −0.090]** |
+
+> **On the Δ values:** the **ΔΦ_V** column (and the diagnosis **Δσ²_B**) are **paired** bootstrap Δ — 3-rater − 2-rater on the *same* complete-case items (1000 resamples, seed=42) — with 95% CI; the valid way to put an interval on a difference. They differ trivially from subtracting the displayed level estimates (each on its own complete-case set): 0.476 − 0.404 ≈ +0.072 while the paired ΔΦ_V is +0.071. Full Δ CIs (ΔΦ_V, Δσ²_B, ΔFleiss κ, ΔKripp α) for all four features: [`vagt_bootstrap_cis.json`](vagt_bootstrap_cis.json). **† dose** ΔΦ_V's CI straddles zero → the lone apparent loss is **not statistically significant**; the three gains (diagnosis, lateral, negation) all have ΔΦ_V CIs strictly above zero.
+
+**Variance ledger (per stratum, 2-rater → 3-rater).** Adding Nemotron shrinks shared bias σ²_B but raises rater variance σ²_R and noise σ²_N — Φ_V nets the two:
+
+| Feature | σ²_B (2r→3r) | σ²_R (2r→3r) | σ²_N (2r→3r) |
+|--|--|--|--|
+| dose | 0.054 → 0.047 | 0.004 → 0.024 | 0.037 → 0.067 |
+| negation | 0.145 → 0.104 | 0.001 → 0.029 | 0.038 → 0.075 |
+| lateral | 0.077 → 0.050 | 0.008 → 0.030 | 0.051 → 0.073 |
+| **diagnosis** | **0.347 → 0.229** | **0.000 → 0.040** | **0.021 → 0.072** |
+
+**The inversion (diagnosis) — the signature VAGT predicts.** When two judges share a blind spot, a third that breaks it *must* disagree with them — so inter-rater agreement falls exactly as veridicality rises. Diagnosis shows this cleanly. Llama and Qwen almost never flag a silently dropped diagnosis (UNSAFE 7% / 3%); adding Nemotron (47% UNSAFE, n=333) cuts shared bias by a third (σ²_B 0.347 → 0.229) and raises Φ_V most (0.404 → 0.476). Yet both robust agreement metrics go *negative* — Fleiss κ 0.076 → −0.088, Krippendorff α 0.077 → −0.086 (paired ΔFleiss κ = ΔKripp α = −0.163 [−0.305, −0.045], CI excludes 0). By every agreement metric the panel looks *worse*; by veridicality it moved *closer to truth*. Agreement statistics reward the blind spot; only a truth-anchored measure sees the fix.
+
+Even so, **Φ_V = 0.476 is still below 0.5** — the panel remains only *weakly* dependable on diagnosis after the fix; the third judge narrows the blind spot but does not close it.
+
+**Agreement falls as veridicality rises — across features.** The paired Δ in the robust agreement metrics (from [`vagt_bootstrap_cis.json`](vagt_bootstrap_cis.json)):
+
+| Feature | ΔFleiss κ (paired, 95% CI) | ΔKripp α (paired, 95% CI) | significant? |
+|--|--|--|--|
+| dose | −0.166 [−0.265, −0.072] | −0.167 [−0.265, −0.072] | yes |
+| negation | −0.183 [−0.298, −0.074] | −0.183 [−0.298, −0.075] | yes |
+| lateral | −0.066 [−0.145, +0.009] | −0.066 [−0.145, +0.009] | no — CI straddles 0 |
+| **diagnosis** | **−0.163 [−0.305, −0.045]** | **−0.163 [−0.305, −0.045]** | yes (and κ turns negative) |
+
+Adding Nemotron lowers inter-rater agreement on **3 of 4 features** (dose, negation, diagnosis significant; lateral not), even as Φ_V *rises* on 3 of 4 — agreement and veridicality decouple. Only **diagnosis** crosses into negative agreement in absolute terms.
+
+> **Caveats:**
+> - **Not a free win everywhere.** On `dose` ΔΦ_V = −0.013 [−0.055, +0.021] (a slight, not statistically significant dip): Llama+Qwen weren't badly blind there, so Nemotron's added rater noise outweighs the small bias gain. The panel benefits most exactly where the incumbents share a blind spot.
+> - Adding a diverging rater **raises σ²_R and σ²_N** (see the Variance ledger above) — the cost side of the ledger. Φ_V nets the two effects.
+> - **Complete-case:** rows where any judge returned ERROR are dropped (9–18 per feature). Counts reported in [`vagt_nemotron_results.txt`](vagt_nemotron_results.txt).
+> - VAGT was developed in the six weeks between submissions — after v1's κ=0.11 finding (July 15) and before the v2 window opened (August 26). The framework files (`vagt_section.md`, `vagt_estimand.md`) live in the v1 repo but were not part of the v1 submission. v2 is VAGT's first empirical application, with Nemotron Nano as the third rater that makes the 3-rater decomposition possible.
 ### A7. Results III — Nemotron Super as teacher
 ### A8. Threats to validity
 ### A9. Reproduce the analysis
@@ -408,35 +463,6 @@ Full adapter storage flow → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
 **Preserved:** section structure, all measurements (20/100, 4 mmHg, 20/70). **Note:** Nemotron removed the blank lines between sections (the prompt asks for no empty lines) — closer to the guideline than the Claude reference.
 
 > **Honest caveat:** Nemotron occasionally adds a soft clause not in the source ("…improved to 20/70, *allowing better daily function*"). Not a medical-fact hallucination, but a mild elaboration that bends the "do not add information" guideline. Frequency across the full set was not separately quantified. ROUGE-L of Nemotron references vs the Claude references: **0.525** (mean over 9,976 pairs; median 0.524, see [`teacher_comparison.json`](teacher_comparison.json)).
-
-## VAGT: When Agreement Misleads — the inversion
-
-Consensus statistics (Cohen's κ, PABAK, Krippendorff α) measure whether judges *agree with each other*. They never measure whether judges agree with the *truth* — so they reward a shared blind spot and penalize the one judge that breaks it. **VAGT (Veridicality-Anchored G-Theory)** fixes this by anchoring to ground truth (the injected error type), decomposing each stratum into:
-
-    consensus  c_i = mean_r X_{ir}
-    shared bias b_i = c_i − τ_i ;  σ²_B = mean_i b_i² − σ²_N/R   (bias-corrected)
-    rater bias  α_r = X̄_{·r} − X̄ ;  σ²_R = mean_r α_r²
-    noise       ε   = X − c − α ;   σ²_N = mean ε²
-    Φ_V = σ²_τ / (σ²_τ + σ²_B + (σ²_R + σ²_N)/n_r)          (higher = more dependable vs truth)
-
-**Adding Nemotron Nano as a third rater** (n_r: 2 → 3), per injected error type (1000-item bootstrap, seed=42; ΔΦ_V shows the **paired** Δ with 95% CI — see note):
-
-| Feature | Φ_V (Llama+Qwen) | Φ_V (+Nemotron) | ΔΦ_V (paired, 95% CI) | σ²_B (L+Q) | σ²_B (+Nemo) | Δσ²_B |
-|--|--|--|--|--|--|--|
-| dose | 0.743 | 0.733 | −0.013 [−0.055, +0.021] † | 0.054 | 0.047 | −0.007 |
-| negation | 0.578 | 0.618 | +0.043 [+0.011, +0.070] | 0.145 | 0.104 | −0.041 |
-| lateral | 0.697 | 0.745 | +0.048 [+0.019, +0.074] | 0.077 | 0.050 | −0.027 |
-| **diagnosis** | **0.404** | **0.476** | **+0.071 [+0.055, +0.087]** | **0.347** | **0.229** | **−0.115 [−0.141, −0.090]** |
-
-> **On the Δ values:** the **ΔΦ_V** column (and the diagnosis **Δσ²_B**) are **paired** bootstrap Δ — 3-rater − 2-rater on the *same* complete-case items (1000 resamples, seed=42) — with 95% CI; the valid way to put an interval on a difference. They differ trivially from subtracting the displayed level estimates (each on its own complete-case set): 0.476 − 0.404 ≈ +0.072 while the paired ΔΦ_V is +0.071. Full Δ CIs (ΔΦ_V, Δσ²_B, ΔFleiss κ, ΔKripp α) for all four features: [`vagt_bootstrap_cis.json`](vagt_bootstrap_cis.json). **† dose** ΔΦ_V's CI straddles zero → the lone apparent loss is **not statistically significant**; the three gains (diagnosis, lateral, negation) all have ΔΦ_V CIs strictly above zero.
-
-**The inversion (diagnosis).** Llama and Qwen share a blind spot: both almost never flag a silently dropped diagnosis (UNSAFE rates 7% / 3%). Adding Nemotron (47% UNSAFE on diagnosis in the VAGT stratum, n=333) cuts shared bias by a third and raises Φ_V most — **yet both robust agreement metrics go *negative* on diagnosis — Fleiss κ 0.076 → −0.088 and Krippendorff α 0.077 → −0.086 — with paired ΔFleiss κ = ΔKripp α = −0.163 [−0.305, −0.045] (CI excludes 0).** By every agreement metric the panel looks *worse*; by veridicality it moved *closer to truth*. That is precisely the failure mode VAGT exists to expose.
-
-> **Honest caveats:**
-> - **Not a free win everywhere.** On `dose` ΔΦ_V = −0.013 [−0.055, +0.021] (a slight, not statistically significant dip): Llama+Qwen weren't badly blind there, so Nemotron's added rater noise outweighs the small bias gain. The panel benefits most exactly where the incumbents share a blind spot.
-> - Adding a diverging rater **raises σ²_R and σ²_N** (printed per feature) — the cost side of the ledger. Φ_V nets the two effects.
-> - **Complete-case:** rows where any judge returned ERROR are dropped (9–18 per feature). Counts reported in [`vagt_nemotron_results.txt`](vagt_nemotron_results.txt).
-> - VAGT was developed in the six weeks between submissions — after v1's κ=0.11 finding (July 15) and before the v2 window opened (August 26). The framework files (`vagt_section.md`, `vagt_estimand.md`) live in the v1 repo but were not part of the v1 submission. v2 is VAGT's first empirical application, with Nemotron Nano as the third rater that makes the 3-rater decomposition possible.
 
 ## Hardware and cost
 
