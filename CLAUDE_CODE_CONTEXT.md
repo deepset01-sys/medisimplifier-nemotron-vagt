@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-05 (Session: README restructure — #13 ALL STUBS POPULATED 🎉 + finishing touches: Under-construction ✅ + B8 items 2-3 ✅; Steps 1/2/3/16/18 ✅; NEXT = B5 translation (X calc from nemotron_calibration_full.json), then dissolve How-it-runs remnant; HEAD = b391f85)
+# Last updated: 2026-09-05 (Session: README restructure — #13 COMPLETE ✅ (Steps 1-4 + finishing touches 1-4; #5 old ## sections deferred by design); Steps 1/2/3/16/18 ✅; NEXT = self-host Qwen3-32B → re-calibrate gate → Fable 5 regular → Fable 5 BONUS ×2; HEAD = de79fa7)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -92,6 +92,8 @@ b371cda - README: B1 What ships (user story, pipeline diagram, what-it's-not) [#
 c3b2e35 - README: B2 Quickstart (Path 1 endpoint + Path 2 gate-only, second product use case) [#13 Step 4 · B2 — LAST empty stub; all A/B stubs now populated]
 0234bb7 - README: drop "Under construction" note (all A/B stubs now populated) [#13 cleanup]
 b391f85 - README: B8 items 2-3 (prompt drift + DISAGREE defense-in-depth) [#13 finishing touches]
+0eabe6f - README: B5 user-facing translation (2-judge miss rate ~34%, diagnosis ~75%) [#13 finishing touches]
+de79fa7 - README: dissolve ## How it runs on Nebius (Why-Token-Factory + adapter pointer → B7; drop stale serverless line) [#13 finishing touches]
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -261,7 +263,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = b391f85)
+## README STATUS — COMPLETE ✅ (HEAD = de79fa7)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -576,7 +578,11 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
 
 ### ✅ DONE — Fable 5 review v1 (no-bonus, 28/40) — 7 fixes landed; see FABLE 5 REVIEW HISTORY
 
-### 🟡 NEXT — #13 finishing touches: #1 "Under construction" ✅ (0234bb7) · #2 B8 items 2-3 ✅ (b391f85) · NEXT = #3 B5 user-facing translation (needs X = 2-judge SAFE-consensus miss-rate on corrupted items, from nemotron_calibration_full.json) · #4 dissolve `## How it runs` remnant · #5 old front-matter ## sections fate (show-first, blueprint = readme_restructure_response.txt)
+### 🟢 #13 COMPLETE ✅ — README two-track restructure done: Steps 1-4 (skeleton → relocate → split → author) + finishing touches #1-#4 (0234bb7 Under-construction · b391f85 B8 items 2-3 · 0eabe6f B5 translation · de79fa7 dissolve How-it-runs). #5 (old front-matter ## sections — What-this-does / What's-new / Choose-your-track / Hardware-and-cost / Project-structure / Dataset-and-models / License / Future-Work) DEFERRED BY DESIGN: they stay as shared front-matter/appendix.
+### 🟡 NEXT SEQUENCE (per methodology)
+- STEP 1: Self-host Qwen3-32B on Nebius (vLLM Job) → re-calibrate gate → revert safety_gate.py to Qwen3-32B + un-defer #7 judge-params table.
+- STEP 2: Fable 5 regular review (no bonus) → target verdict "ready and competitive".
+- STEP 3: Fable 5 BONUS ×2 (Research track + Product track).
 - Done: #18 ✅ (7e3f088), #16 ✅ (7e3f088 + e8a8e31), #13 Step 1/4 skeleton+nav ✅ (5ba67bf).
 - Step 2/4 ✅ COMPLETE — all 4 relocation sub-moves landed:
     · 2a LoRA Configuration → B6 (Model card) ✅ 5494437
@@ -585,8 +591,7 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
     · 2d Dataset and models + Public Artifacts → merged table (+License column) ✅ 9567320
 - Step 3/4 ✅ COMPLETE — both splits landed: 3a (ab3f1f2) Medical Safety → A3/A5/B4/B5/B8 (2×2 rule table, Llama-advisory, calibration-informed rename, 318 parked in B5); 3b (c5ebee7) Reproduce → A9 (analysis) / B9 (deployment, +costs note, h4 Nebius Jobs, B3 forward-note).
 - Step 4 IN PROGRESS: A4 ✅ A6 ✅ (e731fe9, VAGT split) · A7 ✅ (eb37de6, relocated `## Nemotron as Teacher` + `## v2 Evaluation Results`; "What the endpoint serves" + "Adapter provenance" → B6; new authoring 23-errored-dropped-not-imputed + elaboration-freq-future-work; A3 footnote + line-27 inbound re-pointed to A7). All relocation-style splits (A4/A6/A7) now done. A8 ✅ (8908a19). B3 ✅ (f7f8472, API contract — request schema + safety_mode + response contract + /health + error semantics + #26 block-mode-DISAGREE from safety_gate.py; forward-note removed; parked-318 TRIMMED from B5 — health payload now lives once in B3). A1 ✅ (ab42383, Question & estimand — research Q + estimand-in-words + falsifiable prediction; provenance note ABSORBED from A6, now lives once in A1). A2 ✅ (fbad377, Benchmark — 708 items = 200 clean + 508 corrupted [diagnosis 150 / lateral 150 / negation 113 / dose 95], all counts verified from nemotron_calibration_full.json; silent-drop def + τ coding + provenance). **TRACK A FULLY POPULATED (A1-A9 ✅).** B1 ✅ (b371cda, What ships — user story + intended user + what-it's-not + pipeline diagram relocated from `## How it runs` [metrics trimmed → A7, VAGT-calibrated→calibration-informed, corrected serverless framing]). B2 ✅ (c3b2e35, Quickstart — Path 1 endpoint curl+JSON + Path 2 gate-only "second product use case"; SAFE curl / gate Python / Live-endpoint blockquote MOVED from B9, not duplicated). **🎉 ALL A/B STUBS POPULATED — Track A (A1-A9) ✅ Track B (B1-B9) ✅. Core of #13 (Steps 1-4) done.** NEXT = finishing touches: (1) drop "Under construction" note (now accurate to remove); (2) B8 items 2-3 (prompt drift/idx-21 + DISAGREE defense-in-depth); (3) B5 user-facing translation (miss-rate/false-alarm sentence, X from nemotron_calibration_full.json); (4) dissolve `## How it runs` remnant (492 stale framing superseded by B1 + 524 Why-TF→B7 + 526 pointer); (5) decide fate of old front-matter ## sections per Fable final structure.
-- THEN: self-host Qwen3-32B (gate integrity #7 → revert safety_gate.py). Deferred (external): #10 #12; #26 doc.
-  Fable 5 BONUS review = after the structure lands.
+- (Superseded — see "NEXT SEQUENCE" above.) Self-host Qwen3-32B → recalibrate (#7 revert); #26 now ✅ documented in B3/B8; deferred (external): #10 #12.
 
 ### 🟠 THEN (needs key / external)
 - Self-host Qwen3-32B on Nebius (Job + vLLM) → then revert safety_gate.py + un-defer #7.
