@@ -65,6 +65,28 @@ This README is organized into two tracks — read whichever fits:
 
 **VAGT origin.** VAGT was developed in the six weeks between submissions — after v1's κ=0.11 finding (July 15) and before the v2 window opened (August 26). The framework files (`vagt_section.md`, `vagt_estimand.md`) live in the v1 repo but were not part of the v1 submission. v2 is VAGT's first empirical application, with Nemotron Nano as the third rater that makes the 3-rater decomposition possible.
 ### A2. Benchmark — MedSimp-JudgeBench
+
+**Construction.** MedSimp-JudgeBench is **708 items**: **200 clean controls** (τ=0 — faithful simplifications) and **508 corrupted** (τ=1 — a single medical error injected into an otherwise-faithful simplification), spanning four error types.
+
+**Corrupted items by error type** (counted from `nemotron_calibration_full.json`):
+
+| Error type | Injection | Count |
+|--|--|--|
+| diagnosis (silent drop) | a secondary diagnosis removed without replacement | 150 |
+| lateral (side swap) | a laterality / side reference swapped | 150 |
+| negation (flip) | a clinical statement's polarity flipped | 113 |
+| dose (10×) | a dosage scaled by 10× | 95 |
+| **Total corrupted** | | **508** |
+
+200 clean + 508 corrupted = 708.
+
+**Operationalizing "silent drop."** A diagnosis-corrupted item removes one **secondary** diagnosis from the simplification with no replacement and no other change — e.g. idx 146, a Parkinson-disease discharge summary noting *"familial Parkinsonism and depression,"* where the simplification keeps the Parkinsonism but silently omits depression. That single injected change is what makes τ known by construction.
+
+**Ground-truth coding.** Each item carries τ_i ∈ {0,1}: **τ=1** if corrupted, **τ=0** if clean. This constructed label — not any model's judgment — is the ground truth that every recall, Φ_V, and calibration figure is measured against (full coding in A4).
+
+**Reference generation (v2).** The benchmark's reference simplifications were regenerated with Nemotron Super for v2: **519 unique calls fanned out to 708 records, 0 errors** ([`nemotron_references.json`](nemotron_references.json)).
+
+**Provenance.** The benchmark itself — items, perturbations, and τ labels — is a **v1 artifact**; the **Nemotron references are new in v2**. Published: [`chambul/MedSimp-JudgeBench`](https://huggingface.co/datasets/chambul/MedSimp-JudgeBench).
 ### A3. Judge panel & protocol
 
 Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qwen3-32B (cross-family) as a third safety judge, all via Token Factory. Judge prompt is the v1 4-step CoT-with-anti-sycophancy prompt (`safety_eval_v2.py`), reused verbatim.
