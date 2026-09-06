@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-05 (Session: README restructure — #13 COMPLETE ✅ (Steps 1-4 + finishing touches 1-4; #5 old ## sections deferred by design); Steps 1/2/3/16/18 ✅; NEXT = self-host Qwen3-32B → re-calibrate gate → Fable 5 regular → Fable 5 BONUS ×2; HEAD = de79fa7)
+# Last updated: 2026-09-06 (Session: README restructure — #13 COMPLETE ✅ + tone-polish complete (zero "Honest" defensive labels remain); Steps 1/2/3/16/18 ✅; NEXT = self-host Qwen3-32B → re-calibrate gate → Fable 5 regular → Fable 5 BONUS ×2; HEAD = 5d166b5)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -94,6 +94,8 @@ c3b2e35 - README: B2 Quickstart (Path 1 endpoint + Path 2 gate-only, second prod
 b391f85 - README: B8 items 2-3 (prompt drift + DISAGREE defense-in-depth) [#13 finishing touches]
 0eabe6f - README: B5 user-facing translation (2-judge miss rate ~34%, diagnosis ~75%) [#13 finishing touches]
 de79fa7 - README: dissolve ## How it runs on Nebius (Why-Token-Factory + adapter pointer → B7; drop stale serverless line) [#13 finishing touches]
+bb85afb - README: rewrite ## What this project does (deliverables inventory, confident tone) [tone-polish]
+5d166b5 - README: neutralize A7 defensive labels (Honest/real-finding → plain) [tone-polish]
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -263,7 +265,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = de79fa7)
+## README STATUS — COMPLETE ✅ (HEAD = 5d166b5)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -578,7 +580,7 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
 
 ### ✅ DONE — Fable 5 review v1 (no-bonus, 28/40) — 7 fixes landed; see FABLE 5 REVIEW HISTORY
 
-### 🟢 #13 COMPLETE ✅ — README two-track restructure done: Steps 1-4 (skeleton → relocate → split → author) + finishing touches #1-#4 (0234bb7 Under-construction · b391f85 B8 items 2-3 · 0eabe6f B5 translation · de79fa7 dissolve How-it-runs). #5 (old front-matter ## sections — What-this-does / What's-new / Choose-your-track / Hardware-and-cost / Project-structure / Dataset-and-models / License / Future-Work) DEFERRED BY DESIGN: they stay as shared front-matter/appendix.
+### 🟢 #13 COMPLETE ✅ — README two-track restructure done: Steps 1-4 (skeleton → relocate → split → author) + finishing touches #1-#4 (0234bb7 Under-construction · b391f85 B8 items 2-3 · 0eabe6f B5 translation · de79fa7 dissolve How-it-runs). #5 (old front-matter ## sections — What-this-does / What's-new / Choose-your-track / Hardware-and-cost / Project-structure / Dataset-and-models / License / Future-Work) DEFERRED BY DESIGN: they stay as shared front-matter/appendix. TONE-POLISH ✅ (bb85afb + 5d166b5): "What this project does" rewritten as deliverables inventory; A7 "Honest caveat/interpretation" + "a real finding" labels neutralized → zero "Honest" defensive labels remain README-wide (consistent with A6 "Caveats"/B4 "Scope").
 ### 🟡 NEXT SEQUENCE (per methodology)
 - STEP 1: Self-host Qwen3-32B on Nebius (vLLM Job) → re-calibrate gate → revert safety_gate.py to Qwen3-32B + un-defer #7 judge-params table.
 - STEP 2: Fable 5 regular review (no bonus) → target verdict "ready and competitive".
