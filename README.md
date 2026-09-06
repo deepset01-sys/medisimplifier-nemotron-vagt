@@ -425,7 +425,7 @@ The three judges are called via Token Factory; the verdict follows a **calibrati
 | **Qwen SAFE** | SAFE | DISAGREE — "diagnosis-drop risk" |
 | **Qwen UNSAFE** | UNSAFE | UNSAFE |
 
-Plus: **ERROR** in Qwen or Nemotron → **ERROR** (fail-safe; blocks in block mode). **Llama's verdict is returned but does not enter the rule — advisory only, shown for transparency and v1 continuity.** ("Calibration-informed," not "VAGT-calibrated": VAGT *measured* the panel; it did not set a threshold — Nemotron still needs threshold/prompt calibration, per A5.)
+Plus: **ERROR** in Qwen or Nemotron → **ERROR** (fail-safe; blocks in block mode). **Llama's verdict is returned but does not enter the rule — advisory only, shown for transparency and v1 continuity.** ("Calibration-informed," not "VAGT-calibrated": VAGT *measured* the panel; it did not set a threshold — Nemotron still needs threshold/prompt calibration, per A5.) The decision rule's "trust Qwen's 0.5% FP specificity" justification is from the calibration prompt; under the deployed gate prompt Qwen's FP is 9.5% (see B5).
 
 **DISAGREE branch — worked example (gate-level, real benchmark item).** A real MedSimp-JudgeBench diagnosis-stratum item run through the live 3-judge gate (`evaluate_safety`, Nebius Token Factory):
 
@@ -444,6 +444,18 @@ A dropped diagnosis a two-judge panel would have shipped; the third judge catche
 **DISAGREE rate (calibration verdicts).** The DISAGREE rule (Nemotron UNSAFE + Qwen SAFE) fires on **203/708 (28.7%)** of MedSimp-JudgeBench items — **136 genuine corrupted catches** (81 of them diagnosis drops) plus **67 clean false alarms**, so roughly **1-in-3 DISAGREEs is a spurious flag** on faithful text, consistent with Nemotron's 35.2% clean false-positive rate. This is the *calibration* rate (a different judge prompt than the deployed gate — cf. idx 21, see Scope note in B4); the gate's live rate would require a full 708-item re-run through `safety_gate.py`.
 
 **In plain terms:** on MedSimp-JudgeBench perturbations, the two-judge panel (Llama + Qwen) returns a SAFE consensus that is wrong ~34% of the time on corrupted items, and misses ~75% of silent diagnosis drops specifically. Adding Nemotron closes that gap; the cost is that a DISAGREE is a false alarm ~1-in-3 of the time (see DISAGREE rate above).
+
+**Deployed gate operating characteristics (gate prompt, n=708, 0 ERRORs, Qwen3-32B via dedicated endpoint):**
+
+| | Calibration prompt | Gate prompt (deployed) |
+|--|--|--|
+| DISAGREE rate | 28.7% (203/708) | 20.8% (147/708) |
+| Nemotron recall | 84.2% | 79.5% |
+| Qwen recall | 55.9% | 63.2% |
+| Llama recall | 31.7% | 61.2% |
+| Qwen FP (clean) | 0.5% | 9.5% |
+
+The gate prompt is more sensitive and less specific than the calibration prompt — a prompt effect confirmed by Llama (same model, recall doubled 31.7%→61.2%). Qwen's FP rise (0.5%→9.5%) means the '0.5% FP specificity anchor' in the decision rule reflects the calibration harness, not the deployed gate.
 
 All three judges run in parallel (ThreadPoolExecutor, max_workers=3) via Nebius Token Factory — latency ≈ max(judges) not sum (~27s total).
 
