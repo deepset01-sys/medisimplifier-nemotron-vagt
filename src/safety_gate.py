@@ -1,6 +1,6 @@
 """
 safety_gate.py — Three-judge safety gate for Safe Simplification Endpoint (v2)
-Llama + Qwen + Nemotron Nano judges via Nebius Token Factory, run in parallel.
+Llama + Nemotron Nano via Token Factory serverless; Qwen3-32B via a dedicated Nebius endpoint. Judges run in parallel.
 Decision rule informed by VAGT 3-rater calibration (Nemotron catches the
 diagnosis drops Llama and Qwen miss).
 """
@@ -12,7 +12,8 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 LLAMA = "meta-llama/Llama-3.3-70B-Instruct"
-QWEN  = "Qwen/Qwen3-30B-A3B-Instruct-2507"
+QWEN  = "Qwen/Qwen3-32B"   # canonical model name (the dedicated endpoint serves this)
+QWEN_DEDICATED = "dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6"   # Qwen3-32B via dedicated Nebius endpoint (not Token Factory serverless)
 NEMOTRON_NANO = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
 NEBIUS_API_URL = "https://api.studio.nebius.ai/v1/chat/completions"
 
@@ -93,7 +94,7 @@ def evaluate_safety(original: str, simplified: str, safety_mode: str = "flag") -
     # and returns "ERROR" on failure rather than hanging.
     jobs = {
         "llama":    (LLAMA, 2000),
-        "qwen":     (QWEN, 2000),
+        "qwen":     (QWEN_DEDICATED, 8000),   # reasoning model → 8000 max_tokens; served via dedicated endpoint
         "nemotron": (NEMOTRON_NANO, 8000),   # reasoning model → 8000 max_tokens
     }
     verdicts = {"llama": "ERROR", "qwen": "ERROR", "nemotron": "ERROR"}
