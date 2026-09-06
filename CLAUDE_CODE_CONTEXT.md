@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-06 (Session: README ✅ + NEXT-SEQ Step 1 IN PROGRESS — Qwen3-32B restored via Nebius Dedicated Endpoint, gate reverted (3afc059), 708-item gate calibration RUNNING; Steps 1/2/3/16/18 ✅; NEXT after run = update B8 / un-defer #7 / commit results → Fable 5 regular → BONUS ×2; HEAD = 3afc059)
+# Last updated: 2026-09-07 (Session: README ✅ + NEXT-SEQ Step 1 COMPLETE ✅ — Qwen3-32B restored via dedicated endpoint, 708-item gate calibration done (0 ERRORs), B4/B5/B8/A3 updated with gate-prompt operating characteristics; Steps 1/2/3/16/18 ✅; NEXT = Step 2 Fable 5 regular review; HEAD = 47880b9)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -98,6 +98,12 @@ bb85afb - README: rewrite ## What this project does (deliverables inventory, con
 5d166b5 - README: neutralize A7 defensive labels (Honest/real-finding → plain) [tone-polish]
 d0fc620 - CLAUDE_CODE_CONTEXT refresh (README tone-polish complete, recorded HEAD 5d166b5)
 3afc059 - fix: safety_gate.py — revert Qwen to Qwen3-32B via dedicated Nebius endpoint (not Token Factory); bump Qwen max_tokens 2000→8000
+f5cb9d4 - results: gate_calibration_full.json — 708/708, 0 ERRORs, Qwen3-32B dedicated endpoint; DISAGREE 147/708 (20.8%) under gate prompt
+5cd7b5a - README: B5 deployed gate operating characteristics (gate prompt, n=708, 0 ERRORs); B4 Qwen FP caveat
+2d721d4 - README: B8 item 1 Qwen swap RESOLVED (Qwen3-32B restored via dedicated endpoint, 708-item calibration complete)
+d3b6779 - README: A3 judge-params table (Qwen 2000→8000, off→off*, footnote updated) [#7 un-defer]
+4bfbff8 - feat: add run_gate_calibration.py — 708-item gate calibration script
+47880b9 - results: archive invalid gate calibration (146 Qwen ERRORs from Qwen3-32B removal mid-run)
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -267,7 +273,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 3afc059)
+## README STATUS — COMPLETE ✅ (HEAD = 47880b9)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -584,10 +590,11 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
 
 ### 🟢 #13 COMPLETE ✅ — README two-track restructure done: Steps 1-4 (skeleton → relocate → split → author) + finishing touches #1-#4 (0234bb7 Under-construction · b391f85 B8 items 2-3 · 0eabe6f B5 translation · de79fa7 dissolve How-it-runs). #5 (old front-matter ## sections — What-this-does / What's-new / Choose-your-track / Hardware-and-cost / Project-structure / Dataset-and-models / License / Future-Work) DEFERRED BY DESIGN: they stay as shared front-matter/appendix. TONE-POLISH ✅ (bb85afb + 5d166b5): "What this project does" rewritten as deliverables inventory; A7 "Honest caveat/interpretation" + "a real finding" labels neutralized → zero "Honest" defensive labels remain README-wide (consistent with A6 "Caveats"/B4 "Scope").
 ### 🟡 NEXT SEQUENCE (per methodology)
-- STEP 1 (IN PROGRESS): Qwen3-32B restored via **Nebius Dedicated Endpoint** — chosen over self-host vLLM Job (research showed managed dedicated endpoint = no container build; Route A).
-    · QWEN DEDICATED ENDPOINT: name `qwen3-32b-judge`; model `dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6`; H100 NVLink, 1 replica, eu-north1. Same NEBIUS_API_URL + key (dedicated addressed by the `dedicated/...` model-string prefix). Validated: 3 smoke tests + 20-item sanity check (85% agreement vs recorded — 3 mismatches all SAFE→UNSAFE, mostly gate-prompt sensitivity, not endpoint breakage). enable_thinking:False NOT honored (reasons internally — same as Nemotron); max_tokens bumped 2000→8000. Gate reverted (3afc059): Qwen=QWEN_DEDICATED, canonical QWEN="Qwen/Qwen3-32B", docstring fixed.
-    · GATE CALIBRATION RUN IN PROGRESS: 708 items through restored 3-judge panel via `run_gate_calibration.py` (bg task); FRESH start (stale INVALID 146-ERROR file backed up → `results/gate_calibration_full.INVALID-qwen-removal.json`); expected 1–4h. ⚠️ STOP the dedicated endpoint after the run (per-GPU-hr billing). 🔴 exposed key still in use — rotation pending.
-    · PENDING after calibration: update B8 item 1 (Qwen swap → RESOLVED); un-defer #7 (judge-params table); commit `results/gate_calibration_full.json`.
+- STEP 1 ✅ COMPLETE: Qwen3-32B restored via **Nebius Dedicated Endpoint** (`dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6`; H100, 1 replica, eu-north1) — Route A (no container build). Gate reverted (3afc059): Qwen=QWEN_DEDICATED @ 8000 tokens, canonical QWEN="Qwen/Qwen3-32B", docstring fixed. Validated: 3 smoke tests + 20-item sanity (85%). enable_thinking:False NOT honored (Qwen reasons internally, like Nemotron).
+    · GATE CALIBRATION DONE (f5cb9d4): 708/708 through the deployed gate prompt, **0 ERRORs** (vs 146 in the invalid prior run, archived 47880b9). Script committed (4bfbff8).
+    · GATE-PROMPT FINDINGS (measured, in B5/B4): deployed gate prompt is MORE sensitive / LESS specific than the calibration prompt. DISAGREE 28.7%→20.8%; recall Nemo 84.2→79.5, Qwen 55.9→63.2, **Llama 31.7→61.2** (pure prompt effect — same model); **Qwen FP 0.5%→9.5%** (the "0.5% FP anchor" is a calibration-prompt figure, not the deployed gate). Confound: Qwen row also changed serving (serverless→dedicated), but Llama proves prompt is the dominant driver.
+    · DOCS UPDATED: B5 deployed-operating-characteristics table + B4 Qwen-FP caveat (5cd7b5a); B8 item 1 → RESOLVED (2d721d4); #7 un-deferred — A3 judge-params table Qwen 8000/off* + footnote (d3b6779).
+    · 🔴 STILL PENDING (your side): STOP the dedicated endpoint (per-GPU-hr billing; run long done); ROTATE the exposed key (used across the multi-hour run).
 - STEP 2: Fable 5 regular review (no bonus) → target verdict "ready and competitive".
 - STEP 3: Fable 5 BONUS ×2 (Research track + Product track).
 - Done: #18 ✅ (7e3f088), #16 ✅ (7e3f088 + e8a8e31), #13 Step 1/4 skeleton+nav ✅ (5ba67bf).
