@@ -92,10 +92,10 @@ Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qw
 | Judge | temperature | thinking | max_tokens |
 |--|--|--|--|
 | Llama-3.3-70B | 0 | off | 2,000 |
-| Qwen3-32B | 0 | off | 2,000 |
+| Qwen3-32B | 0 | off* | 8,000 |
 | Nemotron Nano | 0 | off* | 8,000 |
 
-> *`enable_thinking=False` is set, but Nemotron Nano reasons internally at inference regardless (see the reasoning-token-budget finding in [A7](#a7-results-iii--nemotron-super-as-teacher) — `max_tokens=16000`); Llama and Qwen do not.
+> *`enable_thinking=False` is set, but both **Nemotron Nano and Qwen3-32B** reason internally at inference regardless (see the reasoning-token-budget finding in [A7](#a7-results-iii--nemotron-super-as-teacher)) — only Llama does not, which is why both reasoning judges get the larger 8,000-token budget. Qwen3-32B is served via a dedicated Nebius endpoint (see B8).
 
 > **Reasoning-budget confound.** Decoding budget is asymmetric: Nemotron Nano runs at `max_tokens=8000` and reasons internally, while Llama and Qwen run at 2,000 with thinking off. Part of Nemotron's recall edge may therefore reflect reasoning budget, not the model itself. A proper control — Llama/Qwen with CoT visible, or Nemotron with a truncated budget — is left as future work (see A8).
 ### A4. Measurement — VAGT
