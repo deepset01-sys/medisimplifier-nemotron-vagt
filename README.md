@@ -18,11 +18,7 @@ Two audiences, two tracks. **Track A — Research Design** gives the estimand, b
 
 ## What this project does
 
-MediSimplifier targets 6th-grade reading level for discharge summaries; v2 achieves ~8th-grade (FK-Grade 8.87, train-v32 image textstat) while preserving all critical medical information. **v2** re-tools the pipeline around NVIDIA Nemotron and adds a calibration measurement layer:
-
-- **Teacher** — Nemotron Super generates reference simplifications (replacing Claude Opus 4.5 from v1), using the *identical* prompt from v1 ([github.com/deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius)) — ensuring a fair comparison where any difference in output quality reflects the model, not the instructions.
-- **Judge** — Nemotron Nano is added as a third, calibrated safety judge alongside Llama-3.3-70B and Qwen3-32B.
-- **Measurement** — VAGT decomposes judge behavior into ground-truth signal (σ²_τ), shared blind-spot bias (σ²_B), rater bias (σ²_R), and noise (σ²_N), yielding a veridicality-anchored dependability coefficient Φ_V that consensus statistics (Cohen's κ, PABAK, Krippendorff α) cannot produce.
+The result above is the point; this section is the package around it. The submission ships as a reproducible whole — a discharge-summary student model, the three-judge safety gate that scores its output, the VAGT measurement framework that anchors the panel to ground truth, and a live Nebius GPU Endpoint that serves the model behind the gate. The models, the MedSimp-JudgeBench benchmark, and the raw calibration verdicts are public on HuggingFace, and every stage — teach, train, evaluate, merge, deploy — rebuilds from committed configs as a Nebius Job or Token Factory call.
 
 > **What's carried from v1 vs new here:** The dataset, the fine-tuning task, the dual-judge safety design, and the perturbation benchmark (MedSimp-JudgeBench, 708 samples) are from v1. New in v2: **Nemotron Super as teacher**, **Nemotron Nano as a third calibrated judge**, and the **first empirical application of VAGT** (developed post-v1 from the κ=0.11 finding). Fine-tuning a student on Nemotron references is complete — see [A7. Results III](#a7-results-iii--nemotron-super-as-teacher).
 
