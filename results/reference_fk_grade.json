@@ -1,0 +1,9 @@
+{
+  "source": "nemotron_training_references.json (9,976 matched pairs)",
+  "metric": "flesch_kincaid_grade",
+  "textstat_version": "0.7.13",
+  "n_pairs": 9976,
+  "claude_refs_mean_fk": 7.2,
+  "nemotron_refs_mean_fk": 10.08,
+  "delta_nemotron_minus_claude": 2.88
+}
