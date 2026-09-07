@@ -10,7 +10,7 @@
 > Built on top of [MediSimplifier-Nebius](https://github.com/deepset01-sys/medisimplifier-nebius) — 🥇 First Place winner of the Nebius Serverless AI Builders Challenge.
 > The Nemotron teacher pipeline, 3-judge calibration panel, VAGT measurement framework (developed as a direct response to v1's κ=0.11 finding, first applied empirically in v2), and v2 training infrastructure were built for this hackathon.
 
-**MediSimplifier v2** rewrites hospital discharge summaries at roughly an 8th-grade reading level and returns, with each rewrite, a safety verdict from a panel of three LLM judges — Llama-3.3-70B, Qwen3-32B, and NVIDIA Nemotron Nano — served per-token on Nebius Token Factory. The student model was fine-tuned on **9,976** references written by **Nemotron Super** (replacing Claude Opus); the judge panel was calibrated on **MedSimp-JudgeBench**, a 708-item benchmark with **508 known injected errors**. Everything below is reproducible from committed artifacts and public HuggingFace models for about **$134.81** in Nebius credits.
+**MediSimplifier v2** rewrites hospital discharge summaries at roughly an 8th-grade reading level and returns, with each rewrite, a safety verdict from a panel of three LLM judges — Llama-3.3-70B, Qwen3-32B, and NVIDIA Nemotron Nano — served per-token on Nebius Token Factory. The student model was fine-tuned on **9,976** references written by **Nemotron Super** (replacing Claude Opus); the judge panel was calibrated on **MedSimp-JudgeBench**, a 708-item benchmark with **508 known injected errors**. Everything below is reproducible from committed artifacts and public HuggingFace models for about **$156.82** in Nebius credits.
 
 The central result is a measurement one. Against ground truth, the two incumbent judges almost never flag a silently dropped diagnosis (recall **14%** and **7%**); Nemotron Nano flags **68%**. Adding it as a third rater raises the veridicality-anchored dependability coefficient Φ_V on the diagnosis stratum from **0.404 to 0.476** (paired bootstrap Δ = **+0.071**, 95% CI **[+0.055, +0.087]**, n = 333, 1,000 resamples) and cuts shared-bias variance σ²_B from **0.347 to 0.229** — while Fleiss κ and Krippendorff α both turn *negative* (**0.076 → −0.088**; Δκ = **−0.163 [−0.305, −0.045]**). Agreement statistics report a worse panel; the truth-anchored decomposition reports a better one. This is the predicted signature of a shared blind spot being broken — the first empirical application of the VAGT framework developed after v1's κ = 0.11 result. The gain is not universal: on dose errors, where the incumbents were not blind, ΔΦ_V is **−0.013 [−0.055, +0.021]**.
 
@@ -551,12 +551,14 @@ Actual Nebius billing for v2 (all figures from Nebius Console):
 | Step | Service | Usage | Cost |
 |------|---------|-------|------|
 | Nemotron Super teacher (9,999 calls) | Token Factory | 81.23M output tokens | $75.19 |
-| Nemotron Nano calibration (708 × 3 judges) | Token Factory | 3.48M output tokens | $0.90 |
-| Llama + Qwen (endpoint smoke tests) | Token Factory | — | $0.43 |
+| Nemotron Nano calibration (708 × 3 judges) | Token Factory | 6.19M output tokens | $1.63 |
+| Llama (endpoint smoke tests) | Token Factory | — | $0.32 |
+| Qwen3-32B gate calibration (708 items) | Token Factory | 1.28M input + 1.10M output | $0.46 |
+| Dedicated Endpoint (Qwen3-32B judge) | Token Factory | 5.17 GPU hours | $20.93 |
 | H100 NVLink (training + eval + merge) | Jobs | 10.22 GPU hours | $39.34 |
 | CPU + RAM | Jobs | 452.60 vCPU / 1,810.39 GiB hours | $11.22 |
 | Disk (Network SSD + Object Storage) | Storage | 76,053.72 GiB hours | $7.73 |
-| **Total v2** | | | **$134.81** |
+| **Total v2** | | | **$156.82** |
 
 **Training run (verified from `logs/train_v2.json.gz`, Nebius Job `aijob-e00rwxv72fe81f54we`):**
 
@@ -574,7 +576,7 @@ Actual Nebius billing for v2 (all figures from Nebius Console):
 
 H100 NVLink rate: ~$3.85/hr on Nebius eu-north1.
 Training: ~2.4h (8,523s), 3 epochs, seed=42.
-Token Factory is the largest cost line (57%) — Nemotron Super's 16,000-token reasoning budget drives the teacher generation cost. Token Factory judges are per-token serverless (no standing infrastructure); the vLLM + 3-judge gate host is a persistent Nebius GPU Endpoint, stopped between demos.
+Token Factory is the largest cost line (63%) — Nemotron Super's 16,000-token reasoning budget drives the teacher generation cost. The Llama and Nemotron judges are per-token serverless; the Qwen3-32B judge runs on a dedicated GPU endpoint (per-GPU-hour), and the vLLM student host is a persistent GPU Endpoint — both stopped between demos.
 
 ## Project structure
 

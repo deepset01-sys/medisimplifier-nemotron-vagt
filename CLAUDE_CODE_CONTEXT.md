@@ -141,7 +141,7 @@ rotate, then redeploy endpoint with the new key so the live URL keeps working.
 | n_samples eval | 1,001 | results/eval_v2_results.json |
 | Training samples | 7,983 | chambul/medisimplifier-nemotron-dataset |
 | Training time | 8,523s (~2.4h) | logs/train_v2.json.gz (train_runtime) |
-| Total cost v2 | $134.81 | Nebius Console actual billing |
+| Total cost v2 | $156.82 | Nebius Console actual billing (incl. dedicated endpoint + gate calibration) |
 | H100 hours | 10.22 | Nebius Console |
 | Nemotron Super cost | $75.19 | Nebius Console Token Factory |
 | Nemotron Nano cost | $0.90 | Nebius Console Token Factory |
@@ -269,7 +269,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 | H100 NVLink | 10.22 GPU hours | $39.34 |
 | CPU + RAM | 452.60 vCPU / 1,810.39 GiB hours | $11.22 |
 | Disk + Object Storage | 76,053.72 GiB hours | $7.73 |
-| **Total v2** | | **$134.81** |
+| **Total v2** | | **$156.82** |
 
 ---
 
@@ -528,7 +528,7 @@ Reconstructed from this session's verified findings — not a verbatim prior lis
 9. ✅ (ad0b508) FK measured: Claude refs 7.2 / Nemotron refs 10.1 (textstat 0.7.13), Δ+2.9; fixed the 8.87 conflation (README:105).
 10. ⏸ DEFERRED (bundle with #12) — "$1.7/21min" JudgeBench run unsourced + absent from cost table (true total ≈$136.5).
 11. ✅ (9cb472a) "δ 1.6–5.0%" defined = ROUGE-L H200→H100 reproduction delta (3 v1 models) + cited v1 table (README:53).
-12. ⏸ PENDING — commit a Nebius billing export/screenshot backing $134.81 (needs Console; do #10 in the same pass).
+12. ⏸ PENDING — commit a Nebius billing export/screenshot backing $156.82 (needs Console; do #10 in the same pass).
 
 ### 🔴 README STRUCTURAL REDESIGN
 13. ⏳ IN PROGRESS (4-step). Step 1/4 ✅ (5ba67bf): Track A/B skeleton + "Choose your track" nav.
