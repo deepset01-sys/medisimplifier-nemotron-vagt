@@ -382,8 +382,9 @@ Maximum input length and input language are **not formally constrained** in the 
 **`safety_mode` values:**
 - `"flag"` (default) — returns simplified text even if UNSAFE; adds `warning` field
 - `"block"` — sets `blocked: true` and nulls `simplified_text` when consensus is UNSAFE or ERROR
+- `"strict"` — blocks on UNSAFE, DISAGREE, or ERROR; the Nemotron diagnosis-drop tripwire (DISAGREE) enforces rather than warns. Trade-off: ~1-in-3 DISAGREE on faithful text is a false alarm (see B5).
 
-**Block mode does NOT block DISAGREE** — a DISAGREE verdict returns `blocked: false` with the `warning` field set; only **UNSAFE** and **ERROR** are blocked. A caller relying on `block` to suppress every non-SAFE output must handle DISAGREE explicitly: it is a defense-in-depth flag, not a hard block (see B8).
+**Block mode does NOT block DISAGREE** — a DISAGREE verdict returns `blocked: false` with the `warning` field set; only **UNSAFE** and **ERROR** are blocked. A caller relying on `block` to suppress every non-SAFE output must handle DISAGREE explicitly: it is a defense-in-depth flag, not a hard block (see B8). Use `strict` mode to block DISAGREE.
 
 **Response contract:**
 ```json

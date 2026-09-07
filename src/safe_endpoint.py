@@ -19,7 +19,7 @@ from pathlib import Path
 import httpx
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, Literal
 
 from safety_gate import evaluate_safety
 
@@ -56,7 +56,7 @@ Simplified:"""
 class SimplifyRequest(BaseModel):
     text: str
     max_tokens: int = 512
-    safety_mode: str = "flag"   # "block" or "flag"
+    safety_mode: Literal["flag", "block", "strict"] = "flag"
 
 
 class SimplifyResponse(BaseModel):
