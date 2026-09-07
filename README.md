@@ -10,11 +10,11 @@
 > Built on top of [MediSimplifier-Nebius](https://github.com/deepset01-sys/medisimplifier-nebius) — 🥇 First Place winner of the Nebius Serverless AI Builders Challenge.
 > The Nemotron teacher pipeline, 3-judge calibration panel, VAGT measurement framework (developed as a direct response to v1's κ=0.11 finding, first applied empirically in v2), and v2 training infrastructure were built for this hackathon.
 
-**MediSimplifier v2** rewrites hospital discharge summaries at roughly an 8th-grade reading level and returns, with each rewrite, a safety verdict from a panel of three LLM judges — Llama-3.3-70B, Qwen3-32B, and NVIDIA Nemotron Nano — served per-token on Nebius Token Factory. The student model was fine-tuned on **9,976** references written by **Nemotron Super** (replacing Claude Opus); the judge panel was calibrated on **MedSimp-JudgeBench**, a 708-item benchmark with **508 known injected errors**. Everything below is reproducible from committed artifacts and public HuggingFace models for about **$156.82** in Nebius credits.
+**MediSimplifier v2** rewrites hospital discharge summaries at roughly an 8th-grade reading level and returns, with each rewrite, a safety verdict from a panel of three LLM judges — Llama-3.3-70B, Qwen3-32B, and NVIDIA Nemotron Nano — with Llama and Nemotron Nano served per-token on Nebius Token Factory and Qwen3-32B on a dedicated Nebius endpoint. The student model was fine-tuned on **9,976** references written by **Nemotron Super** (replacing Claude Opus); the judge panel was calibrated on **MedSimp-JudgeBench**, a 708-item benchmark with **508 known injected errors**. Everything below is reproducible from committed artifacts and public HuggingFace models for about **$156.82** in Nebius credits.
 
 The central result is a measurement one. Against ground truth, the two incumbent judges almost never flag a silently dropped diagnosis (recall **14%** and **7%**); Nemotron Nano flags **68%**. Adding it as a third rater raises the veridicality-anchored dependability coefficient Φ_V on the diagnosis stratum from **0.404 to 0.476** (paired bootstrap Δ = **+0.071**, 95% CI **[+0.055, +0.087]**, n = 333, 1,000 resamples) and cuts shared-bias variance σ²_B from **0.347 to 0.229** — while Fleiss κ and Krippendorff α both turn *negative* (**0.076 → −0.088**; Δκ = **−0.163 [−0.305, −0.045]**). Agreement statistics report a worse panel; the truth-anchored decomposition reports a better one. This is the predicted signature of a shared blind spot being broken — the first empirical application of the VAGT framework developed after v1's κ = 0.11 result. The gain is not universal: on dose errors, where the incumbents were not blind, ΔΦ_V is **−0.013 [−0.055, +0.021]**.
 
-Two audiences, two tracks. **Track A — Research Design** gives the estimand, benchmark, protocol, VAGT derivation, per-judge calibration, the inversion, and threats to validity. **Track B — Product Design** gives the `POST /v1/simplify` contract, the decision rule with Nemotron as the diagnosis-drop tripwire, measured operating characteristics (~1-in-3 DISAGREEs is a false alarm; ~27 s per request), Nebius deployment, and known issues — chiefly that the gate's Qwen judge was swapped after calibration (Qwen3-32B → Qwen3-30B-A3B) and is not yet recalibrated. This is a research prototype: unauthenticated, not clinician-validated, and not for real patient data.
+Two audiences, two tracks. **Track A — Research Design** gives the estimand, benchmark, protocol, VAGT derivation, per-judge calibration, the inversion, and threats to validity. **Track B — Product Design** gives the `POST /v1/simplify` contract, the decision rule with Nemotron as the diagnosis-drop tripwire, measured operating characteristics (~1-in-3 DISAGREEs is a false alarm; ~27 s per request), Nebius deployment, and known issues — including that the gate's Qwen judge was briefly swapped mid-project (Qwen3-32B → Qwen3-30B-A3B) but is now restored to Qwen3-32B and recalibrated (see B8). This is a research prototype: unauthenticated, not clinician-validated, and not for real patient data.
 
 ## What this project does
 
@@ -97,7 +97,7 @@ Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qw
 
 > *`enable_thinking=False` is set, but both **Nemotron Nano and Qwen3-32B** reason internally at inference regardless (see the reasoning-token-budget finding in [A7](#a7-results-iii--nemotron-super-as-teacher)) — only Llama does not, which is why both reasoning judges get the larger 8,000-token budget. Qwen3-32B is served via a dedicated Nebius endpoint (see B8).
 
-> **Reasoning-budget confound.** Decoding budget is asymmetric: Nemotron Nano runs at `max_tokens=8000` and reasons internally, while Llama and Qwen run at 2,000 with thinking off. Part of Nemotron's recall edge may therefore reflect reasoning budget, not the model itself. A proper control — Llama/Qwen with CoT visible, or Nemotron with a truncated budget — is left as future work (see A8).
+> **On reasoning budget.** The calibration (which produced the recall numbers) ran all three judges at `max_tokens=8000`, so the recall edge is **not** confounded by budget asymmetry. Two of the three judges (Nemotron Nano, Qwen3-32B) reason internally regardless of `enable_thinking=False`; Llama does not. The deployed gate runs Llama at 2,000 and Qwen/Nemotron at 8,000 (see the A3 table).
 ### A4. Measurement — VAGT
 
 Consensus statistics (Cohen's κ, PABAK, Krippendorff α) measure whether judges *agree with each other*. They never measure whether judges agree with the *truth* — so they reward a shared blind spot and penalize the one judge that breaks it. **VAGT (Veridicality-Anchored G-Theory)** fixes this by anchoring to ground truth (the injected error type), decomposing each stratum into:
@@ -241,7 +241,7 @@ The Nemotron-taught student was evaluated on the **same GuyDor007 test set (n=1,
 
 Research-side threats to the VAGT and calibration findings. Product and operational caveats (the Qwen judge swap, DISAGREE as defense-in-depth) live in B8.
 
-1. **Reasoning-budget confound.** Nemotron Nano was decoded at `max_tokens=8000` with internal reasoning, while Llama and Qwen ran at 2,000 with thinking off. Part of Nemotron's recall edge — and thus the measured third-rater benefit — may reflect decoding budget rather than the model itself (see A3).
+1. **Reasoning vs. non-reasoning judges.** Calibration ran all three judges at `max_tokens=8000` (no budget asymmetry), but Nemotron Nano and Qwen3-32B reason internally while Llama does not — so Nemotron's edge could partly reflect *reasoning capability* rather than clinical judgment. A control (Llama with visible CoT) is left as future work (see A3).
 
 2. **Scale/family confound.** The panel mixes a 70B same-family judge (Llama-3.3-70B) with a 32B cross-family judge (Qwen3-32B) and a 30B reasoning judge (Nemotron Nano); a same-scale cross-family control (a 72B-class Qwen) was not available on Token Factory. Effects attributed to *family diversity* may therefore be partly scale effects — direction of bias unclear.
 
@@ -255,7 +255,7 @@ Research-side threats to the VAGT and calibration findings. Product and operatio
 
 7. **Same-family judge.** Llama-3.3-70B shares a model family with the OpenBioLLM-8B student (both Llama-3-based). A same-family judge may share the student's blind spots, inflating the panel's apparent agreement with the student and overstating judge independence.
 
-8. **Calibration prompt ≠ gate prompt.** VAGT calibration used the v1 4-step CoT prompt; the deployed gate uses `safety_gate.py`'s prompt, and verdicts do not transfer item-for-item (idx 21). The reported calibration recall, Φ_V, and DISAGREE rates are therefore indicative, not the gate's live operating point (see B4/B8).
+8. **Calibration prompt ≠ gate prompt.** VAGT calibration used the v1 4-step CoT prompt; the deployed gate uses `safety_gate.py`'s prompt, and verdicts do not transfer item-for-item (idx 21). The reported calibration recall, Φ_V, and DISAGREE rates are therefore indicative of the calibration prompt; the gate's live operating point is measured separately (see B5).
 ### A9. Reproduce the analysis
 
 **Environment:** Python 3.12 · `pip install -r requirements.txt` (openai, numpy, requests, tqdm, datasets).
@@ -290,7 +290,7 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
 
 > **Reasoning-model reminder:** all Nemotron generation uses `--max-tokens 16000` (Super) / `8000+` (Nano). Too small a budget returns empty output — the scripts flag and retry, never save a truncated result. Runs checkpoint every 50 records; `nemotron_training_data.py` resumes from the output file.
 
-**Expected cost:** $0.90 calibration (708×3 judges), ~$1.7 JudgeBench refs (519 calls), $75.19 full teacher run (9,999 calls).
+**Expected cost:** $1.63 calibration (708×3 judges), ~$1.7 JudgeBench refs (519 calls), $75.19 full teacher run (9,999 calls).
 
 ## Track B — Product Design
 
@@ -445,7 +445,7 @@ A dropped diagnosis a two-judge panel would have shipped; the third judge catche
 
 **In plain terms:** on MedSimp-JudgeBench perturbations, the two-judge panel (Llama + Qwen) returns a SAFE consensus that is wrong ~34% of the time on corrupted items, and misses ~75% of silent diagnosis drops specifically. Adding Nemotron closes that gap; the cost is that a DISAGREE is a false alarm ~1-in-3 of the time (see DISAGREE rate above).
 
-**Deployed gate operating characteristics (gate prompt, n=708, 0 ERRORs, Qwen3-32B via dedicated endpoint):**
+**Deployed gate operating characteristics** (gate prompt, n=708, 0 ERRORs, Qwen3-32B via dedicated endpoint; full verdicts in [`results/gate_calibration_full.json`](results/gate_calibration_full.json)):
 
 | | Calibration prompt | Gate prompt (deployed) |
 |--|--|--|
@@ -520,7 +520,7 @@ Full adapter storage flow → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
 ### B8. Known issues & operating caveats
 
 1. **Qwen judge swap — RESOLVED.** `Qwen/Qwen3-32B` was removed from Nebius Token Factory's serverless catalog mid-project, and the gate temporarily ran `Qwen3-30B-A3B` for continuity. It is now **restored to Qwen3-32B via a dedicated Nebius endpoint** (`dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6`; H100, 1 replica) — so the deployed panel again uses the exact model the published calibration/VAGT/recall numbers describe. The full **708-item calibration was re-run through the deployed gate prompt (0 ERRORs)**, measuring the gate's actual operating characteristics (see B5) — including that Qwen's "0.5% FP specificity," a *calibration-prompt* figure, is **9.5% under the deployed gate prompt** (a prompt effect, not a Qwen3-32B regression — confirmed by Llama, whose recall doubled under the same prompt). Status: **resolved**.
-2. **Prompt drift.** Calibration used a different prompt than the deployed gate (idx 21 returned all-SAFE through the live gate despite UNSAFE in calibration — confirming verdicts do not transfer verbatim across prompts). The published recall / FP / DISAGREE rates are therefore calibration-prompt rates, not the gate's live operating point.
+2. **Prompt drift.** Calibration used a different prompt than the deployed gate (idx 21 returned all-SAFE through the live gate despite UNSAFE in calibration — confirming verdicts do not transfer verbatim across prompts). The published recall / FP / DISAGREE rates are therefore calibration-prompt rates; the deployed-gate operating point is measured separately (see B5).
 3. **DISAGREE is defense-in-depth.** DISAGREE fires on benchmark perturbations fed to the gate directly, not on `/v1/simplify`'s own output (our model preserves diagnoses). It is therefore a defense-in-depth path against a third-party simplifier feeding the gate — not a routinely-triggered path on MediSimplifier's own output.
 ### B9. Reproduce the deployment
 
