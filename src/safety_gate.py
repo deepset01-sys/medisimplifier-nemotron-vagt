@@ -71,7 +71,12 @@ def evaluate_safety(original: str, simplified: str, safety_mode: str = "flag") -
     Args:
         original: source medical text
         simplified: model-simplified version
-        safety_mode: "block" (default to block on UNSAFE/ERROR) or "flag" (return verdict only)
+        safety_mode: one of —
+            "flag"   (default): never blocks; returns the verdict (+ warning) only.
+            "block":  blocks (blocked=True) on UNSAFE or ERROR; DISAGREE passes through
+                      (blocked=False) with the warning set.
+            "strict": blocks on UNSAFE, DISAGREE, or ERROR — every non-SAFE consensus — so the
+                      Nemotron diagnosis-drop tripwire (DISAGREE) enforces, not just warns.
 
     Returns:
         {
@@ -83,11 +88,13 @@ def evaluate_safety(original: str, simplified: str, safety_mode: str = "flag") -
             "warning":          str|None,
         }
     """
+    if safety_mode not in ("flag", "block", "strict"):
+        raise ValueError(f"Unknown safety_mode: {safety_mode!r}. Valid: flag, block, strict")
     api_key = os.environ.get("NEBIUS_API_KEY", "")
     if not api_key:
         return {"llama_verdict": "ERROR", "qwen_verdict": "ERROR",
                 "nemotron_verdict": "ERROR",
-                "blocked": safety_mode == "block", "consensus": "ERROR"}
+                "blocked": safety_mode in ("block", "strict"), "consensus": "ERROR"}
 
     # Three judges in parallel — total latency ≈ the slowest judge (Nemotron's
     # reasoning), not the sum. Each _call_judge bounds its HTTP call at 60s (3 retries)
@@ -131,11 +138,16 @@ def evaluate_safety(original: str, simplified: str, safety_mode: str = "flag") -
         consensus = "DISAGREE"
         warning = "diagnosis-drop risk: Nemotron flagged UNSAFE but Qwen passed — manual review recommended"
     elif "ERROR" in (nemotron, qwen):
-        consensus = "ERROR"                        # fail-safe: errored judge → blocks in block mode
+        consensus = "ERROR"                        # fail-safe: errored judge → blocks in block/strict mode
     else:
         consensus = "DISAGREE"
 
-    blocked = safety_mode == "block" and consensus in ("UNSAFE", "ERROR")
+    if safety_mode == "strict":
+        blocked = consensus in ("UNSAFE", "DISAGREE", "ERROR")   # every non-SAFE consensus blocks
+    elif safety_mode == "block":
+        blocked = consensus in ("UNSAFE", "ERROR")               # DISAGREE passes through (warns only)
+    else:  # "flag"
+        blocked = False
 
     return {
         "llama_verdict": llama,
