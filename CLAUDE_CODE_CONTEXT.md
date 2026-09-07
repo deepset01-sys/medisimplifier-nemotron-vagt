@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-07 (Session: README ✅ + NEXT-SEQ Step 1 COMPLETE ✅ — Qwen3-32B restored via dedicated endpoint, 708-item gate calibration done (0 ERRORs), B4/B5/B8/A3 updated with gate-prompt operating characteristics; Steps 1/2/3/16/18 ✅; NEXT = Step 2 Fable 5 regular review; HEAD = 47880b9)
+# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 1 ✅ + Step 2 IN PROGRESS — Fable 5 regular 28/40; contradiction + quick fixes ✅; student diagnosis-retention audit RUNNING (bj4tgsiq2, 50/1001: SAFE 42% / DISAGREE 30% / UNSAFE 28%, 0 ERRORs); Steps 1/2/3/16/18 ✅; NEXT = audit result → update README claim + strict mode; HEAD = f4b0327)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -104,6 +104,9 @@ f5cb9d4 - results: gate_calibration_full.json — 708/708, 0 ERRORs, Qwen3-32B d
 d3b6779 - README: A3 judge-params table (Qwen 2000→8000, off→off*, footnote updated) [#7 un-defer]
 4bfbff8 - feat: add run_gate_calibration.py — 708-item gate calibration script
 47880b9 - results: archive invalid gate calibration (146 Qwen ERRORs from Qwen3-32B removal mid-run)
+7ae0b42 - docs: update billing to $156.82 (dedicated endpoint + Qwen3-32B gate calibration rows; TF % 57→63; serverless framing)
+9413b20 - docs: README fix 6 contradictions (Qwen routing, budget-confound reframe [calibration=8000, false premise], cost $0.90→$1.63, gate operating point → B5, gate_calibration_full.json citation)
+f4b0327 - docs: README fix stray #26, 9976→7983, FK-Grade precise, dedup what's-new, ¶2 plain-English hook
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -273,7 +276,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 47880b9)
+## README STATUS — COMPLETE ✅ (HEAD = f4b0327)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -595,7 +598,11 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
     · GATE-PROMPT FINDINGS (measured, in B5/B4): deployed gate prompt is MORE sensitive / LESS specific than the calibration prompt. DISAGREE 28.7%→20.8%; recall Nemo 84.2→79.5, Qwen 55.9→63.2, **Llama 31.7→61.2** (pure prompt effect — same model); **Qwen FP 0.5%→9.5%** (the "0.5% FP anchor" is a calibration-prompt figure, not the deployed gate). Confound: Qwen row also changed serving (serverless→dedicated), but Llama proves prompt is the dominant driver.
     · DOCS UPDATED: B5 deployed-operating-characteristics table + B4 Qwen-FP caveat (5cd7b5a); B8 item 1 → RESOLVED (2d721d4); #7 un-deferred — A3 judge-params table Qwen 8000/off* + footnote (d3b6779).
     · 🔴 STILL PENDING (your side): STOP the dedicated endpoint (per-GPU-hr billing; run long done); ROTATE the exposed key (used across the multi-hour run).
-- STEP 2: Fable 5 regular review (no bonus) → target verdict "ready and competitive".
+- STEP 2 IN PROGRESS: Fable 5 regular review (review_output_v3_fable5.txt) = **28/40** (same as v1; restructure offset by new inconsistencies). Verdict: submission-ready in substance, but README contradicted itself + some numbers uncited.
+    · CONTRADICTION FIXES ✅ (9413b20): Qwen per-token→dedicated; Qwen recalibrated; reasoning-budget confound REFRAMED (calibration used 8000 for ALL judges per nemotron_judge_test.py:122 — NOT a confound, false premise corrected); cost $0.90→$1.63; "unmeasured"→"see B5"; B5 cites gate_calibration_full.json.
+    · QUICK FIXES ✅ (f4b0327): stray #26 removed; 9976→7983 (train split); FK-Grade 8.87 precise; dedup what's-new (blockquote removed + paragraph trimmed, table kept); ¶2 leads with plain-English hook.
+    · STUDENT AUDIT IN PROGRESS (bj4tgsiq2, run_student_audit.py): 1001 v2 test outputs (predictions.json retrieved from bucket via boto3) → gate. 50/1001: SAFE 42% / DISAGREE 30% / UNSAFE 28%, 0 ERRORs (endpoint healthy). ⚠️ EARLY signal trends AGAINST "our model preserves diagnoses" — BUT gate judges "preserves ALL critical info" (simplification inherently omits detail), so high flags ≠ diagnosis drops; needs manual review of flagged cases. Preliminary (5%).
+    · PENDING: strict mode (DISAGREE→block, Fable critical fix #3); reference FK 10.1/7.2 source + inter-judge κ source still uncited. NEXT = wait for audit → update README claim honestly + implement strict mode.
 - STEP 3: Fable 5 BONUS ×2 (Research track + Product track).
 - Done: #18 ✅ (7e3f088), #16 ✅ (7e3f088 + e8a8e31), #13 Step 1/4 skeleton+nav ✅ (5ba67bf).
 - Step 2/4 ✅ COMPLETE — all 4 relocation sub-moves landed:
