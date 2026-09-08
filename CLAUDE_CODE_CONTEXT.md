@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 IN PROGRESS — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit RUNNING (bj4tgsiq2, 250/1001: SAFE ~46% / DISAGREE ~28% / UNSAFE ~26%, 0 ERRORs); Steps 1/2/3/16/18 ✅; NEXT = audit result → update README "preserves diagnoses" claim; HEAD = 5c0de4d)
+# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 IN PROGRESS — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001: SAFE 47.4% / DISAGREE 26.5% / UNSAFE 25.6% / ERROR 0.6%; flagged 52.0%); dual-auditor review RUNNING (Claude Sonnet 5 + Gemini 2.5 Pro, 30-case sample); Steps 1/2/3/16/18 ✅; NEXT = audit results → update README "preserves diagnoses" claim; HEAD = 7496866)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -110,6 +110,7 @@ f4b0327 - docs: README fix stray #26, 9976→7983, FK-Grade precise, dedup what'
 21fe0fd - feat: safety_gate.py strict mode (DISAGREE blocks) + document all three modes
 716a4c6 - feat: B3 strict mode docs + safe_endpoint.py Literal["flag","block","strict"] validation
 5c0de4d - feat: cite κ (A5→nemotron_calibration_full.json) + FK 10.1/7.2 (A7→reference_fk_grade.json artifact + measure_reference_fk.py)
+7496866 - results: student_audit.json complete (1001/1001, SAFE 47.4%, flagged 52.0%) + audit scripts
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -279,7 +280,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 5c0de4d)
+## README STATUS — COMPLETE ✅ (HEAD = 7496866)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -604,8 +605,9 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
 - STEP 2 IN PROGRESS: Fable 5 regular review (review_output_v3_fable5.txt) = **28/40** (same as v1; restructure offset by new inconsistencies). Verdict: submission-ready in substance, but README contradicted itself + some numbers uncited.
     · CONTRADICTION FIXES ✅ (9413b20): Qwen per-token→dedicated; Qwen recalibrated; reasoning-budget confound REFRAMED (calibration used 8000 for ALL judges per nemotron_judge_test.py:122 — NOT a confound, false premise corrected); cost $0.90→$1.63; "unmeasured"→"see B5"; B5 cites gate_calibration_full.json.
     · QUICK FIXES ✅ (f4b0327): stray #26 removed; 9976→7983 (train split); FK-Grade 8.87 precise; dedup what's-new (blockquote removed + paragraph trimmed, table kept); ¶2 leads with plain-English hook.
-    · STUDENT AUDIT IN PROGRESS (bj4tgsiq2, run_student_audit.py): 1001 v2 test outputs (predictions.json retrieved from bucket via boto3) → gate. 250/1001 (stable): SAFE ~46% / DISAGREE ~28% / UNSAFE ~26%, 0 ERRORs (endpoint healthy). ⚠️ Trends AGAINST "our model preserves diagnoses" — BUT gate judges "preserves ALL critical info" (simplification inherently omits detail), so high flags ≠ diagnosis drops; needs manual review of flagged cases.
-    · FABLE FIXES: #1 contradictions ✅ (9413b20); #2 cite B5+κ+FK ✅ (B5 f5cb9d4; κ A5 + FK A7 artifact + measure_reference_fk.py 5c0de4d) — audit still pending for the "preserves diagnoses" claim; #3 strict mode ✅ (code 21fe0fd + B3 docs/endpoint validation 716a4c6). NEXT = wait for audit → update README claim honestly; consider manual review of flagged cases.
+    · STUDENT AUDIT COMPLETE ✅ (7496866; bj4tgsiq2, run_student_audit.py): 1001/1001 v2 test outputs (predictions.json via boto3) → gate. **SAFE 474 (47.4%) / DISAGREE 265 (26.5%) / UNSAFE 256 (25.6%) / ERROR 6 (0.6%); flagged (DISAGREE+UNSAFE) = 521 (52.0%)**. Committed results/student_audit.json + run_student_audit.py + sample_audit_review.py (30-case template built: 10 UNSAFE + 10 DISAGREE + 10 SAFE control, seed=42). ⚠️ 52% flagged CONTRADICTS an unqualified "preserves diagnoses" — BUT the gate judges "preserves ALL critical info" (simplification omits detail) + high known false-alarm floor (~1-in-3 DISAGREE), so flags ≠ diagnosis drops without review.
+    · DUAL-AUDITOR REVIEW RUNNING (bn8j2e1qv, src/llm_review_audit.py): **Claude Sonnet 5 (Anthropic) + Gemini 2.5 Pro (Google)** — independent non-project families (Nemotron=teacher, Llama/Qwen=diagnosis-blind gate judges), identical prompt temp=0, over the 30-case template. Per case: both judgments + agreement (same category); contested → human adjudication. One-time methodology check (NOT a Nebius product endpoint). Report as a 30-case SAMPLE, not extrapolated to all 521.
+    · FABLE FIXES: #1 contradictions ✅ (9413b20); #2 cite B5+κ+FK ✅ (B5 f5cb9d4; κ A5 + FK A7 artifact + measure_reference_fk.py 5c0de4d); #3 strict mode ✅ (code 21fe0fd + B3 docs/endpoint validation 716a4c6). NEXT = dual-auditor result → update README "preserves diagnoses" claim (B4 Scope + A2) honestly (sample-framed, vs the gate's false-alarm floor).
 - STEP 3: Fable 5 BONUS ×2 (Research track + Product track).
 - Done: #18 ✅ (7e3f088), #16 ✅ (7e3f088 + e8a8e31), #13 Step 1/4 skeleton+nav ✅ (5ba67bf).
 - Step 2/4 ✅ COMPLETE — all 4 relocation sub-moves landed:
