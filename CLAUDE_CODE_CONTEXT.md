@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 IN PROGRESS — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001: SAFE 47.4% / DISAGREE 26.5% / UNSAFE 25.6% / ERROR 0.6%; flagged 52.0%); dual-auditor review RUNNING (Claude Sonnet 5 + Gemini 2.5 Pro, 30-case sample); Steps 1/2/3/16/18 ✅; NEXT = audit results → update README "preserves diagnoses" claim; HEAD = 7496866)
+# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; Steps 1/2/3/16/18 ✅; NEXT = re-run Fable regular review to check score lift; HEAD = 25de8bb)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -111,6 +111,9 @@ f4b0327 - docs: README fix stray #26, 9976→7983, FK-Grade precise, dedup what'
 716a4c6 - feat: B3 strict mode docs + safe_endpoint.py Literal["flag","block","strict"] validation
 5c0de4d - feat: cite κ (A5→nemotron_calibration_full.json) + FK 10.1/7.2 (A7→reference_fk_grade.json artifact + measure_reference_fk.py)
 7496866 - results: student_audit.json complete (1001/1001, SAFE 47.4%, flagged 52.0%) + audit scripts
+0322d01 - dual-auditor review complete (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops)
+d7ba1f1 - adjudication brief + human_judgment fields for 6 contested
+25de8bb - README: replace "preserves diagnoses" with measured audit result
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -280,7 +283,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 7496866)
+## README STATUS — COMPLETE ✅ (HEAD = 25de8bb)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -606,8 +609,10 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
     · CONTRADICTION FIXES ✅ (9413b20): Qwen per-token→dedicated; Qwen recalibrated; reasoning-budget confound REFRAMED (calibration used 8000 for ALL judges per nemotron_judge_test.py:122 — NOT a confound, false premise corrected); cost $0.90→$1.63; "unmeasured"→"see B5"; B5 cites gate_calibration_full.json.
     · QUICK FIXES ✅ (f4b0327): stray #26 removed; 9976→7983 (train split); FK-Grade 8.87 precise; dedup what's-new (blockquote removed + paragraph trimmed, table kept); ¶2 leads with plain-English hook.
     · STUDENT AUDIT COMPLETE ✅ (7496866; bj4tgsiq2, run_student_audit.py): 1001/1001 v2 test outputs (predictions.json via boto3) → gate. **SAFE 474 (47.4%) / DISAGREE 265 (26.5%) / UNSAFE 256 (25.6%) / ERROR 6 (0.6%); flagged (DISAGREE+UNSAFE) = 521 (52.0%)**. Committed results/student_audit.json + run_student_audit.py + sample_audit_review.py (30-case template built: 10 UNSAFE + 10 DISAGREE + 10 SAFE control, seed=42). ⚠️ 52% flagged CONTRADICTS an unqualified "preserves diagnoses" — BUT the gate judges "preserves ALL critical info" (simplification omits detail) + high known false-alarm floor (~1-in-3 DISAGREE), so flags ≠ diagnosis drops without review.
-    · DUAL-AUDITOR REVIEW RUNNING (bn8j2e1qv, src/llm_review_audit.py): **Claude Sonnet 5 (Anthropic) + Gemini 2.5 Pro (Google)** — independent non-project families (Nemotron=teacher, Llama/Qwen=diagnosis-blind gate judges), identical prompt temp=0, over the 30-case template. Per case: both judgments + agreement (same category); contested → human adjudication. One-time methodology check (NOT a Nebius product endpoint). Report as a 30-case SAMPLE, not extrapolated to all 521.
-    · FABLE FIXES: #1 contradictions ✅ (9413b20); #2 cite B5+κ+FK ✅ (B5 f5cb9d4; κ A5 + FK A7 artifact + measure_reference_fk.py 5c0de4d); #3 strict mode ✅ (code 21fe0fd + B3 docs/endpoint validation 716a4c6). NEXT = dual-auditor result → update README "preserves diagnoses" claim (B4 Scope + A2) honestly (sample-framed, vs the gate's false-alarm floor).
+    · DUAL-AUDITOR REVIEW COMPLETE ✅ (0322d01; bn8j2e1qv, src/llm_review_audit.py): **Claude Sonnet 5 (Anthropic) + Gemini 2.5 Pro (Google)** — independent non-project families (Nemotron=teacher, Llama/Qwen=diagnosis-blind gate judges), identical prompt, 30-case sample. RESULT: **70% agreement (14/20 flagged); 2/20 both-confirmed diagnosis drops (idx 174, 44); 12/20 both general_simplification; 6/20 contested; 10 SAFE controls clean**. Genuine-drop bound 10–35% of flagged pending review. Debug saga: model ID must be plain `claude-sonnet-5` (no dated variant → 404); `temperature` deprecated for Sonnet 5 (→ removed; Gemini stays temp=0); per-provider resume (re-run failed provider only, keep good judgments).
+    · README CLAIM UPDATED ✅ (25de8bb): unqualified "our model preserves diagnoses" (B4 Scope + B8 item 3) REPLACED with the measured result; new **B5 "Student self-audit"** paragraph is the single measured source (52.0% flagged → dual-auditor sample); cites results/student_audit_review.json + docs/ADJUDICATION_BRIEF.md. Verified: grep "preserves diagnoses"=0, "dual-auditor"=3, "student_audit_review.json"=1.
+    · PHYSICIAN ADJUDICATION PENDING (d7ba1f1): docs/ADJUDICATION_BRIEF.md (plain-language guide) + reserved `human_judgment` fields on the 6 contested (47, 56, 287, 393, 421, 442); physician fills → re-score → firm up the 10–35% bound.
+    · FABLE FIXES: #1 contradictions ✅ (9413b20); #2 cite B5+κ+FK + audit ✅ (5c0de4d + dual-auditor audit closes the "preserves diagnoses" citation gap); #3 strict mode ✅ (21fe0fd + 716a4c6). NEXT = re-run Fable 5 regular review to check score lift.
 - STEP 3: Fable 5 BONUS ×2 (Research track + Product track).
 - Done: #18 ✅ (7e3f088), #16 ✅ (7e3f088 + e8a8e31), #13 Step 1/4 skeleton+nav ✅ (5ba67bf).
 - Step 2/4 ✅ COMPLETE — all 4 relocation sub-moves landed:
