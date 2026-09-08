@@ -605,8 +605,13 @@ src/
   evaluate.py                    Metrics: ROUGE-L, SARI, BERTScore, FK-Grade
   merge_adapter.py               Merge LoRA adapter into base model → HuggingFace publish
   safe_endpoint.py               Safe Simplification Endpoint v2 — FastAPI: vLLM + 3-judge gate
-  safety_gate.py                 VAGT-calibrated 3-judge safety gate (Llama + Qwen + Nemotron Nano)
+  safety_gate.py                 calibration-informed safety gate — Qwen + Nemotron Nano decide, Llama advisory (Qwen3-32B via dedicated endpoint)
   serve_vllm.py                  vLLM inference server (legacy standalone)
+  run_gate_calibration.py        708-item calibration through the deployed gate prompt → gate_calibration_full.json
+  run_student_audit.py           1,001 v2 student outputs → 3-judge gate (student self-audit) → student_audit.json
+  sample_audit_review.py         build 30-case review template (seed=42) + score judgments
+  llm_review_audit.py            dual-auditor review (Claude Sonnet 5 + Gemini 2.5 Pro) of flagged cases
+  measure_reference_fk.py        FK-Grade of Claude vs Nemotron reference sets → reference_fk_grade.json
 docker/
   Dockerfile.train               Builds train-v29/v30/v31 (cryptography==48.0.1 pinned)
   Dockerfile.endpoint            Safe Endpoint v2 image (endpoint-v3)
@@ -620,6 +625,9 @@ scripts/
   start_endpoint.sh              Boot vLLM + Safe Endpoint v2 API (inside endpoint-v3 image)
 logs/
   train_v2.json.gz               v2 training log — Nebius Job aijob-e00rwxv72fe81f54we, 8,523s, per-epoch eval_loss
+docs/
+  ADJUDICATION_BRIEF.md          plain-language guide for physician review of the 6 contested audit cases
+  REPRODUCIBILITY.md             container image digests + adapter storage flow + rebuild steps
 nemotron_judge_test.py           Nemotron Nano as safety judge (3-judge calibration, checkpointed)
 nemotron_teacher.py              Nemotron Super teacher — JudgeBench references
 nemotron_training_data.py        Nemotron Super teacher — full 9,999-record training set (resume-capable)
@@ -633,6 +641,10 @@ results/eval_v2_nemotron_results.json  v2 eval vs Nemotron refs: ROUGE-L 0.6010 
 results/endpoint_smoke_test.json       live endpoint SAFE capture (~27s, all-SAFE verdict)
 results/models_verified.json           both Nemotron model strings verified via /v1/models
 results/disagree_case_gate.json        gate-level DISAGREE capture — JudgeBench idx 146, Nemotron UNSAFE / Llama+Qwen SAFE
+results/gate_calibration_full.json     708-item deployed-gate calibration (0 ERRORs; DISAGREE 20.8%, Qwen FP 9.5%)
+results/student_audit.json             1,001 student outputs through the gate (SAFE 47.4% / flagged 52.0%)
+results/student_audit_review.json      30-case dual-auditor review (Claude + Gemini; 2/20 confirmed drops; human_judgment on 6 contested)
+results/reference_fk_grade.json        FK-Grade: Claude refs 7.2 / Nemotron refs 10.08 (Δ+2.88, textstat 0.7.13, n=9,976)
 vagt_nemotron_results.txt        VAGT decomposition output (per-feature, both rater sets)
 vagt_bootstrap_cis.json               paired-Δ 95% CIs: ΔΦ_V +0.071 [+0.055,+0.087] on diagnosis
 FINDINGS.md                      Full findings write-up (calibration + VAGT + caveats)
