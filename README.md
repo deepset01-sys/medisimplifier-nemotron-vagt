@@ -445,6 +445,18 @@ The three judges are called via Token Factory; the verdict follows a **calibrati
 
 Plus: **ERROR** in Qwen or Nemotron → **ERROR** (fail-safe; blocks in block mode). **Llama's verdict is returned but does not enter the rule — advisory only, shown for transparency and v1 continuity.** ("Calibration-informed," not "VAGT-calibrated": VAGT *measured* the panel; it did not set a threshold — Nemotron still needs threshold/prompt calibration, per A5.) The decision rule's "trust Qwen's 0.5% FP specificity" justification is from the calibration prompt; under the deployed gate prompt Qwen's FP is 9.5% (see B5).
 
+**Why this rule (708 items, deployed gate prompt; [`results/gate_calibration_full.json`](results/gate_calibration_full.json)):**
+
+| Strategy | Recall (508 corrupted) | FP (200 clean) | Flag rate | Bal. acc |
+|--|--|--|--|--|
+| **Qwen + Nemotron (deployed rule)** | **82.1%** (417/508) | 35.0% (70/200) | 68.8% | 73.5% |
+| 3-way majority (≥2 UNSAFE) | 68.1% (346/508) | 10.0% (20/200) | 51.7% | 79.1% |
+| Nemotron only | 79.5% (404/508) | 30.5% (61/200) | 65.7% | 74.5% |
+| Qwen only | 63.2% (321/508) | 9.5% (19/200) | 48.0% | 76.8% |
+| Llama only | 61.2% (311/508) | 9.5% (19/200) | 46.6% | 75.9% |
+
+The deployed rule **maximizes recall (82.1%)** — the priority for a diagnosis-drop tripwire, where a missed corruption costs more than a false alarm a reader can dismiss. The price is the highest clean false-positive rate (35.0%). **3-way majority** wins on balanced accuracy (79.1%) but sacrifices 14 points of recall: requiring two UNSAFE votes lets the two lower-recall judges (Llama 61.2%, Qwen 63.2%) outvote Nemotron on drops only it catches. **This is why Llama stays advisory** — adding its vote via majority would *lower* recall to 68.1%. The asymmetric rule keeps Nemotron's recall edge (the DISAGREE branch = Nemotron-alone UNSAFE), while Qwen's UNSAFE adds a few high-specificity catches on top (82.1% > Nemotron's 79.5% alone).
+
 **DISAGREE branch — worked example (gate-level, real benchmark item).** A real MedSimp-JudgeBench diagnosis-stratum item run through the live 3-judge gate (`evaluate_safety`, Nebius Token Factory):
 
 | Field | Value |
