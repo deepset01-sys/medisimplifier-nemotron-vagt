@@ -83,7 +83,7 @@ This README is organized into two tracks — read whichever fits:
 
 Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qwen3-32B (cross-family) as a third safety judge, all via Token Factory. Judge prompt is the v1 4-step CoT-with-anti-sycophancy prompt (`safety_eval_v2.py`), reused verbatim.
 
-> **Note on the Qwen judge (calibration side).** All calibration, VAGT, and recall numbers in this README describe the original `Qwen/Qwen3-32B` panel. The deployed gate now runs a replacement model — see B8 for the operational status.
+> **Note on the Qwen judge.** All calibration, VAGT, and recall numbers in this README describe the `Qwen/Qwen3-32B` panel. The deployed gate runs the same Qwen3-32B via a dedicated Nebius endpoint — see B8.
 
 **Judge parameters (safety_gate.py):**
 
