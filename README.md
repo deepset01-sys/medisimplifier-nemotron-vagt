@@ -10,7 +10,7 @@
 > Built on top of [MediSimplifier-Nebius](https://github.com/deepset01-sys/medisimplifier-nebius) — 🥇 First Place winner of the Nebius Serverless AI Builders Challenge.
 > The Nemotron teacher pipeline, 3-judge calibration panel, VAGT measurement framework (developed as a direct response to v1's κ=0.11 finding, first applied empirically in v2), and v2 training infrastructure were built for this hackathon.
 
-**MediSimplifier v2** rewrites hospital discharge summaries at an FK-Grade 8.87 reading level (roughly 9th grade) and returns, with each rewrite, a safety verdict from a panel of three LLM judges — Llama-3.3-70B, Qwen3-32B, and NVIDIA Nemotron Nano — with Llama and Nemotron Nano served per-token on Nebius Token Factory and Qwen3-32B on a dedicated Nebius endpoint. The student model was fine-tuned on **7,983** references written by **Nemotron Super** (replacing Claude Opus); the judge panel was calibrated on **MedSimp-JudgeBench**, a 708-item benchmark with **508 known injected errors**. Everything below is reproducible from committed artifacts and public HuggingFace models for about **$225.45** in Nebius credits.
+Patients are sent home with discharge summaries written for clinicians — dense with abbreviations, drug names, and diagnoses most people cannot read. **MediSimplifier v2** rewrites those summaries into plainer language (FK-Grade 8.87, roughly 9th grade) and returns, with each rewrite, a safety verdict from a panel of three LLM judges — Llama-3.3-70B, Qwen3-32B, and NVIDIA Nemotron Nano — with Llama and Nemotron Nano served per-token on Nebius Token Factory and Qwen3-32B on a dedicated Nebius endpoint. The student model was fine-tuned on **7,983** references written by **Nemotron Super** (replacing Claude Opus); the judge panel was calibrated on **MedSimp-JudgeBench**, a 708-item benchmark with **508 known injected errors**. Everything below is reproducible from committed artifacts and public HuggingFace models for about **$225.45** in Nebius credits.
 
 Adding a third judge that breaks a shared blind spot raises accuracy while lowering agreement — the opposite of what κ predicts. Against ground truth, the two incumbent judges almost never flag a silently dropped diagnosis (recall **14%** and **7%**); Nemotron Nano flags **68%**. Adding it as a third rater raises the veridicality-anchored dependability coefficient Φ_V on the diagnosis stratum from **0.404 to 0.476** (paired bootstrap Δ = **+0.071**, 95% CI **[+0.055, +0.087]**, n = 333, 1,000 resamples) and cuts shared-bias variance σ²_B from **0.347 to 0.229** — while Fleiss κ and Krippendorff α both turn *negative* (**0.076 → −0.088**; Δκ = **−0.163 [−0.305, −0.045]**). Agreement statistics report a worse panel; the truth-anchored decomposition reports a better one. This is the predicted signature of a shared blind spot being broken — the first empirical application of the VAGT framework developed after v1's κ = 0.11 result. The gain is not universal: on dose errors, where the incumbents were not blind, ΔΦ_V is **−0.013 [−0.055, +0.021]**.
 
@@ -33,7 +33,7 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 | Judge calibration metric | Cohen's κ only | ✅ VAGT — σ²_B, σ²_R, σ²_N, Φ_V |
 | Robust statistics validation | ❌ (post-submission only) | ✅ Fleiss κ + Krippendorff α — both go negative on diagnosis (below-chance agreement) |
 | Measurement framework | Cohen's κ | ✅ VAGT — detects shared blind spots invisible to κ |
-| Safe Endpoint | vLLM + dual-judge guardrail | ✅ vLLM + 3-judge gate (flag / block / strict modes; DISAGREE blocks in strict) |
+| Safe Endpoint | vLLM + dual-judge guardrail | ✅ vLLM + calibration-informed gate (2-judge rule + advisory Llama; flag / block / strict modes) |
 | Gate operating characteristics | ❌ not measured | ✅ 708-item re-run through deployed gate prompt (0 ERRORs) — DISAGREE 20.8%, Qwen FP 9.5% (see B5) |
 | Diagnosis-retention audit | ❌ not measured | ✅ 1,001 student outputs through gate + dual-auditor review (Claude Sonnet 5 + Gemini 2.5 Pro); 2/20 confirmed drops (see B5) |
 | Safety enforcement modes | flag/block only | ✅ + strict mode: DISAGREE blocks (Nemotron diagnosis-drop tripwire enforces) |
@@ -333,7 +333,7 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
         |
         v
     Nebius Endpoint: Safe Simplification Endpoint v2
-        POST /v1/simplify → vLLM + calibration-informed 3-judge gate
+        POST /v1/simplify → vLLM + calibration-informed gate (2-judge rule + advisory Llama)
         (endpoint tested; redeploy via safe_endpoint_v2.yaml)
 
 **Validation pipeline** (post-deployment measurement):
@@ -575,12 +575,14 @@ Actual Nebius billing for v2 (all figures from Nebius Console):
 | Nemotron Super teacher (9,999 calls) | Token Factory | 81.23M output tokens | $75.19 |
 | Nemotron Nano calibration + student self-audit (708 × 3 judges + 1,001 × 3) | Token Factory | 3.22M input + 8.23M output tokens | $2.17 |
 | Llama (endpoint smoke tests) | Token Factory | 3.03M input + 0.12M output | $0.44 |
-| Qwen3-32B gate calibration (708 items) | Token Factory | 1.28M input + 1.10M output | $0.46 |
+| Gate calibration — Llama + Nemotron Nano (708 items, per-token share) | Token Factory | 1.28M input + 1.10M output | $0.46 |
 | Dedicated Endpoint (Qwen3-32B judge) | Dedicated Endpoint | 21.95 GPU hours | $88.90 |
 | H100 NVLink (training + eval + merge) | Jobs | 10.22 GPU hours | $39.34 |
 | CPU + RAM | Jobs | 452.60 vCPU / 1,810.39 GiB hours | $11.22 |
 | Disk (Network SSD + Object Storage) | Storage | 76,053.72 GiB hours | $7.73 |
 | **Total v2** | | | **$225.45** |
+
+*Note: the gate calibration's Qwen3-32B calls ran on the **dedicated endpoint** (per-GPU-hour) — that share is inside the **$88.90** Dedicated Endpoint row, not the $0.46 per-token line above (which covers only Llama + Nemotron Nano).*
 
 **Training run (verified from `logs/train_v2.json.gz`, Nebius Job `aijob-e00rwxv72fe81f54we`):**
 
@@ -607,11 +609,11 @@ src/
   train.py                       LoRA training — runs as Nebius Job (--dataset flag added for v2)
   evaluate.py                    Metrics: ROUGE-L, SARI, BERTScore, FK-Grade
   merge_adapter.py               Merge LoRA adapter into base model → HuggingFace publish
-  safe_endpoint.py               Safe Simplification Endpoint v2 — FastAPI: vLLM + 3-judge gate
+  safe_endpoint.py               Safe Simplification Endpoint v2 — FastAPI: vLLM + calibration-informed gate (2-judge rule + advisory Llama)
   safety_gate.py                 calibration-informed safety gate — Qwen + Nemotron Nano decide, Llama advisory (Qwen3-32B via dedicated endpoint)
   serve_vllm.py                  vLLM inference server (legacy standalone)
   run_gate_calibration.py        708-item calibration through the deployed gate prompt → gate_calibration_full.json
-  run_student_audit.py           1,001 v2 student outputs → 3-judge gate (student self-audit) → student_audit.json
+  run_student_audit.py           1,001 v2 student outputs → gate (2-judge rule + advisory Llama; student self-audit) → student_audit.json
   sample_audit_review.py         build 30-case review template (seed=42) + score judgments
   llm_review_audit.py            dual-auditor review (Claude Sonnet 5 + Gemini 2.5 Pro) of flagged cases
   measure_reference_fk.py        FK-Grade of Claude vs Nemotron reference sets → reference_fk_grade.json
