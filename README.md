@@ -533,6 +533,8 @@ Note: Judges reproducing the endpoint load directly from `chambul/MediSimplifier
 
 > **Why Token Factory?** Nemotron Super and Nano are both served per-token with zero idle cost. The teacher JudgeBench-reference run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min; the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
 
+> **Qwen3-32B judge:** deployed as a dedicated Nebius endpoint (`qwen3-32b-judge`, `dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6`, H100 NVLink) — stop between uses to avoid idle GPU-hour billing.
+
 Full adapter storage flow → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
 ### B8. Known issues & operating caveats
 
