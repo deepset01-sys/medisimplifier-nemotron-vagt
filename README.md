@@ -332,6 +332,22 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
     Nebius Endpoint: Safe Simplification Endpoint v2
         POST /v1/simplify → vLLM + calibration-informed 3-judge gate
         (endpoint tested; redeploy via safe_endpoint_v2.yaml)
+
+**Validation pipeline** (post-deployment measurement):
+
+    Token Factory + Dedicated Endpoint: gate calibration (708 items, gate prompt)
+        run_gate_calibration.py  ->  results/gate_calibration_full.json
+        (DISAGREE 20.8%, Qwen FP 9.5% under gate prompt — see B5)
+        |
+        v
+    Token Factory + Dedicated Endpoint: student self-audit (1,001 test outputs)
+        run_student_audit.py  ->  results/student_audit.json
+        (SAFE 47.4% / flagged 52.0% — see B5)
+        |
+        v
+    External APIs: dual-auditor diagnosis-retention review (30-case sample, seed=42)
+        llm_review_audit.py  ->  results/student_audit_review.json
+        (Claude Sonnet 5 + Gemini 2.5 Pro; 2/20 confirmed drops — see B5)
 ### B2. Quickstart
 
 Two ways to use it: call the hosted endpoint (**Path 1**), or run the safety gate directly on any `(original, simplified)` pair (**Path 2**).
