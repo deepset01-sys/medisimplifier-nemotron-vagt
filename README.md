@@ -22,7 +22,7 @@ The result above is the point; this section is the package around it. The submis
 
 ## What's new in v2 (vs v1)
 
-The Nebius Serverless Challenge submission (v1) was training + serving + dual-judge safety. This v2 submission extends it with an all-Nemotron pipeline:
+The Nebius Serverless Challenge submission (v1) was training + serving + dual-judge safety. This v2 submission extends it with an all-Nemotron pipeline, measured gate operating characteristics, and a diagnosis-retention audit:
 
 | | v1 (Nebius Serverless Challenge 🥇) | v2 (This Hackathon) |
 |--|--|--|
@@ -33,7 +33,10 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 | Judge calibration metric | Cohen's κ only | ✅ VAGT — σ²_B, σ²_R, σ²_N, Φ_V |
 | Robust statistics validation | ❌ (post-submission only) | ✅ Fleiss κ + Krippendorff α — both go negative on diagnosis (below-chance agreement) |
 | Measurement framework | Cohen's κ | ✅ VAGT — detects shared blind spots invisible to κ |
-| Safe Endpoint | vLLM + dual-judge guardrail | ✅ vLLM + Nemotron Nano guardrail (3-judge parallel) |
+| Safe Endpoint | vLLM + dual-judge guardrail | ✅ vLLM + 3-judge gate (flag / block / strict modes; DISAGREE blocks in strict) |
+| Gate operating characteristics | ❌ not measured | ✅ 708-item re-run through deployed gate prompt (0 ERRORs) — DISAGREE 20.8%, Qwen FP 9.5% (see B5) |
+| Diagnosis-retention audit | ❌ not measured | ✅ 1,001 student outputs through gate + dual-auditor review (Claude Sonnet 5 + Gemini 2.5 Pro); 2/20 confirmed drops (see B5) |
+| Safety enforcement modes | flag/block only | ✅ + strict mode: DISAGREE blocks (Nemotron diagnosis-drop tripwire enforces) |
 | Reproducibility | Public HuggingFace adapters | ✅ Public HuggingFace dataset + adapters v2 |
 
 The novel v2 finding: VAGT inversion — adding Nemotron Nano as third judge cuts shared bias σ²_B on diagnosis from 0.347→0.229 while Fleiss κ goes negative, demonstrating that Cohen's κ — the only metric used in v1 — moves in the wrong direction here.
