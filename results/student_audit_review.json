@@ -72,7 +72,13 @@
         "category": "other",
         "notes": "The simplified version contains a significant clinical error, incorrectly stating that grade I motor power in the legs is 'normal' when it actually represents severe weakness. Additionally, specific medications (ampicillin/sulbactam, fluconazole, nystatin) were replaced by general categories, and an unmentioned medication class ('antivirals') was added."
       },
-      "agreement": false
+      "agreement": false,
+      "human_judgment": {
+        "diagnosis_dropped": null,
+        "medication_dropped": null,
+        "category": null,
+        "notes": ""
+      }
     },
     {
       "index": 529,
@@ -169,7 +175,13 @@
         "category": "medication_drop",
         "notes": "The simplified version omits 'v0' (no venous invasion) from the pathological staging in the discharge diagnosis. It also omits Cisplatin, which is the 'C' component of the 'GC chemotherapy' regimen mentioned in the original text, only specifying gemcitabine."
       },
-      "agreement": false
+      "agreement": false,
+      "human_judgment": {
+        "diagnosis_dropped": null,
+        "medication_dropped": null,
+        "category": null,
+        "notes": ""
+      }
     },
     {
       "index": 287,
@@ -200,7 +212,13 @@
         "category": "diagnosis_drop",
         "notes": "The original text specifies the diagnosis as 'primary open angle glaucoma', but the simplified version only mentions 'glaucoma', dropping the specific type."
       },
-      "agreement": false
+      "agreement": false,
+      "human_judgment": {
+        "diagnosis_dropped": null,
+        "medication_dropped": null,
+        "category": null,
+        "notes": ""
+      }
     },
     {
       "index": 193,
@@ -328,7 +346,13 @@
         "category": "diagnosis_drop",
         "notes": "The simplified version omits the entire 'Diagnostic Assessment' section, which includes specific lab values and test results for hemoglobin, aortic jet velocity, VWF activity, VWF multimer analysis, and vascular endothelial growth factor."
       },
-      "agreement": false
+      "agreement": false,
+      "human_judgment": {
+        "diagnosis_dropped": null,
+        "medication_dropped": null,
+        "category": null,
+        "notes": ""
+      }
     },
     {
       "index": 65,
@@ -423,7 +447,13 @@
         "category": "other",
         "notes": "The simplified version contains significant factual errors and misinterpretations. It incorrectly states the patient's chief complaint (stating she wanted her teeth moved forward, when the original says they were already forwardly positioned). It also omits the specific diagnostic finding of a 'hypodivergent growth pattern'."
       },
-      "agreement": false
+      "agreement": false,
+      "human_judgment": {
+        "diagnosis_dropped": null,
+        "medication_dropped": null,
+        "category": null,
+        "notes": ""
+      }
     },
     {
       "index": 421,
@@ -454,7 +484,13 @@
         "category": "general_simplification",
         "notes": "The simplified version effectively translates complex medical terms into lay language. For instance, 'primary hypothyroidism' becomes 'low thyroid hormone', 'TIO' is referred to as 'a rare bone condition', and the medication 'calcitriol' is simplified to 'vitamin D'. Technical details and brand names from the procedure section are also omitted for clarity."
       },
-      "agreement": false
+      "agreement": false,
+      "human_judgment": {
+        "diagnosis_dropped": null,
+        "medication_dropped": null,
+        "category": null,
+        "notes": ""
+      }
     },
     {
       "index": 985,
