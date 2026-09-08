@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; README consistency pass ✅ (billing→$225.45, project structure, What's-new rows, B-track polish); Steps 1/2/3/16/18 ✅; NEXT = re-run Fable regular review to check score lift; HEAD = c41dddf)
+# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; README consistency pass ✅ (billing→$225.45, project structure, What's-new rows, B-track polish); Steps 1/2/3/16/18 ✅; Fable v4 review 28/40 → ALL README fix-levers landed (cost-table Qwen, 3-judge→2-judge + advisory-Llama justified, deployed DISAGREE 34.7%, B4 decision-rule table, patient-first opening ¶1-3) ✅, billing export ⬜ (Console); NEXT = Fable 5 regular review (v5) to check score lift; HEAD = b0374b7)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -123,6 +123,10 @@ b844bc5 - README B1: add validation pipeline
 9a106e7 - README project structure: add new src/results/docs artifacts + safety_gate.py desc fix
 639b185 - README What's-new: gate chars + audit + strict-mode rows; Safe Endpoint desc
 c41dddf - README opening ¶4: add student self-audit result (2/20 confirmed drops)
+bcd7489 - README: fix cost table Qwen contradiction; 3-judge→2-judge (advisory Llama); patient-first ¶1
+8f25cfc - README: deployed DISAGREE false-alarm 34.7% (51/147) in B3/B5 (replace stale "unmeasured")
+477c13e - README B4: decision-rule comparison table (5 strategies, 708 items)
+b0374b7 - README opening ¶2 (3-bullet what's-new) + ¶3 (30-sec try-it + two tracks)
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -294,7 +298,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = c41dddf)
+## README STATUS — COMPLETE ✅ (HEAD = b0374b7)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -623,7 +627,8 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
     · DUAL-AUDITOR REVIEW COMPLETE ✅ (0322d01; bn8j2e1qv, src/llm_review_audit.py): **Claude Sonnet 5 (Anthropic) + Gemini 2.5 Pro (Google)** — independent non-project families (Nemotron=teacher, Llama/Qwen=diagnosis-blind gate judges), identical prompt, 30-case sample. RESULT: **70% agreement (14/20 flagged); 2/20 both-confirmed diagnosis drops (idx 174, 44); 12/20 both general_simplification; 6/20 contested; 10 SAFE controls clean**. Genuine-drop bound 10–35% of flagged pending review. Debug saga: model ID must be plain `claude-sonnet-5` (no dated variant → 404); `temperature` deprecated for Sonnet 5 (→ removed; Gemini stays temp=0); per-provider resume (re-run failed provider only, keep good judgments).
     · README CLAIM UPDATED ✅ (25de8bb): unqualified "our model preserves diagnoses" (B4 Scope + B8 item 3) REPLACED with the measured result; new **B5 "Student self-audit"** paragraph is the single measured source (52.0% flagged → dual-auditor sample); cites results/student_audit_review.json + docs/ADJUDICATION_BRIEF.md. Verified: grep "preserves diagnoses"=0, "dual-auditor"=3, "student_audit_review.json"=1.
     · PHYSICIAN ADJUDICATION PENDING (d7ba1f1): docs/ADJUDICATION_BRIEF.md (plain-language guide) + reserved `human_judgment` fields on the 6 contested (47, 56, 287, 393, 421, 442); physician fills → re-score → firm up the 10–35% bound.
-    · FABLE FIXES: #1 contradictions ✅ (9413b20); #2 cite B5+κ+FK + audit ✅ (5c0de4d + dual-auditor audit closes the "preserves diagnoses" citation gap); #3 strict mode ✅ (21fe0fd + 716a4c6). NEXT = re-run Fable 5 regular review to check score lift.
+    · FABLE FIXES (v1/v3): #1 contradictions ✅ (9413b20); #2 cite B5+κ+FK + audit ✅ (5c0de4d + dual-auditor audit closes the "preserves diagnoses" citation gap); #3 strict mode ✅ (21fe0fd + 716a4c6).
+    · FABLE v4 REVIEW (review_output_v4_fable5.txt) = **28/40** (unchanged; Tech 8 / Design 7 / Impact 6 / Idea 7). Audit praised ("dual-auditor instead of a hand-wave"); score ceilinged by structural items (demo-grade product, arithmetic inversion) + one new cost-table contradiction. **ALL README FIX-LEVERS LANDED:** cost-table Qwen contradiction (bcd7489); 3-judge→2-judge + advisory-Llama *quantitatively* justified (bcd7489 + B4 5-strategy table 477c13e — majority vote would drop recall 82.1%→68.1%); deployed DISAGREE false-alarm 34.7% (51/147, 8f25cfc); patient-first opening ¶1-3 (bcd7489 + b0374b7). REMAINING: committed billing export ⬜ (needs Nebius Console). NEXT = re-run Fable 5 regular review (v5) to check score lift.
 - STEP 3: Fable 5 BONUS ×2 (Research track + Product track).
 - Done: #18 ✅ (7e3f088), #16 ✅ (7e3f088 + e8a8e31), #13 Step 1/4 skeleton+nav ✅ (5ba67bf).
 - Step 2/4 ✅ COMPLETE — all 4 relocation sub-moves landed:
