@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; README consistency pass ✅ (billing→$225.45, project structure, What's-new rows, B-track polish); Steps 1/2/3/16/18 ✅; Fable v4 review 28/40 → ALL README fix-levers landed (cost-table Qwen, 3-judge→2-judge + advisory-Llama justified, deployed DISAGREE 34.7%, B4 decision-rule table, patient-first opening ¶1-3) ✅, billing export ⬜ (Console); NEXT = Fable 5 regular review (v5) to check score lift; HEAD = b0374b7)
+# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; README consistency pass ✅ (billing→$225.45, project structure, What's-new rows, B-track polish); Steps 1/2/3/16/18 ✅; Fable v4 review 28/40 → ALL README fix-levers landed (cost-table Qwen, 3-judge→2-judge + advisory-Llama justified, deployed DISAGREE 34.7%, B4 decision-rule table, patient-first opening ¶1-3) ✅, billing export ⬜ (Console); **STRATEGIC PIVOT → VAGT-as-product (`/v1/audit_panel` decision tool)**; NEXT = audit_panel Step 6 (pool verdicts); (Fable v5 deferred); HEAD = b55e28d)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -20,6 +20,23 @@
 **Deadline:** October 30, 2026
 **Track:** Best Apps and Agents
 **Prize:** $20,000
+
+---
+
+## STRATEGIC PIVOT — VAGT as Product
+
+Key insight (from `vagt_section.md` + `vagt_estimand.md` analysis):
+
+VAGT was conceived as a **DECISION TOOL** (panel selection, raters-vs-calibration tradeoff — the dependability ceiling Φ_V(∞); "judge choice" is a named calibration lever), **not just a measurement tool**. v2 shipped only the measurement half (one ΔΦ_V from a 2→3 rater ANOVA; the full vision was 20 raters, Bayesian probit, per-feature CAI index).
+
+The stronger product: **`/v1/audit_panel`** — a callable Nebius-native service that tells you *which judge to add and by how much* (ΔΦ_V + CI on the panel's blindest stratum). Steps 1–5 built offline (13/13 tests; reproduces the +0.071 receipt bit-for-bit); Steps 6–8 remain.
+
+**NEXT SEQUENCE:**
+- **Step 6:** Generate verdicts for pool models (2–3 additional from Token Factory — use verified-live: DeepSeek-V4-Flash, gemma-3-27b-it, nemotron-super).
+- **Step 7:** Rebuild endpoint (endpoint-v4) with `/v1/audit_panel` route live + smoke test.
+- **Step 8:** README reframe (VAGT-as-product) + public receipt.
+
+This converts VAGT from *'evidence for a decision'* into *'the decision tool itself'* — the win move both Opus reviews flagged. On-theme (Nebius-native judges), ~60% built; C-analysis verdict: the weakness is **exposure, not the research**. Scope Steps 6–8 tightly (3 verified pool models, one reproducible receipt) to avoid creep.
 
 ---
 
