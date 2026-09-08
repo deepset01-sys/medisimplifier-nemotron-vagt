@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; Steps 1/2/3/16/18 ✅; NEXT = re-run Fable regular review to check score lift; HEAD = 25de8bb)
+# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; README consistency pass ✅ (billing→$225.45, project structure, What's-new rows, B-track polish); Steps 1/2/3/16/18 ✅; NEXT = re-run Fable regular review to check score lift; HEAD = c41dddf)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -114,6 +114,15 @@ f4b0327 - docs: README fix stray #26, 9976→7983, FK-Grade precise, dedup what'
 0322d01 - dual-auditor review complete (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops)
 d7ba1f1 - adjudication brief + human_judgment fields for 6 contested
 25de8bb - README: replace "preserves diagnoses" with measured audit result
+5a5fd6c - CLAUDE_CODE_CONTEXT refresh (dual-auditor complete; README claim updated; recorded HEAD 25de8bb)
+cebe56a - README A3 Qwen note: remove stale "replacement model"
+b844bc5 - README B1: add validation pipeline
+169aea3 - README B7: add Qwen3-32B dedicated endpoint note
+50c6fa9 - README B8 item 1: trim to one line
+9ace9fb - README billing: $225.45 (dedicated endpoint 21.95 GPU-hr $88.90; Nano/Llama updated)
+9a106e7 - README project structure: add new src/results/docs artifacts + safety_gate.py desc fix
+639b185 - README What's-new: gate chars + audit + strict-mode rows; Safe Endpoint desc
+c41dddf - README opening ¶4: add student self-audit result (2/20 confirmed drops)
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -151,10 +160,10 @@ rotate, then redeploy endpoint with the new key so the live URL keeps working.
 | n_samples eval | 1,001 | results/eval_v2_results.json |
 | Training samples | 7,983 | chambul/medisimplifier-nemotron-dataset |
 | Training time | 8,523s (~2.4h) | logs/train_v2.json.gz (train_runtime) |
-| Total cost v2 | $156.82 | Nebius Console actual billing (incl. dedicated endpoint + gate calibration) |
+| Total cost v2 | $225.45 | Nebius Console actual billing (incl. dedicated endpoint 21.95 GPU-hr + gate calibration) |
 | H100 hours | 10.22 | Nebius Console |
 | Nemotron Super cost | $75.19 | Nebius Console Token Factory |
-| Nemotron Nano cost | $0.90 | Nebius Console Token Factory |
+| Nemotron Nano cost | $2.17 | Nebius Console Token Factory (calibration + 1,001-item student audit) |
 
 ---
 
@@ -274,16 +283,18 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 | Resource | Usage | Cost |
 |----------|-------|------|
 | Nemotron Super teacher | 81.23M output tokens | $75.19 |
-| Nemotron Nano calibration | 3.48M output tokens | $0.90 |
-| Llama + Qwen endpoint tests | — | $0.43 |
+| Nemotron Nano calibration + student audit | 3.22M input + 8.23M output tokens | $2.17 |
+| Llama (endpoint smoke tests) | 3.03M input + 0.12M output | $0.44 |
+| Qwen3-32B gate calibration (708 items) | 1.28M input + 1.10M output | $0.46 |
+| Dedicated Endpoint (Qwen3-32B judge) | 21.95 GPU hours | $88.90 |
 | H100 NVLink | 10.22 GPU hours | $39.34 |
 | CPU + RAM | 452.60 vCPU / 1,810.39 GiB hours | $11.22 |
 | Disk + Object Storage | 76,053.72 GiB hours | $7.73 |
-| **Total v2** | | **$156.82** |
+| **Total v2** | | **$225.45** |
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 25de8bb)
+## README STATUS — COMPLETE ✅ (HEAD = c41dddf)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -538,7 +549,7 @@ Reconstructed from this session's verified findings — not a verbatim prior lis
 9. ✅ (ad0b508) FK measured: Claude refs 7.2 / Nemotron refs 10.1 (textstat 0.7.13), Δ+2.9; fixed the 8.87 conflation (README:105).
 10. ⏸ DEFERRED (bundle with #12) — "$1.7/21min" JudgeBench run unsourced + absent from cost table (true total ≈$136.5).
 11. ✅ (9cb472a) "δ 1.6–5.0%" defined = ROUGE-L H200→H100 reproduction delta (3 v1 models) + cited v1 table (README:53).
-12. ⏸ PENDING — commit a Nebius billing export/screenshot backing $156.82 (needs Console; do #10 in the same pass).
+12. ⏸ PENDING — commit a Nebius billing export/screenshot backing $225.45 (needs Console; do #10 in the same pass).
 
 ### 🔴 README STRUCTURAL REDESIGN
 13. ⏳ IN PROGRESS (4-step). Step 1/4 ✅ (5ba67bf): Track A/B skeleton + "Choose your track" nav.
