@@ -20,6 +20,29 @@ Patients are sent home with discharge summaries written for clinicians — dense
 
 **Try it in ~30 seconds.** `POST /v1/simplify` with a discharge summary returns the plain-language rewrite plus a safety verdict; or run the gate on any `(original, simplified)` pair directly, no endpoint needed — full quickstart and a live `curl` in **B2**. **Two tracks follow:** **Track A — Research Design** (estimand, benchmark, protocol, VAGT derivation, per-judge calibration, the inversion, threats to validity) and **Track B — Product Design** (the `POST /v1/simplify` contract, the decision rule with Nemotron as the diagnosis-drop tripwire, measured operating characteristics — ~1-in-3 DISAGREEs is a false alarm (34.7%, see B5), ~27 s per request — Nebius deployment, and known issues, including that the Qwen judge was briefly swapped mid-project (Qwen3-32B → Qwen3-30B-A3B) but is restored to Qwen3-32B and recalibrated, see B8). This is a research prototype: unauthenticated, not clinician-validated, and not for real patient data.
 
+## Why VAGT — the panel selection finding
+
+VAGT is not just a measurement — it answers a **decision**: given a judge panel with a shared blind spot, *which judge should you add to fix it?* Adding more raters of the same kind doesn't help — shared bias doesn't shrink with panel size — so the useful question is *which* rater breaks the blind spot, and by how much. VAGT scores each candidate by the gain in truth-anchored dependability (**ΔΦ_V**) it delivers on the panel's weakest stratum, with a bootstrap confidence interval. We ran the full analysis on our own gate: incumbent panel = **Llama-3.3-70B + Qwen3-32B** (both near-blind to silent diagnosis drops), scoring five candidate third judges on the 708-item MedSimp-JudgeBench.
+
+| Candidate | Family | Size | diag ΔΦ_V | dose ΔΦ_V |
+|--|--|--|--|--|
+| **Nemotron Nano** *(reference)* | NVIDIA | **30B** | **+0.071** | **−0.013** |
+| Nemotron-3-Ultra | NVIDIA | 550B | +0.0721 | −0.032 |
+| gpt-oss-120b | OpenAI | 120B | +0.0719 | −0.030 |
+| Nemotron-3-Super | NVIDIA | 120B | +0.0653 | −0.059 |
+| DeepSeek-V4-Flash | DeepSeek | — | +0.0597 | −0.032 |
+| gemma-3-27b-it | Google | 27B | +0.0017 | +0.038 |
+
+*Each candidate added to the Llama+Qwen incumbent; diagnosis is the panel's blind stratum, dose the one where the incumbents already see well. Point estimates on 708 items; the top three fall within the Nano reference's 95% CI [+0.055, +0.087] — i.e. statistically indistinguishable. Full per-candidate verdicts in [`audit_pool/verdicts/`](audit_pool/verdicts/), receipts in [`audit_pool/candidates.yaml`](audit_pool/candidates.yaml).*
+
+Three findings:
+
+- **Scale is irrelevant within a family.** A **550B** Nemotron (Ultra, +0.0721) does no better than a **30B** one (Nano, +0.071) on the diagnosis blind spot — an **18×** size increase buys nothing, because the whole family shares the same blind spot. Bigger does not fix shared bias.
+- **A different family can break the blind spot — but not automatically.** OpenAI's gpt-oss-120b matches the Nemotrons on diagnosis (+0.0719); Google's gemma-3-27b-it barely moves it (+0.0017) — it is diagnosis-blind like the incumbents. Family diversity is *necessary but not sufficient*: the model still has to be able to catch the error.
+- **The recommendation is Nemotron Nano.** It ties for the best diagnosis fix, does the **least collateral damage** elsewhere (dose −0.013, far milder than the over-flagging 120B+ reasoners at −0.03 to −0.06), is the **smallest and cheapest** (30B), and ran with **zero errors**. The tool picks the small NVIDIA model on the numbers — not because it is on-theme.
+
+The **[`/v1/audit_panel`](#b3-api-contract)** endpoint runs exactly this analysis on any incumbent panel + candidate pool, returning the recommended judge, its ΔΦ_V, and a bootstrap CI.
+
 ## What this project does
 
 The result above is the point; this section is the package around it. The submission ships as a reproducible whole — a discharge-summary student model, the three-judge safety gate that scores its output, the VAGT measurement framework that anchors the panel to ground truth, and a live Nebius GPU Endpoint that serves the model behind the gate. The models, the MedSimp-JudgeBench benchmark, and the raw calibration verdicts are public on HuggingFace, and every stage — teach, train, evaluate, merge, deploy — rebuilds from committed configs as a Nebius Job or Token Factory call.
