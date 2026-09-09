@@ -16,16 +16,23 @@ pooled:            # committed verdict file exists -> scorable now (Steps 1-4)
     model: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
     prompt_provenance: nemotron_judge_test.py JSON-CoT prompt (max_tokens=8000)
 
-pending:           # require Step-6 verdict generation before scorable (all verified-live)
+pending:           # require Step-6 verdict generation before scorable
   - slug: gemma-3-27b-it
     model: google/gemma-3-27b-it
-    status: pending verdict generation
-    availability: verified live in results/models_verified.json
+    max_tokens: 4000
+    status: smoke-validated, ready for 708
   - slug: nemotron-3-super-120b-a12b
     model: nvidia/nemotron-3-super-120b-a12b
-    status: pending verdict generation
-    availability: verified live in results/models_verified.json
-  - slug: DeepSeek-V4-Flash
-    model: deepseek-ai/DeepSeek-V4-Flash
-    status: pending verdict generation
-    availability: verified live in results/models_verified.json
+    max_tokens: 16000
+    status: smoke-validated, ready for 708
+  - slug: Nemotron-3-Ultra-550b-a55b
+    model: nvidia/Nemotron-3-Ultra-550b-a55b
+    max_tokens: 16000
+    status: smoke-validated, ready for 708
+  - slug: gpt-oss-120b
+    model: openai/gpt-oss-120b
+    max_tokens: 8000
+    status: smoke-validated, ready for 708
+  - slug: DeepSeek-V4-Flash-0731
+    model: deepseek-ai/DeepSeek-V4-Flash-0731
+    status: string-corrected, not smoke-tested
