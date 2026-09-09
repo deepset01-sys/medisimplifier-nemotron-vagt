@@ -41,7 +41,7 @@ Three findings:
 - **A different family can break the blind spot — but not automatically.** OpenAI's gpt-oss-120b matches the Nemotrons on diagnosis (+0.0719); Google's gemma-3-27b-it barely moves it (+0.0017) — it is diagnosis-blind like the incumbents. Family diversity is *necessary but not sufficient*: the model still has to be able to catch the error.
 - **The recommendation is Nemotron Nano.** It ties for the best diagnosis fix, does the **least collateral damage** elsewhere (dose −0.013, far milder than the over-flagging 120B+ reasoners at −0.03 to −0.06), is the **smallest and cheapest** (30B), and ran with **zero errors**. The tool picks the small NVIDIA model on the numbers — not because it is on-theme.
 
-The **[`/v1/audit_panel`](#b3-api-contract)** endpoint runs exactly this analysis on any incumbent panel + candidate pool, returning the recommended judge, its ΔΦ_V, and a bootstrap CI.
+The **[`/v1/audit_panel`](#b3-api-contract)** endpoint runs exactly this analysis on any incumbent panel + candidate pool, returning the recommended judge, its ΔΦ_V, and a bootstrap CI — live receipt (recommends Nemotron Nano, +0.0706, CI [+0.055, +0.087]) in [`results/audit_panel_live_receipt.json`](results/audit_panel_live_receipt.json).
 
 ## What this project does
 
@@ -383,12 +383,12 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
 Two ways to use it: call the hosted endpoint (**Path 1**), or run the safety gate directly on any `(original, simplified)` pair (**Path 2**).
 
 > **Live endpoint (Nebius GPU Endpoint — application-tunnel URL, stopped between demos):**
-> https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud
+> https://port8000-vjbksde9vzhgtcx.tunnel.applications.eu-north1.nebius.cloud
 > When running, a request returns in ~27s (3-judge Token Factory gate latency, not a serverless cold-start wake); retry once if no response in 60s. A stopped endpoint first loads vLLM (~10–15 min).
 
 **Path 1 — `POST /v1/simplify`.** Live call to the hosted Safe Endpoint v2 (real response below):
 ```bash
-curl -X POST https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud/v1/simplify \
+curl -X POST https://port8000-vjbksde9vzhgtcx.tunnel.applications.eu-north1.nebius.cloud/v1/simplify \
   -H "Content-Type: application/json" \
   -d '{"text": "Patient presented with acute myocardial infarction. Prescribed metformin 1000mg BID and lisinopril 10mg QD. Diagnosis of type 2 diabetes mellitus confirmed. Follow up in 2 weeks.", "safety_mode": "flag"}'
 ```

@@ -1,0 +1,165 @@
+{
+  "_capture": {
+    "endpoint_url": "https://port8000-vjbksde9vzhgtcx.tunnel.applications.eu-north1.nebius.cloud",
+    "route": "POST /v1/audit_panel",
+    "image": "endpoint-v5@sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe",
+    "captured_utc": "2026-09-09T18:19:29.310011+00:00",
+    "http_status": 200
+  },
+  "request": {
+    "incumbent_panel": [
+      "meta-llama/Llama-3.3-70B-Instruct",
+      "Qwen/Qwen3-32B"
+    ],
+    "candidate_pool": [
+      "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "google/gemma-3-27b-it",
+      "openai/gpt-oss-120b",
+      "nvidia/nemotron-3-super-120b-a12b",
+      "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "nvidia/Nemotron-3-Ultra-550b-a55b"
+    ]
+  },
+  "response": {
+    "benchmark": "MedSimp-JudgeBench",
+    "incumbent": {
+      "panel": [
+        "meta-llama/Llama-3.3-70B-Instruct",
+        "Qwen/Qwen3-32B"
+      ],
+      "per_judge_sigma_R": {
+        "meta-llama/Llama-3.3-70B-Instruct": 0.0033,
+        "Qwen/Qwen3-32B": 0.0033
+      },
+      "panel_sigma_B_by_stratum": {
+        "dose": 0.0537,
+        "negation": 0.1446,
+        "lateral": 0.0769,
+        "diagnosis": 0.3472
+      },
+      "Phi_V_by_stratum": {
+        "dose": 0.743,
+        "negation": 0.578,
+        "lateral": 0.6973,
+        "diagnosis": 0.4044
+      },
+      "blindest_stratum": "diagnosis"
+    },
+    "candidates_ranked": [
+      {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "worst_stratum_delta_Phi_V": -0.0127,
+        "mean_delta_Phi_V": 0.0371,
+        "per_stratum_delta_Phi_V": {
+          "dose": -0.0127,
+          "negation": 0.0425,
+          "lateral": 0.0478,
+          "diagnosis": 0.0706
+        },
+        "per_stratum_delta_sigma_B": {
+          "dose": -0.0061,
+          "negation": -0.0419,
+          "lateral": -0.0275,
+          "diagnosis": -0.115
+        }
+      },
+      {
+        "model": "openai/gpt-oss-120b",
+        "worst_stratum_delta_Phi_V": -0.0299,
+        "mean_delta_Phi_V": 0.033,
+        "per_stratum_delta_Phi_V": {
+          "dose": -0.0299,
+          "negation": 0.0505,
+          "lateral": 0.0396,
+          "diagnosis": 0.0719
+        },
+        "per_stratum_delta_sigma_B": {
+          "dose": -0.0026,
+          "negation": -0.0514,
+          "lateral": -0.028,
+          "diagnosis": -0.1219
+        }
+      },
+      {
+        "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+        "worst_stratum_delta_Phi_V": -0.0318,
+        "mean_delta_Phi_V": 0.0365,
+        "per_stratum_delta_Phi_V": {
+          "dose": -0.0318,
+          "negation": 0.0642,
+          "lateral": 0.0415,
+          "diagnosis": 0.0721
+        },
+        "per_stratum_delta_sigma_B": {
+          "dose": -0.0005,
+          "negation": -0.059,
+          "lateral": -0.0279,
+          "diagnosis": -0.1212
+        }
+      },
+      {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "worst_stratum_delta_Phi_V": -0.0585,
+        "mean_delta_Phi_V": 0.0114,
+        "per_stratum_delta_Phi_V": {
+          "dose": -0.0585,
+          "negation": 0.0283,
+          "lateral": 0.0106,
+          "diagnosis": 0.0653
+        },
+        "per_stratum_delta_sigma_B": {
+          "dose": 0.004,
+          "negation": -0.044,
+          "lateral": -0.0186,
+          "diagnosis": -0.12
+        }
+      },
+      {
+        "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+        "worst_stratum_delta_Phi_V": -0.0321,
+        "mean_delta_Phi_V": 0.0297,
+        "per_stratum_delta_Phi_V": {
+          "dose": -0.0321,
+          "negation": 0.0489,
+          "lateral": 0.0421,
+          "diagnosis": 0.0597
+        },
+        "per_stratum_delta_sigma_B": {
+          "dose": -0.0011,
+          "negation": -0.0507,
+          "lateral": -0.0287,
+          "diagnosis": -0.1061
+        }
+      },
+      {
+        "model": "google/gemma-3-27b-it",
+        "worst_stratum_delta_Phi_V": 0.0017,
+        "mean_delta_Phi_V": 0.014,
+        "per_stratum_delta_Phi_V": {
+          "dose": 0.0378,
+          "negation": 0.0044,
+          "lateral": 0.0122,
+          "diagnosis": 0.0017
+        },
+        "per_stratum_delta_sigma_B": {
+          "dose": -0.008,
+          "negation": 0.0011,
+          "lateral": 0.0018,
+          "diagnosis": -0.0012
+        }
+      }
+    ],
+    "recommendation": {
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "target_blind_spot": "diagnosis",
+      "expected_Phi_V_lift": 0.0706,
+      "ci_95": [
+        0.0552,
+        0.0866
+      ],
+      "caveat": "dose stratum ΔΦ_V = -0.013 [-0.055, +0.021], not statistically significant"
+    },
+    "unseen_candidates": [],
+    "note": "Fixed benchmark + pre-scored candidate pool; unauthenticated demo. Verdicts are pre-computed — no live judge calls at request time."
+  }
+}
