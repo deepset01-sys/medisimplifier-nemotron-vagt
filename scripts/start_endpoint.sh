@@ -26,7 +26,7 @@ done
 echo "==> vLLM ready."
 
 echo "==> Starting Safe Endpoint API on :${API_PORT}..."
-cd /app
+cd /app/src
 python3 -m uvicorn safe_endpoint:app --host 0.0.0.0 --port ${API_PORT}
 
 wait ${VLLM_PID}
