@@ -37,9 +37,9 @@ That inversion generalizes into a decision tool. VAGT is not just a measurement 
 
 Three findings:
 
-- **Scale is irrelevant within a family.** A **550B** Nemotron (Ultra, +0.0721) does no better than a **30B** one (Nano, +0.071) on the diagnosis blind spot — an **18×** size increase buys nothing, because the whole family shares the same blind spot. Bigger does not fix shared bias.
+- **Scale is irrelevant within a family.** A **550B** Nemotron (Ultra, +0.0721) breaks the incumbents' diagnosis blind spot no better than a **30B** one (Nano, +0.071) — an **18×** size increase buys nothing. The repair comes from the Nemotron family's detection ability, already saturated at 30B; adding more of the same kind (a bigger sibling, or more same-family raters) does not shrink the panel's shared bias any further.
 - **A different family can break the blind spot — but not automatically.** OpenAI's gpt-oss-120b matches the Nemotrons on diagnosis (+0.0719); Google's gemma-3-27b-it barely moves it (+0.0017) — it is diagnosis-blind like the incumbents. Family diversity is *necessary but not sufficient*: the model still has to be able to catch the error.
-- **The recommendation is Nemotron Nano.** It ties for the best diagnosis fix, does the **least collateral damage** elsewhere (dose −0.013, far milder than the over-flagging 120B+ reasoners at −0.03 to −0.06), is the **smallest and cheapest** (30B), and ran with **zero errors**. The tool picks the small NVIDIA model on the numbers — not because it is on-theme.
+- **The recommendation is Nemotron Nano.** It ties for the best diagnosis fix and does the **least collateral damage** elsewhere (dose −0.013, far milder than the over-flagging 120B+ reasoners at −0.03 to −0.06), at the **smallest and cheapest** size (30B). The tool picks the small NVIDIA model on the numbers — not because it is on-theme.
 
 The **[`/v1/audit_panel`](#b3-api-contract)** endpoint runs exactly this analysis on any incumbent panel + candidate pool, returning the recommended judge, its ΔΦ_V, and a bootstrap CI — live receipt (recommends Nemotron Nano, +0.0706, CI [+0.055, +0.087]) in [`results/audit_panel_live_receipt.json`](results/audit_panel_live_receipt.json).
 
