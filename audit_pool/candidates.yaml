@@ -31,9 +31,9 @@ pooled:            # committed verdict file exists -> scorable now (Steps 1-4)
     model: deepseek-ai/DeepSeek-V4-Flash-0731
     prompt_provenance: nemotron_judge_test.py step-by-step JSON prompt (max_tokens=16000)
     diagnosis_delta_phi_v: 0.0597      # 708-row, diverse family also breaks the blind spot; 12 residual ERR (~truncation) after resume cleared 43/55; incumbent-check 0.0706 PASS
-
-pending:           # require Step-6 verdict generation before scorable
   - slug: Nemotron-3-Ultra-550b-a55b
     model: nvidia/Nemotron-3-Ultra-550b-a55b
-    max_tokens: 16000
-    status: smoke-validated, ready for 708
+    prompt_provenance: nemotron_judge_test.py step-by-step JSON prompt (max_tokens=16000)
+    diagnosis_delta_phi_v: 0.0721      # 708-row, ≈ Nano 30B (+0.071) at 18× size → scale-flat within family; dose −0.032; 0 ERR; incumbent-check 0.0706 PASS
+
+pending: []        # empty — all Step-6 candidates generated + pooled (2026-09-09)
