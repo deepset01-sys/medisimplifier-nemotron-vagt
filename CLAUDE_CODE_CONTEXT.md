@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; README consistency pass ✅ (billing→$225.45, project structure, What's-new rows, B-track polish); Steps 1/2/3/16/18 ✅; Fable v4 review 28/40 → ALL README fix-levers landed (cost-table Qwen, 3-judge→2-judge + advisory-Llama justified, deployed DISAGREE 34.7%, B4 decision-rule table, patient-first opening ¶1-3) ✅, billing export ⬜ (Console); **STRATEGIC PIVOT → VAGT-as-product (`/v1/audit_panel` decision tool)**; NEXT = audit_panel Step 6 (pool verdicts); (Fable v5 deferred); HEAD = b55e28d)
+# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; README consistency pass ✅ (billing→$225.45, project structure, What's-new rows, B-track polish); Steps 1/2/3/16/18 ✅; Fable v4 review 28/40 → ALL README fix-levers landed (cost-table Qwen, 3-judge→2-judge + advisory-Llama justified, deployed DISAGREE 34.7%, B4 decision-rule table, patient-first opening ¶1-3) ✅, billing export ⬜ (Console); **STRATEGIC PIVOT → VAGT-as-product (`/v1/audit_panel`)**; Step 6 IN PROGRESS — all 5 candidates smoke-validated ✅, gemma 708 ✅ (diag ΔΦ_V +0.0017, vagt_core PASS); run order gemma→gpt-oss→super→DeepSeek→Ultra; NEXT = complete 5×708 → validation → pending→pooled commits; HEAD = ac97253)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -37,6 +37,8 @@ The stronger product: **`/v1/audit_panel`** — a callable Nebius-native service
 - **Step 8:** README reframe (VAGT-as-product) + public receipt.
 
 This converts VAGT from *'evidence for a decision'* into *'the decision tool itself'* — the win move both Opus reviews flagged. On-theme (Nebius-native judges), ~60% built; C-analysis verdict: the weakness is **exposure, not the research**. Scope Steps 6–8 tightly (3 verified pool models, one reproducible receipt) to avoid creep.
+
+**STEP 6 STATUS (in progress):** `gen_pool_verdicts.py` committed (fa78088). All **5 candidates smoke-validated** (0–1 err/20): gemma-3-27b-it (4k), gpt-oss-120b (8k), nemotron-3-super-120b-a12b (16k), Nemotron-3-Ultra-550b-a55b (16k), DeepSeek-V4-Flash-0731 (16k). Full-708 run order (fastest→slowest): **gemma → gpt-oss → super → DeepSeek → Ultra**. Each auto-runs `vagt_core` (incumbent diag ΔΦ_V must reproduce 0.071 ± 1e-3 + row_id alignment) before its `pending→pooled` commit. **gemma DONE ✅** (SAFE 478/UNSAFE 230, 0 err; incumbent 0.0706 PASS; gemma's own diag ΔΦ_V=+0.0017 → barely helps on diagnosis, a real "not all diversity breaks the blind spot" signal). Verdict file `audit_pool/verdicts/gemma-3-27b-it.json` written, validated, **awaiting pending→pooled commit**.
 
 ---
 
@@ -144,6 +146,8 @@ bcd7489 - README: fix cost table Qwen contradiction; 3-judge→2-judge (advisory
 8f25cfc - README: deployed DISAGREE false-alarm 34.7% (51/147) in B3/B5 (replace stale "unmeasured")
 477c13e - README B4: decision-rule comparison table (5 strategies, 708 items)
 b0374b7 - README opening ¶2 (3-bullet what's-new) + ¶3 (30-sec try-it + two tracks)
+fa78088 - feat: gen_pool_verdicts.py + candidates.yaml (4 smoke-validated candidates)
+ac97253 - feat: DeepSeek smoke-validated (16k)
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -315,7 +319,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = b0374b7)
+## README STATUS — COMPLETE ✅ (HEAD = ac97253)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
