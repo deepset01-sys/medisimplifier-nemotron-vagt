@@ -665,7 +665,7 @@ jobs/
   job_eval_v2.yaml               v2 evaluation job (train-v30, sha256:6c3cd4cd..., GuyDor007 test)
   job_eval_v2_nemotron_refs.yaml v2 Nemotron-refs eval job (train-v32, sha256:2c95dfef..., aijob-e00gz7bez5pwq35fze)
   job_merge_v2.yaml              v2 merge job (train-v31, sha256:9d832391..., adapter → bucket → HuggingFace)
-  safe_endpoint_v2.yaml          Safe Endpoint v2 deployment config (endpoint-v3)
+  safe_endpoint_v2.yaml          Safe Endpoint v4 deployment config (endpoint-v4 image; adds /v1/audit_panel)
 scripts/
   start_endpoint.sh              Boot vLLM + Safe Endpoint v2 API (inside endpoint-v3 image)
 logs/
