@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; README consistency pass ✅ (billing→$225.45, project structure, What's-new rows, B-track polish); Steps 1/2/3/16/18 ✅; Fable v4 review 28/40 → ALL README fix-levers landed (cost-table Qwen, 3-judge→2-judge + advisory-Llama justified, deployed DISAGREE 34.7%, B4 decision-rule table, patient-first opening ¶1-3) ✅, billing export ⬜ (Console); **STRATEGIC PIVOT → VAGT-as-product (`/v1/audit_panel`)**; Step 6 COMPLETE ✅ — all 5×708 generated + pooled (pool=8, pending:[]); diag ΔΦ_V: Ultra 550B +0.0721 ≈ gpt-oss +0.0719 ≈ Nano 30B +0.071 (scale-flat within family; diversity-can-but-not-always; Nano wins on merit — smallest dose penalty −0.013); NEXT = Step 7 (endpoint-v4 rebuild + /v1/audit_panel live) + Step 8 (README reframe VAGT-as-product); HEAD = 28300cd)
+# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; README consistency pass ✅ (billing→$225.45, project structure, What's-new rows, B-track polish); Steps 1/2/3/16/18 ✅; Fable v4 review 28/40 → ALL README fix-levers landed (cost-table Qwen, 3-judge→2-judge + advisory-Llama justified, deployed DISAGREE 34.7%, B4 decision-rule table, patient-first opening ¶1-3) ✅, billing export ⬜ (Console); **STRATEGIC PIVOT → VAGT-as-product (`/v1/audit_panel`)**; Step 6 COMPLETE ✅ — all 5×708 generated + pooled (pool=8, pending:[]); diag ΔΦ_V: Ultra 550B +0.0721 ≈ gpt-oss +0.0719 ≈ Nano 30B +0.071 (scale-flat within family; diversity-can-but-not-always; Nano wins on merit — smallest dose penalty −0.013); Step 8 COMPLETE ✅ (README ## Why VAGT section, dddbb24); Step 7 code/config ✅ (endpoint-v4 packaging 5b2e711) — build+deploy pending your side (rotate key → docker build → redeploy → live smoke); NEXT = build+deploy endpoint-v4, then Fable BONUS ×2; HEAD = 5b2e711)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -55,7 +55,11 @@ Diagnosis ΔΦ_V — each candidate added to the Llama+Qwen incumbent (vs the +0
 
 **FINDINGS:** (1) **Scale-flat within family** — 30B Nano (+0.071) ≈ 550B Ultra (+0.0721) over an 18× size range → shared bias doesn't shrink with scale (the VAGT thesis, measured). (2) **Diversity CAN break the blind spot but isn't sufficient** — gpt-oss (diverse family) ties the Nemotrons; gemma (diverse) fails (+0.0017). (3) **On-merit recommendation = Nemotron Nano** — tied-best diagnosis fix, **smallest dose penalty** (−0.013 vs −0.032/−0.030/−0.059), smallest/cheapest/fastest, most reliable (0 err). The audit_panel recommends the 30B NVIDIA model over a 550B sibling + a 120B OpenAI rival — by the numbers, not the theme. Honest nuance: my "smaller is better" prior was too strong; the true result is "flat across scale" (+0.0721 vs +0.071 is noise).
 
-NEXT = **Step 7** (endpoint-v4 rebuild: COPY audit_pool/ + mount `/v1/audit_panel` live + smoke) → **Step 8** (README reframe: VAGT-as-product + committed pool receipt).
+**STEP 8 — COMPLETE ✅ (dddbb24):** README `## Why VAGT — the panel selection finding` inserted after the opening — decision-tool framing + 6-row pool table (Family/Size/diag ΔΦ_V/dose ΔΦ_V) + 3 findings (scale-flat / diversity-can-but-not-always / Nano-on-merit) + `/v1/audit_panel` pointer (→ #b3-api-contract).
+
+**STEP 7 — CODE/CONFIG COMPLETE ✅ (5b2e711); BUILD+DEPLOY PENDING (your side):** `router.py` was already mounted in safe_endpoint.py; the gap was packaging — the old Dockerfile copied neither `src/audit_panel/` nor `audit_pool/`, so the route silently 404'd. Fixed: `Dockerfile.endpoint` now `COPY src/ ./src/` + `COPY audit_pool/ ./audit_pool/` (structure-preserving), and `start_endpoint.sh` runs from `cd /app/src` — so `pool_loader._HERE.parents[1]/"audit_pool"` resolves to `/app/audit_pool` and `safe_endpoint`'s `sys.path.insert(…/"audit_panel")` resolves to `/app/src/audit_panel` (both traced). No `.py`/pip changes (numpy in vLLM base; pool_loader reads JSON only, no PyYAML). REMAINING (your side): (1) 🔴 rotate NEBIUS_API_KEY; (2) `docker build -f docker/Dockerfile.endpoint` → endpoint-v4, dual-tag Docker Hub + Nebius CR; (3) redeploy Nebius GPU Endpoint w/ fresh key; (4) live smoke: `GET /health` → `"audit_panel": true`; `POST /v1/audit_panel` {incumbent [Llama,Qwen] + 8-model pool} → recommendation + ΔΦ_V + CI, capture to results/.
+
+NEXT = build+deploy endpoint-v4 → then Fable BONUS ×2 (Research + Product tracks).
 
 ---
 
@@ -171,6 +175,9 @@ ac97253 - feat: DeepSeek smoke-validated (16k)
 cc975de - results: audit_panel nemotron-super 708 (diag ΔΦ_V +0.0653 < Nano at 4×); pending→pooled
 04afe6b - results: audit_panel DeepSeek-V4-Flash-0731 708 (diag ΔΦ_V +0.0597; resume 55→12 ERR); pending→pooled
 28300cd - results: audit_panel Nemotron-3-Ultra 708 (diag ΔΦ_V +0.0721; scale-flat); Step 6 pool COMPLETE (8)
+dfb1add - docs: CCC — Step 6 COMPLETE (pool=8; full ΔΦ_V table); NEXT Step 7+8
+dddbb24 - README: ## Why VAGT panel selection finding (pool results table, 3 findings) [Step 8]
+5b2e711 - feat: endpoint-v4 packaging (COPY src/ + audit_pool/; cd /app/src) [Step 7 code]
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -342,7 +349,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 28300cd)
+## README STATUS — COMPLETE ✅ (HEAD = 5b2e711)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
