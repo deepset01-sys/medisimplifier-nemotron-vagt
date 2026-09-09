@@ -3,7 +3,11 @@ selector.py — /v1/audit_panel ranking policy over vagt_core (no new statistics
 
 Given an incumbent judge panel and a candidate pool, recommend the single new
 rater that best raises ground-truth-anchored dependability (Φ_V) on the panel's
-BLINDEST stratum, scored by worst-stratum ΔΦ_V (spec §1).
+BLINDEST stratum. Candidates whose blind-spot ΔΦ_V agree within TIE_BAND are
+treated as a statistical tie (their CIs overlap heavily); among the tied top the
+one with the LEAST collateral (highest min ΔΦ_V on the other strata) is preferred,
+then mean ΔΦ_V, then model id. (Earlier this ranked by worst-stratum ΔΦ_V — a
+maximin that recommended a do-no-harm rater which did not fix the blind spot.)
 
 CI convention (matches the committed vagt_bootstrap_cis.json / README exactly):
 the recommended candidate's ΔΦ_V bootstrap CIs are computed by MIRRORING
@@ -17,6 +21,10 @@ Offline: pure arithmetic over pre-computed verdicts, no judge calls.
 import numpy as np
 
 import vagt_core as vc
+
+# Blind-spot ΔΦ_V within this band ⇒ candidates are a statistical tie (CI half-widths
+# on this benchmark are ~0.015, so 0.01 is conservative). Ties break on least collateral.
+TIE_BAND = 0.01
 
 
 def _incumbent_summary(records, incumbent_ids):
@@ -87,9 +95,17 @@ def audit_panel(pool, incumbent_panel, candidate_pool, bootstrap_iters=vc.N_BOOT
             "per_stratum_delta_Phi_V": per_phi,
             "per_stratum_delta_sigma_B": per_sigmaB,
         })
-    # worst-stratum ΔΦ_V; tiebreak mean ΔΦ_V, then -Δσ²_B on the blindest incumbent stratum
-    ranked.sort(key=lambda r: (r["worst_stratum_delta_Phi_V"], r["mean_delta_Phi_V"],
-                               -r["per_stratum_delta_sigma_B"][blindest]), reverse=True)
+    # Primary: blind-spot (blindest-stratum) ΔΦ_V, banded to TIE_BAND so statistical ties
+    # don't turn a +0.0001 gap into a different recommendation. Tie-break: least collateral
+    # (highest min ΔΦ_V over the OTHER strata), then mean ΔΦ_V, then model id (determinism).
+    def _collateral_floor(r):
+        return min(r["per_stratum_delta_Phi_V"][f] for f in vc.STRATA if f != blindest)
+
+    def _banded_blindspot(r):
+        return round(r["per_stratum_delta_Phi_V"][blindest] / TIE_BAND) * TIE_BAND
+
+    ranked.sort(key=lambda r: (_banded_blindspot(r), _collateral_floor(r),
+                               r["mean_delta_Phi_V"], r["model"]), reverse=True)
 
     recommendation = None
     if ranked:
@@ -104,11 +120,16 @@ def audit_panel(pool, incumbent_panel, candidate_pool, bootstrap_iters=vc.N_BOOT
             if lo <= 0 <= hi:
                 caveats.append(f"{f} stratum ΔΦ_V = {best['per_stratum_delta_Phi_V'][f]:+.3f} "
                                f"[{lo:+.3f}, {hi:+.3f}], not statistically significant")
+        top_band = round(ranked[0]["per_stratum_delta_Phi_V"][blindest] / TIE_BAND) * TIE_BAND
+        tied = [r["model"] for r in ranked
+                if round(r["per_stratum_delta_Phi_V"][blindest] / TIE_BAND) * TIE_BAND == top_band]
         recommendation = {
             "model": best["model"],
             "target_blind_spot": blindest,
             "expected_Phi_V_lift": round(lift, 4),
             "ci_95": [round(ci_blind[0], 4), round(ci_blind[1], 4)],
+            "tied_top_candidates": tied,
+            "selected_among_ties_by": "least collateral (highest min ΔΦ_V on non-blind strata)",
             "caveat": "; ".join(caveats) if caveats else None,
         }
 

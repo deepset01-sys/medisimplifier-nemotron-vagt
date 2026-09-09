@@ -4,7 +4,7 @@ test_audit_panel.py — regression lock for the /v1/audit_panel core.
 Steps 1-3 all validate against the README's published receipt, now through the
 REAL pool_loader + selector (not an inline reference):
 
-  Pool = the 3 committed models; incumbent = Llama + Qwen; candidate = Nemotron Nano.
+  Pool = the 8 committed models; incumbent = Llama + Qwen; candidate = Nemotron Nano.
     * recommendation == Nemotron Nano
     * target blind spot == diagnosis (the README's whole thesis)
     * expected Φ_V lift within ±1e-3 of the published +0.071
@@ -29,7 +29,14 @@ import selector                 # noqa: E402
 LLAMA = "meta-llama/Llama-3.3-70B-Instruct"
 QWEN = "Qwen/Qwen3-32B"
 NEMOTRON = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+GEMMA = "google/gemma-3-27b-it"
+GPT_OSS = "openai/gpt-oss-120b"
+SUPER = "nvidia/nemotron-3-super-120b-a12b"
+DEEPSEEK = "deepseek-ai/DeepSeek-V4-Flash-0731"
+ULTRA = "nvidia/Nemotron-3-Ultra-550b-a55b"
 INCUMBENT = [LLAMA, QWEN]
+ALL_EIGHT = {LLAMA, QWEN, NEMOTRON, GEMMA, GPT_OSS, SUPER, DEEPSEEK, ULTRA}
+CANDIDATES = [NEMOTRON, GEMMA, GPT_OSS, SUPER, DEEPSEEK, ULTRA]  # non-incumbent pool
 
 
 def _pool():
@@ -49,9 +56,9 @@ def test_diagnosis_delta_phi_v_matches_readme():
 
 
 # ── pool loader ──────────────────────────────────────────────────────────────
-def test_pool_loads_three_models():
+def test_pool_loads_all_eight_models():
     pool = _pool()
-    assert pool.models == {LLAMA, QWEN, NEMOTRON}
+    assert pool.models == ALL_EIGHT
     assert len(pool.records) == 708
 
 
@@ -59,6 +66,20 @@ def test_pool_loads_three_models():
 def test_recommendation_is_nemotron():
     res = _audit([NEMOTRON])
     assert res["recommendation"]["model"] == NEMOTRON
+
+
+def test_full_pool_recommends_nemotron_not_gemma():
+    # Regression lock for the maximin bug: on the FULL candidate pool the blind-spot-first
+    # policy must recommend Nemotron Nano (best diagnosis fix, least collateral among the
+    # CI-tied top) — NOT gemma (the do-no-harm rater that barely moves diagnosis, +0.0017).
+    res = _audit(CANDIDATES)
+    assert res["recommendation"]["model"] == NEMOTRON
+    assert res["recommendation"]["model"] != GEMMA
+    assert abs(res["recommendation"]["expected_Phi_V_lift"] - 0.071) <= 1e-3
+    assert res["recommendation"]["ci_95"] == [0.0552, 0.0866]
+    # the strong diagnosis-fixers form the tied top; gemma is ranked last (0.00 band)
+    assert set(res["recommendation"]["tied_top_candidates"]) >= {NEMOTRON, GPT_OSS, ULTRA}
+    assert [c["model"] for c in res["candidates_ranked"]][-1] == GEMMA
 
 
 def test_blindest_stratum_is_diagnosis():
