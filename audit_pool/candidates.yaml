@@ -35,4 +35,5 @@ pending:           # require Step-6 verdict generation before scorable
     status: smoke-validated, ready for 708
   - slug: DeepSeek-V4-Flash-0731
     model: deepseek-ai/DeepSeek-V4-Flash-0731
-    status: string-corrected, not smoke-tested
+    max_tokens: 16000
+    status: smoke-validated, ready for 708
