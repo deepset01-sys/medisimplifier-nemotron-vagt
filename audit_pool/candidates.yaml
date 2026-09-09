@@ -15,12 +15,12 @@ pooled:            # committed verdict file exists -> scorable now (Steps 1-4)
   - slug: NVIDIA-Nemotron-3-Nano-30B-A3B
     model: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
     prompt_provenance: nemotron_judge_test.py JSON-CoT prompt (max_tokens=8000)
-
-pending:           # require Step-6 verdict generation before scorable
   - slug: gemma-3-27b-it
     model: google/gemma-3-27b-it
-    max_tokens: 4000
-    status: smoke-validated, ready for 708
+    prompt_provenance: nemotron_judge_test.py step-by-step JSON prompt (max_tokens=4000)
+    diagnosis_delta_phi_v: 0.0017      # 708-row, vs Llama+Qwen incumbent (incumbent-check 0.0706 PASS)
+
+pending:           # require Step-6 verdict generation before scorable
   - slug: nemotron-3-super-120b-a12b
     model: nvidia/nemotron-3-super-120b-a12b
     max_tokens: 16000
