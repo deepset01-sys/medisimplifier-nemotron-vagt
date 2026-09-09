@@ -19,6 +19,10 @@ pooled:            # committed verdict file exists -> scorable now (Steps 1-4)
     model: google/gemma-3-27b-it
     prompt_provenance: nemotron_judge_test.py step-by-step JSON prompt (max_tokens=4000)
     diagnosis_delta_phi_v: 0.0017      # 708-row, vs Llama+Qwen incumbent (incumbent-check 0.0706 PASS)
+  - slug: gpt-oss-120b
+    model: openai/gpt-oss-120b
+    prompt_provenance: nemotron_judge_test.py step-by-step JSON prompt (max_tokens=8000)
+    diagnosis_delta_phi_v: 0.0719      # 708-row, ≈ Nemotron Nano (+0.071); dose −0.030 (over-flags); incumbent-check 0.0706 PASS
 
 pending:           # require Step-6 verdict generation before scorable
   - slug: nemotron-3-super-120b-a12b
@@ -28,10 +32,6 @@ pending:           # require Step-6 verdict generation before scorable
   - slug: Nemotron-3-Ultra-550b-a55b
     model: nvidia/Nemotron-3-Ultra-550b-a55b
     max_tokens: 16000
-    status: smoke-validated, ready for 708
-  - slug: gpt-oss-120b
-    model: openai/gpt-oss-120b
-    max_tokens: 8000
     status: smoke-validated, ready for 708
   - slug: DeepSeek-V4-Flash-0731
     model: deepseek-ai/DeepSeek-V4-Flash-0731
