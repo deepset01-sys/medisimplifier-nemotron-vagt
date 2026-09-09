@@ -9,7 +9,7 @@ resources:
   subnet_id: ${NEBIUS_SUBNET_ID}
 
 docker:
-  image: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint-v4@sha256:0e1d1b5abf5afb08d85dabaa5483399a8035bafbb620c11d82e01c92d17f547f
+  image: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint-v5@sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe
   command: /start.sh
 
 env:

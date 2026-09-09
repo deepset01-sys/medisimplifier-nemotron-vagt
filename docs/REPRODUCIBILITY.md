@@ -34,12 +34,13 @@ Full digests:
 - `train-v31` — `sha256:9d832391f85130114534a36881b8e5acab895d36ceed522126c86fbef02f728f`
 - `train-v32` — `sha256:2c95dfef0a298ce258f094fa5d5647b0d7c84e297850bff8b7daba5a719694dc`
 
-Safe Endpoint image (current: **endpoint-v4** — adds `/v1/audit_panel`; supersedes endpoint-v3):
+Safe Endpoint image (current: **endpoint-v5** — selector blind-spot-first fix → recommends Nemotron Nano; supersedes v4/v3):
 ```bash
-docker pull chambul/medisimplifier:endpoint-v4
+docker pull chambul/medisimplifier:endpoint-v5
 ```
 Digests:
-- `endpoint-v4` — `sha256:0e1d1b5abf5afb08d85dabaa5483399a8035bafbb620c11d82e01c92d17f547f`  (deployed; `COPY src/` + `COPY audit_pool/`)
+- `endpoint-v5` — `sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe`  (deploy this; selector blind-spot-first ranking → Nano)
+- `endpoint-v4` — `sha256:0e1d1b5abf5afb08d85dabaa5483399a8035bafbb620c11d82e01c92d17f547f`  (superseded; old selector → gemma)
 - `endpoint-v3` — `sha256:9d950d839497e9ee35c1676b5e75424016b52efa6827930c34f171300ae38795`  (prior, no audit_panel)
 
 Built from `docker/Dockerfile.train` and `docker/Dockerfile.endpoint`.
@@ -56,12 +57,12 @@ docker push cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v3
 Note: train-v29 and train-v30 use the same Dockerfile.train — rebuild with the appropriate tag (e.g., train-v29 for training, train-v30 for evaluation).
 
 ```bash
-# Rebuild endpoint-v4 (Dockerfile.endpoint now COPYs src/ + audit_pool/ → serves /v1/audit_panel)
-docker build -t chambul/medisimplifier:endpoint-v4 \
-             -t cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint-v4 \
+# Rebuild endpoint-v5 (Dockerfile.endpoint COPYs src/ + audit_pool/ → serves /v1/audit_panel)
+docker build -t chambul/medisimplifier:endpoint-v5 \
+             -t cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint-v5 \
              -f docker/Dockerfile.endpoint .
-docker push chambul/medisimplifier:endpoint-v4
-docker push cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint-v4
+docker push chambul/medisimplifier:endpoint-v5
+docker push cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint-v5
 ```
 
 Note: `docker/requirements_train.txt` pins `cryptography==48.0.1` via a Dockerfile post-install step — resolves the pyOpenSSL/cryptography drift that broke train-v28.
