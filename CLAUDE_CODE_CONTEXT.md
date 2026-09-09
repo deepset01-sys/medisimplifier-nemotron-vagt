@@ -285,7 +285,8 @@ Build host: VM ubuntu@195.242.30.65 (nebius_vm key); has nebius CLI + boto3 + ~/
 | train-v30 | sha256:6c3cd4cd... | evaluation (OLD, pre --save-predictions) |
 | train-v31 | sha256:9d832391... | merge only |
 | train-v32 | sha256:2c95dfef0a298ce258f094fa5d5647b0d7c84e297850bff8b7daba5a719694dc | evaluation with --save-predictions |
-| endpoint-v3 | sha256:9d950d83... | Safe Endpoint v2 |
+| endpoint-v3 | sha256:9d950d83... | Safe Endpoint v2 (no audit_panel) |
+| endpoint-v4 | sha256:0e1d1b5abf5afb08d85dabaa5483399a8035bafbb620c11d82e01c92d17f547f | Safe Endpoint v4 (+ /v1/audit_panel; COPY src/ + audit_pool/) |
 
 **Critical:** cryptography==48.0.1 pinned via post-install step in Dockerfile.train
 **Build method:** manual `docker build` dual-tagged to Docker Hub + Nebius CR, tag bumped per version (build_and_push.sh is STALE — hardcodes v28, Docker-Hub only). CR login: `nebius iam get-access-token | docker login cr.eu-north1.nebius.cloud --username iam --password-stdin`.
