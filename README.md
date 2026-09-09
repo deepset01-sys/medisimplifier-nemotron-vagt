@@ -22,7 +22,7 @@ Patients are sent home with discharge summaries written for clinicians — dense
 
 ## Why VAGT — the panel selection finding
 
-VAGT is not just a measurement — it answers a **decision**: given a judge panel with a shared blind spot, *which judge should you add to fix it?* Adding more raters of the same kind doesn't help — shared bias doesn't shrink with panel size — so the useful question is *which* rater breaks the blind spot, and by how much. VAGT scores each candidate by the gain in truth-anchored dependability (**ΔΦ_V**) it delivers on the panel's weakest stratum, with a bootstrap confidence interval. We ran the full analysis on our own gate: incumbent panel = **Llama-3.3-70B + Qwen3-32B** (both near-blind to silent diagnosis drops), scoring five candidate third judges on the 708-item MedSimp-JudgeBench.
+That inversion generalizes into a decision tool. VAGT is not just a measurement — it answers a **decision**: given a judge panel with a shared blind spot, *which judge should you add to fix it?* Adding more raters of the same kind doesn't help — shared bias doesn't shrink with panel size — so the useful question is *which* rater breaks the blind spot, and by how much. VAGT scores each candidate by the gain in truth-anchored dependability (**ΔΦ_V**) it delivers on the panel's weakest stratum, with a bootstrap confidence interval. We ran the full analysis on our own gate: incumbent panel = **Llama-3.3-70B + Qwen3-32B** (both near-blind to silent diagnosis drops), scoring five candidate third judges on the 708-item MedSimp-JudgeBench.
 
 | Candidate | Family | Size | diag ΔΦ_V | dose ΔΦ_V |
 |--|--|--|--|--|
@@ -359,7 +359,7 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
         {sigma_tau, sigma_B, sigma_R, sigma_N, Phi_V} + Fleiss/Krippendorff  ->  vagt_nemotron_results.txt
         |
         v
-    Nebius Endpoint: Safe Simplification Endpoint v2
+    Nebius Endpoint: Safe Simplification Endpoint v5
         POST /v1/simplify → vLLM + calibration-informed gate (2-judge rule + advisory Llama)
         (endpoint tested; redeploy via safe_endpoint_v2.yaml)
 
@@ -386,7 +386,7 @@ Two ways to use it: call the hosted endpoint (**Path 1**), or run the safety gat
 > https://port8000-vjbksde9vzhgtcx.tunnel.applications.eu-north1.nebius.cloud
 > When running, a request returns in ~27s (3-judge Token Factory gate latency, not a serverless cold-start wake); retry once if no response in 60s. A stopped endpoint first loads vLLM (~10–15 min).
 
-**Path 1 — `POST /v1/simplify`.** Live call to the hosted Safe Endpoint v2 (real response below):
+**Path 1 — `POST /v1/simplify`.** Live call to the hosted Safe Endpoint v5 (real response below):
 ```bash
 curl -X POST https://port8000-vjbksde9vzhgtcx.tunnel.applications.eu-north1.nebius.cloud/v1/simplify \
   -H "Content-Type: application/json" \
@@ -535,7 +535,7 @@ Base model loaded in **4-bit NF4 QLoRA** (`BitsAndBytesConfig`: `load_in_4bit=Tr
 | lora_dropout | 0.05 | v1 convention |
 | use_rslora | True | rank-stabilized LoRA |
 
-> **What the endpoint serves:** The Safe Endpoint v2 serves the v2 (Nemotron-taught) student behind the safety gate (diagnosis-drop detection) — v2's contribution is the VAGT research pipeline and the safety gate, **not a readability improvement**. For maximum readability the v1 student is simpler (FK-Grade 7.33 vs v2's 8.87); but v2's endpoint is the research/safety demo, and that is what is served.
+> **What the endpoint serves:** The Safe Endpoint v5 serves the v2 (Nemotron-taught) student behind the safety gate (diagnosis-drop detection) — v2's contribution is the VAGT research pipeline and the safety gate, **not a readability improvement**. For maximum readability the v1 student is simpler (FK-Grade 7.33 vs v2's 8.87); but v2's endpoint is the research/safety demo, and that is what is served.
 
 > **Adapter provenance:** `chambul/MediSimplifier-OpenBioLLM-v2-merged` merges the Nebius-trained LoRA adapter (`medisimplifier-adapters-v2/adapter/`, r=32, all_attn, 3 epochs) with the base model. ROUGE-L 0.5254 documented in [`results/eval_v2_results.json`](results/eval_v2_results.json).
 
@@ -549,7 +549,7 @@ The LoRA adapter is merged into the base model before serving:
 2. Publish to HuggingFace:
    `chambul/MediSimplifier-OpenBioLLM-v2-merged` (public — no bucket credentials required to reproduce)
 
-3. Deploy Safe Endpoint v2 (Nebius GPU Endpoint):
+3. Deploy Safe Endpoint v5 (Nebius GPU Endpoint):
    `jobs/safe_endpoint_v2.yaml` — vLLM loads model from HuggingFace, Token Factory judges via `NEBIUS_API_KEY`
 
 ```bash
@@ -649,7 +649,7 @@ src/
   train.py                       LoRA training — runs as Nebius Job (--dataset flag added for v2)
   evaluate.py                    Metrics: ROUGE-L, SARI, BERTScore, FK-Grade
   merge_adapter.py               Merge LoRA adapter into base model → HuggingFace publish
-  safe_endpoint.py               Safe Simplification Endpoint v2 — FastAPI: vLLM + calibration-informed gate (2-judge rule + advisory Llama)
+  safe_endpoint.py               Safe Simplification Endpoint v5 — FastAPI: vLLM + calibration-informed gate (2-judge rule + advisory Llama)
   safety_gate.py                 calibration-informed safety gate — Qwen + Nemotron Nano decide, Llama advisory (Qwen3-32B via dedicated endpoint)
   serve_vllm.py                  vLLM inference server (legacy standalone)
   run_gate_calibration.py        708-item calibration through the deployed gate prompt → gate_calibration_full.json
@@ -659,15 +659,15 @@ src/
   measure_reference_fk.py        FK-Grade of Claude vs Nemotron reference sets → reference_fk_grade.json
 docker/
   Dockerfile.train               Builds train-v29/v30/v31 (cryptography==48.0.1 pinned)
-  Dockerfile.endpoint            Safe Endpoint v2 image (endpoint-v3)
+  Dockerfile.endpoint            Safe Endpoint v5 image (endpoint-v5)
 jobs/
   job_train_v2.yaml              v2 fine-tuning job (train-v29, sha256:bbbf6df1..., Nemotron dataset, adapters-v2 bucket)
   job_eval_v2.yaml               v2 evaluation job (train-v30, sha256:6c3cd4cd..., GuyDor007 test)
   job_eval_v2_nemotron_refs.yaml v2 Nemotron-refs eval job (train-v32, sha256:2c95dfef..., aijob-e00gz7bez5pwq35fze)
   job_merge_v2.yaml              v2 merge job (train-v31, sha256:9d832391..., adapter → bucket → HuggingFace)
-  safe_endpoint_v2.yaml          Safe Endpoint v4 deployment config (endpoint-v4 image; adds /v1/audit_panel)
+  safe_endpoint_v2.yaml          Safe Endpoint v5 deployment config (endpoint-v5 image; adds /v1/audit_panel)
 scripts/
-  start_endpoint.sh              Boot vLLM + Safe Endpoint v2 API (inside endpoint-v3 image)
+  start_endpoint.sh              Boot vLLM + Safe Endpoint v5 API (inside endpoint-v5 image)
 logs/
   train_v2.json.gz               v2 training log — Nebius Job aijob-e00rwxv72fe81f54we, 8,523s, per-epoch eval_loss
 docs/
@@ -720,7 +720,7 @@ Full container image digests and rebuild steps → [docs/REPRODUCIBILITY.md](doc
 | Safety judge (new) | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` (Token Factory) | — |
 | Safety judges (v1) | `meta-llama/Llama-3.3-70B-Instruct` · `Qwen/Qwen3-32B` | — |
 | Token Factory endpoint | `https://api.studio.nebius.ai/v1/` | — |
-| Docker images | Training/eval/merge + Safe Endpoint v2 → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) | — |
+| Docker images | Training/eval/merge + Safe Endpoint v5 → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) | — |
 | v1 project | [github.com/deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius) 🥇 | — |
 
 > Underlying clinical notes: [Asclepius-Synthetic-Clinical-Notes](https://huggingface.co/datasets/starmpcc/Asclepius-Synthetic-Clinical-Notes) (CC-BY-NC-SA-4.0) — anonymized synthetic notes, no real patient data. CC-BY-NC-SA-4.0 restricts commercial use and requires derivatives to share under the same license.
@@ -731,7 +731,7 @@ Apache 2.0 — see [LICENSE](LICENSE).
 
 ## Future Work & Limitations
 
-**Deployment Posture:** MediSimplifier v2 is a research prototype — not validated for clinical use. The Safe Simplification Endpoint v2 is unauthenticated demo infrastructure — do not route real patient data through it. Nemotron Super references in the training set are LLM-generated, not clinician-validated. ROUGE-L measures similarity to these LLM-generated references, not to human-expert output quality.
+**Deployment Posture:** MediSimplifier v2 is a research prototype — not validated for clinical use. The Safe Simplification Endpoint v5 is unauthenticated demo infrastructure — do not route real patient data through it. Nemotron Super references in the training set are LLM-generated, not clinician-validated. ROUGE-L measures similarity to these LLM-generated references, not to human-expert output quality.
 
 | Area | Limitation | Future Work |
 |------|-----------|-------------|
