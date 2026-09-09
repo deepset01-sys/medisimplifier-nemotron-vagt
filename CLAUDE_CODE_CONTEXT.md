@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; README consistency pass ✅ (billing→$225.45, project structure, What's-new rows, B-track polish); Steps 1/2/3/16/18 ✅; Fable v4 review 28/40 → ALL README fix-levers landed (cost-table Qwen, 3-judge→2-judge + advisory-Llama justified, deployed DISAGREE 34.7%, B4 decision-rule table, patient-first opening ¶1-3) ✅, billing export ⬜ (Console); **STRATEGIC PIVOT → VAGT-as-product (`/v1/audit_panel`)**; Step 6 COMPLETE ✅ — all 5×708 generated + pooled (pool=8, pending:[]); diag ΔΦ_V: Ultra 550B +0.0721 ≈ gpt-oss +0.0719 ≈ Nano 30B +0.071 (scale-flat within family; diversity-can-but-not-always; Nano wins on merit — smallest dose penalty −0.013); Step 8 COMPLETE ✅ (README ## Why VAGT section, dddbb24); Step 7 endpoint-v4 built+deployed ✅ (digest 0e1d1b5a); live smoke: /health audit_panel:true ✅, /v1/audit_panel live ✅, /v1/simplify ✅ but Qwen judge ERROR (dedicated endpoint stopped); **selector maximin bug FOUND + FIXED (5f22863)** — was recommending gemma, now blind-spot-first → Nemotron Nano (matches README, 14/14 tests); NEXT = endpoint-v5 rebuild with the fix → redeploy → re-smoke; HEAD = 5f22863)
+# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; README consistency pass ✅ (billing→$225.45, project structure, What's-new rows, B-track polish); Steps 1/2/3/16/18 ✅; Fable v4 review 28/40 → ALL README fix-levers landed (cost-table Qwen, 3-judge→2-judge + advisory-Llama justified, deployed DISAGREE 34.7%, B4 decision-rule table, patient-first opening ¶1-3) ✅, billing export ⬜ (Console); **STRATEGIC PIVOT → VAGT-as-product (`/v1/audit_panel`)**; Step 6 COMPLETE ✅ — all 5×708 generated + pooled (pool=8, pending:[]); diag ΔΦ_V: Ultra 550B +0.0721 ≈ gpt-oss +0.0719 ≈ Nano 30B +0.071 (scale-flat within family; diversity-can-but-not-always; Nano wins on merit — smallest dose penalty −0.013); Step 8 COMPLETE ✅ (README ## Why VAGT section, dddbb24); Step 7 endpoint-v4 built+deployed ✅ (digest 0e1d1b5a); live smoke: /health audit_panel:true ✅, /v1/audit_panel live ✅, /v1/simplify ✅ but Qwen judge ERROR (dedicated endpoint stopped); selector maximin bug fixed (5f22863) + **endpoint-v5 BUILT + DEPLOYED + LIVE-VERIFIED ✅** (digest 0e40cff4): /health audit_panel:true, /v1/simplify gate healthy (Qwen restored), /v1/audit_panel → **Nemotron Nano, CI [0.0552,0.0866] = README receipt** (live receipts committed 82eaeeb); STEP 7 COMPLETE; NEXT = README full polish → Fable regular review → Fable BONUS ×2; HEAD = 82eaeeb)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -63,7 +63,9 @@ Diagnosis ΔΦ_V — each candidate added to the Llama+Qwen incumbent (vs the +0
 
 **SELECTOR MAXIMIN BUG — FOUND via live smoke, FIXED (5f22863):** the live `/v1/audit_panel` recommended **gemma** (+0.0017 on diagnosis!) — contradicting the README's "recommend Nemotron Nano". Root cause: selector ranked by `worst_stratum_delta_Phi_V = min(per_phi.values())` (maximin/do-no-harm) → gemma is the only candidate that never regresses a stratum, but it barely fixes the blind spot. The diagnosis-fixers (Nano/gpt-oss/Ultra +0.071) all hurt dose slightly → lost under maximin. Fix (user chose Option B): rank by **blindest-stratum ΔΦ_V banded to TIE_BAND=0.01** (statistical tie), tie-break on **least collateral** (highest min ΔΦ_V on other strata) → **Nemotron Nano** (0.0706, CI [0.0552,0.0866] = the receipt, gemma ranked LAST). Verified offline + 14/14 tests (incl. new `test_full_pool_recommends_nemotron_not_gemma` regression lock; test pool 3→8 models). NOTE: the DEPLOYED endpoint-v4 still has the OLD selector → **needs endpoint-v5 rebuild** for the live route to recommend Nano.
 
-NEXT = endpoint-v5 rebuild (git pull → HEAD 5f22863 → docker build endpoint-v5 → push → YAML digest → redeploy → re-smoke: expect Nano + restore Qwen dedicated endpoint) → then Fable BONUS ×2 (Research + Product tracks).
+**STEP 7 — COMPLETE ✅ (endpoint-v5 LIVE-VERIFIED):** rebuilt on VM (git pull → 7b2c96d, TIE_BAND gate passed), dual-pushed, **digest `sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe`** (YAML + CCC/REPRODUCIBILITY @ 362cbd8), redeployed (Qwen dedicated endpoint restarted + key rotated by user). Live smoke on the v5 tunnel (port8000-vjbksde9vzhgtcx…): `/health` → audit_panel:true ✅; `/v1/simplify` → gate HEALTHY, qwen=SAFE now (was ERROR on v4) ✅; `/v1/audit_panel` (explicit 8-model pool) → **recommends Nemotron Nano, expected_Phi_V_lift 0.0706, CI [0.0552, 0.0866] = the published receipt**, ranked Nano>gpt-oss>Ultra>super>DeepSeek>gemma (gemma LAST) ✅ — bit-for-bit matches README + 14/14 tests. Receipts committed (82eaeeb): results/audit_panel_live_receipt.json (deterministic) + results/endpoint_v5_smoke_test.json (SAFE this call — Nemotron verdict non-deterministic on borderline inputs, honestly noted; a live DISAGREE was seen once but did NOT reproduce → not captured as a claim, per the idx-21 lesson). README: Why-VAGT cites the live receipt; B2 URL → v5. (Cosmetic debt: B2 prose still says "Safe Endpoint v2"; YAML `name:` still `-v4`.)
+
+NEXT = README full polish → Fable regular review → Fable BONUS ×2 (Research + Product tracks).
 
 ---
 
@@ -185,6 +187,9 @@ dddbb24 - README: ## Why VAGT panel selection finding (pool results table, 3 fin
 5da315f - feat: safe_endpoint_v2.yaml → v4 + endpoint-v4 digest (0e1d1b5a); README project-structure line
 acc519d - docs: endpoint-v4 digest → CCC image table + REPRODUCIBILITY
 5f22863 - fix: selector.py blind-spot-first ranking + TIE_BAND (maximin→gemma bug → Nemotron Nano; 14/14 tests)
+7b2c96d - docs: CCC — endpoint-v4 deployed + selector bug fixed; NEXT endpoint-v5
+362cbd8 - feat: safe_endpoint_v2.yaml → endpoint-v5 + digest (0e40cff4); CCC/REPRODUCIBILITY
+82eaeeb - results: audit_panel live receipt (Nano, CI [0.0552,0.0866]) + endpoint-v5 smoke (SAFE); README → v5 URL + receipt link
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -358,7 +363,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = 5f22863)
+## README STATUS — COMPLETE ✅ (HEAD = 82eaeeb)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
