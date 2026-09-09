@@ -421,7 +421,7 @@ All three judges catch the dropped diagnosis → consensus **UNSAFE**. (This dro
 | Field | Type | Required | Default | Notes |
 |--|--|--|--|--|
 | `text` | string | yes | — | the medical text to simplify |
-| `safety_mode` | string | no | `"flag"` | `"flag"` or `"block"` — see below |
+| `safety_mode` | string | no | `"flag"` | `"flag"`, `"block"`, or `"strict"` — see below |
 
 Maximum input length and input language are **not formally constrained** in the current implementation.
 
@@ -454,13 +454,47 @@ Maximum input length and input language are **not formally constrained** in the 
 
 **`GET /health`** — readiness probe. Returns:
 ```json
-{"vllm": true, "token_factory": true, "ready": true}
+{"vllm": true, "token_factory": true, "audit_panel": true, "ready": true}
 ```
 
 **Error semantics:**
 - **`consensus: "ERROR"`** — a Token Factory judge call failed or timed out (each judge bounds its HTTP call at 60 s with 3 retries, then returns `ERROR`).
 - **Fail-safe:** an `ERROR` consensus blocks in `block` mode (same as UNSAFE).
 - **`warning`** — set only on a DISAGREE verdict (`"diagnosis-drop risk"`); `null` for every other verdict.
+
+#### `POST /v1/audit_panel`
+
+Given an incumbent judge panel and a candidate pool, ranks the candidates and recommends the single judge to add that best raises truth-anchored dependability (Φ_V) on the panel's **blindest stratum**. Pure CPU over the committed pre-scored verdict pool — **no live judge calls**. Request body (JSON):
+
+| Field | Type | Required | Default | Notes |
+|--|--|--|--|--|
+| `incumbent_panel` | string[] | yes | — | ≥2 pooled model ids (the current panel) |
+| `candidate_pool` | string[] | yes | — | model ids to rank as the added rater; must be an explicit list. Unknown ids are returned in `unseen_candidates`, never ranked |
+| `bootstrap_iters` | int | no | 1000 | paired-bootstrap resamples for the recommended candidate's CI |
+| `seed` | int | no | 42 | bootstrap seed (chained-rng — reproduces the committed receipt) |
+
+```bash
+curl -X POST <BASE_URL>/v1/audit_panel -H "Content-Type: application/json" \
+  -d '{"incumbent_panel": ["meta-llama/Llama-3.3-70B-Instruct", "Qwen/Qwen3-32B"],
+       "candidate_pool": ["nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B", "google/gemma-3-27b-it",
+                          "openai/gpt-oss-120b", "nvidia/nemotron-3-super-120b-a12b",
+                          "deepseek-ai/DeepSeek-V4-Flash-0731", "nvidia/Nemotron-3-Ultra-550b-a55b"]}'
+```
+
+Response — an `incumbent` summary (per-stratum Φ_V, σ²_B, blindest stratum), the full `candidates_ranked` list, and a `recommendation`:
+
+| Field | Notes |
+|--|--|
+| `recommendation.model` | the recommended judge to add |
+| `recommendation.target_blind_spot` | the panel's blindest stratum (e.g. `diagnosis`) |
+| `recommendation.expected_Phi_V_lift` | ΔΦ_V point estimate on that stratum |
+| `recommendation.ci_95` | bootstrap 95% CI for the lift |
+| `recommendation.tied_top_candidates` | candidates within `TIE_BAND` (statistical tie) of the top |
+| `recommendation.selected_among_ties_by` | tie-break rule (least collateral on non-blind strata) |
+| `recommendation.caveat` | any stratum whose ΔΦ_V CI straddles zero |
+| `candidates_ranked[]` | full pool ranking (per-stratum ΔΦ_V + Δσ²_B per candidate) |
+
+Live receipt (Llama+Qwen incumbent, 6-candidate pool → recommends **Nemotron Nano**, +0.0706, CI **[0.0552, 0.0866]**, gemma ranked last): [`results/audit_panel_live_receipt.json`](results/audit_panel_live_receipt.json).
 ### B4. The safety gate — how a verdict is produced
 
 The three judges are called via Token Factory; the verdict follows a **calibration-informed decision rule** (`safety_gate.py`) over the Qwen and Nemotron verdicts:
@@ -599,7 +633,7 @@ Submit each job via Nebius Console → AI Services → Jobs → Create Job:
 | Evaluation | `jobs/job_eval_v2.yaml` | `rouge_l: 0.5254` in `results/eval_v2_results.json` |
 | Nemotron-refs eval | `jobs/job_eval_v2_nemotron_refs.yaml` | `rouge_l: 0.6010` in `results/eval_v2_nemotron_results.json` |
 | Merge | `jobs/job_merge_v2.yaml` | merged model in bucket + published to HF |
-| Endpoint | `jobs/safe_endpoint_v2.yaml` | `/health` → `{"ready": true}` |
+| Endpoint | `jobs/safe_endpoint_v2.yaml` | `/health` → `{"audit_panel": true, "ready": true}` |
 
 Merge job requires: `AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY` (Nebius S3 keys — create at IAM → Service Accounts → Access keys).
 
