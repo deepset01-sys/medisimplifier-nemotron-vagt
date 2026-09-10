@@ -10,7 +10,7 @@
 > Built on top of [MediSimplifier-Nebius](https://github.com/deepset01-sys/medisimplifier-nebius) — 🥇 First Place winner of the Nebius Serverless AI Builders Challenge.
 > The Nemotron teacher pipeline, 3-judge calibration panel, VAGT measurement framework (developed as a direct response to v1's κ=0.11 finding, first applied empirically in v2), and v2 training infrastructure were built for this hackathon.
 
-Patients are sent home with discharge summaries written for clinicians — dense with abbreviations, drug names, and diagnoses most people cannot read. **MediSimplifier v2** rewrites those summaries into plainer language (FK-Grade 8.87, roughly 9th grade) and returns, with each rewrite, a safety verdict from a panel of three LLM judges — two decide (Qwen3-32B + NVIDIA Nemotron Nano), one advisory (Llama-3.3-70B) — with Llama and Nemotron Nano served per-token on Nebius Token Factory and Qwen3-32B on a dedicated Nebius endpoint. The student model was fine-tuned on **7,983** references written by **Nemotron Super** (replacing Claude Opus); the judge panel was calibrated on **MedSimp-JudgeBench**, a 708-item benchmark with **508 known injected errors**. Everything below is reproducible from committed artifacts and public HuggingFace models for about **$225.45** in Nebius credits.
+Patients are sent home with discharge summaries written for clinicians — dense with abbreviations, drug names, and diagnoses most people cannot read. **MediSimplifier v2** rewrites those summaries into plainer language (FK-Grade 8.87, roughly 9th grade) and returns, with each rewrite, a safety verdict from a panel of three LLM judges — two decide (Qwen3-32B + NVIDIA Nemotron Nano), one advisory (Llama-3.3-70B) — with Llama and Nemotron Nano served per-token on Nebius Token Factory and Qwen3-32B on a dedicated Nebius endpoint. The student model was fine-tuned on **7,983** references written by **Nemotron Super** (replacing Claude Opus); the judge panel was calibrated on **MedSimp-JudgeBench**, a 708-item benchmark with **508 known injected errors**. Everything below is reproducible from committed artifacts and public HuggingFace models for about **$248.10** in Nebius credits.
 
 **What's new in v2 — three things:**
 
@@ -648,17 +648,18 @@ Actual Nebius billing for v2 (all figures from Nebius Console):
 
 | Step | Service | Usage | Cost |
 |------|---------|-------|------|
-| Nemotron Super teacher (9,999 calls) | Token Factory | 81.23M output tokens | $75.19 |
+| Nemotron Super teacher (9,999 calls) | Token Factory | 83.90M output tokens | $75.51 |
 | Nemotron Nano calibration + student self-audit (708 × 3 judges + 1,001 × 3) | Token Factory | 3.22M input + 8.23M output tokens | $2.17 |
 | Llama (endpoint smoke tests) | Token Factory | 3.03M input + 0.12M output | $0.44 |
 | Gate calibration — Llama + Nemotron Nano (708 items, per-token share) | Token Factory | 1.28M input + 1.10M output | $0.46 |
-| Dedicated Endpoint (Qwen3-32B judge) | Dedicated Endpoint | 21.95 GPU hours | $88.90 |
-| H100 NVLink (training + eval + merge) | Jobs | 10.22 GPU hours | $39.34 |
-| CPU + RAM | Jobs | 452.60 vCPU / 1,810.39 GiB hours | $11.22 |
-| Disk (Network SSD + Object Storage) | Storage | 76,053.72 GiB hours | $7.73 |
-| **Total v2** | | | **$225.45** |
+| Dedicated Endpoint (Qwen3-32B judge) | Dedicated Endpoint | 22.67 GPU hours | $91.80 |
+| Audit-pool candidates (5×708: Ultra/Super/gpt-oss/DeepSeek/gemma) | Token Factory | ~14M output tokens | $8.74 |
+| H100 NVLink (training + eval + merge) | Jobs | 11.82 GPU hours | $45.53 |
+| CPU + RAM | Jobs | 629.52 vCPU / 2,518.07 GiB hours | $15.61 |
+| Disk + Object Storage | Storage | 76,542.64 GiB hours | $7.84 |
+| **Total v2 (Nebius)** | | | **$248.10** |
 
-*Note: the gate calibration's Qwen3-32B calls ran on the **dedicated endpoint** (per-GPU-hour) — that share is inside the **$88.90** Dedicated Endpoint row, not the $0.46 per-token line above (which covers only Llama + Nemotron Nano).*
+*Note: the gate calibration's Qwen3-32B calls ran on the dedicated endpoint — that share is inside the $91.80 row. External API costs (dual-auditor review: Claude Sonnet 5 + Gemini 2.5 Pro, ~60 calls) are estimated at ~$1–2 and not included in the Nebius total.*
 
 **Training run (verified from `logs/train_v2.json.gz`, Nebius Job `aijob-e00rwxv72fe81f54we`):**
 
@@ -676,7 +677,7 @@ Actual Nebius billing for v2 (all figures from Nebius Console):
 
 H100 NVLink rate: ~$3.85/hr on Nebius eu-north1.
 Training: ~2.4h (8,523s), 3 epochs, seed=42.
-The dedicated Qwen3-32B endpoint ($88.90, 21.95 GPU hours) is the single largest line — left running across the gate calibration and student self-audit. Nemotron Super teacher generation is $75.19 (16,000-token reasoning budget per call). Llama and Nemotron Nano are per-token serverless; both the dedicated Qwen endpoint and the vLLM student host are stopped between demos to avoid idle GPU-hour billing.
+The dedicated Qwen3-32B endpoint ($91.80, 22.67 GPU hours) is the single largest line — left running across the gate calibration and student self-audit. Nemotron Super teacher generation is $75.51 (16,000-token reasoning budget per call). Llama and Nemotron Nano are per-token serverless; both the dedicated Qwen endpoint and the vLLM student host are stopped between demos to avoid idle GPU-hour billing.
 
 ## Project structure
 
@@ -721,6 +722,8 @@ audit_pool/
   ground_truth.json              708-item ground truth (τ labels, stratum, row_id)
   candidates.yaml                pool manifest (pooled + pending candidates)
   verdicts/                      per-judge 708-row verdict files (8: 3 incumbents + 5 candidates)
+tests/
+  test_audit_panel.py            14-test suite: pool integrity, Nano recommended (not gemma), CI = committed receipt [0.0552, 0.0866]
 nemotron_judge_test.py           Nemotron Nano as safety judge (3-judge calibration, checkpointed)
 nemotron_teacher.py              Nemotron Super teacher — JudgeBench references
 nemotron_training_data.py        Nemotron Super teacher — full 9,999-record training set (resume-capable)
