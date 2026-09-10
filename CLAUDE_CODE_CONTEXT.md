@@ -1,6 +1,6 @@
 # CLAUDE CODE CONTEXT — MediSimplifier v2
 # Nebius x NVIDIA Global AI Hackathon
-# Last updated: 2026-09-08 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; README consistency pass ✅ (billing→$225.45, project structure, What's-new rows, B-track polish); Steps 1/2/3/16/18 ✅; Fable v4 review 28/40 → ALL README fix-levers landed (cost-table Qwen, 3-judge→2-judge + advisory-Llama justified, deployed DISAGREE 34.7%, B4 decision-rule table, patient-first opening ¶1-3) ✅, billing export ⬜ (Console); **STRATEGIC PIVOT → VAGT-as-product (`/v1/audit_panel`)**; Step 6 COMPLETE ✅ — all 5×708 generated + pooled (pool=8, pending:[]); diag ΔΦ_V: Ultra 550B +0.0721 ≈ gpt-oss +0.0719 ≈ Nano 30B +0.071 (scale-flat within family; diversity-can-but-not-always; Nano wins on merit — smallest dose penalty −0.013); Step 8 COMPLETE ✅ (README ## Why VAGT section, dddbb24); Step 7 endpoint-v4 built+deployed ✅ (digest 0e1d1b5a); live smoke: /health audit_panel:true ✅, /v1/audit_panel live ✅, /v1/simplify ✅ but Qwen judge ERROR (dedicated endpoint stopped); selector maximin bug fixed (5f22863) + **endpoint-v5 BUILT + DEPLOYED + LIVE-VERIFIED ✅** (digest 0e40cff4): /health audit_panel:true, /v1/simplify gate healthy (Qwen restored), /v1/audit_panel → **Nemotron Nano, CI [0.0552,0.0866] = README receipt** (live receipts committed 82eaeeb); STEP 7 COMPLETE; README polished (all endpoint labels → v5, Why-VAGT bridge, dd9222a); Fable v6 review = **29/40 (+1 → Impact 7; audit_panel = "broadest-impact piece")**; P1 B3 /v1/audit_panel contract + /health fix (9b67e10) + Rule#2 Why-VAGT fixes (inverted blind-spot claim + false "zero errors", d6fdd08) ✅; NEXT = README full read-through (my side) → remaining Fable fixes (cost accounting, project-structure listing gap, Why-VAGT re-scope); HEAD = d6fdd08)
+# Last updated: 2026-09-10 (Session: NEXT-SEQ Step 2 — Fable 5 regular 28/40; all critical fixes ✅ (contradictions, strict mode, κ+FK cited); student diagnosis-retention audit COMPLETE (1001/1001, flagged 52.0%); dual-auditor review COMPLETE (Claude Sonnet 5 + Gemini 2.5 Pro, 70% agreement, 2/20 confirmed drops, 6 contested); README "preserves diagnoses" claim REPLACED with measured audit result; physician adjudication PENDING; README consistency pass ✅ (billing→$225.45, project structure, What's-new rows, B-track polish); Steps 1/2/3/16/18 ✅; Fable v4 review 28/40 → ALL README fix-levers landed (cost-table Qwen, 3-judge→2-judge + advisory-Llama justified, deployed DISAGREE 34.7%, B4 decision-rule table, patient-first opening ¶1-3) ✅, billing export ⬜ (Console); **STRATEGIC PIVOT → VAGT-as-product (`/v1/audit_panel`)**; Step 6 COMPLETE ✅ — all 5×708 generated + pooled (pool=8, pending:[]); diag ΔΦ_V: Ultra 550B +0.0721 ≈ gpt-oss +0.0719 ≈ Nano 30B +0.071 (scale-flat within family; diversity-can-but-not-always; Nano wins on merit — smallest dose penalty −0.013); Step 8 COMPLETE ✅ (README ## Why VAGT section, dddbb24); Step 7 endpoint-v4 built+deployed ✅ (digest 0e1d1b5a); live smoke: /health audit_panel:true ✅, /v1/audit_panel live ✅, /v1/simplify ✅ but Qwen judge ERROR (dedicated endpoint stopped); selector maximin bug fixed (5f22863) + **endpoint-v5 BUILT + DEPLOYED + LIVE-VERIFIED ✅** (digest 0e40cff4): /health audit_panel:true, /v1/simplify gate healthy (Qwen restored), /v1/audit_panel → **Nemotron Nano, CI [0.0552,0.0866] = README receipt** (live receipts committed 82eaeeb); STEP 7 COMPLETE; README polished (all endpoint labels → v5, Why-VAGT bridge, dd9222a); Fable v6 review = **29/40 (+1 → Impact 7; audit_panel = "broadest-impact piece")**; P1 B3 /v1/audit_panel contract + /health fix (9b67e10) + Rule#2 Why-VAGT fixes (inverted blind-spot claim + false "zero errors", d6fdd08) ✅; remaining Fable v6 fixes ALL LANDED (f33ede2 What's-new audit_panel rows; e311127 project-structure audit_panel/+audit_pool/ + 2-judge intro + soften all-Nemotron; a8aae74 cost table → **$248.10** + tests/; f1fee87 Why-VAGT re-scope — pool-specific framing, no paired-CI claim, audit_panel=pre-computed); **BONUS REVIEW run: review_output_bonus_v1_fable5.txt = 29/40 (Idea 8↑7)** — Track A physician real-failure benchmark, Track B live BYO service + 2nd domain, Overall Research-Top-3-yes/Product-no, single gap = no human-anchored τ; **STRATEGIC DISCUSSION ONGOING — no direction selected** (A Veridict eval agent / B deepen MediSimplifier v2 [physician + entity pipeline + app layer] / C app-layer-only 60s hero case); NEXT = re-run bonus review with new single-thesis prompt (review_prompt_bonus_v3.txt); HEAD = f1fee87)
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -65,7 +65,7 @@ Diagnosis ΔΦ_V — each candidate added to the Llama+Qwen incumbent (vs the +0
 
 **STEP 7 — COMPLETE ✅ (endpoint-v5 LIVE-VERIFIED):** rebuilt on VM (git pull → 7b2c96d, TIE_BAND gate passed), dual-pushed, **digest `sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe`** (YAML + CCC/REPRODUCIBILITY @ 362cbd8), redeployed (Qwen dedicated endpoint restarted + key rotated by user). Live smoke on the v5 tunnel (port8000-vjbksde9vzhgtcx…): `/health` → audit_panel:true ✅; `/v1/simplify` → gate HEALTHY, qwen=SAFE now (was ERROR on v4) ✅; `/v1/audit_panel` (explicit 8-model pool) → **recommends Nemotron Nano, expected_Phi_V_lift 0.0706, CI [0.0552, 0.0866] = the published receipt**, ranked Nano>gpt-oss>Ultra>super>DeepSeek>gemma (gemma LAST) ✅ — bit-for-bit matches README + 14/14 tests. Receipts committed (82eaeeb): results/audit_panel_live_receipt.json (deterministic) + results/endpoint_v5_smoke_test.json (SAFE this call — Nemotron verdict non-deterministic on borderline inputs, honestly noted; a live DISAGREE was seen once but did NOT reproduce → not captured as a claim, per the idx-21 lesson). README: Why-VAGT cites the live receipt; B2 URL → v5. (Cosmetic debt: B2 prose still says "Safe Endpoint v2"; YAML `name:` still `-v4`.)
 
-NEXT = README full polish → Fable regular review → Fable BONUS ×2 (Research + Product tracks).
+NEXT = re-run bonus review with new single-thesis prompt (review_prompt_bonus_v3.txt); strategic direction A/B/C undecided.
 
 ---
 
@@ -194,6 +194,11 @@ acc519d - docs: endpoint-v4 digest → CCC image table + REPRODUCIBILITY
 dd9222a - docs: README polish — endpoint labels v2/v3/v4 → v5 (10 sites); Why-VAGT bridge sentence
 9b67e10 - docs: README B3 — /v1/audit_panel contract + /health audit_panel:true + safety_mode strict
 d6fdd08 - docs: README Why-VAGT — fix inverted "family shares blind spot" + drop false "zero errors" for Nano
+d5766fd - docs: CCC — Fable v6 = 29/40 (+1 Impact; audit_panel broadest-impact); P1 + Rule#2 fixes logged
+f33ede2 - README: What's-new table — /v1/audit_panel + judge-pool experiment rows
+e311127 - README: project structure + audit_panel/ + audit_pool/; 2-judge intro; soften all-Nemotron → Nemotron teacher+judge
+a8aae74 - README: cost table → $248.10 (pool runs + exact Console figures); + tests/
+f1fee87 - README: Why-VAGT re-scope (pool-specific framing; no paired-CI claim; audit_panel = pre-computed)
 ```
 
 ### FIX #3 STATUS — COMPLETE ✅
@@ -367,7 +372,7 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 
 ---
 
-## README STATUS — COMPLETE ✅ (HEAD = d6fdd08)
+## README STATUS — COMPLETE ✅ (HEAD = f1fee87)
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -444,7 +449,7 @@ date; the flag is a model knowledge-cutoff artifact. Timestamp is correct — do
 | v1 (review_output_v1_fable5.txt, no bonus) | 28/40 | "Strong, honest, technically real … submit after the fixes, not before" |
 | v2 (review_output_v2_fable5.txt, no bonus, post-7-fixes) | 27/40 | "submission-ready in substance, not yet in presentation or gate integrity" |
 | v4 (review_output_v4_fable5.txt) | 28/40 | audit praised ("dual-auditor, not a hand-wave"); ceilinged by structural items + a new cost-table contradiction — all README fix-levers then landed |
-| **v6 (review_output_v6_fable5.txt)** | **29/40** ⬆️ | **+1 → Impact 7.** `/v1/audit_panel` = "the broadest-impact piece" + "the genuinely creative move"; verdict "real, well-instrumented Nebius+Nemotron pipeline with honest negative results." Two Rule#2 defects it caught are FIXED (d6fdd08): inverted "family shares blind spot" + false "zero errors" for Nano. REMAINING: (1) cost accounting — $225.45 omits the ~$1.7 JudgeBench run, the 5 audit-pool candidate runs (Ultra 550B etc.), and external Claude/Gemini auditor spend → restate "$225.45 Nebius + $X external"; (2) project-structure listing GAP — audit_pool/ + gen_pool_verdicts.py/selector.py ARE committed but NOT in the README tree listing, so Fable read them as "missing" (add them; safety_eval_v2.py is a v1-repo file); (3) Why-VAGT re-scope — "family diversity necessary" untested, "statistically indistinguishable" checked vs reference CI not paired per-candidate; (4) intro "3 judges" → "2-judge rule + advisory Llama"; soften "all-Nemotron". |
+| **v6 (review_output_v6_fable5.txt)** | **29/40** ⬆️ | **+1 → Impact 7.** `/v1/audit_panel` = "the broadest-impact piece" + "the genuinely creative move"; verdict "real, well-instrumented Nebius+Nemotron pipeline with honest negative results." Two Rule#2 defects it caught are FIXED (d6fdd08): inverted "family shares blind spot" + false "zero errors" for Nano. REMAINING: (1) cost accounting — $225.45 omits the ~$1.7 JudgeBench run, the 5 audit-pool candidate runs (Ultra 550B etc.), and external Claude/Gemini auditor spend → restate "$225.45 Nebius + $X external"; (2) project-structure listing GAP — audit_pool/ + gen_pool_verdicts.py/selector.py ARE committed but NOT in the README tree listing, so Fable read them as "missing" (add them; safety_eval_v2.py is a v1-repo file); (3) Why-VAGT re-scope — "family diversity necessary" untested, "statistically indistinguishable" checked vs reference CI not paired per-candidate; (4) intro "3 judges" → "2-judge rule + advisory Llama"; soften "all-Nemotron". → **ALL 4 LANDED (f33ede2/e311127/a8aae74/f1fee87) ✅** |
 
 Per-criterion: Technological 8 / Design 7 / Impact 6 / Idea 7. Harsher + more forensic than Opus 4.8 (33-34) —
 grader temperament, not a regression. Run: run_review.py --model claude-fable-5-1, MAX_TOKENS=16000 (needed —
@@ -505,6 +510,31 @@ committed code / both repos:
   Nebius-native premise and still wouldn't match the original serving stack).
 - **API catalog is volatile**: /v1/models shrank 31→26→22 mid-session (Qwen3-Next also vanished). Real
   reproducibility caveat. NOTE: only the API was checked — the Nebius console/UI was NOT inspected.
+
+---
+
+## BONUS REVIEW (Fable 5) + STRATEGIC DIRECTION — ONGOING
+
+**review_output_bonus_v1_fable5.txt — 29/40** (Idea 8, up from 7). Prompt = review_prompt_bonus_v2.txt
+(criteria-only + expanded 6-week strategic bonus; verification-checks + submission-specific sections removed).
+
+Key findings (bonus):
+- **Track A (Research):** physician-labeled real-failure benchmark (**MedSimp-RealFail**) — validate the
+  audit_panel recommendation off synthetic perturbations against real clinician-labeled drops.
+- **Track B (Product):** live bring-your-own-benchmark `/v1/audit_panel` service + a second-domain (legal) demo.
+- **Overall:** Research Top 3 = **yes**; Product = **no as it stands**.
+- **Single remaining gap to first place:** no human-anchored τ (all ground truth is perturbation-script or
+  LLM-auditor opinion; the deployed decision rule is tuned in-sample).
+
+**STRATEGIC DISCUSSION — NO DIRECTION SELECTED YET.** Three directions on the table:
+- **A) Veridict eval agent** — productize `/v1/audit_panel` as a standalone judge-governance app/agent.
+  RISK (blog-verified): the Serverless AI Builders Challenge **2nd place** was already an "evaluation dashboard
+  on your own data" (Andrei Goldenberg) → this is the crowded 2nd-place lane; MediSimplifier won **1st** as a
+  vertical mission-with-a-finding.
+- **B) Deepen MediSimplifier v2** — stay medical; physician validation + entity-grounded real-failure pipeline
+  + a thin app layer. Matches the v1-winning formula (hard domain + counterintuitive finding + human-stakes mission).
+- **C) App layer only** — 60s judge-usable demo (cached-real hero case: incumbents pass, Nemotron flags a
+  dropped diagnosis; audit_panel leaderboard reveal); ~1–2 wk on the existing endpoints.
 
 ---
 
