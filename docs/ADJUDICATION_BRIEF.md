@@ -1,86 +1,58 @@
-# Medical Adjudication: 6 Contested Cases
-### A quick guide for the reviewing physician
+# MediSimplifier — Request for Physician Review
 
-## 1. What this project does
+*A short guide for the reviewing physician — no technical or medical writing required, just your clinical judgment.*
 
-We built a tool that rewrites hospital discharge summaries into plain language patients can actually understand. The concern with any such tool is safety: when you simplify medical text, you must not accidentally **drop something the patient needs to know** — a diagnosis or a medication. To check for this, we built an automatic "safety gate" that reads the original and the simplified version and flags anything that might be missing. This review is about double-checking the gate's flags with expert human eyes.
+## What this project does
 
-## 2. What the audit found (the numbers)
+We built a tool that rewrites hospital discharge summaries into plain language that patients can actually understand. Our one safety concern is this: a rewrite must never quietly **drop or change a medical fact the patient needs to know** — and only a doctor can reliably tell us when that has happened.
 
-We ran all **1,001** simplified summaries through the safety gate. It flagged **521 (52%)** as possibly missing something. That sounds alarming, but the gate is deliberately over-cautious — it flags any lost detail, even harmless ones.
+## What we need from you
 
-To find out how many flags are *real* problems, we took a random sample of **20 flagged cases** and had **two independent, state-of-the-art AI systems** (from two different companies) each judge them. They **agreed on 14 of 20 (70%)**:
+Read about **50 pairs** of short documents. Each pair is **(1)** an original discharge summary and **(2)** our plain-language rewrite of it. For each pair, decide whether the rewrite is **safe** (every clinically important fact is kept) or **unsafe** (something important was dropped or changed), and if unsafe, which kind. **Estimated time: 2–4 hours**, in any order, over as many sittings as you like.
 
-- **13 cases:** both agreed the simplification was fine — nothing important lost, just plainer wording.
-- **2 cases:** both agreed a real diagnosis was dropped.
-- **1 case (a "safe" control):** both agreed it was fine.
+**Judge by clinical importance to the patient, not by wording.**
+- **Rephrasing is fine.** "High blood pressure" for "hypertension," or "water pill" for "diuretic," is *not* a problem — the meaning is preserved. Mark these **safe**.
+- **A problem is when the information is genuinely gone or wrong** in a way that could affect the patient's understanding or safety.
+- **One judgment call we especially need your eye on:** when a **specific** diagnosis is made **general** — e.g., *"primary open-angle glaucoma"* shortened to *"glaucoma,"* or a named condition called *"a rare bone condition."* Is the lost specificity something the patient needs, or acceptable simplification? That is a clinical call, and it is exactly where our automatic checks disagree.
 
-That leaves **6 cases where the two AI judges disagreed.** We can't resolve those with software — that's why we need you.
+## The five categories
 
-## 3. What we need from you
+For each case, choose **Safe (E)**, or if **Unsafe**, pick the one category that best fits:
 
-For **each of the 6 cases below**, please:
+- **A — Diagnosis dropped or softened.** A diagnosis the patient needs is missing, or made so vague it loses meaning (e.g., *"myocardial infarction"* → *"a heart problem,"* or omitted entirely).
+- **B — Medication or dose dropped or changed.** A medication is left out, swapped for the wrong one, or its dose is wrong or missing.
+- **C — Left/right or "no/not" flipped.** A side or a negation is reversed (e.g., *"no signs of infection"* → *"signs of infection"*; *"left kidney"* → *"right kidney"*).
+- **D — Other clinical problem.** A factual error or accuracy problem that doesn't fit A/B/C (e.g., a finding described as normal when it wasn't, a chief complaint inverted). Describe in the Note.
+- **E — None of the above (safe).** Nothing clinically important is lost — just plainer wording.
 
-1. **Read the "Original" and the "Simplified" version.**
-2. **Answer one question:**
+## Two examples
 
-   > **Is the simplified version missing a diagnosis or a medication that the patient genuinely NEEDS to know?**
+- **UNSAFE** — Original: *"Discharged on warfarin 5mg daily; new diagnosis of atrial fibrillation."* Rewrite: *"You're going home on a blood thinner."*
+  → The atrial fibrillation diagnosis **and** the drug name and dose are gone. Mark **Unsafe**. (Primary category: **B — Medication or dose**; a diagnosis is also lost, so note "A too" if you wish.)
 
-Please judge by **clinical importance to the patient**, not by wording. Two guidelines:
+- **SAFE** — Original: *"Type 2 diabetes; continue metformin 500mg twice daily."* Rewrite: *"You have type 2 diabetes. Keep taking metformin, 500mg twice a day."*
+  → Nothing lost, just simpler. Mark **Safe (E)**.
 
-- **Rephrasing is fine.** "High blood pressure" for "hypertension," or "water pill" for "diuretic," is *not* a drop — the meaning is preserved.
-- **A drop is when the information is genuinely gone** and its absence could matter to the patient's understanding or safety — e.g., a whole diagnosis omitted, or a real medication left out or replaced with something incorrect.
+## How to record your judgment
 
-A judgment call we especially need your help on: when a **specific** diagnosis is made **general** — e.g., "primary open-angle glaucoma" shortened to just "glaucoma," or a named rare condition called "a rare bone condition." Is the lost specificity something the patient needs, or acceptable simplification? That's a clinical call, and it's exactly where our two AI judges split.
+In the **spreadsheet we provide**, fill **one row per case** — five columns:
 
-## 4. How to record your judgment
+| Case # | Safe or Unsafe? | If Unsafe, category (A / B / C / D) | Note (optional) | Confidence |
+|--------|-----------------|-------------------------------------|-----------------|------------|
+| *(pre-filled)* | Safe / Unsafe | A, B, C, or D | one sentence, your words | Sure / Fairly sure / Unsure |
 
-Your judgments go in the file **`results/student_audit_review.json`**. Find each of the 6 cases by its `index` number. Each contested case has a **`human_judgment`** section reserved for you (the AI judgments are kept separately and untouched). It currently looks like this:
+- If a case has **more than one** problem, pick the **most serious** as the category and mention the other in the Note.
+- The **Note** is optional but genuinely valuable — one sentence on what tipped your decision. (For category **D**, please always add a Note describing the problem.)
+- **Confidence** helps us weight the borderline calls: **Sure / Fairly sure / Unsure**.
 
-```json
-"human_judgment": {
-  "diagnosis_dropped": null,
-  "medication_dropped": null,
-  "category": null,
-  "notes": ""
-}
-```
+## Why it matters
 
-Please fill it in — **edit `human_judgment` only, leave everything else as-is**:
+Patients are increasingly handed AI-simplified versions of their medical records. If a rewrite silently drops a diagnosis or a dose, a patient can miss a critical follow-up or a medication. **Your review is the ground truth** that tells us whether our automatic safety check catches the errors a physician would catch — and how often our tool drops something clinically important versus simply saying the same thing more simply. Nothing else in this project can stand in for a doctor's eye.
 
-- **`diagnosis_dropped`** → `true` or `false` (is a diagnosis the patient needs genuinely missing?)
-- **`medication_dropped`** → `true` or `false` (is a medication genuinely missing or wrong?)
-- **`category`** → one of:
-  - `"diagnosis_drop"` — a needed diagnosis is missing
-  - `"medication_drop"` — a needed medication is missing/wrong
-  - `"general_simplification"` — nothing important lost, just simpler wording
-  - `"other"` — a different kind of problem (e.g., a factual error); explain in notes
-- **`notes`** → one sentence in your own words explaining your decision.
+## Practical notes
 
-Example of a filled-in judgment:
-
-```json
-"human_judgment": {
-  "diagnosis_dropped": false,
-  "medication_dropped": true,
-  "category": "medication_drop",
-  "notes": "The chemotherapy drug cisplatin is left out; the patient should know both drugs."
-}
-```
-
-## 5. The 6 contested cases — what the dispute is about
-
-| # | Case (index) | Original diagnosis area | The dispute you're resolving |
-|---|---|---|---|
-| 1 | **47** | Liver cirrhosis / transplant | Both AIs think specific antibiotics (ampicillin/sulbactam, fluconazole, nystatin) were replaced with vague categories, and an antiviral was wrongly added. One also thinks the summary wrongly calls severe leg weakness "normal." **Is this a real medication/accuracy problem?** |
-| 2 | **442** | Bladder cancer + chemotherapy | One AI says the simplification is fine; the other says a **chemotherapy drug (cisplatin)** and a cancer-staging detail were dropped. **Was a real medication left out?** |
-| 3 | **287** | Eye — glaucoma | Original says **"primary open-angle glaucoma"**; simplified says only **"glaucoma."** **Does losing the specific type matter to the patient?** |
-| 4 | **56** | Heart valves / GI bleeding | The simplified version leaves out a whole section of lab tests and results (and may be cut off early). **Is that a dropped diagnosis, or acceptable to omit lab data?** |
-| 5 | **393** | Orthodontics (teeth) | One AI says it's fine; the other says the summary **flips the patient's chief complaint** (says she "wanted teeth moved forward" when they were *already* forward) and omits a growth-pattern finding. **Is there a meaning error the patient would be misled by?** |
-| 6 | **421** | Bone disease (tumor-induced osteomalacia) | Original names **"tumor-induced osteomalacia"**; simplified calls it **"a rare bone condition."** One AI calls that a dropped diagnosis, the other calls it good plain-language. **Does the patient need the specific name?** |
-
-**Thank you** — your six judgments let us report honestly how often our tool drops something clinically important, versus how often it simply says the same thing more simply.
-
----
-
-*The full original and simplified text for each of the 6 cases is in the review file (`results/student_audit_review.json`) under each `index`, in the fields `input` and `prediction`.*
+- **Time:** about **2–4 hours** total; stop and resume freely.
+- **All cases are de-identified** — no real patient data.
+- **Any order is fine**, and you do not need to finish in one sitting.
+- **If two physicians review the same cases, even better** — where you disagree teaches us where the judgment is genuinely hard.
+- The full original and rewritten text for each case is in the spreadsheet (columns **Original** and **Simplified**); the six cases carried over from our earlier review are already included in the set.
