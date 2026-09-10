@@ -10,12 +10,12 @@
 > Built on top of [MediSimplifier-Nebius](https://github.com/deepset01-sys/medisimplifier-nebius) — 🥇 First Place winner of the Nebius Serverless AI Builders Challenge.
 > The Nemotron teacher pipeline, 3-judge calibration panel, VAGT measurement framework (developed as a direct response to v1's κ=0.11 finding, first applied empirically in v2), and v2 training infrastructure were built for this hackathon.
 
-Patients are sent home with discharge summaries written for clinicians — dense with abbreviations, drug names, and diagnoses most people cannot read. **MediSimplifier v2** rewrites those summaries into plainer language (FK-Grade 8.87, roughly 9th grade) and returns, with each rewrite, a safety verdict from a panel of three LLM judges — Llama-3.3-70B, Qwen3-32B, and NVIDIA Nemotron Nano — with Llama and Nemotron Nano served per-token on Nebius Token Factory and Qwen3-32B on a dedicated Nebius endpoint. The student model was fine-tuned on **7,983** references written by **Nemotron Super** (replacing Claude Opus); the judge panel was calibrated on **MedSimp-JudgeBench**, a 708-item benchmark with **508 known injected errors**. Everything below is reproducible from committed artifacts and public HuggingFace models for about **$225.45** in Nebius credits.
+Patients are sent home with discharge summaries written for clinicians — dense with abbreviations, drug names, and diagnoses most people cannot read. **MediSimplifier v2** rewrites those summaries into plainer language (FK-Grade 8.87, roughly 9th grade) and returns, with each rewrite, a safety verdict from a panel of three LLM judges — two decide (Qwen3-32B + NVIDIA Nemotron Nano), one advisory (Llama-3.3-70B) — with Llama and Nemotron Nano served per-token on Nebius Token Factory and Qwen3-32B on a dedicated Nebius endpoint. The student model was fine-tuned on **7,983** references written by **Nemotron Super** (replacing Claude Opus); the judge panel was calibrated on **MedSimp-JudgeBench**, a 708-item benchmark with **508 known injected errors**. Everything below is reproducible from committed artifacts and public HuggingFace models for about **$225.45** in Nebius credits.
 
 **What's new in v2 — three things:**
 
 - **The finding (measured, not asserted).** Two standard judges — Llama and Qwen — almost never catch a *silently dropped diagnosis*: recall **14%** and **7%**. NVIDIA **Nemotron Nano** catches **68%**. Adding it as a third rater *raises* truth-alignment while *lowering* rater agreement — the opposite of what Cohen's κ (v1's only metric) predicts — because it breaks a blind spot the other two share. Concretely, on the diagnosis stratum the veridicality-anchored dependability Φ_V rises **0.404 → 0.476** (paired Δ **+0.071**, 95% CI **[+0.055, +0.087]**, n = 333, 1,000 resamples), shared-bias variance σ²_B falls **0.347 → 0.229**, and Fleiss κ / Krippendorff α turn *negative* (**0.076 → −0.088**; Δκ **−0.163 [−0.305, −0.045]**). It is not universal: on dose errors, where the incumbents weren't blind, ΔΦ_V is a null **−0.013 [−0.055, +0.021]**. This is the first empirical application of the VAGT framework, developed after v1's κ = 0.11.
-- **An all-Nemotron pipeline.** The student was fine-tuned on **7,983** references written by **Nemotron Super** (replacing Claude Opus); the safety panel adds **Nemotron Nano** as the diagnosis-drop tripwire — teacher and judge both served per-token on Nebius Token Factory.
+- **Nemotron as teacher and judge.** The student was fine-tuned on **7,983** references written by **Nemotron Super** (replacing Claude Opus); the safety panel adds **Nemotron Nano** as the diagnosis-drop tripwire — teacher and judge both served per-token on Nebius Token Factory. (The student base is Llama-3 OpenBioLLM; the evaluation yardstick is still the v1 Claude references.)
 - **Measured, not just built.** A 708-item deployed-gate calibration, a **1,001-output** diagnosis-retention self-audit, and an independent **dual-auditor** review (Claude Sonnet 5 + Gemini 2.5 Pro) quantify how the gate actually behaves — confirming genuine diagnosis drops in only **2 of 20** flagged cases (see B5).
 
 **Try it in ~30 seconds.** `POST /v1/simplify` with a discharge summary returns the plain-language rewrite plus a safety verdict; or run the gate on any `(original, simplified)` pair directly, no endpoint needed — full quickstart and a live `curl` in **B2**. **Two tracks follow:** **Track A — Research Design** (estimand, benchmark, protocol, VAGT derivation, per-judge calibration, the inversion, threats to validity) and **Track B — Product Design** (the `POST /v1/simplify` contract, the decision rule with Nemotron as the diagnosis-drop tripwire, measured operating characteristics — ~1-in-3 DISAGREEs is a false alarm (34.7%, see B5), ~27 s per request — Nebius deployment, and known issues, including that the Qwen judge was briefly swapped mid-project (Qwen3-32B → Qwen3-30B-A3B) but is restored to Qwen3-32B and recalibrated, see B8). This is a research prototype: unauthenticated, not clinician-validated, and not for real patient data.
@@ -49,7 +49,7 @@ The result above is the point; this section is the package around it. The submis
 
 ## What's new in v2 (vs v1)
 
-The Nebius Serverless Challenge submission (v1) was training + serving + dual-judge safety. This v2 submission extends it with an all-Nemotron pipeline, measured gate operating characteristics, and a diagnosis-retention audit:
+The Nebius Serverless Challenge submission (v1) was training + serving + dual-judge safety. This v2 submission extends it with **Nemotron as teacher and third judge**, measured gate operating characteristics, and a diagnosis-retention audit:
 
 | | v1 (Nebius Serverless Challenge 🥇) | v2 (This Hackathon) |
 |--|--|--|
@@ -693,6 +693,14 @@ src/
   sample_audit_review.py         build 30-case review template (seed=42) + score judgments
   llm_review_audit.py            dual-auditor review (Claude Sonnet 5 + Gemini 2.5 Pro) of flagged cases
   measure_reference_fk.py        FK-Grade of Claude vs Nemotron reference sets → reference_fk_grade.json
+  audit_panel/                   /v1/audit_panel service (Steps 1-6):
+    vagt_core.py                 generalized VAGT decomposition (σ²/Φ_V + paired bootstrap CIs)
+    pool_loader.py               load audit_pool verdicts + ground truth (merge by row_id)
+    selector.py                  blind-spot-first ranking (TIE_BAND + collateral tie-break) → recommendation
+    schemas.py                   FastAPI request/response models
+    router.py                    POST /v1/audit_panel route (mounted in safe_endpoint.py)
+    build_pool.py                reshape calibration → audit_pool/ (lossless, self-validating)
+    gen_pool_verdicts.py         Step 6: generate a candidate's 708-row verdicts (dual-registry)
 docker/
   Dockerfile.train               Builds train-v29/v30/v31 (cryptography==48.0.1 pinned)
   Dockerfile.endpoint            Safe Endpoint v5 image (endpoint-v5)
@@ -709,6 +717,10 @@ logs/
 docs/
   ADJUDICATION_BRIEF.md          plain-language guide for physician review of the 6 contested audit cases
   REPRODUCIBILITY.md             container image digests + adapter storage flow + rebuild steps
+audit_pool/
+  ground_truth.json              708-item ground truth (τ labels, stratum, row_id)
+  candidates.yaml                pool manifest (pooled + pending candidates)
+  verdicts/                      per-judge 708-row verdict files (8: 3 incumbents + 5 candidates)
 nemotron_judge_test.py           Nemotron Nano as safety judge (3-judge calibration, checkpointed)
 nemotron_teacher.py              Nemotron Super teacher — JudgeBench references
 nemotron_training_data.py        Nemotron Super teacher — full 9,999-record training set (resume-capable)
