@@ -1,0 +1,2115 @@
+Case #,Original,Simplified,Safe_or_Unsafe,Category,Note,Confidence
+1,"Hospital Course:
+The 62-year-old female patient was admitted to the hospital with complaints of two episodes of sudden onset substernal chest pain, followed by right-sided, sharp diffuse abdominal pain. She was diagnosed with non-small cell lung cancer with bone metastases a year ago and was undergoing palliative chemotherapy. During her hospital stay, the patient complained of fever, chills, and vomiting episodes leading to poor intake. She was treated with intravenous fluids, a dose of IV methylprednisone, and prednisone. She had a renal biopsy that showed evidence of acute tubular injury, focal interstitial inflammation with focal mild tubulitis. The patient's elevated creatinine was believed to be secondary to pembrolizumab, which was permanently discontinued. The patient was started on docetaxel and discharged home with a new creatinine baseline around 1.8-2.0.
+
+Hospital Course Summary: 
+
+Admission:
+A 62-year-old woman was brought to the emergency department with chest and abdominal pain. The patient had a history of non-small cell lung cancer with bone metastases, which was being treated with chemotherapy. Physical examination, laboratory tests, and diagnostic investigations were carried out, and the patient was admitted to the hospital for further care.
+
+Hospital course:
+During her hospital stay, the patient complained of fever, chills, and vomiting episodes leading to poor intake. She was given IV fluids for management of volume depletion. Her creatinine was elevated and attributed to pembrolizumab-induced renal injury. The drug was permanently discontinued, and the patient was started on docetaxel. Her renal biopsy showed evidence of acute tubular injury, focal interstitial inflammation with focal mild tubulitis.
+
+Discharge:
+Following resolution of her symptoms, the patient was discharged home with a discharge summary outlining her hospital course and new creatinine baseline around 1.8-2.0. Prophylactic medications, including sulfamethoxazole-trimethoprim and pantoprazole, were prescribed, and a follow-up plan was established. The patient was advised to return to the hospital if she experienced any new symptoms or concerns.","Hospital Course:
+The 62-year-old woman came to the hospital with sudden chest pain and later sharp belly pain on the right side. She had lung cancer that had spread to bones and was receiving chemotherapy to ease symptoms. During her stay she had fever, chills, and vomiting, which made it hard for her to eat. She received IV fluids, a steroid through a vein, and a steroid pill to help her body. A kidney biopsy showed kidney tube damage, mild inflammation, and mild tube irritation in the kidney. Her high creatinine was thought to be caused by the immunotherapy drug pembrolizumab, which was stopped. She started a different chemotherapy drug called docetaxel and was sent home with a creatinine level of 1.8 to 2.0.
+Hospital Course Summary:
+Admission:
+A 62-year-old woman came to the emergency department with chest and belly pain that started suddenly. She had a history of lung cancer that had spread to bones and was being treated with chemotherapy. Doctors did exams, lab tests, and imaging, and admitted her to the hospital for further care.
+Hospital course:
+During her stay she had fever, chills, and vomiting, which made it hard for her to eat. She received IV fluids to replace lost fluids and help her body recover from dehydration. Her creatinine was high and doctors thought it was caused by the immunotherapy drug pembrolizumab. Pembrolizumab was stopped and she started a different chemotherapy drug called docetaxel to continue her cancer treatment. Her kidney biopsy showed kidney tube damage, mild inflammation, and mild tube irritation in the kidney.
+Discharge:
+After her symptoms improved, she was sent home with a discharge plan that includes her hospital course. The plan also includes a new creatinine level of 1.8 to 2.0, which will be checked regularly. She was given preventive medicines such as sulfamethoxazole-trimethoprim and pantoprazole to prevent infection and stomach ulcers. A follow-up plan was made for her to see her doctor regularly and to monitor her health. She was told to return to the hospital if she notices any new symptoms or worries.",,,,
+2,"Discharge Summary:
+
+Patient Name: [REDACTED]
+Date of Admission: [REDACTED]
+Date of Discharge: [REDACTED]
+
+Hospital Course:
+
+A 44-year-old Caucasian male was admitted to the emergency department after being trapped under the transmission system of a vehicle for an unknown amount of time, causing trauma to his chest and lungs. On admission, the patient had gasping breath, palpable regular pulses, and low blood pressure. He was urgently intubated and put on controlled mechanical ventilation due to his altered consciousness and respiratory distress. Upon examination, the patient's chest and upper body were congested, edematous, and covered with petechiae. Bilateral pneumothorax was detected, and bloody fluid was drained from his lungs through the endotracheal tube. The patient's condition improved after bilateral thoracostomies were inserted, draining air and blood. Arterial blood gases showed a pH of 7.246 and high levels of enzymes associated with muscle breakdown. A CT scan revealed mild brain edema and bilateral hemopneumothorax with lung contusions.
+
+The patient was transferred to the ICU, where he was ventilated with volume-control mode, with a gas mixture that was quickly tapered to a fraction of inspired oxygen of 40%. Care was taken to prevent renal complications from potential traumatic rhabdomyolysis, and special attention was given to the brain edema with mannitol administration and frequent neurologic assessments. The patient improved quickly and was extubated on the second day of hospitalization, but remained disoriented and agitated until the fourth day. His facial and thoracic petechiae gradually faded within the next three days. The patient's enzymes returned to normal levels on the seventh day, and he was transferred to the thoracic surgical ward.
+
+Recommendations:
+
+The patient is advised to continue with follow-up appointments with his healthcare provider to monitor his progress. He should avoid activities that may place excessive stress on his chest and lungs, and he should report any changes in his symptoms to his healthcare provider immediately. The patient should also continue to take any medications as prescribed and follow a healthy lifestyle to aid in his recovery. 
+
+For further medical attention, the patient is advised to contact the healthcare provider immediately should he experience any of the following symptoms: chest pain, shortness of breath, difficulty breathing, fever, or cough with abnormal sputum production. 
+
+Signed, 
+
+[REDACTED]
+Physician","Discharge Summary:
+Patient Name: [REDACTED]
+Date of Admission: [REDACTED]
+Date of Discharge: [REDACTED]
+Hospital Course:
+The patient is a 44-year-old white man who was admitted after being trapped under a car for an unknown time.
+This caused injury to his chest and lungs, leading to breathing problems and low blood pressure.
+When he arrived, he was gasping for breath, had regular pulses, and his blood pressure was low.
+Doctors placed a breathing tube and put him on a machine to help him breathe because he was not alert.
+They also gave him medicine to keep his blood pressure stable and prevent further injury.
+Exam showed his chest and upper body were swollen, bruised, and covered with tiny red spots.
+Both lungs had air and blood inside, and doctors drained the fluid through the breathing tube.
+After placing tubes in both sides of his chest to drain air and blood, his condition improved.
+Blood tests showed his blood was too acidic and had high levels of enzymes from muscle breakdown.
+A CT scan showed mild brain swelling and blood and air in both lungs with bruised lung tissue.
+He was moved to the intensive care unit and continued on the breathing machine with a special gas mix.
+The gas mix was slowly reduced to 40% oxygen to help his lungs recover and prevent further injury.
+Doctors took steps to protect his kidneys from muscle breakdown and to treat the brain swelling.
+They gave mannitol to reduce brain swelling and checked his brain function often to ensure he was stable.
+He improved quickly and the breathing tube was removed on the second day of hospitalization.
+He remained confused and agitated until the fourth day, but his facial and chest bruising faded over the next three days.
+His muscle enzymes returned to normal on the seventh day, and he was transferred to the chest surgery ward.
+Recommendations:
+The patient should keep seeing his doctor for follow-up visits to check his progress and ensure he is healing well.
+He must avoid activities that put too much strain on his chest and lungs to prevent further injury.
+He should tell his doctor right away if he notices any new or worsening symptoms.
+These symptoms include chest pain, trouble breathing, fever, or cough with thick mucus that does not go away.
+He should continue taking any prescribed medicines and follow a healthy lifestyle to help his recovery.
+If he develops chest pain, trouble breathing, fever, or cough with thick mucus, he should call his doctor right away.
+Signed,
+[REDACTED]
+Physician<|",,,,
+3,"Discharge Summary:
+
+Patient Name: [Name redacted]
+Gender: Male
+Date of admission: [Date redacted]
+Date of discharge: [Date redacted]
+Admitting Diagnosis: Brachial arteriovenous fistula
+
+Hospital Course: 
+The patient, an 18-year-old man, was admitted to the department of thoracic and cardiovascular surgery in Wonju Severance Christian Hospital with a pulsatile swelling on his left arm. The swelling had been present for more than 17 years. Upon physical examination, a non-tender pulsating fusiform mass on the medial side of the left upper arm was detected, measuring 4 cm long and 2 cm wide, just proximal to the antecubital area. Color Doppler ultrasonography revealed a communication channel between the brachial artery and vein, with a flow volume of 240 mL/min. Computed tomographic angiography confirmed a brachial arteriovenous fistula (AVF). 
+
+Under general anesthesia, the fistulous opening was closed continuously with non-absorbable monofilament polypropylene 6-0 suture through the venous side. The patient's postoperative 6-month CT angiography showed normalized vessels. The patient had no specific symptoms, such as dyspnea or steal syndrome of the distal arm. His blood pressure was normal, and laboratory results were normal. 
+
+The patient was discharged with instructions to follow up with his primary care provider. Routine follow-up with imaging studies was recommended. 
+
+Discharge Diagnosis: Brachial arteriovenous fistula
+
+Discharge Condition: Stable
+
+Discharge Instructions:
+1. Follow up with the primary care provider
+2. Routine follow-up with imaging studies is recommended
+
+This discharge summary accurately and comprehensively summarizes the patient's hospital course, diagnosis, and instructions upon discharge.","Discharge Summary:
+Patient Name: [Name redacted]
+Gender: Male
+Date of admission: [Date redacted]
+Date of discharge: [Date redacted]
+Admitting Diagnosis: Brachial arteriovenous fistula
+Hospital Course:
+The patient, an 18-year-old man, was admitted to the thoracic and cardiovascular surgery department at Wonju Severance Christian Hospital.
+He had a pulsatile swelling on his left arm that had been present for more than 17 years.
+On exam, a non-tender pulsating fusiform mass was found on the inner side of the left upper arm.
+The mass measured 4 cm long and 2 cm wide, just above the bend of the elbow.
+Color Doppler ultrasound showed a connection between the brachial artery and vein, with blood flow of 240 mL per minute.
+CT angiography confirmed a brachial arteriovenous fistula, which is an abnormal connection between an artery and a vein.
+Under general anesthesia, the fistula opening was closed with non-absorbable polypropylene 6-0 suture through the vein side.
+Six months later, a CT angiogram showed that the blood vessels had returned to normal size.
+The patient had no symptoms such as shortness of breath or arm blood loss, and his blood pressure was normal.
+Laboratory tests, including blood work and imaging, showed no abnormalities and were within normal limits.
+The patient was discharged with instructions to follow up with his primary care provider for ongoing care.
+Routine follow-up with imaging studies, such as CT angiography, was recommended to monitor the fistula.
+Discharge Diagnosis: Brachial arteriovenous fistula
+Discharge Condition: Stable
+Discharge Instructions:
+1. Follow up with the primary care provider
+2. Routine follow-up with imaging studies is recommended
+This discharge summary accurately and comprehensively summarizes the patient's hospital course, diagnosis, and instructions upon discharge.",,,,
+4,"Discharge Summary:
+
+Patient Name: RA
+
+Date of Admission: [DATE]
+
+Date of Discharge: [DATE]
+
+Reason for Admission: EEG Recording
+
+Medical History: RA is a 31-year-old Italian monolingual female with profound unilateral congenital deafness caused by unilateral microtia. She has no history of neurological or psychiatric disorders or any intelligence deficits. She has corrected-to-normal vision and no history of difficulty in learning to speak or read.
+
+Hospital Course: RA underwent an EEG recording and lateral preference assessment, which showed strong right-lateralization as to handedness, footedness, and eyedness while being strongly left-lateralized as to earedness. Eye dominance tests showed her right eye dominance. A reading comprehension test showed that she had no reading difficulties. Phonology and comprehension of the morphosyntactic relations were also assessed, with her responses fully within the normal range.
+
+Summary: RA was admitted for an EEG recording which showed no abnormalities. She was found to have strong right-lateralization as to handedness, footedness, and eyedness while being left-lateralized as to earedness. She had no reading difficulties, and her responses to phonology and comprehension tests were within the normal range. RA has now been discharged.","Discharge Summary:
+Patient Name: RA
+Date of Admission: [DATE]
+Date of Discharge: [DATE]
+Reason for Admission: EEG Recording
+Medical History: RA is a 31-year-old Italian woman who only speaks one language and has profound hearing loss in one ear. The hearing loss was present from birth and is due to a small ear on the affected side. She has no history of neurological or psychiatric disorders and no intellectual or learning problems. Her vision is normal after correction, and she has no difficulty learning to speak or read.
+Hospital Course: RA had an EEG test and a side preference test to check how her brain processes information. The test showed strong right-side preference for hand, foot, and eye use, while ear preference was strong left side. Eye dominance tests indicated that her right eye is dominant for vision, guiding how she sees the world. A reading comprehension test showed she had no trouble understanding written text, and her reading skills are normal. Tests of speech sounds and sentence structure also showed normal results, indicating she processes language normally.
+Summary: RA was admitted for an EEG test, which showed no abnormal activity or signs of disease. The test found strong right-side preference for hand, foot, and eye use, while ear preference was strong left side. She had no reading difficulties, and her responses to speech sound and sentence structure tests were normal. RA has now been discharged and is ready to continue her recovery at home.",,,,
+5,"Hospital Course Summary:
+
+Admission:
+A 43-year-old male with primary hypothyroidism was admitted for evaluation of progressive fatigue, weakness, muscle and joint pain in the setting of recurrent fractures.
+
+History of Present Illness:
+The patient had been experiencing musculoskeletal pain in several locations including bilateral knees, ankles, left shoulder, left arm, and lower back which affected his overall functional status. He struggled to climb a flight of stairs, often grabbing the railing to pull himself up. A nuclear medicine bone scan showed abnormal uptake in bilateral ribs, vertebrae, right knee, hips, ankles, and feet. A lower extremity MRI showed stress fractures in left fibula, fifth metatarsal, and right tibia.
+
+Course in Hospital:
+The patient was started on calcitriol and phosphate supplements which significantly improved muscle weakness. Due to concern for TIO, a positron emission tomography/computed tomography (PET/CT) scan with 68Gallium (68Ga)-DOTATATE was performed which showed multiple lytic osseous lesions with increased somatostatin positive uptake seen throughout pelvis, ribs, ankles, and feet. However, after re-review with radiology, multiple areas of increased uptake were considered to be secondary to fractures, and left posterior acetabular lesion was presumed to be the tumor of interest given a remarkably higher standard uptake values (SUVmax) in this lesion compared to other lesions (SUVmax 20 vs. 4–5).
+
+Procedure:
+The left acetabular lesion was biopsied and pathology demonstrated a 1.4 cm phosphaturic mesenchymal tumor of the left acetabulum with uninvolved margins. The patient underwent radical resection of the tumor of the posterior left acetabulum with reconstruction of the posterior wall and posterior column of the acetabulum through a Kocher-Langenbach approach. His hip joint was able to be spared utilizing a 3D-printed custom bone cutting guide (CG) and intra-operative O-arm guided surgical navigation (Medtronic© Stealth) utilizing a navigated Sonopet Ultrasonic Bone Cutting Bovie (Stryker). The posterior wall and column of his acetabulum were constructed with a tantalum augment (Zimmer) and a pelvic reconstruction plate and screw construct (Synthes) after tumor removal.
+
+Discharge Summary:
+The patient was discharged with normal phosphorus and FGF23 levels, pain-free left hip, no evidence of hardware complication, back to hiking, and walking on the treadmill. Clinical and radiographic follow-up at 6 months postoperatively found him to be pain-free in his left hip, with almost complete resolution of bone pain, and no recurrence of fractures. Phosphorus level also remained normal at 3.4 mg/dL 6 months after surgery.","Hospital Course Summary:
+Admission:
+A 43-year-old man with low thyroid hormone was admitted to check worsening tiredness, weakness, muscle and joint pain, and repeated fractures.
+History of Present Illness:
+The patient had muscle and joint pain in both knees, ankles, left shoulder, left arm, and lower back.
+This pain made it hard for him to climb stairs, so he often held the railing to pull himself up.
+A bone scan showed abnormal activity in both ribs, spine, right knee, hips, ankles, and feet.
+An MRI of his legs showed stress fractures in the left fibula, fifth toe bone, and right tibia.
+Course in Hospital:
+He was given vitamin D and phosphate supplements, which greatly improved his muscle weakness and overall strength.
+Because doctors worried about a rare bone condition, they did a PET/CT scan with a special tracer.
+The scan showed many bone areas with increased activity throughout the pelvis, ribs, ankles, and feet.
+After reviewing the images with radiology, most of the increased activity was thought to be due to fractures.
+The left hip lesion appeared to be the tumor, with a higher tracer value than other spots.
+Procedure:
+Doctors took a biopsy of the left hip lesion and found a 1.4-centimeter phosphaturic mesenchymal tumor.
+The tumor was located in the left hip socket and had clean edges, meaning it was not invasive.
+He had surgery to remove the tumor from the back of the left hip socket.
+The surgery rebuilt the back wall and column of the hip socket using a special approach.
+A 3D-printed bone guide and intraoperative navigation helped cut the bone accurately during the operation.
+The back wall and column were rebuilt with a tantalum implant and a pelvic plate and screws.
+Discharge Summary:
+He left the hospital with normal phosphorus and FGF23 levels, a pain-free left hip, and no hardware problems.
+He was able to hike again and walk on a treadmill without discomfort or difficulty.
+Six months later, he had no hip pain, most of his bone pain had gone, and no new fractures.
+His phosphorus level stayed normal at 3.4 mg/dL six months after surgery, indicating good bone health.",,,,
+6,"Discharge Summary:
+
+Patient Information:
+Name: [Redacted]
+Age: 21
+Gender: Female
+Date of Admission: [Redacted]
+Date of Discharge: [Redacted]
+Admitting Diagnosis: Abdominal enlargement
+Discharge Diagnosis: Ovarian tumor (FIGO Ia)
+
+Hospital Course:
+The patient, a 21-year-old Chinese woman, was admitted with the complaint of gradual abdominal enlargement for more than 6 years. Physical examination revealed a 30 cm abdominal cystic mass. Both abdominal-pelvic sonogram and computed tomography (CT) scan showed a large ovarian mass with two intra-cystic solid protrusions. Her serum CA125, CEA, CA153, and alpha-fetoprotein (AFP) were within the normal range.
+
+The patient underwent fertility-sparing staging surgery, including abdominal right salpingo-oophorectomy, omentectomy, appendectomy, and pelvic lymphadenectomy. The tumor was staged as FIGO Ia (2009). She received two courses of CP (cisplatin + cyclophosphamide) chemotherapy postoperatively.
+
+The patient passed away due to the disease at 44 months following her surgery. 
+
+Follow-up Plan:
+N/A 
+
+Summary:
+The 21-year-old Chinese woman was admitted with the complaint of abdominal enlargement. After physical examination and imaging tests, a large ovarian mass was discovered with normal-range biomarkers. She underwent fertility-sparing staging surgery, which successfully removed the tumor, staged as FIGO Ia. The patient received two courses of chemotherapy postoperatively. Unfortunately, she passed away 44 months after her surgery due to the disease.","Discharge Summary:
+Patient Information:
+Name: [Redacted]
+Age: 21
+Gender: Female
+Date of Admission: [Redacted]
+Date of Discharge: [Redacted]
+Admitting Diagnosis: Abdominal enlargement
+Discharge Diagnosis: Ovarian tumor (FIGO Ia)
+Hospital Course:
+The patient, a 21-year-old Chinese woman, was admitted with a slowly growing belly for over six years.
+Exam showed a 30 cm fluid-filled lump in the belly that felt like a cyst.
+Ultrasound and CT scan found a large ovarian lump with two solid parts inside the cyst.
+Blood tests for CA125, CEA, CA153, and AFP were all within the normal range for the patient.
+She had surgery to preserve fertility, removing the right ovary and fallopian tube, the omentum, the appendix, and pelvic lymph nodes.
+The tumor was staged as FIGO Ia, which is an early stage cancer according to the 2009 classification.
+After surgery, she received two rounds of chemotherapy with cisplatin and cyclophosphamide to treat any remaining cancer cells.
+The patient died from the disease 44 months after her surgery, despite treatment and follow-up care.
+Follow-up Plan:
+N/A
+Summary:
+The 21-year-old Chinese woman came in with a slowly growing belly that had been present for over six years.
+Imaging tests showed a large ovarian lump with two solid parts inside the cyst, and blood tests were normal.
+She had surgery to preserve fertility, removing the tumor and surrounding tissue to treat the cancer.
+The tumor was staged as FIGO Ia, which is an early stage cancer according to the 2009 classification.
+After surgery, she received two rounds of chemotherapy with cisplatin and cyclophosphamide to treat any remaining cancer cells.
+Unfortunately, she passed away 44 months after her surgery due to the disease, despite treatment and follow-up care.",,,,
+7,"Discharge Summary:
+
+Patient Information:
+- Name: [Redacted]
+- Age: 2 months
+- Gender: Male
+- Admitting Diagnosis: Sepsis
+- Discharge Diagnosis: Malaria
+
+Hospital Course:
+The patient, a 2-month-old male infant, was admitted to our pediatric antiretroviral clinic with the complaint of fever, which was occurring every 2 to 3 days. The mother of the patient reported that the fever was associated with nonprojectile vomit containing recently ingested milk formula. Upon examination, the patient was found to have hepatic and splenic enlargement of 4 cm each. A diagnosis of sepsis was made and the patient was treated with intravenous cefuroxime before complete blood count investigation. Fever resolved 2 days after commencing antibiotics and the patient was discharged home on oral cefuroxime.
+
+The patient was re-admitted a week later with the complaint of fever recurring every 2 to 3 days. A diagnosis of malaria was made upon detection of trophozoites of Plasmodium falciparum in the peripheral blood film. The patient was treated with oral quinine and showed a remarkable improvement in his condition, with the intermittent fever resolving by crisis within 24 hours of administration. The packed cell volume of 26% at readmission increased to 32% on the fourth day of quinine therapy. The child remained well and was discharged home two days after.
+
+Follow-up Recommendations:
+The patient is advised to continue co-trimoxazole prophylaxis as previously prescribed and follow up with the pediatric antiretroviral clinic for routine monitoring.
+
+Patient Education:
+The mother of the patient is advised to be vigilant in reporting signs and symptoms of fever and to consider malaria as a potential diagnosis in the event of persistent fever. She is also advised to continue the patient's medication regimen as prescribed and follow up with the pediatric antiretroviral clinic for routine monitoring.
+
+Primary care physician:
+Dr. [Redacted]","Discharge Summary:
+Patient Information:
+Name: [Redacted]
+Age: 2 months
+Gender: Male
+Admitting Diagnosis: Sepsis
+Discharge Diagnosis: Malaria
+Hospital Course:
+The patient, a 2-month-old boy, was admitted to the pediatric HIV clinic with a fever that came every 2 to 3 days.
+The mother said the fever was linked to vomiting that did not shoot out and contained recent milk formula.
+On exam, the liver and spleen were enlarged to about 4 centimeters each, indicating possible infection.
+Doctors diagnosed sepsis and gave IV cefuroxime before doing blood tests to check white blood cells.
+The fever went away two days after starting antibiotics, and the patient was sent home with oral cefuroxime.
+One week later, the patient returned with fever again every 2 to 3 days, prompting further evaluation.
+A blood test showed malaria parasites, and the patient was given oral quinine to treat the infection.
+The fever stopped within 24 hours of starting quinine, and the patient felt much better.
+The patient’s red blood cell count rose from 26% to 32% after four days of quinine.
+The patient stayed well and was discharged home two days after the second hospital stay.
+Follow-up Recommendations:
+The patient should keep taking co-trimoxazole as prescribed and visit the pediatric HIV clinic for regular check-ups.
+Patient Education:
+The mother should watch for fever signs and think malaria if fever continues, and she should call the clinic.
+She must give the medicines as directed and keep all follow-up appointments with the pediatric HIV clinic.
+Primary care physician:
+Dr. [Redacted]",,,,
+8,"Discharge Summary:
+
+Patient Name: 
+
+Date of Admission: 
+
+Date of Discharge: 
+
+Admission Diagnosis: ST-Elevation Myocardial Infarction (STEMI) 
+
+Hospital Course: 
+
+The patient was admitted to our hospital due to 1 hour of severe chest pain. The electrocardiogram showed ST-segment elevation in leads I and AVL. Laboratory results indicated an elevated serum creatine kinase and troponin I. Primary percutaneous coronary intervention (PCI) was performed, and the culprit was found to be left circumflex artery occlusion with triple vessel disease. Aspiration thrombectomy and percutaneous coronary balloon dilation were successful in achieving coronary reperfusion. The cardiac surgeon recommended completing the CABG surgery after the acute phase of AMI; however, the patient declined surgery due to her advanced age. 
+
+On the 6th day of hospitalization, the patient experienced sudden chest pain, dyspnea, agitation, and profuse sweating. An electrocardiogram did not show ST-segment elevation, but the patient was found to have atrial fibrillation with a heart rate of 140 beats per minute, which was treated with electrical defibrillation. The patient was diagnosed with pericardial tamponade and underwent pericardiocentesis with ultrasound guidance. Continuous drainage of hemorrhagic pericardial effusion stabilized her hemodynamic condition. 
+
+A subsequent echocardiogram revealed an abnormal cardiac chamber adjacent to the lateral wall of the left ventricle with a myocardial defect (11 mm) in the lateral wall. The diagnosis was congestive hemodynamic impairment caused by the rupture of the left ventricle after acute myocardial infarction, followed by acute pericardial tamponade. While the patient was advised to undergo surgery, she opted for conservative treatment with drug regimens that included dual antiplatelet, statin, β-blocker, and diuretics. 
+
+During her 36-month follow-up, there were no significant changes in her condition. The volume of the pesudoaneurysm increased to 65 × 55 mm only during the initial 2 months of follow-up. After 1 year, color Doppler ultrasound revealed that the blood flow within the aneurysm cavity decreased and echoes of the thrombus were observed. Once the thrombus almost filled the aneurysm cavity after 1.5 years, partial blood flow imaging was seen only nearby the defect of the left ventricular, which was confirmed by myocardial contrast echocardiography. Given the dynamic changes in the pseudoaneurysm, conservative treatment was continued. After 2.5 years of onset of AMI, the patient experienced angina and underwent LAD and RCA PCI. Following medication adherence and no significant changes during the follow up for 3 years, dual antiplatelet therapy was discontinued. 
+
+Discharge Diagnosis: Congestive Hemodynamic Impairment, Pseudoaneurysm of the Left Ventricular, Triple Vessel Disease
+
+Disposition: 
+
+The patient was discharged in stable condition with instructions to follow up with cardiology for routine medication monitoring and outpatient procedures as needed. The patient was informed of the importance of medication adherence and regular follow-up visits.","Discharge Summary:
+Patient Name: 
+Date of Admission: 
+Date of Discharge: 
+Admission Diagnosis: ST-Elevation Myocardial Infarction (STEMI)
+Hospital Course:
+The patient was admitted to the hospital because of severe chest pain that lasted about one hour.
+A heart test showed ST-segment elevation in leads I and AVL, indicating a heart attack.
+Blood tests revealed high levels of creatine kinase and troponin I, which are markers of heart injury.
+Doctors performed a primary percutaneous coronary intervention to open the blocked artery, and the procedure was successful.
+The blocked artery was the left circumflex artery, and the patient had three-vessel disease overall.
+Aspiration thrombectomy and balloon dilation restored blood flow to the heart muscle, improving circulation and reducing ischemia.
+The cardiac surgeon advised completing a coronary artery bypass graft after the acute phase of the heart attack.
+However, the patient declined surgery because of her advanced age and preferred conservative management at that time.
+On the sixth day in the hospital, the patient had sudden chest pain, shortness of breath, agitation, and heavy sweating.
+A heart test did not show ST-segment elevation, but the patient had atrial fibrillation with a rate of 140 beats per minute.
+The atrial fibrillation was treated with an electrical shock to restore normal rhythm and improve heart function.
+The patient was diagnosed with pericardial tamponade, a condition where fluid collects around the heart.
+Doctors performed pericardiocentesis using ultrasound guidance to remove the fluid, which stabilized the patient's blood pressure.
+A subsequent echocardiogram showed an abnormal chamber near the left ventricle's lateral wall with a 11-mm defect in the lateral wall.
+The diagnosis was congestive hemodynamic impairment caused by a left ventricular rupture after the heart attack, followed by acute pericardial tamponade.
+The patient was advised to undergo surgery, but she chose conservative treatment with dual antiplatelet, statin, beta-blocker, and diuretic medications.
+During the 36-month follow-up, there were no significant changes in the patient's condition overall, and she remained stable.
+The pseudoaneurysm grew to about 65 by 55 mm only during the first two months of follow-up.
+After one year, a color Doppler ultrasound showed reduced blood flow inside the aneurysm and a clot forming.
+After 1.5 years, the clot almost filled the aneurysm, and partial blood flow was seen near",,,,
+9,"Discharge Summary:
+
+Patient Name: [Name]
+Age: 56
+Gender: Male
+Admission Date: [Date]
+Discharge Date: [Date]
+Length of Stay: [Number] days
+
+Hospital Course:
+The patient was admitted to the hospital with severe headache and intermitting nausea. Imaging-studies showed a tumor in the posterior horn of the left lateral ventricle. A first surgical extirpation of the tumor was performed in 2002 at an external hospital. During postoperative reconvalescence, the patient suffered from several conditions including heparin-induced thrombocytopenia II, pulmonary embolism, deep venous thrombosis, and basal ganglion infarction with consecutive right-sided hemiparesis.
+
+Two years after the meningioma extirpation, the patient suffered from recurring headaches, dizziness, and ataxia. A cerebral CT-scan showed hydrocephalus, for which ventriculoperitoneal shunting was performed in 2004. The patient recovered well after the procedure. In 2005, the patient was diagnosed with a hemorrhaged tumor located in the caudal section of the aqueduct and dorsolaterally to the fourth ventricle. The tumor was removed, and the pathological examination revealed a recurrently hemorrhaged cavernoma with regressive transformations.
+
+In 2008, recurrence of the tumor in the posterior horn of the left lateral ventricle was discovered on MRI scans at the same location as the tumor before (2002). Additionally, another tumor located in the quadrigeminal lamina was detected. In 2009, surgical resection of the tumor in the left lateral ventricle was performed. The pathological examination confirmed the diagnosis of a collision tumor consisting of components of a meningioma and a cavernoma.
+
+Postoperative MRI showed no residual tumor, and the tumor in the quadrigeminal lamina seemed to be regressing. No adjuvant treatment was recommended due to the benign characteristics of both tumor entities and the spontaneous regression of the tumor in the quadrigeminal lamina. The patient was discharged in a stable condition.
+
+Diagnoses:
+1. Recurrent atypical meningioma WHO II°
+2. Recurrently hemorrhaged cavernoma with regressive transformations
+3. Hydrocephalus
+
+Procedures:
+1. Ventriculoperitoneal shunting
+2. Surgical extirpation of tumor, posterior horn of the left lateral ventricle
+3. Surgical resection of collision tumor
+
+Condition on Discharge:
+The patient was discharged in a stable condition without any evidence of tumor recurrence in the MRI follow-up.
+
+Follow-Up Plan:
+The patient is advised to attend regular MRI follow-ups to monitor any potential tumor recurrence and report any new symptoms to the healthcare provider immediately.","Discharge Summary:
+Patient Name: [Name]
+Age: 56
+Gender: Male
+Admission Date: [Date]
+Discharge Date: [Date]
+Length of Stay: [Number] days
+Hospital Course:
+The patient was admitted to the hospital with a severe headache and occasional nausea that prompted further evaluation.
+Imaging studies showed a tumor in the back part of the left side fluid-filled space in the brain.
+The first surgery to remove the tumor was done in 2002 at another hospital to treat the meningioma.
+After surgery, the patient developed low platelet count from heparin, a blood clot in the lung, and a leg vein clot.
+The patient also had a stroke in the deep brain area that caused weakness on the right side.
+Two years after the first tumor removal, the patient had recurring headaches, dizziness, and trouble walking.
+A brain scan showed fluid buildup, and a tube was placed to drain the fluid to the belly in 2004.
+The patient recovered well after the tube placement and had no complications during the hospital stay.
+In 2005, doctors found a bleeding tumor in the narrow channel between the brain’s fourth ventricle and the aqueduct.
+The tumor was removed, and tests showed it was a cavernoma that had bled and was shrinking.
+In 2008, an MRI showed the tumor in the left ventricle had come back at the same spot.
+Another MRI also found a tumor in the area where the thalamus meets the midbrain, called the quadrigeminal lamina.
+In 2009, surgeons removed the tumor in the left ventricle to treat the collision tumor.
+Tests showed the tumor was made of meningioma and cavernoma cells, a collision tumor as described.
+After surgery, an MRI showed no remaining tumor, and the tumor in the quadrigeminal lamina appeared to be shrinking.
+No extra treatment was needed because both tumors were benign and the quadrigeminal lamina tumor was shrinking on its own.
+The patient left the hospital in stable condition with no signs of tumor recurrence on follow-up MRI.
+Diagnoses:
+1. Recurrent atypical meningioma, grade II
+2. Recurrently bleeding cavernoma with regressive changes
+3. Hydrocephalus
+Procedures:
+1. Placement of a tube to drain fluid from the brain to the belly
+2. Surgery to remove the tumor in the left ventricle
+3. Surgery to remove the tumor made of meningioma and cavern",,,,
+10,"Discharge Summary:
+
+Hospital Course:
+The 31-year-old male patient was admitted for progressive blurred vision for 3 weeks. Brain MRI revealed multiple cystic lesions in the suprasellar cistern. Lumbar puncture was performed, which showed an increased opening pressure, elevated white blood cell count, elevated protein level, and decreased glucose level. Cerebrospinal fluid cytology revealed increased eosinophils. Cryptococcus antigen tests and an Xpert-MTB assay of the cerebrospinal fluid were negative. Next-generation sequencing of the cerebrospinal fluid identified T. solium DNA sequences. Serum and CSF were positive for C. cellulosae IgG antibodies. The patient was diagnosed with basal subarachnoid NCC and was treated with albendazole, dexamethasone, and ETV. Significant improvement was observed in the patient's symptoms and CSF findings after treatment.
+
+Discharge Diagnosis:
+Basal subarachnoid NCC.
+
+Discharge Medications:
+Albendazole, Dexamethasone, and ETV were administered.
+
+Discharge Instructions:
+The patient is advised to carefully follow up with the treatment for the condition as prescribed. It is recommended to avoid exposure to any uncooked pork or contaminated water. The patient is advised to seek medical attention immediately if there are any new or worsening symptoms.","Discharge Summary:
+Hospital Course:
+The 31-year-old male patient was admitted because his vision had become progressively blurry over the past three weeks.
+A brain MRI showed several fluid-filled sacs in the area above the pituitary gland.
+A spinal tap found high pressure, more white blood cells, high protein, and low sugar in the fluid.
+The fluid test showed more eosinophils, a type of white blood cell, than normal.
+Tests for Cryptococcus and tuberculosis in the spinal fluid came back negative, indicating no infection.
+Genetic testing of the spinal fluid found DNA from the parasite Taenia solium, confirming the diagnosis.
+Blood and spinal fluid tests showed antibodies to the bacteria Chryseobacterium cellulosae, indicating an infection.
+The patient was diagnosed with basal subarachnoid neurocysticercosis and was treated with albendazole, dexamethasone, and ETV.
+His symptoms and spinal fluid improved significantly after the treatment, showing clear improvement in his condition.
+Discharge Diagnosis:
+The discharge diagnosis is basal subarachnoid neurocysticercosis, a condition caused by the parasite Taenia solium.
+Discharge Medications:
+The patient was prescribed albendazole, dexamethasone, and ETV to treat the infection and reduce inflammation.
+Discharge Instructions:
+The patient should follow the treatment plan exactly as prescribed by the doctor to ensure proper recovery.
+Avoid eating raw or undercooked pork and stay away from contaminated water to prevent reinfection.
+Get medical help right away if any new or worsening symptoms appear, such as headache or vision changes.",,,,
+11,"Discharge Summary:
+
+Patient Information:
+Name: [redacted]
+Age: 40s
+Gender: Female
+
+Admission Date: [redacted]
+Discharge Date: [redacted]
+
+Hospital Course:
+The patient was admitted with an elevated lesion in the greater curvature at the fundus, detected during a screening for upper gastrointestinal endoscopy. The patient had no atrophic changes in the background mucosa and serological findings indicated the absence of H. pylori infection. 
+
+Examinations:
+On magnifying endoscopy with narrow-band imaging, the lesion was classified according to the VS (vessel plus surface) classification system, and an irregular pattern was detected. Histopathological examination of the resected specimens revealed that the background mucosa was histologically negative for H. pylori. 
+
+Diagnosis:
+Very well- to well-differentiated adenocarcinoma with a gastric phenotype of mixed fundic and pyloric mucosa type, which has differentiation towards pyloric glands and parietal cells, and foveolar epithelium.
+
+Treatment:
+The patient underwent surgical treatment.
+
+Follow-Up:
+The patient's condition is stable, and the patient has been discharged from the hospital.
+
+Instructions:
+The patient should follow a regular diet. In case of any abnormal symptoms, the patient should contact the hospital for further examination. 
+
+Summary:
+The patient was admitted with an elevated lesion in the greater curvature at the fundus, which was investigated and diagnosed as very well- to well-differentiated adenocarcinoma with a gastric phenotype of mixed fundic and pyloric mucosa type, which has differentiation towards pyloric glands and parietal cells, and foveolar epithelium. The patient underwent surgical treatment and has been discharged from the hospital. The patient should follow a regular diet and contact the hospital for further examination if any abnormal symptoms arise.","Discharge Summary:
+Patient Information:
+Name: [redacted]
+Age: 40s
+Gender: Female
+Admission Date: [redacted]
+Discharge Date: [redacted]
+Hospital Course:
+The patient was admitted because a growth was found in the upper stomach during a routine scope exam.
+The stomach lining looked normal and tests showed no H. pylori infection.
+Examinations:
+Using a special scope with narrow-band imaging, the growth was examined and found to have an uneven pattern.
+The removed tissue showed no H. pylori infection.
+Diagnosis:
+The cancer cells were very well to well differentiated and had a mixed fundic and pyloric type.
+They looked like pyloric glands, parietal cells, and foveolar cells.
+Treatment:
+The patient had surgery to remove the growth.
+Follow-Up:
+The patient’s condition is stable and the patient has been discharged from the hospital.
+Instructions:
+The patient should eat a normal diet.
+If any new or worrying symptoms appear, the patient should call the hospital for more check-ups.
+Summary:
+The patient was admitted with a growth in the upper stomach that was found to be a very well to well differentiated cancer with a mixed fundic and pyloric type.
+The cancer cells looked like pyloric glands, parietal cells, and foveolar cells.
+The patient had surgery to remove the growth and has been discharged from the hospital.
+The patient should eat a normal diet and call the hospital if any new or worrying symptoms appear.",,,,
+12,"DISCHARGE SUMMARY
+
+Patient Name: [REDACTED]
+Date of Admission: [REDACTED]
+Date of Discharge: [REDACTED]
+
+HOSPITAL COURSE:
+
+The 24-year-old patient presented to our outpatient clinic with a complaint of left-sided facial swelling. The patient noticed the swelling approximately three years ago and it remained untreated due to the chronic nature of the swelling and her relatively asymptomatic course. However, subsequently, the patient noticed an interval increase in the size of the swelling associated with pain. The pain was aggravated by palpation, lying on the left side and swallowing. The patient underwent a CT scan of the soft tissue of the neck with contrast, which confirmed a solid nodule in the superficial portion of the left parotid gland that appeared to be homogeneous and had a well-defined margin. MRI of the orbit/face/neck without contrast revealed an indeterminate complex heterogeneous enhancing mass within the superficial left parotid gland. The mass measured 4 x 2.7 x 3 cm. Ultrasound-guided percutaneous core needle biopsy of the left parotid mass revealed a salivary gland neoplasm with squamous and mucinous differentiation. The patient underwent nerve-sparing left parotidectomy, fat grafting and reconstruction. The final histopathological appraisal concluded that this was a cellular pleomorphic adenoma with mucinous and squamous differentiation with reactive lymph nodes. The patient has been followed in the outpatient setting where the surgical site is healing well without any facial nerve abnormalities.
+
+HOSPITAL COURSE SUMMARY:
+
+The patient was admitted to our outpatient clinic with a left-sided facial swelling complaint. A CT scan of the soft tissue of the neck with contrast and MRI of the orbit/face/neck without contrast revealed an indeterminate mass in the superficial portion of the left parotid gland. Ultrasound-guided percutaneous core needle biopsy revealed a salivary gland neoplasm with squamous and mucinous differentiation. The patient underwent nerve-sparing left parotidectomy, fat grafting and reconstruction after a final histopathological appraisal concluded that this was a cellular pleomorphic adenoma with mucinous and squamous differentiation with reactive lymph nodes. The surgical site is healing well without any facial nerve abnormalities.","DISCHARGE SUMMARY
+Patient Name: [REDACTED]
+Date of Admission: [REDACTED]
+Date of Discharge: [REDACTED]
+HOSPITAL COURSE:
+The patient is a 24-year-old woman who came to the clinic with swelling on the left side of her face.
+She first noticed the swelling about three years ago and did not treat it because it was not painful.
+Later, the swelling grew larger and caused pain that got worse when the area was touched, when she lay on her left side, and when she swallowed.
+A CT scan of the neck showed a solid lump in the left parotid gland that looked even and had clear edges.
+An MRI of the face, eye, and neck without contrast showed an unclear mass in the left parotid gland.
+The mass measured about 4 centimeters by 2.7 centimeters by 3 centimeters in size overall.
+A biopsy taken with ultrasound guidance showed a salivary gland tumor with both squamous and mucinous cell types.
+The patient had surgery to remove the left parotid gland while saving the facial nerve, then fat grafting and reconstruction.
+The final pathology report said the tumor was a cellular pleomorphic adenoma with mucinous and squamous cell features.
+It also showed reactive lymph nodes in the surrounding tissue, indicating some local spread that was treated.
+The surgical site is healing well and there are no signs of facial nerve problems.
+HOSPITAL COURSE SUMMARY:
+The patient was seen in the outpatient clinic for left-sided facial swelling that had been present for several years.
+A CT scan of the neck with contrast and an MRI of the face, eye, and neck without contrast showed an unclear mass in the left parotid gland.
+A biopsy taken with ultrasound guidance showed a salivary gland tumor with both squamous and mucinous cell types.
+The patient had surgery to remove the left parotid gland while saving the facial nerve, then fat grafting and reconstruction.
+The final pathology report said the tumor was a cellular pleomorphic adenoma with mucinous and squamous cell features.
+It also showed reactive lymph nodes in the surrounding tissue, indicating some local spread that was treated.
+The surgical site is healing well and there are no signs of facial nerve problems.",,,,
+13,"Discharge Summary:
+
+Admission Date: 
+
+Discharge Date: 
+
+Patient Name: 
+
+Medical Record Number: 
+
+Hospital Course: 
+
+The patient was admitted with a 5-month history of exertional dyspnea and a 2-week history of intermittent palpitation. An echocardiogram revealed a large cystic lesion that was compressing the right side of the heart. CT scan revealed a large cystic mass in the right anterior mediastinum. Surgical exploration was performed, and a large aneurysm in the distal portion of the right coronary artery was diagnosed by CT angiography and coronary angiography. The aneurysm was resected, and the right coronary artery was ligated by a Prolene stitch. The patient was weaned off the cardiopulmonary bypass without any complication and discharged at the sixth postoperative day under good general condition. 
+
+Hospital Course Summary: 
+
+A 32-year-old woman was admitted with a 5-month history of exertional dyspnea and a 2-week history of intermittent palpitation. The patient had a large cystic lesion compressing the right side of the heart and a large cystic mass in the right anterior mediastinum. A surgical exploration was performed, and a large aneurysm in the distal portion of the right coronary artery was diagnosed by CT angiography and coronary angiography. The aneurysm was resected, and the right coronary artery was ligated by a Prolene stitch. The patient was weaned off the cardiopulmonary bypass without any complication and discharged at the sixth postoperative day under good general condition.","Discharge Summary:
+Admission Date: 
+Discharge Date: 
+Patient Name: 
+Medical Record Number: 
+Hospital Course: 
+The patient was admitted because of shortness of breath on activity and occasional fast heartbeat for two weeks.
+An ultrasound of the heart showed a large fluid-filled lump pressing on the right side of the heart.
+A CT scan found a large fluid-filled lump in the front middle part of the chest.
+Surgery was done and a large bulge in the lower part of the right heart artery was found.
+The bulge was removed and the artery was tied off with a Prolene stitch during the operation.
+The patient was taken off the heart-lung machine without problems and left the hospital six days after surgery feeling well.
+Hospital Course Summary:
+A 32-year-old woman was admitted because of shortness of breath on activity and occasional fast heartbeat for two weeks.
+She had a large fluid-filled lump pressing on the right side of the heart and a large fluid-filled lump in the front middle part of the chest.
+Surgery was done and a large bulge in the lower part of the right heart artery was found.
+The bulge was removed and the artery was tied off with a Prolene stitch during the operation.
+The patient was taken off the heart-lung machine without problems and left the hospital six days after surgery feeling well.",,,,
+14,"Discharge Summary
+Patient: 19-year-old female
+Clinical Visit Date: [insert date]
+
+Hospital Course:
+The patient was admitted to the Department of Orthodontics and Dentofacial Orthopaedics with the chief complaint of forwardly positioned upper front teeth. On extra oral examination, it was observed that the patient had symmetric facial appearance, convex profile, and incompetent lips with Class II molar and canine relation bilaterally. An overjet of 7 mm and an overbite of 70% were noted. Cephalometric findings showed a hypodivergent growth pattern, skeletal Class II malocclusion with protruded maxilla and reduced mandibular length. Furthermore, orthopantomogram findings revealed erupting mandibular third molars. Based on the patient's diagnostic parameters and arch discrepancies, fixed orthodontic mechanotherapy with the extraction of all four first premolars was decided.
+
+Treatment:
+Maxillary and mandibular dentitions were bonded using slot brackets, and initial alignment was done with progressing 016 NiTi to 019 × 025 NiTi wires. Later, 019 × 025 stainless steel wires were continued for 1 month followed by the extraction of all four first premolars. Miniscrews were placed in the maxillary arch with respect to the maxillary second premolar and the maxillary molar for retraction of maxillary incisors. Concurrently, mandibular buccal segment protraction was performed using Class II elastics. Customized utility arch correction was done with 016 × 022 TMA wire for deep bite correction along with Class II mechanics. Final finishing and detailing were done with settling elastics. The total duration of treatment was 22 months.
+
+Outcome:
+The patient's final orthodontic treatment had satisfactory results with ideal overjet and overbite as well as achieving Class I canine and molar relation. The patient showed improvement in smile esthetics and an optimum soft tissue profile. Post-treatment records show that an adequate level of lip competence was achieved.
+
+Follow-up:
+The patient's long-term retention was planned to sustain the correction achieved in her orthodontic treatment. A long-term follow-up protocol was prescribed for monitoring of erupted mandibular third molars and maintenance of occlusion stability. The patient was scheduled for periodic evaluations to minimize the chances of relapse. 
+
+Signed, 
+[insert clinician name and title]","Discharge Summary
+Patient: 19-year-old female
+Clinical Visit Date: [insert date]
+Hospital Course:
+The patient was admitted to the Orthodontics and Dentofacial Orthopaedics department because she wanted her upper front teeth moved forward.
+On exam, her face looked even, her profile was convex, and her lips did not meet well.
+Her back teeth were in a Class II relationship on both sides, meaning they were too far back.
+She had an overjet of 7 mm and an overbite of 70%, which means her upper teeth stuck out too far and her lower teeth were too high.
+X-ray measurements showed her jaw grew forward, giving a skeletal Class II pattern with a protruding upper jaw and a short lower jaw.
+An orthopantomogram revealed that her lower wisdom teeth were erupting, which means they were coming in.
+Based on these findings, the orthodontist decided to use braces to move the teeth and remove all four first premolars.
+Treatment:
+Brackets were placed on both the upper and lower teeth, and the teeth were aligned using 016 nickel-titanium wire, then 019×025 nickel-titanium wire.
+Next, a 019×025 stainless steel wire was used for one month, after which all four first premolars were removed.
+Small titanium screws were placed in the upper jaw near the second premolar and the molar to pull the front teeth back.
+At the same time, the lower back teeth were pushed forward using rubber bands on the inside of the cheeks.
+A special wire was used to correct the bite depth and to maintain the Class II relationship.
+Final adjustments were made with settling rubber bands to ensure the teeth fit together properly.
+The treatment lasted a total of 22 months, which is about 1.8 years, from start to finish.
+Outcome:
+The final braces treatment gave the patient an ideal overjet and overbite, and the canine and molar teeth were in a Class I relationship.
+Her smile looked better and her gum line was optimal, giving her a more attractive appearance.
+After treatment, her lips could close normally, showing good lip competence and preventing tooth exposure.
+Follow-up:
+The plan is to keep the teeth in the new position with long-term retainers to maintain the treatment results.
+A follow-up schedule will monitor the erupting lower wisdom teeth and check that the bite stays stable.
+Regular check-ups will help prevent the teeth from moving back to their original position, reducing the chance of relapse.
+Signed,
+[insert clinician name and",,,,
+15,"Hospital Course:
+The 60-year-old female patient with a palpable mass on the dorsal surface of her right foot underwent a lesion biopsy, which revealed calcifying aponeurotic fibroma. The lesion was totally excised, and the patient had an uneventful postoperative recovery. The patient has been well with no signs of recurrence during the last six months. 
+
+Diagnosis:
+Calcifying aponeurotic fibroma 
+
+Inpatient Progress:
+The patient was in good general condition without any history of trauma. A physical examination revealed a hard, painless, and immobile mass on the dorsal surface of the right foot. Radiographs revealed calcifying soft tissue mass without bone involvement. The lesion biopsy confirmed the diagnosis of calcifying aponeurotic fibroma. 
+
+Treatment:
+Total excision of the lesion 
+
+Outpatient Treatment and Follow-up:
+The patient has been well with no signs of recurrence during the last six months. 
+
+Summary:
+The 60-year-old female patient presented with a palpable mass on the dorsal surface of her right foot. The lesion was histologically identified as calcifying aponeurotic fibroma, which was totally excised, and the patient had an uneventful postoperative recovery. The patient has been well with no signs of recurrence during the last six months.","Hospital Course:
+The 60-year-old woman felt a lump on the top of her right foot during a routine exam.
+A biopsy showed the lump was calcifying aponeurotic fibroma, a benign growth that does not spread.
+The lump was removed completely and the patient recovered well with no complications during the hospital stay.
+She has been well and the lump has not returned in the last six months.
+Diagnosis:
+The diagnosis is calcifying aponeurotic fibroma, a benign growth that does not spread and was removed.
+Inpatient Progress:
+The patient was in good overall health and had no history of injury or illness.
+Exam showed a hard, painless lump on the top of the right foot that did not move.
+X-rays showed a calcium-containing soft tissue lump that did not involve the bone at all.
+The biopsy confirmed the lump was calcifying aponeurotic fibroma, a benign growth that does not spread.
+Treatment:
+The lump was removed completely by surgery, and the patient had no complications during the procedure.
+Outpatient Treatment and Follow-up:
+The patient has been well and the lump has not returned in the last six months.
+Summary:
+The 60-year-old woman felt a lump on the top of her right foot during a routine exam.
+The lump was identified as calcifying aponeurotic fibroma, a benign growth that does not spread.
+The lump was removed completely and the patient recovered well with no complications during the hospital stay.
+She has been well and the lump has not returned in the last six months.",,,,
+16,"Discharge Summary:
+
+Patient Name: [REDACTED]
+DOB: [REDACTED]
+Admission Date: [REDACTED]
+Discharge Date: [REDACTED]
+
+History of Presenting Illness:
+The patient presented with stable angina pectoris lasting for two months. The patient had a past medical history of diabetes and high cholesterol. He was a smoker with no previous cardiac events. Coronary angiography was performed due to a positive treadmill exercise test, which revealed diffuse dissection that originated from the proximal bed of the second obtuse marginal-II branch and extended to its distal bed.
+
+Hospital Course:
+The patient received medical treatment with a beta-blocker and aspirin, as coronary angioplasty was not feasible due to technical difficulties and the narrowness of the ischemia-related artery. The patient remained stable throughout the hospital admission and was discharged with instructions to follow up with his primary care physician.
+
+Summary:
+The patient, a 52-year-old male, presented with stable angina pectoris, and a coronary angiogram revealed diffuse dissection originating from the second obtuse marginal-II branch. He was managed with a beta-blocker and aspirin, and due to the technical difficulties, coronary angioplasty was not feasible. The patient was discharged to follow up with his primary care physician.","Discharge Summary:
+Patient Name: [REDACTED]
+DOB: [REDACTED]
+Admission Date: [REDACTED]
+Discharge Date: [REDACTED]
+History of Presenting Illness:
+The patient had chest pain that comes and goes and has lasted for about two months.
+The patient has a history of diabetes and high cholesterol, which are long-term health conditions.
+The patient smokes but has never had a heart attack or other cardiac event before.
+A heart test called a treadmill exercise test was positive, so doctors did a heart artery X-ray.
+The X-ray showed a tear in the artery that started near the second obtuse marginal-II branch.
+It extended to the far end of that branch, which is a small side artery.
+Hospital Course:
+The patient was given a beta-blocker medicine and aspirin to help the heart work better.
+A balloon procedure to open the artery could not be done because the artery was too narrow and hard to reach.
+The patient stayed stable during the hospital stay and was sent home with instructions to see the primary care doctor.
+Summary:
+The patient is a 52-year-old man who came in with chest pain that comes and goes.
+A heart artery X-ray showed a tear in the second obtuse marginal-II branch, which is a small side artery.
+He was treated with a beta-blocker and aspirin, and a balloon procedure could not be done because the artery was narrow and hard to reach.
+He was discharged to follow up with his primary care doctor for ongoing care and monitoring.",,,,
+17,"Hospital Course:
+
+This 68-year-old male presented with suspected gastric and rectal cancer. The patient underwent a multidisciplinary assessment and NOSES surgery was performed to resect the tumors. No complications occurred during the hospitalization period. The patient was monitored closely and deemed stable throughout the recovery period. Recommended follow-up includes outpatient oncology evaluation and surveillance.
+
+History and Background:
+
+The patient has a past medical history of hypertension and coronary artery disease with a body mass index of 28.1 kg/m2. The patient was evaluated with imaging and biopsies which indicated adenocarcinoma in both the gastric and rectal areas. Pathologic staging revealed gastric cT2N0M0 (AJCC stage I) and rectal cT2N0M0 (AJCC stage I).
+
+Hospital Course:
+
+The patient was admitted and underwent NOSES surgery to remove both the gastric and rectal tumors. The procedure was performed without complications. The patient recovered without any adverse events and was monitored for any complications during his hospital stay. The patient was discharged with follow-up instructions to be evaluated by an oncologist and adhere to surveillance standards.
+
+Discharge Medications:
+
+None.
+
+Follow-up Appointments:
+
+Outpatient oncology evaluation. 
+
+Hospital Disposition:
+
+The patient was discharged in stable condition.","Hospital Course:
+The patient is a 68-year-old man who came in with suspected stomach and rectal cancer.
+He had a team review and underwent NOSES surgery to remove the tumors.
+No problems occurred during his hospital stay.
+He was watched closely and remained stable during recovery.
+He should see an oncologist for follow-up and follow the recommended check-ups.
+History and Background:
+The patient has high blood pressure and heart artery disease.
+His body mass index is 28.1.
+Tests showed adenocarcinoma in both the stomach and rectum.
+Pathology found the stomach cancer was stage I and the rectal cancer was also stage I.
+Hospital Course:
+He was admitted and had NOSES surgery to remove both stomach and rectal tumors.
+The surgery went smoothly with no complications.
+He recovered well and was watched for any problems during his hospital stay.
+He was discharged with instructions to see an oncologist for follow-up and to follow the recommended check-ups.
+Discharge Medications:
+None.
+Follow-up Appointments:
+Outpatient oncology evaluation.
+Hospital Disposition:
+The patient was discharged in stable condition.",,,,
+18,"Discharge Summary:
+
+Patient: 52-year-old male with a 17.5-month history of disorder of consciousness (DOC)
+Hospital Course: The patient was involved in a motor vehicle accident resulting in multiple injuries including subdural hematoma, subarachnoid hemorrhage, right temporal lobe contusion, and multiple fractures. Despite intensive care measures, environmental stimulation, rehabilitation exercises, and symptom-corresponding treatments, the patient continued to exhibit impaired consciousness. Three MRIs were performed at 1.5, 7.5, and 17.5 months after the brain injury, which revealed the presence of focal malacia, oedema, gliosis, and enlarged bilateral ventricles. Behavioral assessments using the Coma Recovery Scale-Revised (CRS-R) were also conducted at these intervals, and the patient exhibited evidence of behavioral responsiveness (CRS-R score 4) at the first evaluation, evidence of changes in the patient's state of consciousness (CRS-R score 12) at 6 months after injury, and evidence of cognitive and behavioral improvement (CRS-R score 14) at 17.5 months after injury. 
+Tests and Procedures: 7 T MRI, 3D T1-weighted imaging (T1WI), and diffusion tensor imaging (DTI).
+
+Diagnosis: Disorder of consciousness (DOC)
+
+Hospital Course Summary:
+The patient sustained extensive injuries due to a motor vehicle accident and suffered a subdural hematoma, subarachnoid hemorrhage, and right temporal lobe contusion. Despite extensive medical management and symptom-corresponding treatments, the patient continued to exhibit a disorder of consciousness. Repeated MRIs revealed focal malacia, oedema, gliosis, and enlarged bilateral ventricles. The patient was evaluated using the Coma Recovery Scale-Revised (CRS-R), which indicated behavioral responsiveness (CRS-R score 4) at the first assessment, changes in the patient's state of consciousness (CRS-R score 12) at 6 months after injury, and improvement in cognitive and behavioral abilities (CRS-R score 14) at 17.5 months after injury. The patient was discharged with instructions for ongoing rehabilitation with family support.","Discharge Summary:
+Patient: 52-year-old male with a 17.5-month history of a severe brain injury that affects awareness and responsiveness
+Hospital Course: The patient was in a car crash that caused several injuries to the brain and skull
+These injuries included bleeding on the brain surface, bleeding around the brain, and a bruise on the right side of the brain
+The patient also had several broken bones in the skull and spine
+Despite intensive care, special stimulation, rehab exercises, and treatments aimed at specific symptoms, the patient's awareness and responsiveness did not improve
+Three brain scans were done at 1.5, 7.5, and 17.5 months after the injury
+These scans showed damaged brain tissue, swelling, scar tissue, and enlarged fluid spaces on both sides of the brain
+Behavioral tests using the Coma Recovery Scale-Revised were done at the same times
+At the first test, the patient showed basic responsiveness (CRS-R score 4)
+At the six-month test, the patient showed changes in awareness (CRS-R score 12)
+At the 17.5-month test, the patient showed improvement in thinking and behavior (CRS-R score 14)
+Tests and Procedures: A special MRI with high resolution (7 T) and detailed 3D images (T1-weighted) were performed
+Diffusion tensor imaging (DTI) was also used to study brain connections
+Diagnosis: Severe brain injury that affects awareness and responsiveness
+Hospital Course Summary:
+The patient suffered extensive injuries from a car crash
+These injuries included bleeding on the brain surface, bleeding around the brain, and a bruise on the right side of the brain
+Despite extensive medical care and treatments aimed at specific symptoms, the patient continued to have a severe brain injury that affects awareness and responsiveness
+Repeated brain scans showed damaged brain tissue, swelling, scar tissue, and enlarged fluid spaces on both sides of the brain
+Behavioral tests using the Coma Recovery Scale-Revised showed basic responsiveness (CRS-R score 4) at the first test
+They also showed changes in awareness (CRS-R score 12) at the six-month test
+And they showed improvement in thinking and behavior (CRS-R score 14) at the 17.5-month test
+The patient was discharged with instructions to continue rehabilitation and receive support from family members",,,,
+19,"Discharge Summary
+
+Patient Name: [Name]
+Medical Record Number: [Number]
+
+Hospital Course:
+The patient was admitted with lower extremity edema and proteinuria on urinalysis. A renal biopsy established the diagnosis of lambda light chain amyloidosis. Treatment included melphalan- and dexamethasone-based chemotherapy followed by autologous stem cell transplantation. Unfortunately, despite therapy, total serum-free light chain levels and massive nephrotic syndrome persisted. Nine months later, the patient underwent hand-assisted laparoscopic ligation of both native ureters to decrease daily urinary protein loss and restore plasma oncotic pressure. Post-operative renal ultrasound confirmed mild hydronephrosis. During the 12-day hospitalization, nutritional and functional status improved, and he was dismissed home on long-term hemodialysis requiring minimal assistance for ambulation.
+
+Final Diagnoses:
+Lambda light chain amyloidosis with massive nephrotic syndrome and autonomic dysfunction with disabling orthostatic hypotension.
+
+Procedures:
+Hand-assisted laparoscopic ligation of both native ureters.
+
+Follow-Up Plans:
+The patient will follow up with the nephrologist for long-term management of his renal disease. Hemodialysis will be continued as needed. Further imaging studies may be considered to evaluate the patient's renal function.","Discharge Summary
+Patient Name: [Name]
+Medical Record Number: [Number]
+Hospital Course:
+The patient was admitted because of leg swelling and protein in the urine.
+A kidney biopsy showed lambda light chain amyloidosis.
+Treatment included melphalan and dexamethasone chemotherapy followed by a stem cell transplant using the patient's own cells.
+Despite treatment, the patient's abnormal light chain levels and severe kidney protein loss continued.
+Nine months later, the patient had surgery to tie off both ureters using small cuts and a camera.
+This surgery aimed to lower daily urine protein loss and raise plasma pressure.
+After surgery, a kidney ultrasound showed mild swelling of the kidneys.
+During the nine-day hospital stay, the patient's nutrition and activity improved.
+The patient was sent home needing only light help to walk and requiring long-term dialysis.
+Final Diagnoses:
+Lambda light chain amyloidosis with severe kidney protein loss and nerve problems causing low blood pressure when standing.
+Procedures:
+Surgery to tie off both ureters using small cuts and a camera.
+Follow-Up Plans:
+The patient will see the kidney doctor for long-term care of the kidney disease.
+Hemodialysis will continue as needed.
+More imaging tests may be done to check kidney function.",,,,
+20,"Discharge Summary:
+
+Admitting Diagnosis: Hepatitis B virus-related liver cirrhosis with portal vein thrombosis and portal systemic encephalopathy.
+
+Hospital Course:
+The patient underwent donor liver transplantation and was admitted to the surgical intensive care unit for postoperative care. Medications included aspirin and nafamostat mesilate to prevent thrombosis, prostaglandin E1 to vasodilate the anastomosed vessels, tacrolimus and prednisolone for immunosuppression, and ampicillin/sulbactam, fluconazole, and nystatin for prophylaxis against infection.
+
+On postoperative day 6, the patient showed deteriorated mental status and decreased motor power on both upper extremities (grade III) and lower extremities (grade I). A neurologic examination was performed by a neurologist. Over the next 6 days, the patient experienced seizures with abnormal mouth chewing movements, which were controlled by the administration of antiepileptic drugs (AED). A brain computed tomography (CT) scan on pod 15 showed that the existing intracerebral hemorrhage (ICH) had decreased slightly.
+
+Disposition: The patient was discharged two weeks later and demonstrated movement in blinking his eyes and shaking his head. Follow-up brain magnetic resonance imaging (MRI) showed a 50% decrease in the size of the ICH three months after liver transplantation. 
+
+Diagnosis at discharge: Hepatitis B virus-related liver cirrhosis with portal vein thrombosis, portal systemic encephalopathy, and intracerebral hemorrhage.","Discharge Summary:
+Admitting Diagnosis: Liver scarring from hepatitis B with blood clot in the main liver vein and brain problems from poor blood flow.
+Hospital Course:
+The patient received a donor liver transplant and was moved to the surgical intensive care unit for recovery.
+Medications included aspirin and nafamostat to prevent clots, prostaglandin E1 to widen blood vessels, tacrolimus and prednisolone to prevent rejection, and antibiotics, antifungals, and antivirals to prevent infection.
+On day six after surgery, the patient's thinking worsened and strength in both arms was weak (grade III).
+Strength in both legs was normal (grade I).
+A neurologist performed a nerve exam.
+Over the next six days, the patient had seizures with odd mouth movements that were controlled with seizure medicine.
+A brain CT scan on day fifteen showed the existing brain bleed had gotten a little smaller.
+Disposition:
+The patient left the hospital two weeks later and could still move his eyes and head.
+A brain MRI three months after the transplant showed the brain bleed was about half its original size.
+Diagnosis at discharge: Liver scarring from hepatitis B with blood clot in the main liver vein and brain problems from poor blood flow, plus a brain bleed.",,,,
+21,"Hospital Course Summary:
+
+Admission Date: 
+Discharge Date: 
+
+History of Present Illness:
+The patient, a 52-year-old man with no significant medical history, presented with a dry cough, recurrent streaky hemoptysis and occasional low grade fever for the last one and half years. The expectoration was mucoid, scanty in amount and there was no postural or seasonal variation. Fever was of low grade (up to 100°F), and irregular, without any definite periodicity. 
+
+Physical Examination:
+The patient was well built and well-nourished with no clubbing or peripheral lymphadenopathy. Respiratory system examination was essentially normal except impaired percussion note and diminished vesicular breath sound in the left infraclavicular region. Trachea was central in position. Cardiovascular system (CVS) and Central Nervous System (CNS) and abdominal examinations were unremarkable. 
+
+Diagnostic Evaluation:
+Complete blood count and blood biochemistry was normal except anemia (Hb: 10.8 gm %) and high ESR (40 mm/hr). HIV serology was nonreactive, and sputum smear failed to show any AFB on two occasions. Chest X-ray revealed nonhomogenous opacity in left upper zone with upward and forward retraction of oblique fissure, left hilar prominence and raised left hemidiaphragm. CECT thorax showed collapse-consolidation with a few air bronchograms and tiny calcification in the left upper lobe. 
+
+Fiberoptic Bronchoscopy:
+The patient underwent fibroptic bronchoscopy, which revealed hyperemic and swollen bronchial mucosa of the left upper lobe with a globular mass, which was partially occluding the left upper lobe opening. Biopsy was taken from the mass, white cheesy material was seen coming out of it, and it was sent for HPE. BAL fluid was also sent for Gram stain and C/S, AFB stain and M. Tuberculosis culture. The BAL fluid failed to show any organism in smear, but the bronchial biopsy showed typical caseating epitheloid granuloma. Postbronchoscopic sputum showed AFB in smear examination. The BAL fluid grew Mycobacterium tuberculosis after three weeks. 
+
+Management:
+After review of the investigation reports, the patient was started on Category I ATD (2H 3R3Z3E3/4H3R3) under DOTS along with oral prednisolone. Three months post-treatment, repeat bronchoscopy showed restored patency of the left upper lobe bronchus with stenosis.
+
+Discharge Diagnosis:
+Tuberculosis
+
+Disposition:
+The patient was discharged in stable condition and instructed regarding TB care, including medication schedule, importance of compliance with therapy, and proper precautions to be taken when coughing and in public settings. Follow-up appointment was scheduled with the primary care physician.","Hospital Course Summary:
+Admission Date: 
+Discharge Date: 
+History of Present Illness:
+The patient is a 52-year-old man with no major health problems and no prior illnesses.
+He had a dry cough, occasional streaky blood-tinged sputum, and low-grade fever for about one and a half years.
+The sputum was thin, little, and did not change with posture or the seasons.
+His fever was low, irregular, and did not have a clear pattern.
+Physical Examination:
+The patient was well built, well nourished, and had no clubbing or swollen lymph nodes.
+His lung exam was normal except for a dull sound and reduced breath sounds in the left lower chest.
+His trachea was in the normal midline position.
+His heart, nervous system, and belly exams were normal.
+Diagnostic Evaluation:
+Blood tests were normal except for low hemoglobin (10.8 g/dL) and high ESR (40 mm/hr).
+HIV test was negative and sputum smear did not show TB bacteria on two samples.
+Chest X-ray showed an uneven spot in the left upper lung with a lifted fissure, enlarged hilum, and raised diaphragm.
+CT scan of the chest showed the left upper lobe collapsed with some air-filled bronchi and tiny calcium spots.
+Fiberoptic Bronchoscopy:
+Bronchoscopy showed the left upper lobe bronchus was red and swollen with a round mass that partly blocked its opening.
+Biopsy of the mass revealed caseating granulomas, and sputum from the bronchoscopy showed TB bacteria.
+BAL fluid did not show bacteria in smear but the biopsy showed typical caseating granulomas.
+After bronchoscopy, sputum smear also showed TB bacteria.
+BAL fluid grew TB bacteria after three weeks.
+Management:
+Based on the test results, the patient started Category I anti-TB treatment (2H 3R3Z3E3/4H3R3) under DOTS with oral prednisolone.
+Three months after treatment, a repeat bronchoscopy showed the left upper lobe bronchus was open again but narrowed.
+Discharge Diagnosis:
+Tuberculosis
+Disposition:
+The patient was discharged in stable condition and given TB care instructions.
+These instructions included taking medicines as prescribed, following the treatment plan, and following proper cough and public safety precautions.
+A follow-up appointment was scheduled with the primary care physician.",,,,
+22,"Discharge summary:
+
+Patient Name: Not mentioned
+Gender: Male
+Age: 82 years
+Date of admission: Not mentioned
+Date of discharge: Not applicable
+
+Hospital Course:
+
+An 82-year-old male patient was admitted with two lesions on his scalp, which were initially diagnosed as basal cell carcinoma. He underwent Wide Local Excision (WLE) to remove the lesions, with surgical margins of 1.5 cm for the anterior lesion and 0.5 cm for the posterior lesion. The anterior defect was reconstructed with STSG, and the posterior defect was repaired using a simple advancement local flap.
+
+Histopathological examination of the resected lesions revealed that both were Merkel Cell Carcinoma (MCC). The patient's condition deteriorated, and he developed aspiration pneumonia one month after surgery. Unfortunately, he passed away before receiving the scheduled radiation therapy.
+
+Summary:
+
+The patient, an 82-year-old male, was admitted for the treatment of two scalp lesions initially diagnosed as basal cell carcinoma. Surgical removal of the lesions was carried out, followed by reconstruction of the defects. Subsequent histopathological examination revealed that the lesions were MCC. The patient later developed aspiration pneumonia and passed away before receiving scheduled radiation therapy.","Discharge summary:
+Patient Name: Not mentioned
+Gender: Male
+Age: 82 years
+Date of admission: Not mentioned
+Date of discharge: Not applicable
+Hospital Course:
+The patient, an 82-year-old man, was admitted for two scalp spots first thought to be skin cancer.
+He had surgery to remove the spots, with extra tissue taken around the front spot and less around the back spot.
+The front wound was covered with a skin graft, and the back wound was closed using a nearby skin flap.
+Lab tests showed both spots were Merkel cell carcinoma, a rare skin cancer.
+One month after surgery, he got a lung infection from inhaling food or liquid.
+Sadly, he died before the planned radiation treatment could start.
+Summary:
+The patient, an 82-year-old man, was admitted for two scalp spots first thought to be skin cancer.
+Surgery removed the spots, and the wounds were repaired with a skin graft and a nearby skin flap.
+Lab tests later showed both spots were Merkel cell carcinoma, a rare skin cancer.
+He later developed a lung infection from inhaling food or liquid.
+Sadly, he died before the planned radiation treatment could start.",,,,
+23,"Hospital Course Summary:
+
+Admission Date: [insert date]
+Discharge Date: [insert date]
+
+Patient Name: [insert name]               Medical Record Number: [insert number]
+
+Reason for Admission:
+The patient was admitted due to suspicion of a mycotic aortic aneurysm and severe infection.
+
+Hospital Course:
+The patient underwent intravenous antibiotic therapy for four weeks and was started on tazobactam/piperacillin hydrate. Computed tomography angiography showed a descending aortic aneurysm measuring 70 × 70 mm, which extended 20 mm in only 2 weeks. Transcatheter endovascular aortic repair (TEVAR) was performed under local anesthesia using two 37 × 200 mm Conformable stent grafts (W. L. Gore & Associates, Inc., Newark, DE, USA) to prevent aortic rupture.
+
+Upon discharge, the patient was afebrile with a normal white blood cell count and C-reactive protein level. Oral antibiotics were continued for 18 months. The patient underwent monitoring by computed tomography 15 months after the TEVAR, and the aneurysm had regressed significantly, measuring 53 × 53 mm. The patient had no further signs of infection at the time of writing.
+
+Diagnosis:
+Descending aortic aneurysm
+
+Procedures:
+Transcatheter endovascular aortic repair (TEVAR)
+
+Condition at Discharge:
+The patient was discharged without serious complications.
+
+Follow-Up:
+The patient was monitored via computed tomography 15 months after TEVAR repair, at which point there was significant regression of the aneurysm. The patient was free from antibiotics at the time of writing.","Hospital Course Summary:
+Admission Date: [insert date]
+Discharge Date: [insert date]
+Patient Name: [insert name]               Medical Record Number: [insert number]
+Reason for Admission:
+The patient was admitted because doctors suspected a fungal bulge in the main artery and a serious infection.
+Hospital Course:
+The patient received antibiotics through a vein for four weeks and started on the antibiotic tazobactam/piperacillin.
+A CT scan showed a bulge in the lower part of the main artery about 70 by 70 mm.
+The bulge grew 20 mm in just two weeks, which is a fast increase for this condition.
+Doctors placed two stents inside the artery to repair the bulge and prevent rupture during the procedure.
+The stents were 37 mm wide and 200 mm long, made by W. L. Gore & Associates.
+When leaving the hospital, the patient had no fever, normal white blood cell count, and normal inflammation marker.
+The patient took antibiotics by mouth for 18 months to treat any remaining infection and prevent recurrence.
+Fifteen months after the stent procedure, a CT scan showed the bulge had shrunk to 53 by 53 mm.
+At the time of this writing, the patient had no signs of infection or complications.
+Diagnosis:
+Bulge in the lower part of the main artery
+Procedures:
+Procedure to place stents inside the artery to repair the bulge
+Condition at Discharge:
+The patient left the hospital with no serious problems or complications after the stent procedure.
+Follow-Up:
+Fifteen months after the stent procedure, a CT scan showed the bulge had shrunk significantly.
+At the time of this writing, the patient was not taking antibiotics and had no signs of infection.",,,,
+24,"Discharge Summary
+
+Patient Name: [REDACTED]
+Date of Admission: [REDACTED]
+Date of Discharge: [REDACTED]
+DOB: [REDACTED]
+Sex: Male
+Diagnosis: Mild Intellectual Disability with Paranoid Schizophrenia
+
+Hospital Course:
+The patient, a 28-year-old male, presented with irritable behavior, muttering to self, and hearing unreal voices of songs for 12 years. On MSE, delusion of reference, with 2nd person auditory hallucinations were present. IQ was found to be 54. Based on clinical evaluation, the patient was diagnosed with mild ID with Paranoid Schizophrenia. The patient was started on tablet olanzapine 10 mg and tablet sodium valproate 1000 mg with good response.
+
+Patient Progress:
+During the hospital stay, the patient showed significant improvement in symptoms of irritable behavior and auditory hallucinations. His sleep and appetite were also found to be improving. The patient was discharged after the treating physician deemed him stable and fit for discharge. The patient was advised to continue the prescribed medications, attend follow-up psychiatric visits, and adhere to the prescribed treatment plan.
+
+Discharge Instructions:
+The following discharge instructions were provided to the patient:
+• Continue taking the prescribed medications regularly as per the dosage mentioned in the prescription.
+• Attend scheduled follow-up psychiatric visits to monitor symptoms and progress.
+• Notify the treating physician if any new symptoms or side effects occur.
+• Adhere to the prescribed treatment plan including diet, exercise, and lifestyle modifications.
+• In case of any emergency, contact the emergency services or visit the nearest hospital for medical assistance.
+
+Follow-up Care:
+The patient was advised to follow up with the treating psychiatrist as per the scheduled appointments. The patient and patient's family were informed about the importance of regular follow-up psychiatric visits to ensure the effectiveness of the treatment plan and to address any concerns or issues related to the patient's condition.
+
+Summary:
+The patient, a 28-year-old male with mild Intellectual Disability with Paranoid Schizophrenia, was discharged with significant improvement in symptoms. The treating physician advised the patient to continue taking the prescribed medications and attend follow-up psychiatric visits for continued monitoring. The patient and patient's family were educated about the importance of adhering to the prescribed treatment plan and following up with the treating physician regularly.","Discharge Summary
+Patient Name: [REDACTED]
+Date of Admission: [REDACTED]
+Date of Discharge: [REDACTED]
+DOB: [REDACTED]
+Sex: Male
+Diagnosis: Mild Intellectual Disability with Paranoid Schizophrenia
+Hospital Course:
+The patient is a 28-year-old man who has been irritable, muttering to himself, and hearing unreal voices of songs for 12 years.
+During the mental status exam, he had false beliefs that things or events meant something personal to him.
+He also heard voices that sounded like people talking but were not real.
+His IQ was measured at 54, which is considered mild intellectual disability.
+Based on these findings, the patient was diagnosed with mild intellectual disability and paranoid schizophrenia.
+He was started on olanzapine 10 mg and sodium valproate 1000 mg, and his symptoms improved.
+Patient Progress:
+During the hospital stay, the patient’s irritable behavior and hearing voices improved significantly.
+His sleep and appetite also got better.
+The treating doctor decided he was stable enough to go home.
+He was told to keep taking his medicines, go to follow-up psychiatric visits, and follow the treatment plan.
+Discharge Instructions:
+The patient was told to keep taking the prescribed medicines exactly as directed.
+He was advised to attend all scheduled follow-up psychiatric visits to check his symptoms and progress.
+He was told to call the doctor if he notices any new symptoms or side effects.
+He was advised to follow the treatment plan, including diet, exercise, and lifestyle changes.
+In case of an emergency, he should call emergency services or go to the nearest hospital for help.
+Follow-up Care:
+The patient was told to see the psychiatrist as scheduled for follow-up appointments.
+The patient and his family were taught that regular follow-up visits are important to keep the treatment working.
+They were also told to address any concerns or issues that may arise.
+Summary:
+The patient, a 28-year-old man with mild intellectual disability and paranoid schizophrenia, was discharged with significant improvement in symptoms.
+The treating doctor advised him to continue taking the prescribed medicines and attend follow-up psychiatric visits for continued monitoring.
+The patient and his family were educated about the importance of adhering to the treatment plan and following up with the treating doctor regularly.",,,,
+25,"DISCHARGE SUMMARY
+
+Patient Name: Confidential 
+Age: 60 
+Gender: Male 
+Medical Record Number: Confidential 
+
+Admission Date: Confidential 
+Discharge Date: Confidential 
+Duration of Stay: Confidential 
+
+Admitting Diagnosis: Hypercalcaemic hyperparathyroid crisis 
+
+Hospital Course: 
+
+The patient was admitted to our tertiary referral center from a regional hospital with hypercalcaemic hyperparathyroid crisis. He presented with a two-week history of weakness and lethargy and a one-week history of vomiting, polyuria and polydipsia. He became confused 24 hours prior to his admission and registered 12 on the Glasgow Coma Scale. On examination, he had a left-sided mass in the anterior triangle of his neck measuring 3 × 3 cm. An ultrasonography of his neck showed a 4 × 3 cm large cyst in the left lobe of his thyroid gland. He was normotensive, with a regular pulse of 70 beats/min. 
+
+Initial management included aggressive fluid resuscitation, cardiac monitoring and the administration of intravenous bisphosphonates. A left thyroid lobectomy and left lower parathyroidectomy were performed. Biopsy revealed a 4 cm parathyroid carcinoma within the cyst, which was fully excised. The patient remained intubated and ventilated overnight in the intensive care unit. His metabolic laboratory profile resolved quickly following the surgery. A lower respiratory tract infection delayed his initial recovery. 
+
+The patient was discharged home 24 days after surgery on oral calcium supplementation. He has been followed up for 6 months so far without any complications or disease recurrence. 
+
+Summary of Care: 
+
+The patient was admitted with hypercalcaemic hyperparathyroid crisis and managed with aggressive fluid resuscitation, cardiac monitoring and the administration of intravenous bisphosphonates. Following a left thyroid lobectomy and left lower parathyroidectomy, he was discharged home on oral calcium supplementation and has been followed up for 6 months without any complications or disease recurrence. 
+
+Disposition: Discharged. 
+
+Instructions: 
+- Continue taking oral calcium supplementation as directed 
+- Follow up with your primary care physician in 2 weeks 
+- In case of any emergency, call 911 or go to the nearest emergency department. 
+
+Signed, 
+Confidential 
+Attending Physician.","DISCHARGE SUMMARY
+Patient Name: Confidential
+Age: 60
+Gender: Male
+Medical Record Number: Confidential
+Admission Date: Confidential
+Discharge Date: Confidential
+Duration of Stay: Confidential
+Admitting Diagnosis: High calcium level due to overactive parathyroid gland
+Hospital Course:
+The patient was admitted to a specialized hospital from a local hospital with high calcium level due to overactive parathyroid gland.
+He had felt weak and tired for two weeks and had vomiting, frequent urination, and excessive thirst for one week.
+He became confused 24 hours before admission and scored 12 on a consciousness test.
+Exam showed a lump about 3 cm on the left side of his neck.
+An ultrasound of his neck showed a fluid-filled sac about 4 cm in the left thyroid lobe.
+His blood pressure was normal and his heart beat was steady at 70 beats per minute.
+He received large amounts of IV fluids, had his heart watched closely, and got medicine to lower calcium.
+Surgeons removed part of the left thyroid and the lower left parathyroid gland.
+The removed tissue showed a 4 cm cancer of the parathyroid gland inside the sac, which was taken out completely.
+He stayed on a breathing machine and ventilator in the intensive care unit overnight.
+His body chemistry returned to normal after the surgery.
+A lung infection slowed his recovery.
+He left the hospital 24 days after surgery and was given calcium pills to take by mouth.
+He has been checked for six months and has had no problems or return of the disease.
+Summary of Care:
+The patient was admitted with high calcium level due to overactive parathyroid gland and treated with large amounts of IV fluids, heart monitoring, and IV medicine to lower calcium.
+After surgery to remove part of the left thyroid and lower left parathyroid gland, he went home on calcium pills and has been followed for six months with no complications or disease return.
+Disposition: Discharged.
+Instructions:
+Continue taking oral calcium supplementation as directed.
+Follow up with your primary care physician in 2 weeks.
+In case of any emergency, call 911 or go to the nearest emergency department.
+Signed,
+Confidential
+Attending Physician.",,,,
+26,"Hospital Course:
+The patient, a 38-year-old male, was admitted to our hospital with complaints of fever and painful swelling in the right proximal leg. He had a history of travel to Malaysia and was suspected to have tuberculosis of the abdomen in a previous hospital, where he was started on antitubercular drugs. He also had an ongoing anorexia with weight loss. On presentation to our hospital, he was in septic shock and was diagnosed with acute osteomyelitis of the right proximal tibia with septic arthritis of the knee joint. He underwent arthrotomy and was found to have a Gram-negative, safety pin-shaped bacteria infection suggestive of B. pseudomallei. He was initiated on six weeks of ceftazidime and levofloxacin, followed by oral eradication therapy with cotrimoxazole and doxycycline for six months. He completed the treatment course without any adverse drug reactions.
+
+Hospital Course Summary:
+The patient was admitted with fever and painful swelling in the right proximal leg. He was suspected to have tuberculosis of the abdomen in a previous hospital where he was started on antitubercular drugs. On presentation to our hospital, he was diagnosed with acute osteomyelitis of the right proximal tibia with septic arthritis of the knee joint, caused by B. pseudomallei infection. He underwent treatment with ceftazidime and levofloxacin for six weeks followed by oral eradication therapy with cotrimoxazole and doxycycline for six months. He completed the treatment course without any adverse drug reactions.","Hospital Course:
+The patient is a 38-year-old man who came to the hospital with fever and pain in his right upper leg. He had recently traveled to Malaysia and was thought to have tuberculosis of the abdomen at another hospital. At that hospital he was started on tuberculosis medicine, but he also had ongoing loss of appetite and weight loss. When he arrived at our hospital he was in septic shock, a serious infection that can be life-threatening. Doctors found he had a bone infection in the upper part of his right shin bone. They also found an infection in his knee joint, which is called septic arthritis, and needed treatment. He had surgery to open the joint and doctors saw a thin, safety-pin-shaped germ that looked like Burkholderia pseudomallei. He was given six weeks of antibiotics ceftazidime and levofloxacin, then took oral antibiotics cotrimoxazole and doxycycline for six months. He finished the full course of antibiotics with no side effects and felt better over time.
+Hospital Course Summary:
+The patient was admitted to the hospital with fever and pain in his right upper leg. He was suspected to have tuberculosis of the abdomen at another hospital where he was started on tuberculosis medicine. At our hospital doctors found he had a bone infection in the upper part of his right shin bone. They also found an infection in his knee joint, which is called septic arthritis, and needed treatment. The infection was caused by Burkholderia pseudomallei, a bacteria that can cause bone and joint infections. He received six weeks of antibiotics ceftazidime and levofloxacin, then took oral antibiotics cotrimoxazole and doxycycline for six months. He finished the full course of antibiotics with no side effects and felt better over time.",,,,
+27,"Hospital Course:
+The patient was admitted to our department for the evaluation and treatment of a swelling in the left anterior maxillary region. On clinical examination, a diffuse swelling was noted with defined borders. The patient had a habit of chewing tobacco and areca nut since 5 years. Radiological investigations revealed an irregular soft tissue mass causing osteolytic destruction of the left upper maxillary alveolus and floor and lateral wall of the left maxillary sinus. Fine needle aspiration biopsy smears showed a matrix-dominated lesion with moderate cellularity, favoring a diagnosis of well-differentiated chondrosarcoma. An incisional biopsy was carried out, and the patient was referred to a higher center for further management.
+
+Hospital Course Summary:
+29-year-old male with a history of tobacco and areca nut chewing, presenting with a slow-growing swelling in the left anterior maxillary region, increasing over 1 year, and an intraoral swelling. All investigations revealed an irregular soft tissue mass, causing osteolytic destruction of the left upper maxillary alveolus and floor and lateral wall of the left maxillary sinus. Fine needle aspiration biopsy smears favored a diagnosis of well-differentiated chondrosarcoma, and an incisional biopsy confirmed the same. The patient was referred to a higher center for further management.","Hospital Course:
+The patient was admitted to the hospital to check and treat a swelling in the front upper jaw.
+On exam, the swelling had clear edges and was spread out evenly throughout the area.
+The patient had been chewing tobacco and areca nut for five years, which is a long-term habit.
+X-rays showed an odd-shaped soft tissue lump that was breaking down the bone in the upper jaw.
+The lump was also breaking down the floor and side wall of the left maxillary sinus.
+A thin needle biopsy of the lump showed a cell pattern that suggested a slow-growing cartilage tumor.
+A small tissue sample was taken, and the patient was sent to a bigger hospital for more care.
+Hospital Course Summary:
+The patient is a 29-year-old man who has chewed tobacco and areca nut for several years.
+He came in with a slow-growing swelling in the front upper jaw that had been getting bigger for about a year.
+The swelling was also seen inside the mouth, which is called an intraoral swelling, and it was noted during the exam.
+All tests showed an odd-shaped soft tissue lump that was breaking down the bone in the upper jaw.
+The lump was also breaking down the floor and side wall of the left maxillary sinus.
+The thin needle biopsy of the lump suggested a slow-growing cartilage tumor, and the small tissue sample confirmed it.
+The patient was sent to a bigger hospital for more care and to discuss treatment options.",,,,
+28,"Discharge Summary
+
+Patient: [INSERT NAME HERE]
+
+Gender: Male
+
+Age: 63
+
+Chief Complaint: Erythematous patches and excoriated crust on the scalp
+
+History of Present Illness:
+
+The patient presented to a local dermatology clinic with a month-long complaint of erythematous patches and excoriated crust in the scalp. The diagnosis was initially chronic ulceration related to focal infection. Despite four weeks of follow-up, the patient's symptoms did not improve and referred to a tertiary referral university hospital for excisional biopsy and further management. On the excisional biopsy, the patient was diagnosed with angiosarcoma with microscopic involvement of the margins.
+
+Hospital Course:
+
+The patient underwent MRI, which showed that the tumor invaded subcutaneous fat with reticular patterns and spread galea aponeurotica and epicranial muscles. PET-CT showed diffuse uptake in the scalp and faint uptake in both level VA lymph nodes. He performed wide excision and treated with free latissimus dorsi flap and split-thickness skin graft. After wide resection and reconstruction surgery, multiple lymph node metastases were detected on PET-CT. After radiotherapy and adjuvant chemotherapy, increased uptake lesions were disappeared.
+
+Summary:
+
+In summary, the patient presented to the hospital with angiosarcoma with microscopic involvement of the margins. The treatment plan included wide excision and reconstruction surgery, followed by radiotherapy and adjuvant chemotherapy, which led to the disappearance of the increased uptake lesions. The patient was discharged in stable condition and instructed to follow up with his primary care physician and oncologist for further evaluation and management.","Discharge Summary
+Patient: [INSERT NAME HERE]
+Gender: Male
+Age: 63
+Chief Complaint: Red patches and sore crust on the scalp
+History of Present Illness:
+The patient went to a skin clinic because he had red patches and sore crust on his scalp for about a month.
+Doctors first thought it was a long-lasting sore from a skin infection, but they were unsure.
+After four weeks of follow-up visits, his symptoms did not get better and he was sent to a university hospital.
+At the university hospital, doctors removed the tumor and checked the edges to see if any cancer cells remained.
+The removed tissue showed a rare blood-vessel cancer called angiosarcoma, and the edges had cancer cells.
+Hospital Course:
+An MRI scan showed the tumor had grown into the fat under the skin and spread to nearby tissues.
+A PET-CT scan showed the cancer had spread throughout the scalp and showed up in some lymph nodes.
+He had surgery to remove the tumor and surrounding tissue, then doctors moved skin from his back to cover the area.
+After the surgery, doctors placed a skin graft over the area to cover the wound and promote healing.
+Later, a PET-CT scan found cancer in several lymph nodes, indicating the disease had spread.
+He received radiation therapy and then chemotherapy to kill any remaining cancer cells and reduce the risk of recurrence.
+After the radiation and chemotherapy, the abnormal spots on the PET-CT scan disappeared, indicating the treatment worked.
+Summary:
+In summary, the patient came to the hospital with a rare blood-vessel cancer that had cancer cells at the edges.
+The treatment included removing the tumor and surrounding tissue, then placing a skin graft to cover the area.
+After that, he received radiation therapy and then chemotherapy to kill any remaining cancer cells.
+This treatment led to the disappearance of the abnormal spots on the PET-CT scan, showing the cancer was under control.
+The patient left the hospital in stable condition and was told to see his regular doctor and cancer doctor for further care.",,,,
+29,"Discharge Summary:
+
+Patient Name: [Redacted]
+
+Hospital Course:
+A 9-year-old male patient was admitted to our hospital with sudden loss of vision in his left eye for the past 10 days, following an episode of vigorous eye rubbing. On examination, corneal ectasia with Vogt's striae was observed in the right eye along with a superficial corneal scar. The left eye exhibited dense stromal edema along with a central corneal ectasia, indicating acute hydrops. A diagnosis of bilateral keratoconus with left eye acute hydrops was made based on the clinical findings.
+
+Treatment and Procedures:
+The patient underwent pneumodesmetopexy with C3F8 in the left eye, with AC paracentesis using a 26-gauge needle under aseptic conditions. Air was first added to completely fill the anterior chamber (AC) and then replaced with 14% of C3F8 to fill two-thirds of the AC. Topical antibiotics and steroids were prescribed, and the patient was advised to remain in a supine position postoperatively.
+
+Outcome:
+The patient has been followed up for 12 months, and the corneal edema has completely resolved. The patient currently has a nebular grade corneal scar and the best-corrected visual acuity is 6/9 (with contact lens). Intraocular pressure (IOP) has been normal postoperatively.
+
+Impressions and Plan:
+The patient was treated for bilateral keratoconus with left eye acute hydrops through pneumodesmetopexy with C3F8. The patient’s corneal edema completely resolved, and the best-corrected visual acuity has improved with contact lens. The patient has been discharged with long term follow-up recommended.","Discharge Summary:
+Patient Name: [Redacted]
+Hospital Course:
+The patient is a 9-year-old boy who came to the hospital because he suddenly lost vision in his left eye.
+This happened after he rubbed his eye hard for about ten days, causing injury.
+Exam showed the cornea was bulging outward in the right eye with lines called Vogt's striae.
+There was also a small scar on the surface of the cornea, which was noted.
+The left eye had severe swelling inside the cornea and a central bulging, meaning acute hydrops.
+Based on these findings, the doctor diagnosed bilateral keratoconus with acute hydrops in the left eye.
+Treatment and Procedures:
+The patient had a procedure called pneumodesmetopexy using a gas called C3F8 in the left eye.
+During the procedure, a small amount of fluid was removed from the front of the eye.
+The gas was then injected to fill about two-thirds of the front chamber of the eye.
+Antibiotic and steroid eye drops were prescribed, and the patient was told to lie flat on his back after surgery.
+Outcome:
+The patient has been checked regularly for twelve months, and the corneal swelling has completely gone away.
+He now has a small scar on the cornea that looks like a nebula, which is a cloudy spot.
+With glasses or a contact lens, his vision is 6/9, which is considered good for reading and daily activities.
+Eye pressure has stayed normal after the procedure, and there is no sign of glaucoma.
+Impressions and Plan:
+The patient was treated for bilateral keratoconus with acute hydrops in the left eye using pneumodesmetopexy with C3F8.
+The corneal swelling went away completely, and his vision improved with glasses or a contact lens.
+He has been discharged and will need long-term follow-up visits to monitor his eye health.",,,,
+30,"Discharge Summary:
+
+Patient Name: [REDACTED]   
+Date of Admission: [REDACTED]   
+Date of Discharge: [REDACTED]   
+
+Hospital Course:   
+The 45-year-old patient was admitted to the outpatient department with complaints of a right vulvar mass that was painful and tender. She noticed the tumor a few days back and reported an aggravation of pain during menstruation. No other symptoms like fever, erythema, or discharge were identified, and her personal medical history was unremarkable. Physical examination disclosed a mass on her right labia minor, which was superficially located and very mobile. Ultrasonography revealed a hypoechoic lesion that suggests the presence of Bartholin gland cyst or abscess. The uterus and both adnexae were insignificant. Therefore, a mass excision was carried out for definitive diagnosis and treatment. During surgery, the vulvar mass was located in deep dermis and had a tortuous appearance with soft rubbery consistency.   
+
+Diagnosis:   
+Microscopic examination revealed a well-demarcated convoluted or multinodular tumor with solid growth pattern. The tumor was composed mainly of uniform epithelioid round or polygonal cells with abundant eosinophilic cytoplasm and centrally located round nuclei. Extracellular myxoid materials were multifocally identified in stroma. In addition, intracellular vacuolar myxoid changes were also noted. The focal areas were made up of spindle cells with blunt-ended elongated nuclei in part, and in some areas, the tumor originated from the vessel wall. Mitotic activity, cellular atypia, or necrosis pleomorphism were absent. Immunohistochemistry revealed diffuse strong positive and focal positivity for desmin, smooth muscle actin (SMA), smooth muscle myosin heavy chain (Smm-hc), and estrogen receptor (ER). HMB45 was not expressed in the tumor cells. Based on histologic features and immunohistochemistry, the tumor was diagnosed as vulvar epithelioid leiomyoma.
+
+Treatment and Condition on Discharge:   
+The patient underwent a mass excision and was discharged without any complications. She was advised periodic follow-up visits. There was no evidence of clinical or radiologic recurrence for 10 months.
+
+Follow-up Plan:   
+The patient is advised to visit the hospital periodically as per the follow-up schedule informed by the doctor.   
+
+Summary:   
+A 45-year-old female visited the outpatient department with pain and tenderness in a right vulvar mass. Imaging suggested Bartholin gland cyst or abscess, and therefore a mass excision was performed. Histopathological examination revealed the tumor to be vulvar epithelioid leiomyoma. The patient was discharged without any complications and advised periodic follow-up visits. No clinical or radiologic recurrence was observed for 10 months after the surgery.","Discharge Summary:
+Patient Name: [REDACTED]
+Date of Admission: [REDACTED]
+Date of Discharge: [REDACTED]
+Hospital Course:
+The patient is a 45-year-old woman who came to the clinic with a painful lump on her right vulva.
+She noticed the lump a few days ago and said the pain got worse during her period.
+She had no fever, redness, or discharge, and her past health was normal with no other problems.
+Exam showed a movable lump on the right outer lip of the vulva, under the skin.
+Ultrasound showed a dark spot that looked like a Bartholin gland cyst or abscess, with no other abnormal findings.
+Because of these findings, doctors removed the lump to get a clear diagnosis and treatment.
+During surgery, the lump was found in the deep layer of skin and had a twisted, soft rubbery feel.
+Diagnosis:
+Under the microscope, the lump showed clear edges, a twisted pattern, and solid growth with uniform cells.
+The cells were round or polygonal, had lots of pink cytoplasm, and round nuclei in the center.
+Some areas had mucus-like material outside the cells and inside the cells, indicating myxoid changes.
+Spindle cells with blunt-ended nuclei were also seen in some parts, and the tumor started from blood vessel walls.
+There was no cell division, abnormal cells, or cell death, indicating low aggressiveness and no signs of cancer.
+Tests showed strong positive results for desmin, SMA, Smm-hc, and ER, while HMB45 was negative.
+Based on these features, the tumor was diagnosed as vulvar epithelioid leiomyoma, a benign growth.
+Treatment and Condition on Discharge:
+The patient had the lump removed and left the hospital without any problems or complications.
+She was told to return for regular check-ups to monitor her recovery and ensure the area stays healthy.
+For the first 10 months after surgery, there was no sign of the lump coming back on exam or imaging.
+Follow-up Plan:
+The patient should visit the hospital as scheduled by her doctor to check her progress.
+Summary:
+A 45-year-old woman came to the clinic with a painful lump on her right vulva.
+Imaging suggested a Bartholin gland cyst or abscess, so doctors removed the lump for diagnosis and treatment.
+The removed lump was found to be vulvar epithelioid leiomyoma, a benign growth that does not spread.
+She left the hospital without problems and was told to return",,,,
+31,"Discharge Summary:
+
+Patient was diagnosed with annular alopecia areata (AA) based on clinical examination and histopathological findings. The patient presented with asymptomatic loss of hair in an annular pattern at multiple sites over the scalp for 2 months. Hair loss was more pronounced at the periphery compared to the center of the patch. The patient had no history of similar illness in family members and no history of drug intake or trauma.
+
+On examination, there were multiple well-defined annular patches of non-scarring alopecia ranging in size from 2 cm x 3 cm to 4 cm x 4 cm present at the parietal and occipital region of the scalp. The area was smooth with no associated skin changes. Systemic examination was within normal limits. Potassium hydroxide (KOH) examination of hair showed no fungal elements, and fungal culture with Sabouraud's media at 4 weeks revealed no growth.
+
+Histopathological examination from the hairless region showed a few vellus follicles in mid dermis with a sparse perifollicular lymphocytic infiltrate. The dermis and subcutis also showed several follicular stellae representing former follicular papillae. The total number of follicles was substantially reduced, with no terminal follicles.
+
+The patient was treated with intralesional injections of trimacinolone acetonide (5mg/ml) every 4 weeks, with remarkable improvement in the lesions after 3 months (3 intralesional injections) of follow-up.
+
+The patient was discharged with recommendations for follow-up care and to continue treatment with intralesional injections of trimacinolone acetonide. The patient was advised to schedule appointments with their healthcare provider every 4 weeks for follow-up care and to monitor for any signs of recurrent alopecia.","Discharge Summary:
+The patient was diagnosed with annular alopecia areata based on the exam and tissue test.
+The patient had no symptoms and hair loss in a ring shape on the scalp for two months.
+Hair loss was more noticeable at the edge of the patch than in the center.
+The patient had no family history of similar illness and no drug use or injury.
+On exam, there were several ring-shaped bald patches without scarring, 2 cm by 3 cm to 4 cm by 4 cm.
+These patches were on the top and back of the scalp and felt smooth with no skin changes.
+The rest of the body exam was normal, and a hair test with potassium hydroxide showed no fungus.
+A fungus culture on special media after four weeks also showed no growth.
+Tissue from the bald area showed a few fine hairs in the middle layer of skin.
+There was a small cluster of immune cells around each hair follicle.
+The deeper skin layers also showed some follicle shapes that were once hair follicles.
+The total number of hair follicles was much lower, and there were no normal hair follicles.
+The patient received steroid shots into the skin patches every four weeks.
+After three months of treatment, the lesions improved greatly.
+The patient was discharged with instructions to follow up regularly and to continue the steroid shots.
+The patient was told to schedule visits with their healthcare provider every four weeks.
+The patient was also advised to watch for any return of hair loss.",,,,
+32,"Hospital Course:
+The patient was admitted with a complaint of decreased visual acuity of the right eye for 1 month. A stage 2 macular hole in the right eye was noted. His decimal best-corrected visual acuity (BCVA) at the first visit was 0.3 in the right eye and 1.0 in the left eye. Furthermore, his intraocular pressure (IOP) was 15 mm Hg in the right eye and 14 mm Hg in the left eye. The axial length was 23.28 mm in the right eye and 23.44 mm in the left eye. No systemic diseases such as diabetes or hypertension were observed. 
+
+Treatment:
+The patient underwent phacovitrectomy with a tamponade of 20% sulfur hexafluoride (SF6) gas under retrobulbar anesthesia. At the end of the operation, a subconjunctival injection of gentamicin was administered. 
+
+Follow-up:
+On POD1, dot hemorrhages were observed on the temporal side of the optic disk. However, neither retinal whitening nor further hemorrhage was observed on POD3, and the patient was discharged. Fundus examination on POD10 revealed blot hemorrhage, mottled retinal whitening in the macula, and cotton wool spots, and the patient's BCVA was 0.01 in the right eye, which decreased to hand motion during postoperative week 1. 
+
+Diagnosis:
+Fundus examination and fluorescein angiography (FA) showed multiple disruptions of the vessels surrounding the fovea and occlusion of the macular branch retinal artery on the inferior temporal side. Slight fluorescence leakage on the nasal side of the optic nerve head was observed. Progression of arteriovenous occlusion around the macula was observed, and the patient's macular hole was finally closed. 
+
+Treatment:
+Limaprost alfadex and kallidinogenase were prescribed as antiplatelet and vasodilator therapy, along with an oral steroid. Stellate ganglion block was performed to increase ocular circulation. 
+
+Outcome:
+The patient's postoperative BCVA was 0.2.","Hospital Course:
+The patient came in because his right eye vision had gotten worse over the past month.
+Doctors found a stage 2 macular hole in the right eye, which is a tear in the retina.
+With glasses, he could see 0.3 with the right eye and 1.0 with the left eye.
+Eye pressure measured 15 in the right eye and 14 in the left eye, which is normal.
+The eye length was 23.28 mm in the right eye and 23.44 mm in the left eye.
+No other health problems like diabetes or high blood pressure were found during the exam.
+Treatment:
+The patient had cataract surgery with vitrectomy and gas injection to close the macular hole.
+The surgery used 20% sulfur hexafluoride gas and was done with numbing medicine around the eye.
+After surgery, an antibiotic injection was given under the eye surface to prevent infection.
+Follow-up:
+The next day, small red dots appeared on the outer side of the optic nerve head.
+By day three, no new white spots or bleeding were seen, and the patient left the hospital.
+Ten days later, the eye exam showed a small red dot and patchy white spots in the central retina.
+It also showed cotton-wool spots, which are tiny white patches on the retina.
+Vision with glasses dropped to 0.01 in the right eye, and by week one after surgery it was only hand motion.
+Diagnosis:
+Eye exam and dye test showed broken blood vessels around the fovea and a blocked artery in the lower outer retina.
+There was slight leakage of dye on the inner side of the optic nerve head.
+The blockage of blood vessels around the macula got worse, and the macular hole closed completely.
+Treatment:
+The patient was given linaprost alfadex and kallidinogenase to prevent clots and widen blood vessels.
+He also took a steroid pill to reduce inflammation and swelling around the eye.
+A stellate ganglion block was done to improve blood flow to the eye and reduce pressure.
+Outcome:
+After surgery, his vision with glasses improved to 0.2, which is better than before the operation.",,,,
+33,"Discharge Summary:
+
+Patient Name: [XXXXXX]
+Age: [27]
+Gender: [Male]
+Date of Admission: [DD/MM/YYYY]
+Date of Discharge: [DD/MM/YYYY]
+
+Medical History:
+The patient presented with symptoms of poor educational performance at the age of 8 years, followed by gait abnormalities and facial abnormal movements at the age of 12 years. Subsequent symptoms included dysarthria, frequent falls, ataxia and dystonia of right limbs, supranuclear vertical gaze palsy, and swallowing difficulties. Brain MRI at 24 years of age showed a generalized cortical atrophy. A muscle biopsy analyzed by light microscopy showed a nonspecific chronic inflammatory process. Abdominal ultrasound demonstrated splenomegaly. The suspicion index for Niemann-Pick disease type C (NPC) scored 227 points. Nucleotide sequencing found two heterozygous changes in NPC1, which confirmed the diagnosis of NPC.
+
+Hospital Course:
+The patient was initiated on miglustat late in the progression of NPC disease with a modified functional disability scale score of 17 points for a short period (less than 6 months). He had complicated aspiration pneumonia, which required admission to ICU, pulmonary artificial ventilation, and tracheostomy. He is now relatively stable with tracheostomy and GI tube for feeding and restarted very recently treatment with miglustat 200 mg every 8 hours. However, he shows a higher disability score of 21.
+
+Medical Condition at Discharge:
+The patient's medical condition at the time of discharge was stable.
+
+Follow-up Care:
+The patient will be followed up by the neurology department for treatment and management of his condition.
+
+Recommendations:
+The patient was recommended to have regular follow-up with the neurology department. Any significant changes in his condition should be reported immediately.
+
+Signed by:
+[Doctor's Name]
+[Designation]
+[Date]","Discharge Summary:
+Patient Name: [XXXXXX]
+Age: [27]
+Gender: [Male]
+Date of Admission: [DD/MM/YYYY]
+Date of Discharge: [DD/MM/YYYY]
+Medical History:
+The patient had trouble learning at age 8, then walked oddly and had face jerking at age 12.
+Later he had slurred speech, fell often, and had unsteady walking and muscle cramps in his right arm and leg.
+He also had trouble looking up and down and trouble swallowing.
+A brain scan at age 24 showed overall brain shrinkage.
+A muscle biopsy showed long-term inflammation.
+An ultrasound of the belly showed an enlarged spleen.
+A test for Niemann-Pick disease type C gave a score of 227, indicating high risk.
+Genetic testing found two changes in the NPC1 gene, confirming the diagnosis of Niemann-Pick disease type C.
+Hospital Course:
+The patient started miglustat when his disease was advanced, with a disability score of 17 for a short time.
+He developed a serious lung infection that needed intensive care, a breathing machine, and a tracheostomy.
+Now he is stable with a tracheostomy and a feeding tube, and he recently restarted miglustat 200 mg every eight hours.
+His disability score has increased to 21.
+Medical Condition at Discharge:
+The patient's condition at discharge was stable.
+Follow-up Care:
+The patient will be seen by the neurology team for ongoing treatment and management of his condition.
+Recommendations:
+The patient should have regular visits with the neurology team.
+Any major changes in his condition should be reported right away.
+Signed by:
+[Doctor's Name]
+[Designation]
+[Date]",,,,
+34,"Discharge Summary:
+
+Patient Name: Not Disclosed
+Gender: Female
+Age: 80
+
+Hospital Course:
+The patient presented with a history of a slow-growing, painless cyst in the right lateral orbital region, which was evaluated through mechanical ptosis, proptosis, and slight hypotropia. Magnetic resonance imaging (MRI) showed a round mass with no enhancement by gadolinium, and computed tomography (CT) presented with deformation of the right orbit with bone erosion centering on the frontosphenoidal suture and confirmed the diagnosis of a dermoid cyst. The patient declined surgical removal with boney reconstruction and continued with periodic aspiration. Sclerotherapy was performed after obtaining informed consent and aspirating the fluid multiple times. The first sclerotherapy was performed with 10 mL of 1% lidocaine containing 1:100,000 epinephrine and 10 mL of absolute ethanol was instilled, and the cavity was washed again with 10 mL of saline. Second and third sclerotherapies were performed at intervals of 3 months. After the final sclerotherapy, the cyst had shrunk in size, and no re-expansion was seen during a 1-year follow-up after the last sclerotherapy. The patient complained of visual field disturbance due to redundant skin, and a blepharoplasty was performed concomitant with incisional biopsy of the cyst. Histopathological examination showed that the specimen comprised dermis with well-developed sweat and sebaceous glands, compatible with a dermoid cyst.
+
+Condition at Discharge:
+The patient's dermoid cyst was treated successfully with sclerotherapy and incisional biopsy. At the time of discharge, the patient demonstrated no evidence of a recurring cyst.
+
+Follow-Up Plan:
+The patient will continue follow-up care with her primary care physician near her home residence and is advised to inquire if any new symptoms arise.","Discharge Summary:
+Patient Name: Not Disclosed
+Gender: Female
+Age: 80
+Hospital Course:
+The patient had a slow-growing, painless lump on the right side of the eye socket.
+Doctors checked the lump by looking at the eyelid, eye bulging, and slight downward eye movement.
+An MRI showed a round lump that did not light up with contrast dye during the scan.
+A CT scan showed the eye socket was changed and the bone was worn away at the front.
+This finding led to a diagnosis of a dermoid cyst, which is a benign growth.
+The patient chose not to have surgery to remove the cyst and rebuild the bone.
+Instead, the cyst was drained regularly with a needle to reduce fluid and prevent infection.
+After getting permission, a doctor injected 10 mL of 1% lidocaine with epinephrine and 10 mL of pure alcohol.
+The area was then washed with 10 mL of salt water to remove any remaining fluid.
+Three months later, the doctor repeated the injection procedure again to treat the cyst and prevent recurrence.
+Three months after that, the doctor performed a third injection to ensure the cyst was fully treated.
+After the final injection, the cyst got smaller and did not grow back during the following year.
+The patient said she had trouble seeing side-to-side because extra skin was pressing on her eye.
+Doctors also removed the extra skin with a blepharoplasty and took a small sample of the cyst for testing.
+The tissue sample showed sweat and oil glands, confirming the cyst was a dermoid cyst.
+Condition at Discharge:
+The dermoid cyst was successfully treated with injections and a small skin surgery to remove extra tissue.
+At discharge, there was no sign the cyst had come back or was growing again.
+Follow-Up Plan:
+The patient will keep seeing her regular doctor near her home for ongoing care and check-ups.
+She should call the doctor if she notices any new symptoms or changes in her eye.",,,,
+35,"Discharge Summary:
+    
+Patient Name: [Redacted]
+Date of Admission: January 2003
+Date of Discharge: N/A
+
+HISTORY OF PRESENT ILLNESS: 
+The patient was admitted with a palpable abdominal mass in left hypochondrium and mild abdominal pain. CT revealed a large hypervascularised splenic tumor. She underwent a radical splenectomy surgery due to increased vascularity and possibility of localized malignancy seeding. The histopathology report confirmed low-grade primary splenic angiosarcoma. 
+
+HOSPITAL COURSE: 
+During follow-up, the patient complained of severe bone pain, and multiple bone metastases were detected. Palliative radiotherapy and bisphosphonate therapy were given. Over time, new metastatic deposits appeared, and the patient underwent another course of palliative radiotherapy. However, the patient declined the palliative chemotherapy. Subsequently, new metastases in the liver and axial skeleton were identified in 2010. Chemotherapy treatment was offered and, with the patient's approval, 6 cycles of palliative chemotherapy were given. The patient underwent subsequent follow-up, and no progression of disease was detected until 2016, when progression of metastatic lung lesions was noted. CT directed lung biopsy was performed, which confirmed angiosarcoma metastasis. The patient is currently undergoing second-line chemotherapy with paclitaxel weekly.
+
+DISCHARGE DIAGNOSIS: 
+Primary splenic angiosarcoma with metastases to bones, sternoclavicular joint, liver, and lungs.
+
+DISCHARGE INSTRUCTIONS: 
+The patient is advised to continue with the ongoing second-line chemotherapy with paclitaxel weekly under close medical supervision. The patient is instructed to maintain follow-up appointments as per the treating physician's advice. In case of any emergency, the patient should consult the hospital emergency department and inform them about the ongoing treatment. The patient is advised to avoid smoking, alcohol and exposure to environmental toxins.
+
+FOLLOW-UP CARE: 
+The patient requires periodic follow-up appointments with the treating physician to monitor the response to chemotherapy, manage side effects, and evaluate any new symptoms. The frequency of visits should be determined on an individual basis by the treating physician.
+
+SUMMARY: 
+A 65-year-old female patient with primary splenic angiosarcoma was admitted with a palpable abdominal mass and mild abdominal pain. She underwent radical splenectomy surgery, which confirmed the diagnosis of low-grade primary splenic angiosarcoma. The patient developed multiple bone metastases, which were treated with palliative radiotherapy and bisphosphonate therapy. Subsequently, new metastases developed in the liver and axial skeleton, for which the patient received palliative chemotherapy with doxorubicin. During follow-up, metastatic lung lesions were noted, and the patient is currently undergoing second-line chemotherapy with paclitaxel weekly. The patient is advised to continue ongoing treatment under close medical supervision and maintain follow-up appointments with the treating physician.","Discharge Summary:
+Patient Name: [Redacted]
+Date of Admission: January 2003
+Date of Discharge: N/A
+HISTORY OF PRESENT ILLNESS:
+The patient was admitted because a lump could be felt in the left upper belly and she had mild belly pain.
+A CT scan showed a large tumor in the spleen that had many blood vessels.
+She had surgery to remove the spleen because the tumor was very blood-rich and might have spread cancer cells.
+The tissue test confirmed the tumor was a low-grade primary spleen angiosarcoma, a rare cancer.
+HOSPITAL COURSE:
+During follow-up, the patient complained of severe bone pain and scans showed many bone metastases.
+She received palliative radiotherapy and bisphosphonate therapy to help control pain and prevent further bone damage.
+Over time, new metastatic deposits appeared, and she had another course of palliative radiotherapy to control symptoms.
+She declined palliative chemotherapy because she felt the treatment was not worth the side effects.
+In 2010, new metastases were found in the liver and the axial skeleton, which includes the spine and ribs.
+Chemotherapy was offered, and she agreed to six cycles of palliative chemotherapy to try to slow the disease.
+She had regular follow-up appointments, and no disease progression was seen until 2016, when lung lesions grew.
+A CT-directed lung biopsy confirmed the lung lesions were angiosarcoma metastases, confirming the cancer had spread.
+She is now receiving second-line chemotherapy with paclitaxel weekly to try to control the cancer.
+DISCHARGE DIAGNOSIS:
+The discharge diagnosis is primary spleen angiosarcoma with metastases to bones, the sternoclavicular joint, the liver, and the lungs.
+DISCHARGE INSTRUCTIONS:
+The patient should continue the ongoing second-line chemotherapy with paclitaxel weekly under close medical supervision.
+The patient must keep follow-up appointments as advised by the treating physician to monitor treatment and detect any problems early.
+In an emergency, the patient should go to the hospital emergency department and tell them about the ongoing treatment.
+The patient should avoid smoking, alcohol, and exposure to environmental toxins to reduce cancer risk.
+FOLLOW-UP CARE:
+The patient needs regular follow-up visits with the treating physician to monitor chemotherapy response, manage side effects, and watch for new symptoms.
+The frequency of visits should be decided by the treating physician based on the patient's condition.
+SUMMARY:
+A 65-year-old woman with primary spleen",,,,
+36,"Hospital Course:
+
+An 8-year-old male child was admitted to our hospital with cardiac failure. The patient had a history of TOF repair and left pulmonary arterioplasty two years ago at the referring hospital. Echocardiogram conducted during admission showed the presence of a large residual muscular outlet ventricular septal defect (VSD) likely following VSD patch dehiscence. Cardiac catheterization was performed for further evaluation which confirmed the presence of VSD via angiogram. The right ventricular pressure was high at systole, and angiogram in the main pulmonary artery showed dilated right pulmonary artery while the left pulmonary artery (LPA) was completely occluded.
+
+Intervention:
+
+Radio-frequency (RF) energy was applied to the blind-ending channel of the proximal LPA to recanalize the occluded artery. A 2mm × 10mm coronary balloon was inflated at the atretic segment of LPA and a 6mm × 20mm cutting balloon was used to perform balloon dilatation. A 10mm × 17mm stent was used to address the atretic segment, which was further dilated using an 8mm×40mm Powerflex PTA balloon. The patient was discharged 3 days after the procedure with aspirin at 5mg/kg.
+
+Follow-up:
+
+The patient was readmitted 4 weeks after the procedure for the revision of the VSD patch. Repeat cardiac catheterization conducted three months later shows that the LPA stent is patent and the LPA had increased in size with improved left lung arborization. A localized segment of the left lower lobe artery was stenosed (2.4mm), which was subsequently redilated using an 8mm × 20mm peripheral Flextome cutting balloon.
+
+Outcome:
+
+A Formula 418 Expandable stent was implanted to the stenotic segment distal to the first stent with satisfactory results. The LPA and distal pulmonary arterial tree appear healthy and are of satisfactory size for future growth. Repeat cardiac catheterization conducted four months after the initial intervention showed a reduction of the right ventricular pressure of 41 end-diastolic pressure 8 mmHg (simultaneous aortic pressure: 91/50 mmHg, mean: 66 mmHg).
+
+Conclusion:
+
+The patient was discharged in stable condition with aspirin therapy. The guardian of the patient was instructed to follow-up with their local pediatric cardiologist for routine monitoring and care.","Hospital Course:
+The patient is an 8-year-old boy who came to the hospital because his heart was not pumping well.
+He had surgery two years ago to fix a heart defect called Tetralogy of Fallot.
+He also had a procedure to fix a left lung artery.
+An ultrasound of the heart showed a large hole between the lower heart chambers that had not been closed.
+A special heart test confirmed the hole was still there.
+The right side of the heart was pumping too hard.
+The right lung artery was enlarged and the left lung artery was completely blocked.
+Intervention:
+Doctors used heat energy to open the blocked left lung artery.
+They inflated a small balloon in the narrowed part of the artery.
+They then used a cutting balloon to widen the artery.
+They placed a stent in the narrowed part and expanded it with a larger balloon.
+The patient left the hospital three days after the procedure and was given aspirin.
+Follow-up:
+Four weeks later the patient returned to the hospital to fix the hole between the heart chambers.
+Three months after the first procedure, a heart test showed the stent in the left lung artery was open.
+The left lung artery had grown larger and the blood flow to the left lung was better.
+A small part of the artery in the lower left lung was narrowed and needed treatment.
+Doctors widened that narrowed part with a cutting balloon.
+Outcome:
+Doctors placed a special stent in the narrowed part of the artery to keep it open.
+The left lung artery and the rest of the lung arteries look healthy and are the right size for future growth.
+Four months after the first procedure, a heart test showed the right side of the heart was pumping better.
+The right side pressure was 41 at rest and 8 when the heart squeezed.
+The main artery pressure was 91 over 50, with an average of 66.
+Conclusion:
+The patient left the hospital in stable condition and was given aspirin.
+The guardian was told to see a pediatric heart doctor regularly for check-ups.",,,,
+37,"Discharge Summary:
+
+Patient: 53-year-old female
+Medical History: Chronic epigastric pain and ‘heart burn’
+
+Hospital course:
+The patient presented with chronic epigastric pain and ‘heart burn’ for two years. Physical examination and labs were within normal limits. Initial upper endoscopy revealed slight granularity in the distal esophagus and superficial erosions in the antrum. Biopsy showed intestinal metaplasia and reflux esophagitis. Helicobacter pylori were negative. Gastric mapping was performed six months later and showed acute-on-chronic erosive gastritis. Esophagoscopy revealed numerous 1-2 mm white plaques that were adherent from mid-esophagus down to the gastroesophageal junction. Brushings for cytology were done, which showed septated and filamentous hyphae and coccoid forms of bacteria consistent with Dermatophilus congolensis. The patient was then started on triple therapy for H. pylori, which resulted in rapid and complete resolution of symptoms. Repeat endoscopy one month later showed progression of white plaques to involve the entire esophagus, diffusely and was again consistent with D. congolensis. However, the patient continued to be asymptomatic but was unfortunately lost to follow-up before further recommendations could be made. Care was re-established one year later, six months after she quit her job. Final endoscopy showed complete resolution of white plaques despite lack of further intervention.
+
+Summary:
+The patient presented with chronic epigastric pain and ‘heart burn’ for two years. Initial upper endoscopy revealed slight granularity in the distal esophagus and superficial erosions in the antrum. Biopsy showed intestinal metaplasia and reflux esophagitis. Gastric mapping was performed six months later and showed acute-on-chronic erosive gastritis. Esophagoscopy revealed numerous 1-2 mm white plaques that were adherent from mid-esophagus down to the gastroesophageal junction. Brushings for cytology were done, which showed septated and filamentous hyphae and coccoid forms of bacteria consistent with Dermatophilus congolensis. The patient was treated with triple therapy for H. pylori, resulting in complete resolution of symptoms, with no further intervention required. The final endoscopy one year later showed complete resolution of white plaques.","Discharge Summary:
+Patient: 53-year-old female
+Medical History: Long-term stomach pain and heart burn
+Hospital course:
+The patient came in with long-term stomach pain and heart burn that had lasted two years.
+Physical exam and lab tests were normal, showing no signs of infection or other problems.
+An early scope of the food pipe showed tiny rough spots and shallow sores at the lower end.
+Biopsy showed changes where the stomach lining had turned into intestine-like cells and irritation from stomach acid.
+Tests for H. pylori bacteria were negative, meaning the infection was not present in the stomach.
+Six months later, a stomach mapping test showed long-term irritation with new sores in the stomach lining.
+A scope of the food pipe showed many small white patches stuck from the middle to the stomach connection.
+Cell samples taken from the white patches showed a type of bacteria called Dermatophilus congolensis.
+The patient started three-drug treatment for H. pylori and her symptoms went away quickly and completely.
+One month later, a repeat scope showed the white patches had spread to the whole food pipe.
+The white patches were still present but the patient had no symptoms and felt fine.
+She missed follow-up appointments and did not return for further care, so her condition was not monitored.
+One year later, after she had quit her job, care was restarted again to check her health.
+A final scope showed the white patches had completely disappeared, even though no further treatment was given.
+Summary:
+The patient came in with long-term stomach pain and heart burn that had lasted two years.
+An early scope of the food pipe showed tiny rough spots and shallow sores at the lower end.
+Biopsy showed changes where the stomach lining had turned into intestine-like cells and irritation from stomach acid.
+Six months later, a stomach mapping test showed long-term irritation with new sores in the stomach lining.
+A scope of the food pipe showed many small white patches stuck from the middle to the stomach connection.
+Cell samples taken from the white patches showed a type of bacteria called Dermatophilus congolensis.
+The patient started three-drug treatment for H. pylori and her symptoms went away quickly and completely.
+One month later, a repeat scope showed the white patches had spread to the whole food pipe.
+The white patches were still present but the patient had no symptoms and felt fine.
+She missed follow-up appointments and did not return for further care, so her condition was not monitored.
+One year later, after she had quit her job, care was restarted again to",,,,
+38,"Hospital Course:
+The 76-year-old male patient presented with visual impairment of his right eye 50 years after receiving penetrating keratoplasty (PKP). This followed an explosion injury that resulted in bilateral corneal opacities before the 1960s trauma. The patient reported seeing his ophthalmologist annually for follow-up examinations for 50 years following his first PKP, and control examinations were conducted in recent years due to primary open angle glaucoma. Cataract surgery was performed externally, 42 years after PKP in the right eye, and six years following surgery, he reported a deterioration of his vision. Follow-up examinations were conducted regularly by his ophthalmologist, with depositing in the periphery of the graft being described 48 years after the first PKP. Upon slit-lamp examination, the graft diameters of the former grafts were 6 mm with a central corneal thickness of 584 µm in the right eye and 544 µm in the left eye. The recipient cornea was cloudy, and gray with an endothelial cell count of 1162 c/mm2 in the right eye and 1320 c/mm2 in the left eye. As a result of progressive visual impairment and discomfort caused by the blurred vision, a repeated PKP was offered on the worse right eye. The patient accepted, and surgery was performed without any complications. The excised primary corneal graft with a rim of the recipient cornea was sent for histopathological analysis.","Hospital Course:
+The 76-year-old man came in because his right eye vision got worse 50 years after a cornea transplant.
+He had an explosion injury that caused cloudy corneas in both eyes before the 1960s.
+He saw his eye doctor once a year for 50 years after the first transplant.
+In recent years, exams were done because he has glaucoma that needs monitoring for his eye health.
+He had cataract surgery on the right eye 42 years after the transplant to improve vision.
+Six years later, he noticed his vision got worse and felt uncomfortable with blurry sight.
+His eye doctor checked him regularly, and 48 years after the first transplant, a deposit appeared at the graft edge.
+Exam showed the old grafts were 6 mm wide and 584 micrometers thick in the right eye.
+They were 544 micrometers thick in the left eye, and the cornea was cloudy and gray.
+The inner layer of the cornea had 1162 cells per square millimeter in the right eye.
+It had 1320 cells per square millimeter in the left eye, indicating a higher density.
+Because his vision kept getting worse and he felt uncomfortable with blurry sight, doctors offered a second cornea transplant.
+He agreed to the surgery, and it went smoothly without any complications during the procedure.
+The removed cornea with a rim of the original cornea was sent to the lab for tissue study.",,,,
+39,"Hospital Course:
+This 54-year-old previously healthy man was admitted for subarachnoid hemorrhage with left hemiparesis and hemihypesthesia. He had experienced progressive headache and neck pain with dizziness for the past two weeks prior to admission. The headache was oppressive, holocranial, and had strong postural variation. The patient developed numbness of the left limbs and fell, resulting in an admission to the previous hospital where he was found to have a contused wound in the left temporal area. The patient was transferred to this hospital for further tests and treatment.
+
+Diagnostic Testing:
+CT scan revealed a right frontoparietal subarachnoid hemorrhage and a right parietal hematoma measuring 8 mm in diameter (reported as a probable venous malformation). Cranial CT angiography showed hypoplasia of the A1 segment of the right anterior cerebral artery. Digital subtraction angiography found no aneurysms or arteriovenous malformations but revealed a tubular filling defect within the right frontoparietal superficial cortical vein. Contrast material was slow to empty from the left transverse sinus, suggesting moderate intracranial hypertension. Brain MRI showed diffuse pachymeningeal enhancement after gadolinium administration, suggestive of liquoral hypotension, and a small right parietal hematoma in the acute phase.
+
+Treatment:
+The patient was treated with nimodipine, subcutaneous heparin, and subsequently with oral anticoagulants. The patient's neurological deficits resolved, but his headaches persisted. Treatment with blood patch brought about complete resolution of symptoms.
+
+Follow-up:
+The patient was discharged in good condition and given follow-up instructions for continued care. The recommendations include maintaining regular follow-up appointments with a healthcare provider and following a healthy lifestyle to prevent any future complications or recurrence of symptoms.","Hospital Course:
+The patient is a 54-year-old man who was previously healthy and came to the hospital after a bleed in the brain.
+He had a bleed around the brain that caused weakness and numbness on the left side.
+He had a worsening headache, neck pain, and dizziness for two weeks before admission.
+The headache felt heavy, covered the whole head, and changed when he moved his head.
+He felt numbness in his left arm and leg and fell, which led to a contusion on the left side of his head.
+He was then transferred to this hospital for more tests and treatment to understand his condition.
+Diagnostic Testing:
+A CT scan showed bleeding around the brain on the right side and a small blood clot in the right side.
+The scan also suggested a likely abnormal vein in the brain that may have caused the bleed.
+A special CT scan of the blood vessels showed the right front brain artery was smaller than normal.
+A dye test of the blood vessels found no aneurysms or abnormal connections but saw a blockage in a vein.
+The test also showed slow drainage from the left side of the brain, indicating high pressure inside the skull.
+A brain MRI showed thickening of the brain lining after contrast and a small blood clot on the right side.
+Treatment:
+The patient was given the medicine nimodipine, a blood thinner under the skin, and later took blood-thinning pills.
+His weakness and numbness improved, but his headaches continued despite treatment and required further care.
+A procedure called a blood patch was done and it completely relieved his symptoms, improving his condition.
+Follow-up:
+The patient left the hospital in good condition and received instructions for ongoing care to monitor his recovery.
+He was told to keep regular appointments with a doctor and to live a healthy life.
+This will help prevent future problems and keep symptoms from coming back, staying well.",,,,
+40,"Hospital Course:
+
+Patient is a 77-year-old female who presented with right L2-3 radiculopathy that was refractory to maximum medical management. This was secondary to foraminal compression at L2-3 and L3-4 due to degenerative disc disease, levoscoliosis, as well as grade 1 spondylolisthesis at both levels.
+
+Treatment:
+
+Given the patient’s prior history of posterior decompressive laminectomy, it was felt that the best approach would be a minimally invasive lateral approach to obtain indirect decompression of the foramina as well as correct her spinal deformity. This will achieve the goals of decompression and fusion as well as deformity correction while avoiding the risk of operating through scar tissue. A retroperitoneal transpsoas approach was used to expose the disc spaces from the patient’s left side.
+
+Complete discectomy was performed with the release of the contralateral annulus fibrosis followed by the interbody fusion. A lordotic PEEK graft was used at each level, 50 mm length x 18 mm width x 9 mm height, packed with demineralized bone matrix (DBM).
+
+Outcome:
+
+Postoperative anteroposterior and lateral x-ray imaging confirmed good position of interbody grafts, correction of scoliosis as well as spondylolisthesis, and restoration of disc height achieving satisfactory foraminal indirect decompression. A routine postoperative x-ray at three months demonstrated lateral cage migration on the left side at the L2-3 level with evidence of arthrodesis in the disc space.
+
+The patient remained asymptomatic and follow-up imaging at one year demonstrated completed fusion without further migration of the interbody graft at L2-3.
+
+Conclusion:
+
+Informed patient consent was obtained prior to treatment and with the patient’s permission, we report on this case of successful minimally invasive lateral approach to obtain indirect decompression of the foramina as well as correct spinal deformity. The patient had significant improvement and remained asymptomatic.","Hospital Course:
+The patient is a 77-year-old woman with right leg pain from nerve pressure at L2-3 and L3-4.
+This pain did not improve with maximum medical management, so surgery was considered to relieve pressure.
+The nerve pressure was caused by wear-and-tear of the discs, a left-side spinal curve, and a slight slip of the vertebrae.
+Treatment:
+Because the patient had previously had a back surgery to remove bone and tissue, a minimally invasive side approach was chosen.
+The approach aimed to relieve pressure on the nerves and correct the spinal curve without going through scar tissue.
+A retroperitoneal transpsoas approach was used to reach the disc spaces on the left side of the spine.
+The disc was completely removed, and the opposite side’s disc ring was released to allow fusion.
+A lordotic PEEK graft measuring 50 mm long, 18 mm wide, and 9 mm high was placed at each level.
+The graft was packed with demineralized bone matrix to help the fusion process and support the spine.
+Outcome:
+Postoperative x-rays showed the grafts were in good position, the curve was corrected, the slip was fixed, and disc height was restored.
+A three-month follow-up x-ray showed the left side cage had moved laterally at L2-3, but the disc space had fused.
+The patient had no symptoms and one-year follow-up imaging confirmed complete fusion with no further cage migration at L2-3.
+Conclusion:
+Consent was obtained before treatment, and the patient agreed to share this case for educational purposes.
+This case demonstrates a successful minimally invasive side approach that relieved nerve pressure and corrected the spinal curve.
+The patient had significant improvement, remained asymptomatic, and reported no complications during the follow-up period.",,,,
+41,"Discharge Summary:
+
+Patient: 80-year-old Japanese male
+Admission Date: [Date]
+Discharge Date: [Date]
+
+Hospital Course:
+The patient presented to our hospital with gross hematuria and was diagnosed with bladder cancer. He underwent transurethral resection of the bladder tumor (TURBT) followed by Bacille Calmette–Guérin (BCG) injections into his bladder. He later developed a papillary tumor in the neck of the bladder and computed tomography showed bilateral ureteral cancer. Subsequently, bilateral laparoscopic nephroureterectomy and lymph-node dissection were performed. HD was initiated and two courses of postoperative GC chemotherapy were administered. During the first course, the patient developed grade 4 leukopenia, neutropenia, and thrombocytopenia, and GEM was discontinued due to bone marrow toxicity. In the second course, the patient developed thrombocytopenia and neutropenia remained at grade 3. Cystectomy was performed due to multiple recurrent bladder cancer.
+
+Past Medical History:
+The patient had a history of transurethral ureteral lithotripsy which resulted in a ureteral injury. He had microscopic hematuria which resolved after three months.
+
+Medical Team:
+Primary Physician: [Name]
+Nursing Staff: [Name(s)]
+
+Discharge Diagnosis:
+High-risk non-muscular invasive bladder cancer with CIS, after BCG and TURBT therapeutic status, pT2, ly0, v0, surgical margin is negative.
+
+Discharge Medications:
+[No medications provided in the case report]
+
+Discharge Instructions:
+The patient was advised to continue with his regular follow-up and treatment plans with his primary physician. All non-hematological toxicities such as nausea, fatigue, anorexia, and fever were monitored throughout the treatment courses.
+
+Follow-up Care:
+The patient was instructed to follow up with his primary physician for regular monitoring and to ensure proper attention to his health needs.
+
+Patient Acknowledgement:
+The patient provided informed consent for the publication of this report and its supporting images. The patient was managed in accordance with the principles of the Declaration of Helsinki.","Discharge Summary:
+Patient: 80-year-old Japanese male
+Admission Date: [Date]
+Discharge Date: [Date]
+Hospital Course:
+The patient came to the hospital with visible blood in his urine and was found to have bladder cancer.
+He had surgery to remove the tumor through the urethra and then received BCG injections into his bladder.
+Later a growth appeared in the neck of the bladder and a CT scan showed cancer in both ureters.
+Both kidneys and ureters were removed using small cuts and lymph nodes were taken out.
+He started chemotherapy with gemcitabine and received two rounds of chemotherapy after surgery to treat the cancer.
+During the first round he had severe low white blood cells, low neutrophils, and low platelets.
+Gemcitabine was stopped because it caused bone marrow toxicity, which is damage to the blood-making cells.
+In the second round he had low platelets and low neutrophils stayed moderate, which is grade 3.
+A cystectomy was done because the bladder cancer kept coming back multiple times, indicating recurrent disease.
+Past Medical History:
+The patient had a procedure to break up kidney stones using a scope that injured the ureter.
+He had tiny amounts of blood in his urine that went away after three months.
+Medical Team:
+Primary Physician: [Name]
+Nursing Staff: [Name(s)]
+Discharge Diagnosis:
+The patient has high-risk bladder cancer that has not spread into muscle layers and has CIS.
+After BCG and tumor removal, the cancer is staged as pT2, lymph node invasion is absent, and surgical margins are clear.
+Discharge Medications:
+[No medications provided in the case report]
+Discharge Instructions:
+The patient was told to keep seeing his primary doctor for follow-up and to follow his treatment plan.
+All side effects that are not blood-related, such as nausea, tiredness, loss of appetite, and fever, were watched during treatment.
+Follow-up Care:
+The patient was told to see his primary doctor regularly for check-ups and to take care of his health.
+Patient Acknowledgement:
+The patient agreed to let this report and its pictures be published for medical research.
+His care followed the Declaration of Helsinki, which sets standards for ethical research in medicine.",,,,
+42,"Discharge Summary:
+
+Admission Date: [Date]
+Discharge Date: [Date]
+Admission Diagnosis: Anthrax lesion on the left upper eyelid 
+Discharge Diagnosis: Healing of the anthrax lesion on the left upper eyelid 
+
+Hospital Course:
+The patient was admitted to the clinic with a 1 cm round, blackish, ulcerated, and crusted surface lesion on the left upper eyelid that started 5 days ago. Gram(+) bacilli compatible with B. anthracis were observed in Gram staining performed with the wound culture taken from the lesion. The patient had contact with meat bought from a butcher during the regional anthrax endemic period in 2018 and had no direct contact with an infected animal. The patient was started on ciprofloxacin 500 mg every 8 hours and amoxicillin 875 mg + clavulanic acid 125 mg every 12 hours for oral treatment. For topical treatment, chloramphenicol ointment was initiated twice daily. Eyelid edema slightly increased 1 day after the treatment was initiated. A sample was taken from the wound on the second day, and no growth was observed due to antibiotic use. 
+
+On the seventh day of treatment, significant improvement was observed in the lesion, with healing zones seen in the middle of the crust and on the intact skin border. Eyelid edema and redness regressed. The antibiotic treatment was stopped on the 16th day of treatment based on signs of significant improvement in the lesion. All vital signs remained within normal limits throughout the patient's hospital course. 
+
+Discharge Instructions:
+The patient was discharged with instructions to follow up with their primary care physician and to continue applying chloramphenicol ointment twice daily on the healed area of the lesion, as directed. The patient was also instructed to practice good hand hygiene and to avoid contact with animals or contaminated products. In case of any additional symptoms or concerns, the patient was advised to contact their healthcare provider.","Discharge Summary:
+Admission Date: [Date]
+Discharge Date: [Date]
+Admission Diagnosis: Anthrax lesion on the left upper eyelid
+Discharge Diagnosis: Healing of the anthrax lesion on the left upper eyelid
+Hospital Course:
+The patient came to the clinic with a 1 cm round black ulcerated crust on the left upper eyelid.
+The lesion started five days ago and was black, ulcerated, and crusty on the eyelid.
+Lab tests showed gram-positive bacilli that looked like Bacillus anthracis, the bacteria that cause anthrax.
+The patient had handled meat bought from a butcher during a local anthrax outbreak in 2018.
+The patient had no direct contact with infected animals during the hospital stay or before admission.
+The patient was given ciprofloxacin 500 mg every eight hours and amoxicillin-clavulanate 875 mg-125 mg every twelve hours by mouth.
+Chloramphenicol ointment was applied to the eyelid twice daily to help the wound heal.
+One day after starting treatment, eyelid swelling increased slightly but remained within normal limits.
+On the second day, a wound sample was taken and no bacteria grew because of the antibiotics.
+By day seven, the lesion showed clear improvement with healing areas in the middle of the crust and at the edge.
+Swelling and redness of the eyelid decreased over the following days and the area looked less inflamed.
+Antibiotic treatment was stopped on day sixteen because the lesion had improved significantly and the doctor felt it was safe.
+All vital signs stayed normal throughout the hospital stay and no complications were observed.
+Discharge Instructions:
+The patient was told to follow up with their primary care doctor for routine check-ups.
+The patient was told to keep applying chloramphenicol ointment twice daily on the healed area of the lesion.
+The patient was also told to practice good hand hygiene and to avoid contact with animals or contaminated products.
+If any new symptoms or concerns arise, the patient should call their healthcare provider right away.",,,,
+43,"DISCHARGE SUMMARY
+
+Hospital Course:
+The patient is a 44-year-old Hispanic male who was admitted for the evaluation of bilateral ocular inflammation in the setting of treatment with ipilimumab for metastatic cutaneous melanoma. He had received his third infusion two months prior to presentation, which led to systemic inflammatory side effects from therapy including rash, diarrhea, fever, and persistent rectal abscesses.
+
+Physical Exam:
+Upon presentation, the patient had central scotoma in the left eye, and both eyes showed pigment on the endothelium without keratic precipitates. Bilateral optic nerve edema with Paton’s lines and macular edema were noted on fundus examination. Cystic intraretinal and subfoveal fluid was also identified during Optical Coherence Tomography (OCT).
+
+Treatment:
+The patient was initially treated with topical therapy with prednisolone acetate and was referred to the uveitis service for further evaluation. Bilateral prednisolone acetate 1% was started four times a day with 0.2% brimonidine tartrate-0.5% timolol maleate ophthalmic solution twice a day and increased to 80 mg of oral prednisone daily. The patient was continually monitored and had his medication doses adjusted to promote healing.
+
+Improvement and Discharge:
+Over the course of following three weeks, his vision steadily improved with resolution of the optic nerve and retinal edema and subsequent development of a macular star. At the 2-month follow-up, his vision in both eyes improved to 20/25 and his anterior chamber reaction stabilized at 1+ flare and rare cell while taking prednisolone acetate four times a day. The patient was then lost to follow-up.","DISCHARGE SUMMARY
+Hospital Course:
+The patient is a 44-year-old Hispanic man admitted for eye inflammation after his third ipilimumab infusion for melanoma.
+He had rash, diarrhea, fever, and ongoing rectal abscesses from the treatment two months before admission.
+Physical Exam:
+On exam, he had a central blind spot in the left eye and pigment on the eye surface.
+Both eyes showed swelling of the optic nerve with Paton’s lines and swelling of the macula.
+Fluid-filled pockets were seen inside and under the retina using an OCT scan of the eye.
+Treatment:
+He was first treated with steroid eye drops and referred to the uveitis clinic for further evaluation.
+Steroid eye drops were prescribed four times a day and a glaucoma eye drop twice daily.
+His oral steroid dose was increased to 80 mg daily to control inflammation and reduce swelling.
+His medication was adjusted over time to help healing and prevent side effects while monitoring his vision.
+Improvement and Discharge:
+Over three weeks, his vision improved as the optic nerve and retinal swelling went away.
+A macular star appeared in the center of the retina, which is a normal healing sign.
+At the two-month check-up, vision in both eyes was 20/25 and the front of the eye looked normal.
+The eye exam showed mild inflammation with 1+ flare and rare cells while he continued steroid eye drops.
+He was then lost to follow-up and did not return for further care or appointments.",,,,
+44,"Hospital Course:
+
+The patient was a 33-year-old female who presented to the hospital with a sudden onset of right-sided weakness. CT scan of the brain showed that the patient had an ischemic stroke which affected the left middle cerebral artery territory. An MRI of the brain revealed altered signal intensity in the left parietal, temporal cortices, and left basal ganglia. The rest of the brain appeared structurally normal, and both cerebellar hemispheres showed no abnormality.
+
+Diagnosis:
+
+The patient was diagnosed with an ischemic stroke in the left middle cerebral artery territory. Additionally, a hypo-dense lesion was found in the medial part of the left basifrontal lobe, in the left Putamen extending superiorly to the left para-ventricular white matter, and around the frontal horn of the left lateral ventricle.
+
+Treatment:
+
+The patient underwent FDG PET/CT as part of routine evaluation before being planned for stem cell transplant for stroke. The PET/CT of the brain revealed reduced FDG uptake in the frontal, parietal, and temporal cortices, and basal ganglia on the left side. Correlative CT revealed a hypo-dense lesion as described above. The patient was treated under the care of the hospital's medical team.
+
+Assessment and Plan:
+
+During the hospital stay, the patient received therapy aimed at preventing further ischemic stroke. The medical team monitored the patient's condition closely and ordered various diagnostic tests, which revealed reduced FDG uptake in the frontal, parietal, and temporal cortices, and basal ganglia on the left side.
+
+Summary:
+
+The patient was admitted to the hospital with an acute onset of right-sided weakness due to an ischemic stroke in the left middle cerebral artery territory. Various diagnostic tests were performed which revealed a hypo-dense lesion in the medial part of the left basifrontal lobe, in the left Putamen extending superiorly to the left para-ventricular white matter, and around the frontal horn of the left lateral ventricle. The patient received treatment for ischemic stroke and was monitored closely by the hospital's medical team.","Hospital Course:
+The patient is a 33-year-old woman who came to the hospital with sudden right-side weakness.
+A brain CT scan showed she had an ischemic stroke in the left middle cerebral artery area.
+An MRI of the brain showed abnormal signal in the left parietal, temporal lobes, and left basal ganglia.
+The rest of the brain looked normal, and both cerebellar hemispheres showed no abnormality.
+Diagnosis:
+The patient was diagnosed with an ischemic stroke in the left middle cerebral artery area.
+A hypo-dense lesion was seen in the left basifrontal lobe, extending to the putamen and surrounding white matter.
+It also extended to the frontal horn of the left lateral ventricle, as shown on imaging.
+Treatment:
+The patient underwent an FDG PET/CT scan as part of routine evaluation before a planned stem cell transplant for stroke.
+The PET/CT showed reduced FDG uptake in the left frontal, parietal, temporal lobes, and basal ganglia.
+The CT scan confirmed the hypo-dense lesion described above, matching the PET/CT findings and guiding further care.
+The patient was treated under the care of the hospital's medical team throughout her stay.
+Assessment and Plan:
+During the hospital stay, the patient received therapy aimed at preventing further ischemic strokes and improving recovery.
+The medical team monitored the patient's condition closely and ordered various diagnostic tests to assess stroke damage.
+These tests showed reduced FDG uptake in the left frontal, parietal, temporal lobes, and basal ganglia.
+Summary:
+The patient was admitted to the hospital with acute right-side weakness due to an ischemic stroke in the left middle cerebral artery area.
+Various diagnostic tests showed a hypo-dense lesion in the left basifrontal lobe, extending to the putamen and surrounding white matter.
+It also extended to the frontal horn of the left lateral ventricle, as seen on imaging.
+The patient received treatment for the ischemic stroke and was monitored closely by the hospital's medical team.",,,,
+45,"Discharge Summary:
+
+Admission Date: [Date]
+Discharge Date: [Date]
+
+Patient Name: [Name]
+Medical Record Number: [Number]
+
+Admitting Diagnosis: Hypertension
+
+Hospital Course:
+
+The patient was admitted with a diagnosis of hypertension. The subsequent sonography revealed a right suprarenal mass and the echotexture of both the kidneys was normal. The urinary vanilyl mandelic acid was elevated. Iodine 131-metaiodobenzyl guanidine (MIBG) scan was normal. The Fluorine 18-fluorodeoxyglucose positron emission tomography-computed tomography (F18-FDG PET-CT) scan revealed hypermetabolic right adrenal mass suggestive of pheochromocytoma. There were no hypermetabolic renal cortical or pancreatic lesions. The subsequent high resolution computer tomography of the kidneys revealed multiple hypervascular cortical based lesions in the right kidney. The pancreas was replaced by multiple cysts. Per operative needle aspiration from pancreas did not show malignant cells.
+
+Treatment Provided:
+
+Partial nephrectomy was performed. Histology of the renal lesion showed clear cell carcinoma.
+
+Discharge Diagnosis:
+
+Clear cell carcinoma
+
+Condition at Discharge:
+
+Stable
+
+Follow-up Plan:
+
+The patient is advised to follow up with the physician at regular intervals.","Discharge Summary:
+Admission Date: [Date]
+Discharge Date: [Date]
+Patient Name: [Name]
+Medical Record Number: [Number]
+Admitting Diagnosis: High blood pressure
+Hospital Course:
+The patient was admitted to the hospital with high blood pressure, which is also called hypertension.
+An ultrasound showed a lump on the right adrenal gland and both kidneys looked normal.
+A urine test showed high levels of a chemical called vanillyl mandelic acid, which can indicate certain tumors.
+A special scan called MIBG scan did not show any abnormal activity in the adrenal gland.
+A PET-CT scan showed a bright spot on the right adrenal gland, suggesting a tumor called pheochromocytoma.
+The scan did not show any bright spots in the kidney or pancreas tissue, indicating normal function.
+A detailed kidney CT scan showed several blood-rich spots in the outer part of the right kidney.
+The pancreas was replaced by many fluid-filled sacs, known as cysts, which are common in some conditions.
+A needle sample taken from the pancreas during surgery did not contain cancer cells, indicating no malignancy.
+Treatment Provided:
+The doctors removed part of the kidney to treat the cancer, a procedure called partial nephrectomy.
+Examining the removed kidney tissue under a microscope showed clear cell carcinoma, a type of kidney cancer.
+Discharge Diagnosis:
+The discharge diagnosis is clear cell carcinoma, a type of kidney cancer that requires ongoing care.
+Condition at Discharge:
+The patient’s condition was stable when leaving the hospital, with no immediate complications or concerns.
+Follow-up Plan:
+The patient should see the doctor regularly for check-ups to monitor health and catch any changes early.",,,,
+46,"DISCHARGE SUMMARY
+
+Patient Name: [Redacted]
+Age: 8
+Gender: Male
+Date of Admission: [Redacted]
+Date of Discharge: [Redacted]
+
+HOSPITAL COURSE:
+
+The patient was admitted to our hospital due to abdominal pain, which was relieved by conservative management. He had been diagnosed with congenital IPSVS six years prior and was under medication for attention-deficit hyperactivity disorder.
+
+Laboratory tests revealed elevated ammonia levels and a prolonged coagulation profile. Imaging studies confirmed the presence of IPSVS and the hepatic mass.
+
+The patient's parents opted for close follow-up rather than invasive treatment for the IPSVS. However, at the six-month follow-up, the patient's blood ammonia level had risen significantly, and the shunt ratio indicated the potential progression of hepatic encephalopathy. Hence, endovascular treatment was performed to close the shunt.
+
+During the procedure, the patient experienced bleeding from the sheath's tract, which was managed promptly using US-guided compression. Within six days of the procedure, the patient's serum ammonia levels had decreased to within normal range, and he was discharged after nine days.
+
+FOLLOW-UP:
+
+Two weeks post-embolization, an abdominal US showed occluded shunts with a decrease in the size of the hepatic mass. The right portal vein's blood flow had increased markedly, and the spleen size had minimally increased. A follow-up CT scan a month later showed complete embolization of the IPSVS, improved portal flow to the right lobe, and nearly complete disappearance of the hepatic mass.
+
+On discharge, the patient was stable, alert and oriented. His physical exam and vital signs were normal. His medications were reviewed, and he was instructed to follow up with his referring physician.
+
+DISCHARGE DIAGNOSIS:
+
+1. Congenital IPSVS
+2. Hepatic mass.
+
+DISCHARGE PLAN:
+
+1. Follow up with the referring physician for routine care and monitoring.
+2. Medications to be continued as before.
+3. No dietary restrictions.
+4. No strenuous physical activity for two weeks.
+5. Report back to the hospital if there are any concerns or adverse events.","DISCHARGE SUMMARY
+Patient Name: [Redacted]
+Age: 8
+Gender: Male
+Date of Admission: [Redacted]
+Date of Discharge: [Redacted]
+HOSPITAL COURSE:
+The patient was admitted to the hospital because of belly pain that got better with simple care.
+He had been born with a heart blood vessel problem called IPSVS and was taking medicine for ADHD.
+Blood tests showed high ammonia and a slow clotting time, indicating liver stress and possible bleeding risk.
+Imaging showed the IPSVS and a liver lump, confirming the diagnosis and guiding further care.
+The parents chose regular check-ups instead of surgery to treat the IPSVS and monitor the liver.
+At the six-month check-up, the ammonia level rose and the shunt ratio suggested the liver problem was getting worse.
+So doctors used a catheter to block the abnormal blood vessel connection, a procedure called endovascular treatment.
+During the procedure, bleeding from the tube was stopped with ultrasound-guided pressure, and the patient tolerated the treatment well.
+Six days later, the ammonia level returned to normal and the patient left the hospital after nine days.
+FOLLOW-UP:
+Two weeks after the procedure, an ultrasound showed the shunts were closed and the liver lump had shrunk.
+Blood flow in the right portal vein increased a lot and the spleen grew a little.
+A CT scan one month later showed the shunts were completely blocked and blood flow to the right liver lobe improved.
+The liver lump had almost disappeared, indicating successful treatment and reduced liver stress for the patient.
+At discharge, the patient was stable, alert, and oriented, with normal physical exam and vital signs.
+His medicines were reviewed and he was told to see his referring doctor for ongoing care.
+DISCHARGE DIAGNOSIS:
+1. Congenital IPSVS
+2. Hepatic mass.
+DISCHARGE PLAN:
+1. Follow up with the referring physician for routine care and monitoring.
+2. Medications to be continued as before.
+3. No dietary restrictions.
+4. No strenuous physical activity for two weeks.
+5. Report back to the hospital if there are any concerns or adverse events.",,,,
+47,"Discharge Summary:
+
+Patient Name: _______________                Date of Admission: __________
+MRN: _____________________                Date of Discharge: __________
+
+Hospital Course:
+The patient is a 60-year-old, morbidly obese male with a medical history of uncontrolled hypertension, type 2 diabetes mellitus with microvascular complications, stroke without residual weakness, and obstructive sleep apnea who was admitted to the hospital with a three-day history of severe headache. An initial CT scan of the brain showed no evidence of subarachnoid hemorrhage. However, an MRI scan of the brain revealed generalized volume loss.
+
+Physical Examination:
+On physical examination, the patient had mild bilateral pedal edema, and we were unable to evaluate jugular venous pulsations due to a thick short neck. Neurological examination was unremarkable, and fundoscopic examination did not reveal any papilledema. Electrocardiogram showed low voltage sinus rhythm. Chest x-ray showed mild left pleural effusion and cardiomegaly. An echocardiogram revealed a large pericardial effusion with features of tamponade.
+
+Diagnostic Studies:
+The patient underwent emergent pericardial drainage, and the fluid analysis revealed it as a hemorrhagic pericardial effusion. The septic screen was negative, and vasculitis screening with ANA and ANCA was also negative. A PET CT scan did not detect any malignant focus. An MRI scan of the heart showed basal septal mid-wall myocardial enhancement of non-ischemic pattern, likely due to myocarditis or cardiomyopathy.
+
+Diagnosis:
+After ruling out secondary causes of hemorrhagic pericardial effusion, such as malignancy, autoimmune diseases, and TB, our patient was labeled as idiopathic myocarditis leading to chronic pericardial effusion based on MRI scan of the heart.
+
+Management:
+The patient's headache was relieved after pericardiocentesis, and his blood pressure stabilized after resuming his home antihypertensive medications. The patient was observed in the hospital for ten days with regular echocardiogram studies. He was asymptomatic and discharged with regular follow-up in the cardiology clinic. The cardiologist outpatient follow-ups with repeated echocardiogram studies for a further five months did not show any fluid reaccumulation. The patient was followed for one year after discharge where he remained clinically stable.
+
+Discharge Diagnosis:
+Idiopathic myocarditis leading to chronic pericardial effusion.
+
+Follow-up:
+The patient will have regular follow-up in the cardiology clinic to monitor the progress of the patient's condition.","Discharge Summary:
+Patient Name: _______________                Date of Admission: __________
+MRN: _____________________                Date of Discharge: __________
+Hospital Course:
+The patient is a 60-year-old man with severe obesity and high blood pressure that is not under control.
+He also has type 2 diabetes with small blood vessel problems and a past stroke with no lasting weakness.
+He has sleep apnea that causes breathing pauses during sleep and requires treatment to help him breathe better.
+He was admitted to the hospital because he had a severe headache that lasted three days.
+A brain CT scan showed no bleeding around the brain, which is called subarachnoid hemorrhage.
+An MRI of the brain showed overall shrinkage of brain tissue, indicating volume loss that can happen with certain conditions.
+Physical Examination:
+On exam, the patient had swelling in both feet and we could not see the neck veins due to a short neck.
+His nervous system exam was normal and his eye exam showed no swelling of the optic nerve head.
+His heart rhythm on the ECG was normal but showed low voltage, which can sometimes indicate heart strain.
+A chest X-ray showed a small amount of fluid around the left lung and an enlarged heart.
+An ultrasound of the heart showed a large amount of fluid around the heart that was pressing on the heart.
+Diagnostic Studies:
+The patient had an emergency procedure to drain the fluid around the heart, called pericardial drainage.
+The fluid was bloody and showed no signs of infection, indicating hemorrhagic pericardial effusion, which means bleeding around the heart.
+Tests for infection and autoimmune disease were negative, ruling out those causes of the fluid.
+A PET scan did not show any cancer, which helped rule out malignancy as a cause.
+A heart MRI showed inflammation of the heart muscle that was not due to lack of blood flow.
+This pattern suggests myocarditis or cardiomyopathy, which are conditions that affect the heart muscle and can cause fluid buildup.
+Diagnosis:
+After checking for other causes, the patient was diagnosed with idiopathic myocarditis leading to chronic pericardial effusion.
+This means the heart muscle inflammation caused long-term fluid around the heart, as seen on the heart MRI.
+Management:
+The patient's headache went away after the fluid was drained and his blood pressure returned to normal when he restarted his home blood pressure medicines.
+He was watched in the hospital for ten days with regular heart ultrasound checks to monitor his condition.
+He had no symptoms and was sent home with plans for regular cardiology clinic visits.",,,,
+48,"Discharge Summary
+
+Patient Information:
+- Name: Not provided
+- Sex: Female
+- Age: 76 years
+
+Hospital Course:
+- The patient underwent mitral and tricuspid valve replacement in 1989 followed by aortic valve replacement in 2009.
+- In 2010, the patient experienced a large-volume tarry stool and hemorrhagic shock which was caused by angiodysplasia in the sigmoid colon. The patient required a transfusion to stabilize her condition. Endoscopic coagulation was done to treat the bleeding.
+- Between 2010 and 2016, gastrointestinal bleeding events occurred in the sigmoid colon ulcer, sigmoid and gastric angiodysplasia, and a descending colon polyp. Endoscopic therapies, including clipping and argon plasma coagulation (APC), helped control the bleeding.
+- In 2016, the patient suffered from anemia due to gastric hyperplastic polyp bleeding caused by Helicobacter pylori (H. pylori) infection. Endoscopic mucosal resection was done, and H. pylori was eradicated. However, the anemia progressed again in 2017.
+- In 2017, capsule endoscopy revealed jejunal intestinal angiodysplasia, which was treated by APC using balloon-assisted endoscopy. The patient required a total of 360 units of blood transfusion between 2017 and 2020 to treat the slowly progressing anemia.
+- In October 2020, the patient suffered from hematemesis due to multiple gastric angiodysplasia lesions. Hemostasis was performed twice using APC.
+- The patient died due to acute exacerbation from chronic heart failure in November 2020, 10 years after the initial gastrointestinal bleeding event.
+
+Medical History:
+- Mitral valve replacement and tricuspid valve replacement in 1989
+- Aortic valve replacement in 2009
+- Gastrointestinal bleeding events due to angiodysplasia in sigmoid colon ulcer, sigmoid and gastric angiodysplasia, and descending colon polyp between 2010-2016
+- Anemia due to gastric hyperplastic polyp bleeding caused by H. pylori infection in 2016
+- Jejunal intestinal angiodysplasia identified and treated in 2017
+- Multiple gastric angiodysplasia lesions treated in October 2020
+
+Diagnostic Assessment:
+- Complete blood count revealed hemoglobin level of 11.0 g/dL after 2010 episode
+- Max aortic jet velocity (AVmax) of 3.96 m/s in 2008, decreased to 3.04 m/s after surgery in 2009
+- AVmax increased to 3.95 m/s in 2010 when gastrointestinal bleeding occurred and increased to 4.74 m/s in 2012.
+- VWF activity decreased from 113% in 2017 to 100% in 2019.
+- VWF multimer analysis was normal in 2020.
+- Vascular endothelial growth factor level was 865 pg/mL (normal range: 62–704 pg/mL).
+
+Summary and Follow-up:
+- The patient suffered from gastrointestinal bleeding due to angiodysplasia several times between 2010 and 2016, which were treated by endoscopic therapies.
+- Anemia recurred due to gastric hyperplastic polyp bleeding caused by H. pylori infection in 2016, and subsequently, jejunal intestinal angiodysplasia was identified and treated by APC.
+- Multiple gastric angiodysplasia lesions, leading to hematemesis, were treated using APC in October 2020.
+- Unfortunately, the patient died due to acute exacerbation from chronic heart failure in November 2020.
+- No further follow-up is required.","Discharge Summary
+Patient Information:
+Name: Not provided
+Sex: Female
+Age: 76 years
+Hospital Course:
+The patient had mitral and tricuspid valve replacement in 1989 and aortic valve replacement in 2009.
+In 2010, the patient had a large amount of dark stool and severe bleeding from angiodysplasia in the sigmoid colon.
+The patient received a blood transfusion to stabilize her condition and endoscopic coagulation was performed to treat the bleeding.
+Between 2010 and 2016, the patient had bleeding from sigmoid colon ulcer, sigmoid and gastric angiodysplasia, and a descending colon polyp.
+Endoscopic therapies, including clipping and argon plasma coagulation, helped control the bleeding during this period.
+In 2016, the patient developed anemia from gastric hyperplastic polyp bleeding caused by H. pylori infection.
+Endoscopic mucosal resection was performed to remove the polyp and H. pylori was eradicated successfully.
+However, the anemia returned again in 2017, requiring further treatment and monitoring by the medical team.
+In 2017, capsule endoscopy showed jejunal intestinal angiodysplasia, which was treated by APC using balloon-assisted endoscopy.
+The patient received a total of 360 units of blood transfusion between 2017 and 2020 to treat the slowly progressing anemia.
+In October 2020, the patient vomited blood due to multiple gastric angiodysplasia lesions, which required immediate attention.
+Hemostasis was performed twice using APC to stop the bleeding from these lesions and stabilize the patient.
+The patient died due to a sudden worsening of chronic heart failure in November 2020.
+This occurred ten years after the first gastrointestinal bleeding event, which marked the start of her ongoing health issues.
+Medical History:
+The patient had mitral and tricuspid valve replacement in 1989 and aortic valve replacement in 2009.
+The patient had gastrointestinal bleeding events due to angiodysplasia in the sigmoid colon ulcer, sigmoid and gastric angiodysplasia, and descending colon polyp between 2010 and 2016.
+The patient developed anemia from gastric hyperplastic polyp bleeding caused by H. pylori infection in 2016.
+Jejunal intestinal angiodysplasia was identified and treated in 2017 using argon plasma coagulation to stop the bleeding.
+Multiple gastric angiodysplasia lesions were treated in",,,,
+49,"Discharge Summary:
+
+Patient: 39-year-old woman diagnosed with plasmablastic IgA lambda multiple myeloma
+
+Hospital Course:
+
+The patient was admitted to our facility in January 2011 with a diagnosis of plasmablastic IgA lambda multiple myeloma, stage III (International Staging System). She underwent four cycles of PAD chemotherapy (bortezomib, adriamycin, and dexamethasone) and zoledronic acid before receiving an autologous peripheral blood stem cell transplant, conditioned with melphalan (200 mg/m2), in August 2011. The patient experienced a symptomatic relapse with a T7 vertebral collapse in March 2013, after which treatment with lenalidomide and dexamethasone was initiated. Due to a loss of response after four cycles of treatment, the patient received VCD chemotherapy (bortezomib, cyclophosphamide, and dexamethasone), achieving a second complete remission. In December 2013, a fully matched sibling hematopoietic stem cell transplantation, after reduced-intensity conditioning regimen, was performed to consolidate the excellent response. The patient experienced another bone marrow relapse, along with a plasmacytoma of tibia in April 2014, following which she was retreated with VCD. This regimen was stopped after two cycles of treatment due to bortezomib-related peripheral neuropathy. The patient was then placed on VBCMP/VBAD chemotherapy (vincristine, carmustine, cyclophosphamide, melphalan, prednisone/vincristine, carmustine, doxorubicin, and high-dose dexamethasone), achieving a third complete remission.
+
+In April 2015, the patient presented with pericardial effusion and echocardiographic signs of cardiac tamponade, which were resolved through pericardiocentesis. In May 2015, the patient presented with massive left-side pleural effusion. Two thoracocentesis revealed plasmablastic cells. Despite this EMM relapse, multiple myeloma was not detected in blood, urine, or bone marrow. The patient was then started on carfilzomib plus dexamethasone, which resulted in a sudden improvement in her general condition and was discharged without pleural effusion.
+
+Follow-Up Recommendations:
+
+The patient is currently receiving the 18th cycle of treatment and remains in complete remission 19 months after the EMM was detected. Further follow-up appointments will be scheduled to monitor the patient's progress.","Discharge Summary:
+Patient: 39-year-old woman diagnosed with a type of blood cancer called plasmablastic IgA lambda multiple myeloma.
+Hospital Course:
+The patient was admitted in January 2011 with stage III multiple myeloma, a serious blood cancer.
+She received four cycles of PAD chemotherapy (bortezomib, adriamycin, and dexamethasone) and zoledronic acid.
+In August 2011 she had a stem cell transplant using her own blood cells, treated with melphalan.
+In March 2013 she had a relapse with a broken vertebra in the neck, treated with lenalidomide and dexamethasone.
+After four cycles of lenalidomide and dexamethasone she did not respond well, so she switched to VCD chemotherapy.
+VCD chemotherapy (bortezomib, cyclophosphamide, and dexamethasone) put her back into complete remission, meaning no detectable cancer.
+In December 2013 she received a stem cell transplant from a fully matched sibling donor after a mild chemo regimen.
+The transplant was meant to strengthen her response and prevent further relapse, and it worked.
+In April 2014 she had a bone marrow relapse and a tumor in her shin bone.
+She was treated again with VCD chemotherapy, but stopped after two cycles due to nerve damage from bortezomib.
+She then received VBCMP/VBAD chemotherapy (vincristine, carmustine, cyclophosphamide, melphalan, prednisone, carmustine, doxorubicin, high-dose dexamethasone).
+This treatment put her back into a third complete remission, meaning no detectable cancer.
+In April 2015 she developed fluid around her heart and signs of heart compression, treated by draining the fluid.
+In May 2015 she had a large buildup of fluid in her left lung, treated by draining it twice.
+Tests showed the fluid contained cancer cells, indicating a relapse of the EMM type.
+No cancer was found in her blood, urine, or bone marrow, suggesting the EMM was limited to the fluid.
+She started carfilzomib plus dexamethasone, which quickly improved her overall health and she left the hospital with no lung fluid.
+Follow-Up Recommendations:
+The patient is currently finishing the 18th cycle of treatment and remains in complete remission.
+This means no detectable cancer",,,,
+50,"Discharge Summary:
+
+Patient Name: [INSERT PATIENT NAME]
+Date of Admission: [INSERT DATE OF ADMISSION]
+Date of Discharge: [INSERT DATE OF DISCHARGE]
+Admitting Diagnosis: Headache and Vision Changes
+
+Hospital Course:
+The patient was admitted to the hospital with complaints of bitemporal headache and vision changes. On examination, the patient exhibited 20/20 visual acuity in the right eye but loss of peripheral vision and minimal light perception centrally in the left eye. Additionally, an afferent pupillary defect of the left eye was noted on swinging light reflex. CT scan revealed a hyperdense lesion within the posterior sella, which was unchanged from 17 months prior, but no acute intracranial findings. Further evaluation with POCUS revealed elevation of the optic disc into the vitreous cavity, consistent with papilledema, and an enlarged optic nerve sheath diameter. Ophthalmology assessment revealed Grade 3-4 optic disc edema bilaterally, with probable optic neuropathy of the left eye secondary to optic disc edema. MRI of the brain revealed a posterior pituitary adenoma, but it was not compressing on the optic chiasm or optic nerves. Laboratory tests assessing pituitary function were all within normal limits. Lumbar puncture revealed increased opening pressure, with a closing pressure suggesting a diagnosis of IIH. The patient's headache improved following a large-volume lumbar puncture. She was started on acetazolamide and underwent ventriculoperitoneal shunt placement. 
+Upon follow-up with ophthalmology, improvement of papilledema in both eyes was noted, but with clinical evidence of optic neuropathy and optic nerve atrophy in the left eye. The patient was discharged home with scheduled follow-up appointments with neurosurgery, neurology, and ophthalmology.
+
+Discharge Medications:
+The patient was prescribed acetazolamide to be taken 500 milligrams every six hours.
+
+Follow-up:
+The patient was advised to follow up with neurosurgery, neurology, and ophthalmology as scheduled to assess her condition.","Discharge Summary:
+Patient Name: [INSERT PATIENT NAME]
+Date of Admission: [INSERT DATE OF ADMISSION]
+Date of Discharge: [INSERT DATE OF DISCHARGE]
+Admitting Diagnosis: Headache and Vision Changes
+Hospital Course:
+The patient came to the hospital with a headache on both sides of the head and changes in vision.
+Exam showed normal vision in the right eye but side vision loss and little light perception in the left eye.
+The left eye did not react to light when tested with a swinging light.
+A CT scan showed a dense spot at the back of the pituitary gland, unchanged from 17 months ago.
+It did not show any new brain problems.
+An eye ultrasound showed the optic nerve head pushed into the gel inside the eye, indicating papilledema.
+It also showed an enlarged optic nerve covering.
+Eye doctor found severe optic nerve swelling in both eyes, with likely optic nerve damage in the left eye.
+MRI showed a pituitary tumor at the back, not pressing on the optic nerve crossing or nerves.
+Pituitary hormone tests were normal.
+A spinal tap showed high fluid pressure, suggesting increased pressure inside the skull.
+The patient's headache improved after a large spinal tap.
+She was started on acetazolamide and had a tube placed to drain fluid from the brain to the belly.
+At follow-up, the optic nerve swelling in both eyes improved, but there was still optic nerve damage and thinning in the left eye.
+She was sent home with scheduled visits with brain surgery, nerve specialist, and eye doctor.
+Discharge Medications:
+The patient was prescribed acetazolamide 500 milligrams to be taken every six hours.
+Follow-up:
+The patient was told to see the brain surgery, nerve specialist, and eye doctor as scheduled to check her condition.",,,,
