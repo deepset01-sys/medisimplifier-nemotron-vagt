@@ -1,0 +1,6 @@
+/* minimal reset — the demo component (demo.jsx) supplies all of its own styling.
+   This just clears the browser defaults that would fight the clinical layout
+   (centering, dark theme, body margin). */
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; padding: 0; width: 100%; }
+body { background: #f4f7fa; }
