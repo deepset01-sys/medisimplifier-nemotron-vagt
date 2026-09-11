@@ -4,4 +4,13 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    proxy: {
+      '/v1': {
+        target: 'https://port8000-vjbksde9vzhgtcx.tunnel.applications.eu-north1.nebius.cloud',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 })

@@ -160,6 +160,31 @@ const CASE_SAFE = {
     "Claude Sonnet 5 and Gemini 2.5 Pro both confirm every diagnosis and medication is retained.",
 };
 
+/* ===================== audit_panel — Act 2 (live) ====================== */
+
+const AUDIT_ENDPOINT = "/v1/audit_panel"; // proxied by Vite; deterministic (pure CPU) — same answer every call
+const AUDIT_REQUEST = {
+  incumbent_panel: ["meta-llama/Llama-3.3-70B-Instruct", "Qwen/Qwen3-32B"],
+  candidate_pool: [
+    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "google/gemma-3-27b-it",
+    "openai/gpt-oss-120b",
+    "nvidia/nemotron-3-super-120b-a12b",
+    "deepseek-ai/DeepSeek-V4-Flash-0731",
+    "nvidia/Nemotron-3-Ultra-550b-a55b",
+  ],
+};
+
+// Static ΔΦ_V chart (diagnosis stratum) from results/audit_panel_live_receipt.json.
+const PANEL_CANDIDATES = [
+  { name: "Nemotron Nano", delta: 0.0706, ci: [0.0552, 0.0866], recommended: true },
+  { name: "gpt-oss-120b", delta: 0.0719 },
+  { name: "Ultra 550B", delta: 0.0721 },
+  { name: "DeepSeek Flash", delta: 0.0597 },
+  { name: "gemma-27B", delta: 0.0017 },
+];
+const PANEL_MAX = 0.0721; // longest bar (Ultra) → normalizes bar widths
+
 /* ================================ styles ================================ */
 
 const CSS = `
@@ -315,6 +340,72 @@ const CSS = `
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px;
   background: #eef2f7; padding: 1px 6px; border-radius: 4px; color: var(--ink-soft);
 }
+
+/* run-it-live */
+.ms-live { margin-top: 18px; }
+.ms-runbtn {
+  appearance: none; border: 1px solid var(--brand); background: var(--brand); color: #fff;
+  font-weight: 600; font-size: 14px; padding: 10px 18px; border-radius: 8px; cursor: pointer;
+  transition: background .15s, transform .05s;
+}
+.ms-runbtn:hover { background: #24466e; }
+.ms-runbtn:active { transform: translateY(1px); }
+.ms-runbtn:focus-visible { outline: 2px solid #a9c3e6; outline-offset: 2px; }
+.ms-live-note { margin-left: 12px; font-size: 12.5px; color: var(--ink-faint); }
+.ms-live-loading { display: inline-flex; align-items: center; font-size: 14px; color: var(--ink-soft); font-weight: 500; }
+.ms-live-loading .dots span { animation: msblink 1.2s infinite both; }
+.ms-live-loading .dots span:nth-child(2) { animation-delay: .2s; }
+.ms-live-loading .dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes msblink { 0%, 80%, 100% { opacity: .2; } 40% { opacity: 1; } }
+.ms-live-result {
+  border: 1px solid #cbd6e6; border-left: 4px solid var(--brand); background: #f7fafd;
+  border-radius: 10px; padding: 14px 16px;
+}
+.ms-live-badge {
+  display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700;
+  letter-spacing: .04em; text-transform: uppercase; color: var(--brand); margin-bottom: 10px;
+}
+.ms-live-badge .live-dot { width: 8px; height: 8px; border-radius: 50%; background: #e53e3e; animation: mspulse 1.4s infinite; }
+@keyframes mspulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+.ms-live-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.ms-live-consensus { font-weight: 700; font-size: 14px; }
+.v-SAFE { color: var(--safe-ink); } .v-UNSAFE { color: var(--unsafe-ink); }
+.v-DISAGREE { color: var(--warn-accent); } .v-ERROR { color: var(--ink-faint); }
+.ms-live-meta { font-size: 12.5px; color: var(--ink-faint); }
+.ms-live-error {
+  border: 1px solid var(--warn-line); background: var(--warn-bg); border-radius: 10px;
+  padding: 12px 16px; font-size: 14px; color: var(--warn-ink);
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.ms-retry {
+  appearance: none; border: 1px solid #cdd7e2; background: #fff; color: var(--brand);
+  font-weight: 600; font-size: 13px; padding: 6px 12px; border-radius: 999px; cursor: pointer;
+}
+
+/* Act 2 — bridge + audit_panel card */
+.ms-bridge {
+  margin: 18px 0 0; font-size: 14.5px; line-height: 1.6; color: var(--ink-soft);
+  border-left: 3px solid var(--line); padding-left: 14px;
+}
+.ms-act2 {
+  margin-top: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(16,24,40,0.04), 0 8px 24px rgba(16,24,40,0.04); padding: 20px 22px;
+}
+.ms-act2-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+.ms-act2-sub { font-size: 12.5px; color: var(--ink-faint); margin-bottom: 16px; }
+.ms-bars { display: flex; flex-direction: column; gap: 9px; }
+.ms-bar-row { display: grid; grid-template-columns: 104px 1fr auto; align-items: center; gap: 12px; font-size: 13px; }
+.ms-bar-name { color: var(--ink-soft); font-weight: 500; text-align: right; }
+.ms-bar-row.rec .ms-bar-name { color: var(--brand); font-weight: 700; }
+.ms-bar-track { height: 16px; background: #eef2f7; border-radius: 4px; overflow: hidden; }
+.ms-bar-fill { display: block; height: 100%; background: #cbd6e6; border-radius: 4px; }
+.ms-bar-row.rec .ms-bar-fill { background: var(--brand); }
+.ms-bar-val { font-variant-numeric: tabular-nums; color: var(--ink-soft); white-space: nowrap; font-size: 12.5px; }
+.ms-bar-row.rec .ms-bar-val { color: var(--ink); font-weight: 600; }
+.ms-bar-ci { color: var(--ink-faint); font-weight: 400; }
+.ms-bar-tag { color: var(--brand); font-weight: 700; margin-left: 6px; font-size: 11.5px; }
+.ms-act2-caption { margin: 16px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
+.ms-audit-live { margin-top: 16px; }
 `;
 
 /* ============================== components ============================== */
@@ -345,6 +436,27 @@ export default function App() {
   const [caseKey, setCaseKey] = useState("flagged");
   const isFlagged = caseKey === "flagged";
   const active = isFlagged ? CASE_FLAGGED : CASE_SAFE;
+  const [audit, setAudit] = useState({ status: "idle", data: null });
+
+  async function runAudit() {
+    setAudit({ status: "loading", data: null });
+    try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 30000); // CPU service — milliseconds; generous ceiling
+      const res = await fetch(AUDIT_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(AUDIT_REQUEST),
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data = await res.json();
+      setAudit({ status: "success", data });
+    } catch (e) {
+      setAudit({ status: "error", data: null });
+    }
+  }
 
   return (
     <div className="ms-page">
@@ -414,12 +526,96 @@ export default function App() {
             </div>
           </div>
 
+          {/* Act 2 (auditor confirm + bridge + audit_panel) — FLAGGED case only */}
+          {isFlagged && (
+            <>
           <div className="ms-auditors">
             <span className="check" aria-hidden="true">✓</span>
             <span>
               <strong>Confirmed by 2 independent LLM auditors</strong> — {active.auditors}
             </span>
           </div>
+
+          {/* bridge — Act 1's noise motivates Act 2's rigor */}
+          <p className="ms-bridge">
+            A single judge call on a hard case is noisy — even Nemotron doesn't always agree with itself. So how do we
+            know it belongs in the panel? We don't trust one call. We measured it.
+          </p>
+
+          {/* Act 2 — why you can trust the panel (audit_panel) */}
+          <div className="ms-act2">
+            <div className="ms-act2-title">Which judge best fixes the panel's blind spot?</div>
+            <div className="ms-act2-sub">ΔΦ_V on the diagnosis stratum — the panel's blindest</div>
+
+            <div className="ms-bars">
+              {PANEL_CANDIDATES.map((c) => (
+                <div className={"ms-bar-row" + (c.recommended ? " rec" : "")} key={c.name}>
+                  <span className="ms-bar-name">{c.name}</span>
+                  <span className="ms-bar-track">
+                    <span className="ms-bar-fill" style={{ width: (c.delta / PANEL_MAX) * 100 + "%" }} />
+                  </span>
+                  <span className="ms-bar-val">
+                    +{c.delta.toFixed(4)}
+                    {c.recommended && <span className="ms-bar-ci"> [{c.ci[0]}, {c.ci[1]}]</span>}
+                    {c.recommended && <span className="ms-bar-tag">← recommended</span>}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <p className="ms-act2-caption">
+              VAGT ranked five candidate judges by truth-anchored dependability. The tool picked the small NVIDIA
+              model on the numbers — over a 550B sibling and an OpenAI model.
+            </p>
+
+            {/* live, deterministic audit_panel call (proxied by Vite) */}
+            <div className="ms-audit-live">
+              {audit.status === "idle" && (
+                <button className="ms-runbtn" onClick={runAudit}>Run audit_panel live →</button>
+              )}
+
+              {audit.status === "loading" && (
+                <div className="ms-live-loading">
+                  Calling audit_panel
+                  <span className="dots">
+                    <span>.</span>
+                    <span>.</span>
+                    <span>.</span>
+                  </span>
+                </div>
+              )}
+
+              {audit.status === "success" && audit.data && (() => {
+                const rec = audit.data.recommendation || {};
+                const ci = rec.ci_95 || [];
+                return (
+                  <div className="ms-live-result">
+                    <div className="ms-live-badge">
+                      <span className="live-dot" aria-hidden="true" />Live result — deterministic (same answer every call)
+                    </div>
+                    <div className="ms-live-row">
+                      <span className="ms-live-consensus v-SAFE">Recommended: {rec.model}</span>
+                      {rec.expected_Phi_V_lift != null && (
+                        <span className="ms-live-meta">
+                          ΔΦ_V +{rec.expected_Phi_V_lift}
+                          {ci.length === 2 && ` · CI [${ci[0]}, ${ci[1]}]`}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {audit.status === "error" && (
+                <div className="ms-live-error">
+                  <span>⚠️ Endpoint offline — showing the committed receipt above.</span>
+                  <button className="ms-retry" onClick={runAudit}>Try again</button>
+                </div>
+              )}
+            </div>
+          </div>
+            </>
+          )}
         </section>
 
         {/* footer / honesty */}
