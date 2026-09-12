@@ -1,0 +1,120 @@
+{
+  "source": "results/gate_calibration_full.json (deployed gate prompt)",
+  "majority_rule": "flag when >= half the panel votes UNSAFE (ties flag): 2-rater >=1 of 2, 3-rater >=2 of 3",
+  "note": "sigma_B / Phi_V computed on the SAME gate-prompt data (not the calibration-prompt published values) so they are apples-to-apples with the consensus accuracy above; they differ from the README calibration headline by design (see split_half_validation.json).",
+  "published_calibration_reference": {
+    "diagnosis": {
+      "sigma_B_2to3": [
+        0.347,
+        0.229
+      ],
+      "delta_phi_v": 0.071
+    }
+  },
+  "per_stratum": {
+    "dose": {
+      "n": 295,
+      "n_corrupted": 95,
+      "n_clean": 200,
+      "consensus": {
+        "rater2": {
+          "recall": 0.8947,
+          "specificity": 0.81,
+          "bal_acc": 0.8524
+        },
+        "rater3": {
+          "recall": 0.8737,
+          "specificity": 0.9,
+          "bal_acc": 0.8868
+        },
+        "delta_bal_acc": 0.0345
+      },
+      "decomposition_gate_prompt": {
+        "sigma_B_2": 0.0534,
+        "sigma_B_3": 0.0611,
+        "delta_sigma_B": 0.0077,
+        "phi_v_2": 0.7497,
+        "phi_v_3": 0.7218,
+        "delta_phi_v": -0.0279
+      }
+    },
+    "negation": {
+      "n": 313,
+      "n_corrupted": 113,
+      "n_clean": 200,
+      "consensus": {
+        "rater2": {
+          "recall": 0.7611,
+          "specificity": 0.81,
+          "bal_acc": 0.7855
+        },
+        "rater3": {
+          "recall": 0.6903,
+          "specificity": 0.9,
+          "bal_acc": 0.7951
+        },
+        "delta_bal_acc": 0.0096
+      },
+      "decomposition_gate_prompt": {
+        "sigma_B_2": 0.1143,
+        "sigma_B_3": 0.1138,
+        "delta_sigma_B": -0.0005,
+        "phi_v_2": 0.6186,
+        "phi_v_3": 0.6187,
+        "delta_phi_v": 0.0001
+      }
+    },
+    "lateral": {
+      "n": 350,
+      "n_corrupted": 150,
+      "n_clean": 200,
+      "consensus": {
+        "rater2": {
+          "recall": 0.9733,
+          "specificity": 0.81,
+          "bal_acc": 0.8917
+        },
+        "rater3": {
+          "recall": 0.9667,
+          "specificity": 0.9,
+          "bal_acc": 0.9333
+        },
+        "delta_bal_acc": 0.0417
+      },
+      "decomposition_gate_prompt": {
+        "sigma_B_2": 0.036,
+        "sigma_B_3": 0.0434,
+        "delta_sigma_B": 0.0073,
+        "phi_v_2": 0.8023,
+        "phi_v_3": 0.785,
+        "delta_phi_v": -0.0173
+      }
+    },
+    "diagnosis": {
+      "n": 350,
+      "n_corrupted": 150,
+      "n_clean": 200,
+      "consensus": {
+        "rater2": {
+          "recall": 0.4,
+          "specificity": 0.81,
+          "bal_acc": 0.605
+        },
+        "rater3": {
+          "recall": 0.2667,
+          "specificity": 0.9,
+          "bal_acc": 0.5833
+        },
+        "delta_bal_acc": -0.0217
+      },
+      "decomposition_gate_prompt": {
+        "sigma_B_2": 0.2893,
+        "sigma_B_3": 0.2317,
+        "delta_sigma_B": -0.0576,
+        "phi_v_2": 0.4324,
+        "phi_v_3": 0.4762,
+        "delta_phi_v": 0.0438
+      }
+    }
+  }
+}
