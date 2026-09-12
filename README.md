@@ -707,7 +707,7 @@ src/
     build_pool.py                reshape calibration → audit_pool/ (lossless, self-validating)
     gen_pool_verdicts.py         Step 6: generate a candidate's 708-row verdicts (dual-registry)
 docker/
-  Dockerfile.train               Builds train-v29/v30/v31 (cryptography==48.0.1 pinned)
+  Dockerfile.train               Builds train-v29/v30/v31/v32 (cryptography==48.0.1 pinned)
   Dockerfile.endpoint            Safe Endpoint v5 image (endpoint-v5)
 jobs/
   job_train_v2.yaml              v2 fine-tuning job (train-v29, sha256:bbbf6df1..., Nemotron dataset, adapters-v2 bucket)
