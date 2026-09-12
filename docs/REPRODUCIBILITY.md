@@ -67,6 +67,39 @@ docker push cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint
 
 Note: `docker/requirements_train.txt` pins `cryptography==48.0.1` via a Dockerfile post-install step — resolves the pyOpenSSL/cryptography drift that broke train-v28.
 
+## CPU audit_panel service (always-on)
+
+A slim, CPU-only image that serves **only** `/v1/audit_panel` + `/health` — no vLLM,
+no torch, no CUDA, no gate, no simplifier. Request-time work is pure CPU over the
+committed `audit_pool/` verdict files, so it needs **no API key** and no GPU. This is
+the always-on demo floor (the deterministic VAGT panel selector), decoupled from the
+H100 endpoint (~$1–3/day instead of ~$4/hr).
+
+- **Image:** `chambul/medisimplifier:audit-cpu`
+- **Digest:** `sha256:3df2a39ead023bc2ca79feddccd43d6988366f0197966b43ed36aa8e457cb06d`
+- **Size:** 370 MB (vs ~8.8 GB for the GPU endpoint — vLLM/torch/CUDA dropped)
+- **Serves:** `POST /v1/audit_panel` + `GET /health` ONLY
+- **Built from:** `docker/Dockerfile.cpu` (app `src/cpu_endpoint.py`, launcher `scripts/start_cpu_endpoint.sh`)
+
+Pull and run:
+```bash
+docker pull chambul/medisimplifier@sha256:3df2a39ead023bc2ca79feddccd43d6988366f0197966b43ed36aa8e457cb06d
+docker run -p 8000:8000 chambul/medisimplifier:audit-cpu
+```
+
+Verify:
+```bash
+curl localhost:8000/health
+# → {"service":"audit_panel-cpu","audit_panel":true,"pool_loaded":true,"ready":true,"pool_error":null}
+```
+
+Rebuild:
+```bash
+cd ~/medisimplifier-nemotron-vagt && git pull
+docker build -t chambul/medisimplifier:audit-cpu -f docker/Dockerfile.cpu .
+docker push chambul/medisimplifier:audit-cpu
+```
+
 ## Deploy the endpoint
 
 The Safe Endpoint runs as a Nebius AI Endpoint from `jobs/safe_endpoint_v2.yaml`. To stand it up on your own Nebius account:

@@ -339,6 +339,7 @@ Build host: VM ubuntu@195.242.30.65 (nebius_vm key); has nebius CLI + boto3 + ~/
 | endpoint-v3 | sha256:9d950d83... | Safe Endpoint v2 (no audit_panel) |
 | endpoint-v4 | sha256:0e1d1b5abf5afb08d85dabaa5483399a8035bafbb620c11d82e01c92d17f547f | Safe Endpoint v4 (+ /v1/audit_panel) — SUPERSEDED (old selector → gemma) |
 | endpoint-v5 | sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe | Safe Endpoint v5 — selector blind-spot-first fix → Nano; **DEPLOY THIS** (safe_endpoint_v2.yaml) |
+| audit-cpu | sha256:3df2a39ead023bc2ca79feddccd43d6988366f0197966b43ed36aa8e457cb06d | CPU-only audit_panel service — /v1/audit_panel + /health ONLY, no vLLM/gate/key; always-on floor ~$1–3/day (Dockerfile.cpu) |
 
 **Critical:** cryptography==48.0.1 pinned via post-install step in Dockerfile.train
 **Build method:** manual `docker build` dual-tagged to Docker Hub + Nebius CR, tag bumped per version (build_and_push.sh is STALE — hardcodes v28, Docker-Hub only). CR login: `nebius iam get-access-token | docker login cr.eu-north1.nebius.cloud --username iam --password-stdin`.
