@@ -392,6 +392,11 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
         (Claude Sonnet 5 + Gemini 2.5 Pro; 2/20 confirmed drops — see B5)
 ### B2. Quickstart
 
+**🔗 Live demo (always-on, no setup):**
+https://deepset01-sys.github.io/medisimplifier-nemotron-vagt/
+
+Open the link → click "Run audit_panel live →" → get the real deterministic VAGT recommendation (Nemotron Nano, +0.0706, CI [0.0552, 0.0866]). No account, no GPU, nothing to install.
+
 Two ways to use it: call the hosted endpoint (**Path 1**), or run the safety gate directly on any `(original, simplified)` pair (**Path 2**).
 
 > **Live endpoint (Nebius GPU Endpoint — application-tunnel URL, stopped between demos):**
