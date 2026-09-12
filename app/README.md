@@ -35,21 +35,22 @@ npm install && npm run dev
 ```
 → http://localhost:5173
 
-## Live button — prerequisite
+## Live button — always-on CPU service
 
 The demo makes exactly **one** live call: the **"Run audit_panel live →"** button,
-which POSTs to `/v1/audit_panel` (proxied by Vite to the Nebius endpoint). That route
-is **pure CPU** — it re-ranks pre-computed verdict files and calls no models — so it
-returns in ~1 s, deterministically, the same recommendation every time.
+which POSTs to `/v1/audit_panel` (proxied by Vite to the **always-on CPU service**).
+That route is **pure CPU** — it re-ranks pre-computed verdict files and calls no
+models — so it returns in ~1 s, deterministically, the same recommendation every time.
 
-It does require the **endpoint-v5 (Safe Endpoint)** container to be running, since that
-is what *serves* the `/v1/audit_panel` route. Start it from the Nebius Console before
-presenting. It does **not** need the Qwen3-32B dedicated judge endpoint or any GPU
-inference — audit_panel touches neither.
+That route is served by the **always-on CPU service** (`chambul/medisimplifier:audit-cpu`)
+— a slim CPU-only container with no vLLM, no GPU, and no API key. It is **always warm**
+(no cold start, ~$1–3/day), so there is **nothing to start** before presenting — the
+button just works. It does **not** touch the H100 endpoint, the Qwen3-32B dedicated
+judge, or any GPU inference — audit_panel touches none of them.
 
-If endpoint-v5 is down, the button falls back gracefully to *"showing the committed
-receipt"* (the same numbers as the static Act 2 chart), so the demo still works fully —
-you just don't get the live round-trip.
+If the CPU service is ever unreachable, the button falls back gracefully to *"showing
+the committed receipt"* (the same numbers as the static Act 2 chart), so the demo still
+works fully — you just don't get the live round-trip.
 
 Note: **Act 1 (the gate verdicts) is cached** — the demo does *not* call `/v1/simplify`
 live — so the DISAGREE result and the auditor confirmation display with no endpoint
