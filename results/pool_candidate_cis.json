@@ -1,0 +1,281 @@
+{
+  "seed": 42,
+  "n_bootstrap": 1000,
+  "incumbent_panel": [
+    "meta-llama/Llama-3.3-70B-Instruct",
+    "Qwen/Qwen3-32B"
+  ],
+  "metric": "delta_phi_v (paired, candidate vs Llama+Qwen)",
+  "candidates": {
+    "gemma-3-27b-it": {
+      "model": "google/gemma-3-27b-it",
+      "per_stratum": {
+        "dose": {
+          "n": 284,
+          "dropped": 11,
+          "delta_phi_v": 0.0378,
+          "ci_95": [
+            0.0155,
+            0.0603
+          ],
+          "ci_width": 0.0448
+        },
+        "negation": {
+          "n": 298,
+          "dropped": 15,
+          "delta_phi_v": 0.0044,
+          "ci_95": [
+            -0.0126,
+            0.0224
+          ],
+          "ci_width": 0.035
+        },
+        "lateral": {
+          "n": 342,
+          "dropped": 8,
+          "delta_phi_v": 0.0122,
+          "ci_95": [
+            -0.0091,
+            0.0365
+          ],
+          "ci_width": 0.0456
+        },
+        "diagnosis": {
+          "n": 336,
+          "dropped": 14,
+          "delta_phi_v": 0.0017,
+          "ci_95": [
+            -0.0061,
+            0.0098
+          ],
+          "ci_width": 0.0158
+        }
+      }
+    },
+    "gpt-oss-120b": {
+      "model": "openai/gpt-oss-120b",
+      "per_stratum": {
+        "dose": {
+          "n": 284,
+          "dropped": 11,
+          "delta_phi_v": -0.0299,
+          "ci_95": [
+            -0.0725,
+            0.0047
+          ],
+          "ci_width": 0.0772
+        },
+        "negation": {
+          "n": 298,
+          "dropped": 15,
+          "delta_phi_v": 0.0505,
+          "ci_95": [
+            0.0204,
+            0.0759
+          ],
+          "ci_width": 0.0555
+        },
+        "lateral": {
+          "n": 342,
+          "dropped": 8,
+          "delta_phi_v": 0.0396,
+          "ci_95": [
+            0.0083,
+            0.0675
+          ],
+          "ci_width": 0.0592
+        },
+        "diagnosis": {
+          "n": 336,
+          "dropped": 14,
+          "delta_phi_v": 0.0719,
+          "ci_95": [
+            0.0545,
+            0.0886
+          ],
+          "ci_width": 0.0341
+        }
+      }
+    },
+    "nemotron-3-super-120b-a12b": {
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "per_stratum": {
+        "dose": {
+          "n": 283,
+          "dropped": 12,
+          "delta_phi_v": -0.0585,
+          "ci_95": [
+            -0.1069,
+            -0.0181
+          ],
+          "ci_width": 0.0888
+        },
+        "negation": {
+          "n": 298,
+          "dropped": 15,
+          "delta_phi_v": 0.0283,
+          "ci_95": [
+            -0.0089,
+            0.0567
+          ],
+          "ci_width": 0.0656
+        },
+        "lateral": {
+          "n": 341,
+          "dropped": 9,
+          "delta_phi_v": 0.0106,
+          "ci_95": [
+            -0.0232,
+            0.0395
+          ],
+          "ci_width": 0.0627
+        },
+        "diagnosis": {
+          "n": 335,
+          "dropped": 15,
+          "delta_phi_v": 0.0653,
+          "ci_95": [
+            0.0481,
+            0.0826
+          ],
+          "ci_width": 0.0346
+        }
+      }
+    },
+    "DeepSeek-V4-Flash-0731": {
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "per_stratum": {
+        "dose": {
+          "n": 280,
+          "dropped": 15,
+          "delta_phi_v": -0.0321,
+          "ci_95": [
+            -0.0725,
+            -0.0004
+          ],
+          "ci_width": 0.0721
+        },
+        "negation": {
+          "n": 294,
+          "dropped": 19,
+          "delta_phi_v": 0.0489,
+          "ci_95": [
+            0.0168,
+            0.0764
+          ],
+          "ci_width": 0.0596
+        },
+        "lateral": {
+          "n": 339,
+          "dropped": 11,
+          "delta_phi_v": 0.0421,
+          "ci_95": [
+            0.0109,
+            0.0716
+          ],
+          "ci_width": 0.0608
+        },
+        "diagnosis": {
+          "n": 328,
+          "dropped": 22,
+          "delta_phi_v": 0.0597,
+          "ci_95": [
+            0.044,
+            0.0773
+          ],
+          "ci_width": 0.0334
+        }
+      }
+    },
+    "Nemotron-3-Ultra-550b-a55b": {
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "per_stratum": {
+        "dose": {
+          "n": 284,
+          "dropped": 11,
+          "delta_phi_v": -0.0318,
+          "ci_95": [
+            -0.0742,
+            0.0021
+          ],
+          "ci_width": 0.0763
+        },
+        "negation": {
+          "n": 298,
+          "dropped": 15,
+          "delta_phi_v": 0.0642,
+          "ci_95": [
+            0.032,
+            0.0887
+          ],
+          "ci_width": 0.0567
+        },
+        "lateral": {
+          "n": 342,
+          "dropped": 8,
+          "delta_phi_v": 0.0415,
+          "ci_95": [
+            0.008,
+            0.0677
+          ],
+          "ci_width": 0.0598
+        },
+        "diagnosis": {
+          "n": 336,
+          "dropped": 14,
+          "delta_phi_v": 0.0721,
+          "ci_95": [
+            0.0547,
+            0.0878
+          ],
+          "ci_width": 0.0331
+        }
+      }
+    },
+    "Nemotron-3-Nano-30B (ref)": {
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "per_stratum": {
+        "dose": {
+          "n": 280,
+          "dropped": 15,
+          "delta_phi_v": -0.0127,
+          "ci_95": [
+            -0.0552,
+            0.0208
+          ],
+          "ci_width": 0.0761
+        },
+        "negation": {
+          "n": 295,
+          "dropped": 18,
+          "delta_phi_v": 0.0425,
+          "ci_95": [
+            0.0125,
+            0.0683
+          ],
+          "ci_width": 0.0558
+        },
+        "lateral": {
+          "n": 341,
+          "dropped": 9,
+          "delta_phi_v": 0.0478,
+          "ci_95": [
+            0.0207,
+            0.0724
+          ],
+          "ci_width": 0.0517
+        },
+        "diagnosis": {
+          "n": 333,
+          "dropped": 17,
+          "delta_phi_v": 0.0706,
+          "ci_95": [
+            0.0527,
+            0.0868
+          ],
+          "ci_width": 0.0341
+        }
+      }
+    }
+  }
+}
