@@ -12,6 +12,8 @@
 
 Patients are sent home with discharge summaries written for clinicians — dense with abbreviations, drug names, and diagnoses most people cannot read. **MediSimplifier v2** rewrites those summaries into plainer language (FK-Grade 8.87, roughly 9th grade) and returns, with each rewrite, a safety verdict from a panel of three LLM judges — two decide (Qwen3-32B + NVIDIA Nemotron Nano), one advisory (Llama-3.3-70B) — with Llama and Nemotron Nano served per-token on Nebius Token Factory and Qwen3-32B on a dedicated Nebius endpoint. The student model was fine-tuned on **7,983** references written by **Nemotron Super** (replacing Claude Opus); the judge panel was calibrated on **MedSimp-JudgeBench**, a 708-item benchmark with **508 known injected errors**. Everything below is reproducible from committed artifacts and public HuggingFace models for about **$248.10** in Nebius credits.
 
+**Nebius-native by construction.** Every stage runs on Nebius: teacher generation, the three-judge panel, calibration, and pool-verdict generation on **Token Factory** (per-token; Qwen3-32B on a dedicated Nebius endpoint); training, evaluation, and merge as **Nebius Jobs** on H100; and the live safety gate as a persistent **Nebius GPU Endpoint** (vLLM). This is the architecture, not a deployment afterthought.
+
 **What's new in v2 — three things:**
 
 - **The finding (measured, not asserted).** Two standard judges — Llama and Qwen — almost never catch a *silently dropped diagnosis*: recall **14%** and **7%**. NVIDIA **Nemotron Nano** catches **68%**. Adding it as a third rater *raises* truth-alignment while *lowering* rater agreement — the opposite of what Cohen's κ (v1's only metric) predicts — because it breaks a blind spot the other two share. Concretely, on the diagnosis stratum the veridicality-anchored dependability Φ_V rises **0.404 → 0.476** (paired Δ **+0.071**, 95% CI **[+0.055, +0.087]**, n = 333, 1,000 resamples), shared-bias variance σ²_B falls **0.347 → 0.229**, and Fleiss κ / Krippendorff α turn *negative* (**0.076 → −0.088**; Δκ **−0.163 [−0.305, −0.045]**). It is not universal: on dose errors, where the incumbents weren't blind, ΔΦ_V is a null **−0.013 [−0.055, +0.021]**. This is the first empirical application of the VAGT framework, developed after v1's κ = 0.11.
@@ -810,8 +812,8 @@ Apache 2.0 — see [LICENSE](LICENSE).
 |------|-----------|-------------|
 | Teacher | Nemotron Super references not expert-reviewed | Human-expert validation of teacher quality |
 | Training | No ablation on Nemotron dataset — used v1 winner config directly | Ablation study on Nemotron-taught dataset |
-| Safety | Nemotron Nano: 35.2% FP on clean text — threshold/prompt calibration needed | Threshold calibration to separate recall from over-flagging |
+| Safety | Nemotron Nano: 35.2% FP on clean text — threshold/prompt calibration needed | Null-rater baseline shows Nemotron uniquely net-positive (+0.037 mean ΔΦ_V) — validates collateral tie-break; threshold calibration remains open |
 | Safety | Scale/family confound in judge disagreement (Qwen-72B unavailable on Token Factory) | Scale-matched judge comparison |
-| Safety | Diagnosis-drop partially addressed (Nemotron 68% vs 14%/7% v1 judges) | Human-anchored calibration study |
-| VAGT | Bootstrap CIs are 95% point estimates (seed=42) — not full power analysis | Full power simulation (developed post-v1, see v1 repo) |
+| Safety | Diagnosis-drop partially addressed (Nemotron 68% vs 14%/7% v1 judges) | Physician-labeled 50-case validation in progress (blinded sheet + merge pipeline committed; docs/ADJUDICATION_BRIEF.md) |
+| VAGT | Bootstrap CIs are 95% point estimates (seed=42) — not full power analysis | Per-candidate paired CIs computed (results/pool_candidate_cis.json); null-rater baseline added (results/null_baseline_cis.json) |
 | VAGT | 3-rater empirical application only — formal estimand developed post-v1 submission | Formal publication of VAGT estimand |
