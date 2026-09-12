@@ -1,0 +1,135 @@
+{
+  "seed": 42,
+  "n_bootstrap": 1000,
+  "p_unsafe_target": 0.47,
+  "null_random_realized_prevalence": 0.4619,
+  "incumbent_panel": [
+    "meta-llama/Llama-3.3-70B-Instruct",
+    "Qwen/Qwen3-32B"
+  ],
+  "raters": {
+    "null_unsafe (constant UNSAFE)": {
+      "model": "null_unsafe",
+      "per_stratum": {
+        "dose": {
+          "n": 284,
+          "delta_phi_v": -0.1691,
+          "ci_95": [
+            -0.2291,
+            -0.1196
+          ],
+          "ci_width": 0.1095
+        },
+        "negation": {
+          "n": 298,
+          "delta_phi_v": -0.0513,
+          "ci_95": [
+            -0.0986,
+            -0.0122
+          ],
+          "ci_width": 0.0864
+        },
+        "lateral": {
+          "n": 342,
+          "delta_phi_v": -0.0807,
+          "ci_95": [
+            -0.1249,
+            -0.0454
+          ],
+          "ci_width": 0.0795
+        },
+        "diagnosis": {
+          "n": 336,
+          "delta_phi_v": 0.0486,
+          "ci_95": [
+            0.026,
+            0.0666
+          ],
+          "ci_width": 0.0406
+        }
+      }
+    },
+    "null_random (p=0.47)": {
+      "model": "null_random",
+      "per_stratum": {
+        "dose": {
+          "n": 284,
+          "delta_phi_v": -0.1076,
+          "ci_95": [
+            -0.1476,
+            -0.0754
+          ],
+          "ci_width": 0.0722
+        },
+        "negation": {
+          "n": 298,
+          "delta_phi_v": -0.0155,
+          "ci_95": [
+            -0.0506,
+            0.011
+          ],
+          "ci_width": 0.0617
+        },
+        "lateral": {
+          "n": 342,
+          "delta_phi_v": -0.0647,
+          "ci_95": [
+            -0.0949,
+            -0.0385
+          ],
+          "ci_width": 0.0563
+        },
+        "diagnosis": {
+          "n": 336,
+          "delta_phi_v": 0.0381,
+          "ci_95": [
+            0.0214,
+            0.0528
+          ],
+          "ci_width": 0.0313
+        }
+      }
+    },
+    "Nemotron Nano (real)": {
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "per_stratum": {
+        "dose": {
+          "n": 280,
+          "delta_phi_v": -0.0127,
+          "ci_95": [
+            -0.0552,
+            0.0208
+          ],
+          "ci_width": 0.0761
+        },
+        "negation": {
+          "n": 295,
+          "delta_phi_v": 0.0425,
+          "ci_95": [
+            0.0125,
+            0.0683
+          ],
+          "ci_width": 0.0558
+        },
+        "lateral": {
+          "n": 341,
+          "delta_phi_v": 0.0478,
+          "ci_95": [
+            0.0207,
+            0.0724
+          ],
+          "ci_width": 0.0517
+        },
+        "diagnosis": {
+          "n": 333,
+          "delta_phi_v": 0.0706,
+          "ci_95": [
+            0.0527,
+            0.0868
+          ],
+          "ci_width": 0.0341
+        }
+      }
+    }
+  }
+}
