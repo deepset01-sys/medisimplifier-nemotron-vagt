@@ -22,7 +22,7 @@ Patients are sent home with discharge summaries written for clinicians — dense
 
 ## Why VAGT — the panel selection finding
 
-That inversion generalizes into a decision tool. VAGT is not just a measurement — it answers a **decision**: given a judge panel with a shared blind spot, *which judge should you add to fix it?* Adding more raters of the same kind doesn't help — shared bias doesn't shrink with panel size — so the useful question is *which* rater breaks the blind spot, and by how much. VAGT scores each candidate by the gain in truth-anchored dependability (**ΔΦ_V**) it delivers on the panel's weakest stratum, with a bootstrap confidence interval. We ran the full analysis on our own gate: incumbent panel = **Llama-3.3-70B + Qwen3-32B** (both near-blind to silent diagnosis drops), scoring five candidate third judges on the 708-item MedSimp-JudgeBench.
+That inversion generalizes into a decision tool. VAGT is not just a measurement — it answers a **decision**: given a judge panel with a shared blind spot, *which judge should you add to fix it?* Adding more raters of the same kind doesn't help — shared bias doesn't shrink with panel size — so the useful question is *which* rater breaks the blind spot, and by how much. VAGT scores each candidate by the gain in truth-anchored dependability (**ΔΦ_V**) it delivers on the panel's weakest stratum, with a bootstrap confidence interval. We ran the full analysis on our own gate: incumbent panel = **Llama-3.3-70B + Qwen3-32B** (both near-blind to silent diagnosis drops), scoring six candidate third judges (the deployed Nemotron Nano as the reference, plus five alternatives) on the 708-item MedSimp-JudgeBench.
 
 | Candidate | Family | Size | diag ΔΦ_V | dose ΔΦ_V |
 |--|--|--|--|--|
@@ -264,7 +264,7 @@ The Nemotron-taught student was evaluated on the **same GuyDor007 test set (n=1,
 
 > FK-Grade is prediction-only (reference-independent); Δ~0 confirms library consistency.
 
-**Training run:** LoRA (r=32, all_attn, 3 epochs) on 7,983 train / 995 val / 998 test — ~2.4 hours (8,523 s) on 1×H100, ~$9 for training alone (combined train+eval+merge GPU cost: $39.34 — see cost table). Teacher references agree with Claude's at ROUGE-L **0.525** ([`teacher_comparison.json`](teacher_comparison.json)).
+**Training run:** LoRA (r=32, all_attn, 3 epochs) on 7,983 train / 995 val / 998 test — ~2.4 hours (8,523 s) on 1×H100, ~$9 for training alone (combined train+eval+merge GPU cost: $45.53 — see cost table). Teacher references agree with Claude's at ROUGE-L **0.525** ([`teacher_comparison.json`](teacher_comparison.json)).
 
 > **Interpretation:** v2 ROUGE-L reflects **style divergence from Claude references, not a quality failure** — Nemotron Super produces *less* simplified references — measured FK-Grade **10.1** (Nemotron refs) vs **7.2** (Claude refs), Δ **+2.9** grade levels, both on textstat 0.7.13 over 9,976 pairs (see [`results/reference_fk_grade.json`](results/reference_fk_grade.json)) — and the student model faithfully learned this style. (The student's published FK-Grade 8.87 is a separate measurement — student output, scored with the train-v32 image's textstat — so it is not directly comparable to these reference figures.) The lower ROUGE-L/SARI is the student matching a *different teacher's style*, scored against Claude's references; it is not evidence the v2 outputs are worse, only that they are less Claude-like (and at a slightly higher reading level). Note the ~0.525 student↔Claude ROUGE-L closely tracks the ~0.525 teacher↔teacher ROUGE-L — the student inherited exactly the teacher gap.
 
@@ -322,13 +322,13 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
 
 > **Reasoning-model reminder:** all Nemotron generation uses `--max-tokens 16000` (Super) / `8000+` (Nano). Too small a budget returns empty output — the scripts flag and retry, never save a truncated result. Runs checkpoint every 50 records; `nemotron_training_data.py` resumes from the output file.
 
-**Expected cost:** $1.63 calibration (708×3 judges), ~$1.7 JudgeBench refs (519 calls), $75.19 full teacher run (9,999 calls).
+**Expected cost:** $1.63 calibration (708×3 judges), ~$1.7 JudgeBench refs (519 calls), $75.51 full teacher run (9,999 calls).
 
 ## Track B — Product Design
 
 ### B1. What you get & who it's for
 
-**User story.** Send a discharge summary; receive a 6th–9th-grade rewrite and a three-judge safety verdict; choose whether unsafe outputs are flagged or blocked.
+**User story.** Send a discharge summary; receive a ~9th-grade rewrite (FK-Grade 8.87) and a three-judge safety verdict; choose whether unsafe outputs are flagged or blocked.
 
 **Intended user.** A developer wrapping or evaluating a medical text simplifier.
 
