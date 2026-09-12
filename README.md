@@ -696,6 +696,8 @@ src/
   sample_audit_review.py         build 30-case review template (seed=42) + score judgments
   llm_review_audit.py            dual-auditor review (Claude Sonnet 5 + Gemini 2.5 Pro) of flagged cases
   measure_reference_fk.py        FK-Grade of Claude vs Nemotron reference sets → reference_fk_grade.json
+  eval_vs_nemotron_refs.py       Evaluate student vs Nemotron references
+  run_disagree_capture.py        Capture live DISAGREE case from endpoint
   audit_panel/                   /v1/audit_panel service (Steps 1-6):
     vagt_core.py                 generalized VAGT decomposition (σ²/Φ_V + paired bootstrap CIs)
     pool_loader.py               load audit_pool verdicts + ground truth (merge by row_id)
@@ -715,11 +717,23 @@ jobs/
   safe_endpoint_v2.yaml          Safe Endpoint v5 deployment config (endpoint-v5 image; adds /v1/audit_panel)
 scripts/
   start_endpoint.sh              Boot vLLM + Safe Endpoint v5 API (inside endpoint-v5 image)
+  build_physician_review.py      Build blinded 50-case physician spreadsheet (seed=42)
+  merge_physician_labels.py      Merge physician labels → human-anchored τ + inter-rater κ
+  compute_pool_cis.py            Per-candidate paired bootstrap CIs (all 5 pool candidates × 4 strata)
+  compute_null_baseline.py       Null-rater baseline (constant-UNSAFE + random-47%); validates collateral tie-break
 logs/
   train_v2.json.gz               v2 training log — Nebius Job aijob-e00rwxv72fe81f54we, 8,523s, per-epoch eval_loss
 docs/
-  ADJUDICATION_BRIEF.md          plain-language guide for physician review of the 6 contested audit cases
+  ADJUDICATION_BRIEF.md          unified 50-case blinded physician protocol (5 categories matching VAGT strata, spreadsheet recording)
   REPRODUCIBILITY.md             container image digests + adapter storage flow + rebuild steps
+app/
+  demo.jsx                       React single-page demo — Act 1 (gate catches drop) + Act 2 (audit_panel leaderboard)
+  index.html                     Vite entry point
+  src/main.jsx                   React mount
+  src/index.css                  Minimal CSS reset (clinical layout)
+  package.json                   Pinned deps (React 19, Vite 8)
+  vite.config.js                 Vite config + /v1 proxy → live Nebius endpoint
+  README.md                      Clone-and-run instructions (npm install && npm run dev)
 audit_pool/
   ground_truth.json              708-item ground truth (τ labels, stratum, row_id)
   candidates.yaml                pool manifest (pooled + pending candidates)
@@ -743,6 +757,12 @@ results/gate_calibration_full.json     708-item deployed-gate calibration (0 ERR
 results/student_audit.json             1,001 student outputs through the gate (SAFE 47.4% / flagged 52.0%)
 results/student_audit_review.json      30-case dual-auditor review (Claude + Gemini; 2/20 confirmed drops; human_judgment on 6 contested)
 results/reference_fk_grade.json        FK-Grade: Claude refs 7.2 / Nemotron refs 10.08 (Δ+2.88, textstat 0.7.13, n=9,976)
+results/pool_candidate_cis.json        Per-candidate ΔΦ_V + 95% CI (Fix 1; all 5 candidates × 4 strata)
+results/null_baseline_cis.json         Null-rater control (Fix 2; nulls net-negative; Nemotron net-positive +0.037)
+results/physician_review.csv           Blinded 50-case physician spreadsheet (seed=42; 6 contested + 44 stratified)
+results/physician_review_KEY.csv       De-blinding key (Case# → orig_index → stratum → source)
+results/audit_panel_live_receipt.json  Live /v1/audit_panel receipt (Nano recommended, +0.0706, CI [0.0552, 0.0866])
+results/endpoint_v5_smoke_test.json    endpoint-v5 smoke test (SAFE capture; honest note on non-determinism)
 vagt_nemotron_results.txt        VAGT decomposition output (per-feature, both rater sets)
 vagt_bootstrap_cis.json               paired-Δ 95% CIs: ΔΦ_V +0.071 [+0.055,+0.087] on diagnosis
 FINDINGS.md                      Full findings write-up (calibration + VAGT + caveats)
