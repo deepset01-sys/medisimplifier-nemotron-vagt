@@ -39,7 +39,7 @@ That inversion generalizes into a decision tool. VAGT is not just a measurement 
 
 Three findings:
 
-- **Scale buys no *measurable* gain, 30B to 550B.** A **550B** Nemotron (Ultra, +0.0721 [+0.055, +0.088]) breaks the incumbents' diagnosis blind spot no better than a **30B** one (Nano, +0.0706 [+0.053, +0.087]) — the two CIs overlap almost entirely, so the diagnosis fix is **statistically indistinguishable across an 18× size range (overlapping CIs)**. The repair comes from the family's detection ability, already present at 30B; a bigger sibling adds no measurable reduction in the panel's shared bias. (These are per-candidate CIs vs the incumbent, not a paired between-candidate test — so "indistinguishable," not "proven equal.")
+- **Scale buys no *measurable* gain, 30B to 550B.** A **550B** Nemotron (Ultra, +0.0721 [+0.055, +0.088]) breaks the incumbents' diagnosis blind spot no better than a **30B** one (Nano, +0.0706 [0.0552, 0.0866]) — the two CIs overlap almost entirely, so the diagnosis fix is **statistically indistinguishable across an 18× size range (overlapping CIs)**. The repair comes from the family's detection ability, already present at 30B; a bigger sibling adds no measurable reduction in the panel's shared bias. (These are per-candidate CIs vs the incumbent, not a paired between-candidate test — so "indistinguishable," not "proven equal.")
 - **A different family can break the blind spot — but not automatically.** OpenAI's gpt-oss-120b matches the Nemotrons on diagnosis (+0.0719, CI excludes 0); Google's gemma-3-27b-it barely moves it (**+0.0017, CI [−0.006, +0.010] — straddles zero, statistically indistinguishable from no help at all**) — it is diagnosis-blind like the incumbents. On this 6-model pool, switching family looked *necessary but not sufficient*: a different family was needed to break the blind spot (gpt-oss did; gemma did not), yet being different was not enough on its own — the model still has to be able to catch the error. This is an observation on six candidates, not a general law.
 - **The recommendation is Nemotron Nano — a point-estimate tie-break among three statistically indistinguishable candidates** (Nano +0.0706, Ultra +0.0721, gpt-oss +0.0719; all three diagnosis CIs overlap, so **the margin between them is not statistically significant**). Nano wins the tie on the axes that *are* separable: the **least collateral damage** elsewhere (dose −0.013, CI straddles 0 — no significant harm — versus the over-flagging 120B+ reasoners super/DeepSeek at −0.03 to −0.06, whose dose CIs exclude 0), and it is **the only candidate net-positive across all four strata (+0.037 mean ΔΦ_V versus −0.063 for a constant-UNSAFE null rater; see the control below)**, at the **smallest and cheapest** size (30B). The tool picks the small NVIDIA model on the numbers — on collateral and cost, not on a significant diagnosis margin, and not because it is on-theme.
 
@@ -68,7 +68,7 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 | Gate operating characteristics | ❌ not measured | ✅ 708-item re-run through deployed gate prompt (0 ERRORs) — DISAGREE 20.8%, Qwen FP 9.5% (see B5) |
 | Diagnosis-retention audit | ❌ not measured | ✅ 1,001 student outputs through gate + dual-auditor review (Claude Sonnet 5 + Gemini 2.5 Pro); 2/20 confirmed drops (see B5) |
 | Safety enforcement modes | flag/block only | ✅ + strict mode: DISAGREE blocks (Nemotron diagnosis-drop tripwire enforces) |
-| VAGT panel-selection service | ❌ not built | ✅ /v1/audit_panel — callable Nebius service: given any incumbent panel + candidate pool, recommends the judge to add (ΔΦ_V on blindest stratum + bootstrap CI); 5-candidate pool validated on MedSimp-JudgeBench (see Why VAGT) |
+| VAGT panel-selection service | ❌ not built | ✅ /v1/audit_panel — callable Nebius service: given any incumbent panel + candidate pool, recommends the judge to add (ΔΦ_V on blindest stratum + bootstrap CI); 6-candidate pool validated on MedSimp-JudgeBench (see Why VAGT) |
 | Judge pool experiment | ❌ not measured | ✅ 5×708 verdicts (gemma 27B / gpt-oss 120B / Nemotron Super 120B / DeepSeek Flash / Nemotron Ultra 550B) — scale flat within Nemotron family (30B ≈ 550B); Nano recommended on merit |
 | Reproducibility | Public HuggingFace adapters | ✅ Public HuggingFace dataset + adapters v2 |
 
@@ -739,7 +739,7 @@ app/
 audit_pool/
   ground_truth.json              708-item ground truth (τ labels, stratum, row_id)
   candidates.yaml                pool manifest (pooled + pending candidates)
-  verdicts/                      per-judge 708-row verdict files (8: 3 incumbents + 5 candidates)
+  verdicts/                      per-judge 708-row verdict files (8: 3 incumbents + 5 additional models)
 tests/
   test_audit_panel.py            14-test suite: pool integrity, Nano recommended (not gemma), CI = committed receipt [0.0552, 0.0866]
 nemotron_judge_test.py           Nemotron Nano as safety judge (3-judge calibration, checkpointed)
@@ -759,8 +759,8 @@ results/gate_calibration_full.json     708-item deployed-gate calibration (0 ERR
 results/student_audit.json             1,001 student outputs through the gate (SAFE 47.4% / flagged 52.0%)
 results/student_audit_review.json      30-case dual-auditor review (Claude + Gemini; 2/20 confirmed drops; human_judgment on 6 contested)
 results/reference_fk_grade.json        FK-Grade: Claude refs 7.2 / Nemotron refs 10.08 (Δ+2.88, textstat 0.7.13, n=9,976)
-results/pool_candidate_cis.json        Per-candidate ΔΦ_V + 95% CI (Fix 1; all 5 candidates × 4 strata)
-results/null_baseline_cis.json         Null-rater control (Fix 2; nulls net-negative; Nemotron net-positive +0.037)
+results/pool_candidate_cis.json        Per-candidate ΔΦ_V + 95% CI (all 6 candidates × 4 strata)
+results/null_baseline_cis.json         Null-rater control (nulls net-negative; Nemotron net-positive +0.037)
 results/physician_review.csv           Blinded 50-case physician spreadsheet (seed=42; 6 contested + 44 stratified)
 results/physician_review_KEY.csv       De-blinding key (Case# → orig_index → stratum → source)
 results/audit_panel_live_receipt.json  Live /v1/audit_panel receipt (Nano recommended, +0.0706, CI [0.0552, 0.0866])
