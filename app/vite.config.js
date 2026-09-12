@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/medisimplifier-nemotron-vagt/',
   plugins: [react()],
   server: {
     proxy: {

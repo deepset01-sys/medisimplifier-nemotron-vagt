@@ -162,7 +162,7 @@ const CASE_SAFE = {
 
 /* ===================== audit_panel — Act 2 (live) ====================== */
 
-const AUDIT_ENDPOINT = "/v1/audit_panel"; // proxied by Vite; deterministic (pure CPU) — same answer every call
+const AUDIT_ENDPOINT = "https://port8000-n5qwhak1n451qq2.tunnel.applications.eu-north1.nebius.cloud/v1/audit_panel"; // always-on CPU service (CORS-enabled); deterministic — same answer every call
 const AUDIT_REQUEST = {
   incumbent_panel: ["meta-llama/Llama-3.3-70B-Instruct", "Qwen/Qwen3-32B"],
   candidate_pool: [
