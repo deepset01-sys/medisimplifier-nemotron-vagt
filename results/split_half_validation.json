@@ -1,0 +1,182 @@
+{
+  "seed": 42,
+  "n_bootstrap": 1000,
+  "prompt_source": "deployed gate prompt (safety_gate.py JUDGE_PROMPT)",
+  "split": {
+    "dev_n": 353,
+    "test_n": 355,
+    "dev_composition": {
+      "diagnosis/corrupted": 75,
+      "dose/corrupted": 47,
+      "lateral/corrupted": 75,
+      "negation/corrupted": 56,
+      "none/clean": 100
+    },
+    "test_composition": {
+      "diagnosis/corrupted": 75,
+      "dose/corrupted": 48,
+      "lateral/corrupted": 75,
+      "negation/corrupted": 57,
+      "none/clean": 100
+    }
+  },
+  "b4_strategies": {
+    "dev": {
+      "nemotron_only": {
+        "n_corr": 253,
+        "n_clean": 100,
+        "recall": 0.8024,
+        "fp": 0.35,
+        "flag_rate": 0.6742,
+        "bal_acc": 0.7262
+      },
+      "qwen_only": {
+        "n_corr": 253,
+        "n_clean": 100,
+        "recall": 0.6482,
+        "fp": 0.11,
+        "flag_rate": 0.4958,
+        "bal_acc": 0.7691
+      },
+      "llama_only": {
+        "n_corr": 253,
+        "n_clean": 100,
+        "recall": 0.6126,
+        "fp": 0.12,
+        "flag_rate": 0.4731,
+        "bal_acc": 0.7463
+      },
+      "majority_2of3": {
+        "n_corr": 253,
+        "n_clean": 100,
+        "recall": 0.7154,
+        "fp": 0.12,
+        "flag_rate": 0.5467,
+        "bal_acc": 0.7977
+      },
+      "deployed": {
+        "n_corr": 253,
+        "n_clean": 100,
+        "recall": 0.834,
+        "fp": 0.41,
+        "flag_rate": 0.7139,
+        "bal_acc": 0.712
+      }
+    },
+    "test": {
+      "nemotron_only": {
+        "n_corr": 255,
+        "n_clean": 100,
+        "recall": 0.7882,
+        "fp": 0.26,
+        "flag_rate": 0.6394,
+        "bal_acc": 0.7641
+      },
+      "qwen_only": {
+        "n_corr": 255,
+        "n_clean": 100,
+        "recall": 0.6157,
+        "fp": 0.08,
+        "flag_rate": 0.4648,
+        "bal_acc": 0.7678
+      },
+      "llama_only": {
+        "n_corr": 255,
+        "n_clean": 100,
+        "recall": 0.6118,
+        "fp": 0.07,
+        "flag_rate": 0.4592,
+        "bal_acc": 0.7709
+      },
+      "majority_2of3": {
+        "n_corr": 255,
+        "n_clean": 100,
+        "recall": 0.6471,
+        "fp": 0.08,
+        "flag_rate": 0.4873,
+        "bal_acc": 0.7835
+      },
+      "deployed": {
+        "n_corr": 255,
+        "n_clean": 100,
+        "recall": 0.8078,
+        "fp": 0.29,
+        "flag_rate": 0.662,
+        "bal_acc": 0.7589
+      }
+    }
+  },
+  "per_stratum_recall_test": {
+    "dose": {
+      "n_corrupted": 48,
+      "nemotron": 0.9167,
+      "llama": 0.8125,
+      "qwen": 0.8125
+    },
+    "negation": {
+      "n_corrupted": 57,
+      "nemotron": 0.7193,
+      "llama": 0.6667,
+      "qwen": 0.5614
+    },
+    "lateral": {
+      "n_corrupted": 75,
+      "nemotron": 0.9867,
+      "llama": 0.88,
+      "qwen": 0.92
+    },
+    "diagnosis": {
+      "n_corrupted": 75,
+      "nemotron": 0.56,
+      "llama": 0.1733,
+      "qwen": 0.2267
+    }
+  },
+  "delta_phi_v_test": {
+    "dose": {
+      "n": 148,
+      "dropped": 0,
+      "delta_phi_v": -0.0032,
+      "ci_95": [
+        -0.0532,
+        0.0446
+      ],
+      "ci_width": 0.0978
+    },
+    "negation": {
+      "n": 157,
+      "dropped": 0,
+      "delta_phi_v": -0.0044,
+      "ci_95": [
+        -0.0364,
+        0.0276
+      ],
+      "ci_width": 0.064
+    },
+    "lateral": {
+      "n": 175,
+      "dropped": 0,
+      "delta_phi_v": -0.0121,
+      "ci_95": [
+        -0.0468,
+        0.0203
+      ],
+      "ci_width": 0.0671
+    },
+    "diagnosis": {
+      "n": 175,
+      "dropped": 0,
+      "delta_phi_v": 0.0518,
+      "ci_95": [
+        0.0298,
+        0.0754
+      ],
+      "ci_width": 0.0456
+    }
+  },
+  "caveats": [
+    "Single stratified 50/50 split (seed=42), NOT k-fold - a directional out-of-sample check, not a precise re-estimate.",
+    "Test-half recall carries Wilson +/-~6-11%; dose (~47) and negation (~56) corrupted counts make their delta-Phi_V CIs wide - report, do not over-read.",
+    "This is the DEPLOYED gate prompt: per-stratum recall here will differ from the calibration-prompt headline (68%/14%/7%); Llama's gate-prompt recall is higher, so the incumbent blind spot may look less dramatic - that is the honest deployed number."
+  ]
+}
