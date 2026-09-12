@@ -598,7 +598,7 @@ The LoRA adapter is merged into the base model before serving:
    `chambul/MediSimplifier-OpenBioLLM-v2-merged` (public — no bucket credentials required to reproduce)
 
 3. Deploy Safe Endpoint v5 (Nebius GPU Endpoint):
-   `jobs/safe_endpoint_v2.yaml` — vLLM loads model from HuggingFace, Token Factory judges via `NEBIUS_API_KEY`
+   `endpoint-v5` image (see docs/REPRODUCIBILITY.md) — vLLM loads model from HuggingFace, Token Factory judges via `NEBIUS_API_KEY`
 
 ```bash
 # Step 1: Merge (Nebius Job)
@@ -616,7 +616,7 @@ huggingface-cli upload \
   /tmp/merged_openbio_v2/
 
 # Step 3: Deploy endpoint
-# Submit jobs/safe_endpoint_v2.yaml via Nebius Console
+# Deploy via Nebius Console → AI Services → Endpoints → Create Endpoint (see B9 + docs/REPRODUCIBILITY.md for the verified CLI command)
 # Requires: NEBIUS_API_KEY, HF_TOKEN
 ```
 
@@ -647,12 +647,19 @@ Submit each job via Nebius Console → AI Services → Jobs → Create Job:
 | Evaluation | `jobs/job_eval_v2.yaml` | `rouge_l: 0.5254` in `results/eval_v2_results.json` |
 | Nemotron-refs eval | `jobs/job_eval_v2_nemotron_refs.yaml` | `rouge_l: 0.6010` in `results/eval_v2_nemotron_results.json` |
 | Merge | `jobs/job_merge_v2.yaml` | merged model in bucket + published to HF |
-| Endpoint | `jobs/safe_endpoint_v2.yaml` | `/health` → `{"audit_panel": true, "ready": true}` |
 
 Merge job requires: `AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY` (Nebius S3 keys — create at IAM → Service Accounts → Access keys).
 
 The merged model is publicly available — no training required to test the endpoint:
 `chambul/MediSimplifier-OpenBioLLM-v2-merged`
+
+#### Nebius Endpoint (deploy the Safe Endpoint v5)
+
+The Safe Endpoint is a **Nebius AI *Endpoint*** — not a Job. Deploy it via **Console → AI Services → Endpoints → Create Endpoint** (image, preset, command, and env from `jobs/safe_endpoint_v2.yaml`), or with the **verified CLI command** in [docs/REPRODUCIBILITY.md → Deploy the endpoint](docs/REPRODUCIBILITY.md).
+
+- **Image:** `chambul/medisimplifier:endpoint-v5@sha256:0e40cff4…` — public Docker Hub, digest-pinned (no `--registry-*` auth needed).
+- **Prerequisites:** `NEBIUS_API_KEY`, `HF_TOKEN`, and the **Qwen3-32B judge dedicated endpoint must be running** (`dedicated/Qwen/Qwen3-32B-…`) — otherwise the gate returns `ERROR` on the Qwen verdict (see B7/B8).
+- **Verify:** `GET /health` → `{"audit_panel": true, "ready": true}`
 
 ## Hardware and cost
 
