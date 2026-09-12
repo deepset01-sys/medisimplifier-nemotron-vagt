@@ -67,6 +67,32 @@ docker push cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint
 
 Note: `docker/requirements_train.txt` pins `cryptography==48.0.1` via a Dockerfile post-install step — resolves the pyOpenSSL/cryptography drift that broke train-v28.
 
+## Deploy the endpoint
+
+The Safe Endpoint runs as a Nebius AI Endpoint from `jobs/safe_endpoint_v2.yaml`. To stand it up on your own Nebius account:
+
+**Prerequisites**
+- `NEBIUS_PROJECT_ID`, `NEBIUS_SUBNET_ID` — your Nebius project and subnet.
+- `HF_TOKEN` — a HuggingFace token with access to the gated base model (`aaditya/Llama3-OpenBioLLM-8B`).
+- `NEBIUS_API_KEY` — used for the Token Factory judge calls (Llama-3.3-70B, Nemotron Nano).
+- **The Qwen3-32B judge dedicated endpoint must be running.** The gate's Qwen verdict comes from a *separate* dedicated Nebius endpoint (`dedicated/Qwen/Qwen3-32B-…`), not Token Factory — start it before testing `/v1/simplify`, or the gate returns `ERROR` on the Qwen verdict (see README **B7**).
+- An H100 quota (`gpu-h100-sxm`); vLLM cold-starts in ~10–15 min.
+
+**Image** — public on Docker Hub, digest-pinned: `chambul/medisimplifier:endpoint-v5@sha256:0e40cff4…`. If your Nebius endpoint pulls only from your own Container Registry, mirror it first:
+```bash
+docker pull chambul/medisimplifier:endpoint-v5
+docker tag  chambul/medisimplifier:endpoint-v5 <your-cr>/medisimplifier:endpoint-v5
+docker push <your-cr>/medisimplifier:endpoint-v5
+```
+
+**Create the endpoint — Nebius Console (primary).** In the Nebius AI Endpoints console, create an endpoint with the image, preset (`gpu-h100-sxm` / `1gpu-16vcpu-200gb`), command (`/start.sh`), and the env vars above, exactly as declared in `jobs/safe_endpoint_v2.yaml`. See README **B7** for the deployment walkthrough.
+
+**Or via CLI (secondary).**
+```bash
+export NEBIUS_PROJECT_ID=…  NEBIUS_SUBNET_ID=…  HF_TOKEN=…  NEBIUS_API_KEY=…
+nebius ai endpoint create --file jobs/safe_endpoint_v2.yaml   # verify flags against `nebius ai endpoint create --help`
+```
+
 ## Adapter Storage Flow
 
 Training jobs write the LoRA adapter to `/output/adapter` inside the job. The job config mounts the `medisimplifier-adapters-v2` bucket to `/output`, so the adapter is automatically persisted to Object Storage. Evaluation and merge jobs mount the same bucket to `/mnt/adapters` and read the adapter from `/mnt/adapters/adapter`.

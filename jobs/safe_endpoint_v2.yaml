@@ -1,5 +1,5 @@
-name: medisimplifier-safe-endpoint-v4
-description: "Safe Simplification Endpoint v4 — vLLM + calibration-informed gate (Qwen+Nemotron decide, Llama advisory) + /v1/audit_panel (VAGT panel selection)"
+name: medisimplifier-safe-endpoint-v5
+description: "Safe Simplification Endpoint v5 — vLLM + calibration-informed gate (Qwen+Nemotron decide, Llama advisory) + /v1/audit_panel (VAGT panel selection)"
 parent_id: ${NEBIUS_PROJECT_ID}
 
 resources:
@@ -9,7 +9,7 @@ resources:
   subnet_id: ${NEBIUS_SUBNET_ID}
 
 docker:
-  image: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint-v5@sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe
+  image: chambul/medisimplifier:endpoint-v5@sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe
   command: /start.sh
 
 env:
