@@ -1,0 +1,30 @@
+# docker/Dockerfile.cpu — always-on CPU service: /v1/audit_panel + /health ONLY.
+# No vLLM, no torch, no CUDA, no gate, no simplify. Pure-CPU VAGT panel selection
+# over the committed audit_pool. Expect ~150-250MB vs ~8.8GB for the GPU endpoint.
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Runtime deps ONLY. The /v1/audit_panel path imports fastapi + numpy + pydantic;
+# uvicorn serves it. Deliberately absent: torch, vllm, openai, httpx, pyyaml —
+# none are on the audit_panel path (verified against src/audit_panel/*).
+RUN pip install --no-cache-dir \
+      "fastapi==0.115.*" \
+      "uvicorn[standard]==0.30.*" \
+      "numpy==1.26.*" \
+      "pydantic==2.*"
+
+# Structure-preserving copy so pool_loader resolves the pool:
+#   module  /app/src/audit_panel/  ->  _HERE.parents[1] == /app  ->  /app/audit_pool  OK
+COPY src/audit_panel/    ./src/audit_panel/
+COPY src/cpu_endpoint.py ./src/cpu_endpoint.py
+COPY audit_pool/         ./audit_pool/
+COPY scripts/start_cpu_endpoint.sh /start.sh
+RUN chmod +x /start.sh
+
+# NOT in this image (by design): safe_endpoint.py, safety_gate.py, vLLM, the student
+# model. It physically CANNOT run the gate or the simplifier — only the panel selector.
+
+ENV PYTHONUNBUFFERED=1
+EXPOSE 8000
+CMD ["/start.sh"]
