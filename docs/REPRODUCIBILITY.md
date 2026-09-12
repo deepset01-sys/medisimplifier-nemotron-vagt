@@ -87,11 +87,22 @@ docker push <your-cr>/medisimplifier:endpoint-v5
 
 **Create the endpoint — Nebius Console (primary).** In the Nebius AI Endpoints console, create an endpoint with the image, preset (`gpu-h100-sxm` / `1gpu-16vcpu-200gb`), command (`/start.sh`), and the env vars above, exactly as declared in `jobs/safe_endpoint_v2.yaml`. See README **B7** for the deployment walkthrough.
 
-**Or via CLI (secondary).**
+**Or via CLI (secondary)** — flag-based, the same form v1 used (`jobs/safe_endpoint_v2.yaml` above is a *reference* manifest, not the Endpoint deploy form):
 ```bash
-export NEBIUS_PROJECT_ID=…  NEBIUS_SUBNET_ID=…  HF_TOKEN=…  NEBIUS_API_KEY=…
-nebius ai endpoint create --file jobs/safe_endpoint_v2.yaml   # verify flags against `nebius ai endpoint create --help`
+nebius ai endpoint create \
+  --name medisimplifier-safe-endpoint-v5 \
+  --public --container-port 8000 \
+  --platform gpu-h100-sxm \
+  --preset 1gpu-16vcpu-200gb \
+  --disk-size 250Gi \
+  --image chambul/medisimplifier:endpoint-v5@sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe \
+  --container-command /start.sh \
+  --env HF_HOME=/tmp/hf_cache \
+  --env HF_TOKEN=<your-hf-token> \
+  --env NEBIUS_API_KEY=<your-nebius-api-key> \
+  --subnet-id <your-subnet-id>
 ```
+Flags verified against the live Nebius CLI (`nebius ai endpoint create --help`, eu-north1). The public Docker Hub image requires no `--registry-*` auth flags. Or use `--env-secret HF_TOKEN=<secret-selector>` if the token is stored in Nebius MysteryBox (secret store) — the production-secure form.
 
 ## Adapter Storage Flow
 
