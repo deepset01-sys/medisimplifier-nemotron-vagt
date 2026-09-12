@@ -392,16 +392,26 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
         (Claude Sonnet 5 + Gemini 2.5 Pro; 2/20 confirmed drops — see B5)
 ### B2. Quickstart
 
-**🔗 Live demo (always-on, no setup):**
-https://deepset01-sys.github.io/medisimplifier-nemotron-vagt/
+#### Tier 1 — Always-on demo (no setup)
+
+**🔗 Live demo:** https://deepset01-sys.github.io/medisimplifier-nemotron-vagt/
 
 Open the link → click "Run audit_panel live →" → get the real deterministic VAGT recommendation (Nemotron Nano, +0.0706, CI [0.0552, 0.0866]). No account, no GPU, nothing to install.
 
-Two ways to use it: call the hosted endpoint (**Path 1**), or run the safety gate directly on any `(original, simplified)` pair (**Path 2**).
+**Serves `/v1/audit_panel` only** — pure CPU over pre-computed verdicts. No GPU, no key, no cold start (backed by the always-on CPU service `chambul/medisimplifier:audit-cpu`).
+
+#### Tier 2 — Full pipeline (GPU, on-demand)
+
+The full simplify-and-gate pipeline requires **two** Nebius endpoints running — both started from the Nebius Console (see [REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) for redeploy instructions):
+
+1. **endpoint-v5** (H100, ~10–15 min cold start) — serves `POST /v1/simplify` (student rewrite); `POST /v1/audit_panel` is also available here.
+2. **qwen3-32b-judge** (dedicated endpoint) — supplies the Qwen verdict. Without it, `qwen_verdict = ERROR`, and the gate's decision rule (Qwen3-32B + Nemotron decide) cannot be applied.
 
 > **Live endpoint (Nebius GPU Endpoint — application-tunnel URL, stopped between demos):**
 > https://port8000-vjbksde9vzhgtcx.tunnel.applications.eu-north1.nebius.cloud
 > When running, a request returns in ~27s (3-judge Token Factory gate latency, not a serverless cold-start wake); retry once if no response in 60s. A stopped endpoint first loads vLLM (~10–15 min).
+
+Two ways to call it: the hosted endpoint (**Path 1**), or the safety gate directly on any `(original, simplified)` pair (**Path 2**).
 
 **Path 1 — `POST /v1/simplify`.** Live call to the hosted Safe Endpoint v5 (real response below):
 ```bash
