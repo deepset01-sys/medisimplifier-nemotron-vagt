@@ -74,7 +74,7 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 | Judge pool experiment | ❌ not measured | ✅ 5×708 verdicts (gemma 27B / gpt-oss 120B / Nemotron Super 120B / DeepSeek Flash / Nemotron Ultra 550B) — scale flat within Nemotron family (30B ≈ 550B); Nano recommended on merit |
 | Reproducibility | Public HuggingFace adapters | ✅ Public HuggingFace dataset + adapters v2 |
 
-The novel v2 finding: VAGT inversion — adding Nemotron Nano as third judge cuts shared bias σ²_B on diagnosis from 0.347→0.229 while Fleiss κ goes negative, demonstrating that Cohen's κ — the only metric used in v1 — moves in the wrong direction here.
+The novel v2 finding: VAGT inversion — adding Nemotron Nano as third judge cuts shared bias σ²_B on diagnosis while Fleiss κ goes negative (full decomposition in A6), demonstrating that Cohen's κ — the only metric used in v1 — moves in the wrong direction here.
 
 ## Choose your track
 
