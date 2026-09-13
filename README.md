@@ -721,6 +721,7 @@ src/
   evaluate.py                    Metrics: ROUGE-L, SARI, BERTScore, FK-Grade
   merge_adapter.py               Merge LoRA adapter into base model → HuggingFace publish
   safe_endpoint.py               Safe Simplification Endpoint v5 — FastAPI: vLLM + calibration-informed gate (2-judge rule + advisory Llama)
+  cpu_endpoint.py                CPU-only always-on service — FastAPI: /v1/audit_panel + /health ONLY (no vLLM, no gate, no key)
   safety_gate.py                 calibration-informed safety gate — Qwen + Nemotron Nano decide, Llama advisory (Qwen3-32B via dedicated endpoint)
   serve_vllm.py                  vLLM inference server (legacy standalone)
   run_gate_calibration.py        708-item calibration through the deployed gate prompt → gate_calibration_full.json
@@ -741,6 +742,7 @@ src/
 docker/
   Dockerfile.train               Builds train-v29/v30/v31/v32 (cryptography==48.0.1 pinned)
   Dockerfile.endpoint            Safe Endpoint v5 image (endpoint-v5)
+  Dockerfile.cpu                 CPU-only audit_panel image (audit-cpu; no vLLM/torch/CUDA; ~370MB)
 jobs/
   job_train_v2.yaml              v2 fine-tuning job (train-v29, sha256:bbbf6df1..., Nemotron dataset, adapters-v2 bucket)
   job_eval_v2.yaml               v2 evaluation job (train-v30, sha256:6c3cd4cd..., GuyDor007 test)
@@ -749,10 +751,13 @@ jobs/
   safe_endpoint_v2.yaml          Safe Endpoint v5 deployment config (endpoint-v5 image; adds /v1/audit_panel)
 scripts/
   start_endpoint.sh              Boot vLLM + Safe Endpoint v5 API (inside endpoint-v5 image)
+  start_cpu_endpoint.sh          Boot the CPU-only audit_panel service (uvicorn cpu_endpoint:app)
   build_physician_review.py      Build blinded 50-case physician spreadsheet (seed=42)
   merge_physician_labels.py      Merge physician labels → human-anchored τ + inter-rater κ
   compute_pool_cis.py            Per-candidate paired bootstrap CIs (all 5 pool candidates × 4 strata)
   compute_null_baseline.py       Null-rater baseline (constant-UNSAFE + random-47%); validates collateral tie-break
+  compute_split_half.py          Fix 3: split-half out-of-sample validation under the deployed gate prompt
+  compute_consensus_accuracy.py  Consensus-accuracy baseline vs Φ_V decomposition (majority-vote bal-acc)
 logs/
   train_v2.json.gz               v2 training log — Nebius Job aijob-e00rwxv72fe81f54we, 8,523s, per-epoch eval_loss
 docs/
@@ -766,6 +771,8 @@ app/
   package.json                   Pinned deps (React 19, Vite 8)
   vite.config.js                 Vite config + /v1 proxy → live Nebius endpoint
   README.md                      Clone-and-run instructions (npm install && npm run dev)
+.github/
+  workflows/deploy.yml           GitHub Actions — build app/ (Vite) → gh-pages → public demo URL
 audit_pool/
   ground_truth.json              708-item ground truth (τ labels, stratum, row_id)
   candidates.yaml                pool manifest (pooled + pending candidates)
@@ -791,6 +798,8 @@ results/student_audit_review.json      30-case dual-auditor review (Claude + Gem
 results/reference_fk_grade.json        FK-Grade: Claude refs 7.2 / Nemotron refs 10.08 (Δ+2.88, textstat 0.7.13, n=9,976)
 results/pool_candidate_cis.json        Per-candidate ΔΦ_V + 95% CI (all 6 candidates × 4 strata)
 results/null_baseline_cis.json         Null-rater control (nulls net-negative; Nemotron net-positive +0.037)
+results/split_half_validation.json     Fix 3: split-half out-of-sample (diagnosis ΔΦ_V +0.052 [+0.030,+0.075] survives)
+results/consensus_accuracy.json        Consensus-accuracy vs Φ_V (majority-vote bal-acc drops on diagnosis 60.5%→58.3%)
 results/physician_review.csv           Blinded 50-case physician spreadsheet (seed=42; 6 contested + 44 stratified)
 results/physician_review_KEY.csv       De-blinding key (Case# → orig_index → stratum → source)
 results/audit_panel_live_receipt.json  Live /v1/audit_panel receipt (Nano recommended, +0.0706, CI [0.0552, 0.0866])
