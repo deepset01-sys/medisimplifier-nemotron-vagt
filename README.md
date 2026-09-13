@@ -646,7 +646,6 @@ Full adapter storage flow → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
 
 1. **Qwen judge swap — RESOLVED.** `Qwen/Qwen3-32B` was removed from Token Factory's serverless catalog mid-project; the gate now runs the same model via a dedicated Nebius endpoint (`dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6`). Calibration re-run confirmed 0 ERRORs and measured the gate's actual operating characteristics (see B5).
 2. **Prompt drift.** Calibration used a different prompt than the deployed gate (idx 21 returned all-SAFE through the live gate despite UNSAFE in calibration — confirming verdicts do not transfer verbatim across prompts). The published recall / FP / DISAGREE rates are therefore calibration-prompt rates; the deployed-gate operating point is measured separately (see B5).
-3. **DISAGREE is defense-in-depth.** DISAGREE fires on benchmark perturbations fed to the gate directly, and only rarely on `/v1/simplify`'s own output: a dual-auditor review of a flagged sample confirmed a genuine diagnosis/medication drop in just **2 of 20 flagged cases** (10%; 6 contested pending physician review — see B5), so silent diagnosis drops are **uncommon in our model's output, not absent**. It is therefore primarily a defense-in-depth path against a downstream or third-party simplifier feeding the gate — while still catching the occasional drop in our own output. Even our own model warrants the gate's monitoring.
 ### B9. Reproduce the deployment
 
 **Environment:** Python 3.12 · `pip install -r requirements.txt` (openai, numpy, requests, tqdm, datasets).
