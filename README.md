@@ -396,7 +396,11 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
 
 **🔗 Live demo:** https://deepset01-sys.github.io/medisimplifier-nemotron-vagt/
 
-Open the link → click "Run audit_panel live →" → get the real deterministic VAGT recommendation (Nemotron Nano, +0.0706, CI [0.0552, 0.0866]). No account, no GPU, nothing to install.
+**Two live interactive elements** (CPU, no GPU):
+1. **"Run audit_panel live →"** — the deterministic VAGT recommendation for *our* gate panel (Llama + Qwen): **Nemotron Nano, +0.0706, CI [0.0552, 0.0866]** — same answer every call.
+2. **"Try a different panel"** — pick any **2+ of the 8** pooled judges and VAGT recommends which judge to add for *your* panel (the recommendation changes with the panel).
+
+No account, no GPU, nothing to install.
 
 **Serves `/v1/audit_panel` only** — pure CPU over pre-computed verdicts. No GPU, no key, no cold start (backed by the always-on CPU service `chambul/medisimplifier:audit-cpu`).
 
