@@ -772,7 +772,8 @@ app/
   src/main.jsx                   React mount
   src/index.css                  Minimal CSS reset (clinical layout)
   package.json                   Pinned deps (React 19, Vite 8)
-  vite.config.js                 Vite config + /v1 proxy → live Nebius endpoint
+  package-lock.json              Pinned dependency tree (npm install reproducibility)
+  vite.config.js                 Vite config — conditional base (dev=/ prod=/medisimplifier-nemotron-vagt/) + /v1 proxy
   README.md                      Clone-and-run instructions (npm install && npm run dev)
 .github/
   workflows/deploy.yml           GitHub Actions — build app/ (Vite) → gh-pages → public demo URL
