@@ -185,6 +185,19 @@ const PANEL_CANDIDATES = [
 ];
 const PANEL_MAX = 0.0721; // longest bar (Ultra) → normalizes bar widths
 
+/* ---- interactive panel explorer: the full 8-model pool ---- */
+const EXPLORER_MODELS = [
+  { id: "meta-llama/Llama-3.3-70B-Instruct", label: "Llama 3.3 70B" },
+  { id: "Qwen/Qwen3-32B", label: "Qwen3-32B" },
+  { id: "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B", label: "Nemotron Nano 30B" },
+  { id: "nvidia/nemotron-3-super-120b-a12b", label: "Nemotron Super 120B" },
+  { id: "nvidia/Nemotron-3-Ultra-550b-a55b", label: "Nemotron Ultra 550B" },
+  { id: "openai/gpt-oss-120b", label: "GPT-OSS 120B" },
+  { id: "deepseek-ai/DeepSeek-V4-Flash-0731", label: "DeepSeek Flash" },
+  { id: "google/gemma-3-27b-it", label: "Gemma 27B" },
+];
+const EXPLORER_LABEL = Object.fromEntries(EXPLORER_MODELS.map((m) => [m.id, m.label]));
+
 /* ================================ styles ================================ */
 
 const CSS = `
@@ -406,6 +419,47 @@ const CSS = `
 .ms-bar-tag { color: var(--brand); font-weight: 700; margin-left: 6px; font-size: 11.5px; }
 .ms-act2-caption { margin: 16px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
 .ms-audit-live { margin-top: 16px; }
+
+/* interactive panel explorer */
+.ms-explorer {
+  margin-top: 26px; background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(16,24,40,0.04), 0 8px 24px rgba(16,24,40,0.04); padding: 22px;
+}
+.ms-exp-title { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 4px; }
+.ms-exp-sub { font-size: 13.5px; color: var(--ink-soft); margin: 0 0 18px; max-width: 720px; }
+.ms-exp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+@media (max-width: 820px) { .ms-exp-grid { grid-template-columns: repeat(2, 1fr); } }
+.ms-exp-card {
+  appearance: none; text-align: left; cursor: pointer; background: #fff; border: 1px solid var(--line);
+  border-radius: 10px; padding: 12px 13px; display: flex; flex-direction: column; gap: 3px;
+  transition: border-color .15s, background .15s, box-shadow .15s;
+}
+.ms-exp-card:hover { border-color: #a9c3e6; }
+.ms-exp-card:focus-visible { outline: 2px solid #a9c3e6; outline-offset: 2px; }
+.ms-exp-card.on { border-color: var(--brand); background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand); }
+.ms-exp-check {
+  width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 12px; font-weight: 700; background: #eef2f7; color: var(--ink-faint); margin-bottom: 2px;
+}
+.ms-exp-card.on .ms-exp-check { background: var(--brand); color: #fff; }
+.ms-exp-name { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.ms-exp-role { font-size: 11px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .04em; }
+.ms-exp-card.on .ms-exp-role { color: var(--brand); }
+.ms-exp-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 16px; }
+.ms-exp-count { font-size: 12.5px; color: var(--ink-faint); font-weight: 500; }
+.ms-runbtn:disabled { background: #cbd6e6; border-color: #cbd6e6; cursor: not-allowed; }
+.ms-exp-result {
+  margin-top: 16px; border: 1px solid #cbd6e6; border-left: 4px solid var(--brand);
+  background: #f7fafd; border-radius: 10px; padding: 14px 16px;
+}
+.ms-exp-blind { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 10px; }
+.ms-exp-blind strong { color: var(--warn-accent); font-weight: 700; text-transform: capitalize; }
+.ms-exp-rec { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; }
+.ms-exp-rec-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); }
+.ms-exp-rec-model { font-size: 17px; font-weight: 700; color: var(--brand); }
+.ms-exp-rec-meta { font-size: 12.5px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+.ms-exp-why { margin: 10px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--ink); }
+.ms-exp-scope { margin: 14px 0 0; font-size: 11.5px; color: var(--ink-faint); }
 `;
 
 /* ============================== components ============================== */
@@ -455,6 +509,37 @@ export default function App() {
       setAudit({ status: "success", data });
     } catch (e) {
       setAudit({ status: "error", data: null });
+    }
+  }
+
+  // interactive panel explorer state (default = the gate's own panel: Llama + Qwen)
+  const [panelSel, setPanelSel] = useState(["meta-llama/Llama-3.3-70B-Instruct", "Qwen/Qwen3-32B"]);
+  const [explore, setExplore] = useState({ status: "idle", data: null });
+
+  function togglePanel(id) {
+    setPanelSel((cur) => (cur.includes(id) ? cur.filter((m) => m !== id) : [...cur, id]));
+    setExplore({ status: "idle", data: null }); // any panel change invalidates the last result
+  }
+
+  async function runExplorer() {
+    if (panelSel.length < 2) return; // endpoint requires >= 2 incumbents
+    setExplore({ status: "loading", data: null });
+    try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 30000);
+      const candidate_pool = EXPLORER_MODELS.map((m) => m.id).filter((id) => !panelSel.includes(id));
+      const res = await fetch(AUDIT_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ incumbent_panel: panelSel, candidate_pool }),
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data = await res.json();
+      setExplore({ status: "success", data });
+    } catch (e) {
+      setExplore({ status: "error", data: null });
     }
   }
 
@@ -616,6 +701,98 @@ export default function App() {
           </div>
             </>
           )}
+        </section>
+
+        {/* interactive panel explorer — Try a different panel */}
+        <section className="ms-explorer">
+          <div className="ms-exp-title">Try a different panel</div>
+          <p className="ms-exp-sub">
+            Pick the judges you'd run (at least 2). VAGT measures the panel's blind spot and recommends which judge to
+            add — live, deterministic, over the 8-model MedSimp-JudgeBench pool. Change the panel and the recommendation
+            changes.
+          </p>
+
+          <div className="ms-exp-grid">
+            {EXPLORER_MODELS.map((m) => {
+              const on = panelSel.includes(m.id);
+              return (
+                <button
+                  key={m.id}
+                  className={"ms-exp-card" + (on ? " on" : "")}
+                  onClick={() => togglePanel(m.id)}
+                  aria-pressed={on}
+                >
+                  <span className="ms-exp-check" aria-hidden="true">{on ? "✓" : "+"}</span>
+                  <span className="ms-exp-name">{m.label}</span>
+                  <span className="ms-exp-role">{on ? "in your panel" : "candidate"}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="ms-exp-actions">
+            <span className="ms-exp-count">
+              {panelSel.length} in panel
+              {panelSel.length < 2
+                ? " — pick at least 2"
+                : ` · ${EXPLORER_MODELS.length - panelSel.length} candidates`}
+            </span>
+            <button
+              className="ms-runbtn"
+              onClick={runExplorer}
+              disabled={panelSel.length < 2 || explore.status === "loading"}
+            >
+              {explore.status === "loading" ? "Analyzing…" : "Analyze my panel →"}
+            </button>
+          </div>
+
+          {explore.status === "success" && explore.data && (() => {
+            const d = explore.data;
+            const rec = d.recommendation || {};
+            const ci = rec.ci_95 || [];
+            const blind = d.incumbent && d.incumbent.blindest_stratum;
+            const label = EXPLORER_LABEL[rec.model] || rec.model;
+            const straddles = ci.length === 2 && ci[0] <= 0;
+            return (
+              <div className="ms-exp-result">
+                <div className="ms-live-badge"><span className="live-dot" aria-hidden="true" />Live · deterministic</div>
+                {blind && <div className="ms-exp-blind">Your panel's blind spot: <strong>{blind}</strong></div>}
+                {rec.model ? (
+                  <>
+                    <div className="ms-exp-rec">
+                      <span className="ms-exp-rec-label">Add</span>
+                      <span className="ms-exp-rec-model">{label}</span>
+                      {rec.expected_Phi_V_lift != null && (
+                        <span className="ms-exp-rec-meta">
+                          ΔΦ_V +{rec.expected_Phi_V_lift}
+                          {ci.length === 2 ? ` · 95% CI [${ci[0]}, ${ci[1]}]` : ""}
+                        </span>
+                      )}
+                    </div>
+                    <p className="ms-exp-why">
+                      {straddles
+                        ? `${label} is the best available add, but its 95% CI straddles zero — no candidate in the pool clearly improves this panel's weakest stratum (${blind}). Sometimes the honest answer is "none of these clearly helps."`
+                        : `This panel is weakest on ${blind}. Of the remaining models, ${label} most improves it — the largest gain on the blind spot, with the least collateral damage elsewhere.${rec.caveat ? " Caveat: " + rec.caveat : ""}`}
+                    </p>
+                  </>
+                ) : (
+                  <p className="ms-exp-why">No candidate in the pool improves this panel's blind spot.</p>
+                )}
+              </div>
+            );
+          })()}
+
+          {explore.status === "error" && (
+            <div className="ms-live-error">
+              <span>⚠️ Couldn't reach audit_panel — check the selection (need ≥ 2) and try again.</span>
+              <button className="ms-retry" onClick={runExplorer}>Try again</button>
+            </div>
+          )}
+
+          <p className="ms-exp-scope">
+            8-model pool · MedSimp-JudgeBench (708 items) · pre-computed verdicts, no live model calls · same panel →
+            same answer.
+          </p>
         </section>
 
         {/* footer / honesty */}
