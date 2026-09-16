@@ -296,8 +296,6 @@ Research-side threats to the VAGT and calibration findings. Product and operatio
 7. **Same-family judge.** Llama-3.3-70B shares a model family with the OpenBioLLM-8B student (both Llama-3-based). A same-family judge may share the student's blind spots, inflating the panel's apparent agreement with the student and overstating judge independence.
 
 8. **Calibration prompt ≠ gate prompt.** VAGT calibration used the v1 4-step CoT prompt; the deployed gate uses `safety_gate.py`'s prompt, and verdicts do not transfer item-for-item (idx 21). The reported calibration recall, Φ_V, and DISAGREE rates are therefore indicative of the calibration prompt; the gate's live operating point is measured separately (see B5). Partial mitigation: a stratified split-half check *under the deployed gate prompt* reproduces the diagnosis effect out-of-sample (ΔΦ_V **+0.052 [+0.030, +0.075]** on the held-out half; only diagnosis survives — dose/negation/lateral straddle zero), so the core finding holds under the gate prompt, not just calibration ([`results/split_half_validation.json`](results/split_half_validation.json)).
-
-9. **Reference-authorship self-preference.** The 708-item calibration judged Nemotron Super references (A2). Nemotron Nano shares model family with the reference author; self-preference would make Nano more lenient on same-family text, biasing diagnosis recall downward — understating, not inflating, the catch-rate advantage. The deployed gate panel (Llama + Qwen + Nano) has only one Nemotron-family judge; the pool experiment adds two more (Super, Ultra) as candidates, where the confound is sharpest.
 ### A9. Reproduce the analysis
 
 **Environment:** Python 3.12 · `pip install -r requirements.txt` (openai, numpy, requests, tqdm, datasets).
