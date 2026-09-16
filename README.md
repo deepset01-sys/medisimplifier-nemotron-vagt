@@ -855,8 +855,8 @@ Apache 2.0 — see [LICENSE](LICENSE).
 |------|-----------|-------------|
 | Teacher | Nemotron Super references not expert-reviewed | Human-expert validation of teacher quality |
 | Training | No ablation on Nemotron dataset — used v1 winner config directly | Ablation study on Nemotron-taught dataset |
-| Safety | Nemotron Nano: 35.2% FP on clean text — threshold/prompt calibration needed | Null-rater baseline shows Nemotron uniquely net-positive (+0.037 mean ΔΦ_V) — validates collateral tie-break; threshold calibration remains open |
-| Safety | Scale/family confound in judge disagreement (Qwen-72B unavailable on Token Factory) | Scale-matched judge comparison |
+| Safety | Nemotron Nano: 35.2% FP on clean text — threshold/prompt calibration needed | Null-rater baseline validates collateral tie-break (results/null_baseline_cis.json); threshold calibration remains open |
+| Safety | Scale/family confound in judge disagreement (Qwen-72B unavailable on Token Factory) | 5-candidate pool experiment across families and scales (gemma/gpt-oss/DeepSeek/Super/Ultra) — scale-flat within Nemotron family confirmed (see Why VAGT) |
 | Safety | Diagnosis-drop partially addressed (Nemotron 68% vs 14%/7% v1 judges) | Physician-labeled 50-case validation in progress (blinded sheet + merge pipeline committed; docs/ADJUDICATION_BRIEF.md) |
 | VAGT | Bootstrap CIs are 95% point estimates (seed=42) — not full power analysis | Per-candidate paired CIs computed (results/pool_candidate_cis.json); null-rater baseline added (results/null_baseline_cis.json) |
 | VAGT | 3-rater empirical application only — formal estimand developed post-v1 submission | Formal publication of VAGT estimand |
