@@ -28,7 +28,7 @@ That inversion generalizes into a decision tool. VAGT is not just a measurement 
 
 | Candidate | Family | Size | diag ΔΦ_V | dose ΔΦ_V |
 |--|--|--|--|--|
-| **Nemotron Nano** *(reference)* | NVIDIA | **30B** | **+0.071** | **−0.013** |
+| **Nemotron Nano** *(reference)* | NVIDIA | **30B** | **+0.0706** | **−0.013** |
 | Nemotron-3-Ultra | NVIDIA | 550B | +0.0721 | −0.032 |
 | gpt-oss-120b | OpenAI | 120B | +0.0719 | −0.030 |
 | Nemotron-3-Super | NVIDIA | 120B | +0.0653 | −0.059 |
@@ -64,7 +64,7 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 | Student model | OpenBioLLM v1 | ✅ OpenBioLLM v2 (Nemotron-taught) |
 | Safety judges | Llama + Qwen (2 judges) | ✅ + Nemotron Nano (3 judges, calibrated) |
 | Judge calibration metric | Cohen's κ only | ✅ VAGT — σ²_B, σ²_R, σ²_N, Φ_V |
-| Robust statistics validation | ❌ (post-submission only) | ✅ Fleiss κ + Krippendorff α — both go negative on diagnosis (below-chance agreement) |
+| Robust statistics validation | ❌ (post-submission only) | ✅ Fleiss κ and Krippendorff α both go negative on diagnosis (below-chance agreement) — near-identical on binary complete-case data (values agree to three decimals across all strata), so one robustness check, not two independent ones |
 | Measurement framework | Cohen's κ | ✅ VAGT — detects shared blind spots invisible to κ |
 | Safe Endpoint | vLLM + dual-judge guardrail | ✅ vLLM + calibration-informed gate (2-judge rule + advisory Llama; flag / block / strict modes) |
 | Gate operating characteristics | ❌ not measured | ✅ 708-item re-run through deployed gate prompt (0 ERRORs) — DISAGREE 20.8%, Qwen FP 9.5% (see B5) |
