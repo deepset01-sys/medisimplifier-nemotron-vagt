@@ -384,7 +384,7 @@ python nemotron_training_data.py --workers 12              # full run (resumes o
         v
     Token Factory + Dedicated Endpoint: student self-audit (1,001 test outputs)
         run_student_audit.py  ->  results/student_audit.json
-        (SAFE 47.4% / flagged 52.0% — see B5)
+        (SAFE 47.4% / flagged 52.0%, plus 0.6% ERROR — see B5)
         |
         v
     External APIs: dual-auditor diagnosis-retention review (30-case sample, seed=42)
@@ -797,7 +797,7 @@ results/endpoint_smoke_test.json       live endpoint SAFE capture (~27s, all-SAF
 results/models_verified.json           both Nemotron model strings verified via /v1/models
 results/disagree_case_gate.json        gate-level DISAGREE capture — JudgeBench idx 146, Nemotron UNSAFE / Llama+Qwen SAFE
 results/gate_calibration_full.json     708-item deployed-gate calibration (0 ERRORs; DISAGREE 20.8%, Qwen FP 9.5%)
-results/student_audit.json             1,001 student outputs through the gate (SAFE 47.4% / flagged 52.0%)
+results/student_audit.json             1,001 student outputs through the gate (SAFE 47.4% / flagged 52.0%, plus 0.6% ERROR)
 results/student_audit_review.json      30-case dual-auditor review (Claude + Gemini; 2/20 confirmed drops; human_judgment on 6 contested)
 results/reference_fk_grade.json        FK-Grade: Claude refs 7.2 / Nemotron refs 10.08 (Δ+2.88, textstat 0.7.13, n=9,976)
 results/pool_candidate_cis.json        Per-candidate ΔΦ_V + 95% CI (all 6 candidates × 4 strata)
