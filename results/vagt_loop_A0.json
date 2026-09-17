@@ -1,0 +1,5608 @@
+{
+  "arm": "A0",
+  "status": "complete",
+  "n": 350,
+  "completed": 350,
+  "per_item": [
+    {
+      "key": [
+        4,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 4,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 24555
+    },
+    {
+      "key": [
+        12,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 12,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 13958
+    },
+    {
+      "key": [
+        12,
+        "none",
+        "clean"
+      ],
+      "idx": 12,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 16755
+    },
+    {
+      "key": [
+        14,
+        "none",
+        "clean"
+      ],
+      "idx": 14,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13507
+    },
+    {
+      "key": [
+        15,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 15,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 14695
+    },
+    {
+      "key": [
+        16,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 16,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 26475
+    },
+    {
+      "key": [
+        19,
+        "none",
+        "clean"
+      ],
+      "idx": 19,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 21315
+    },
+    {
+      "key": [
+        21,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 21,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 16689
+    },
+    {
+      "key": [
+        22,
+        "none",
+        "clean"
+      ],
+      "idx": 22,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 40345
+    },
+    {
+      "key": [
+        27,
+        "none",
+        "clean"
+      ],
+      "idx": 27,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14997
+    },
+    {
+      "key": [
+        29,
+        "none",
+        "clean"
+      ],
+      "idx": 29,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13569
+    },
+    {
+      "key": [
+        32,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 32,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 22334
+    },
+    {
+      "key": [
+        36,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 36,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 22272
+    },
+    {
+      "key": [
+        40,
+        "none",
+        "clean"
+      ],
+      "idx": 40,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7855
+    },
+    {
+      "key": [
+        46,
+        "none",
+        "clean"
+      ],
+      "idx": 46,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13627
+    },
+    {
+      "key": [
+        47,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 47,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 18510
+    },
+    {
+      "key": [
+        49,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 49,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11288
+    },
+    {
+      "key": [
+        50,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 50,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 9623
+    },
+    {
+      "key": [
+        57,
+        "none",
+        "clean"
+      ],
+      "idx": 57,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11962
+    },
+    {
+      "key": [
+        67,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 67,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 17725
+    },
+    {
+      "key": [
+        78,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 78,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 31988
+    },
+    {
+      "key": [
+        80,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 80,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17284
+    },
+    {
+      "key": [
+        83,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 83,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 35928
+    },
+    {
+      "key": [
+        84,
+        "none",
+        "clean"
+      ],
+      "idx": 84,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 13804
+    },
+    {
+      "key": [
+        89,
+        "none",
+        "clean"
+      ],
+      "idx": 89,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 22849
+    },
+    {
+      "key": [
+        93,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 93,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13932
+    },
+    {
+      "key": [
+        93,
+        "none",
+        "clean"
+      ],
+      "idx": 93,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 75200
+    },
+    {
+      "key": [
+        94,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 94,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 28344
+    },
+    {
+      "key": [
+        98,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 98,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15315
+    },
+    {
+      "key": [
+        102,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 102,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15259
+    },
+    {
+      "key": [
+        108,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 108,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17269
+    },
+    {
+      "key": [
+        109,
+        "none",
+        "clean"
+      ],
+      "idx": 109,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 18825
+    },
+    {
+      "key": [
+        110,
+        "none",
+        "clean"
+      ],
+      "idx": 110,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10611
+    },
+    {
+      "key": [
+        112,
+        "none",
+        "clean"
+      ],
+      "idx": 112,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15176
+    },
+    {
+      "key": [
+        113,
+        "none",
+        "clean"
+      ],
+      "idx": 113,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12390
+    },
+    {
+      "key": [
+        115,
+        "none",
+        "clean"
+      ],
+      "idx": 115,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 33121
+    },
+    {
+      "key": [
+        118,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 118,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 19103
+    },
+    {
+      "key": [
+        120,
+        "none",
+        "clean"
+      ],
+      "idx": 120,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 18542
+    },
+    {
+      "key": [
+        121,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 121,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14902
+    },
+    {
+      "key": [
+        121,
+        "none",
+        "clean"
+      ],
+      "idx": 121,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9163
+    },
+    {
+      "key": [
+        126,
+        "none",
+        "clean"
+      ],
+      "idx": 126,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10639
+    },
+    {
+      "key": [
+        127,
+        "none",
+        "clean"
+      ],
+      "idx": 127,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 21118
+    },
+    {
+      "key": [
+        129,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 129,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 16658
+    },
+    {
+      "key": [
+        131,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 131,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 23707
+    },
+    {
+      "key": [
+        132,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 132,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 9088
+    },
+    {
+      "key": [
+        132,
+        "none",
+        "clean"
+      ],
+      "idx": 132,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11479
+    },
+    {
+      "key": [
+        134,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 134,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 10539
+    },
+    {
+      "key": [
+        134,
+        "none",
+        "clean"
+      ],
+      "idx": 134,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 10154
+    },
+    {
+      "key": [
+        135,
+        "none",
+        "clean"
+      ],
+      "idx": 135,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9062
+    },
+    {
+      "key": [
+        137,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 137,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 32415
+    },
+    {
+      "key": [
+        138,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 138,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11323
+    },
+    {
+      "key": [
+        138,
+        "none",
+        "clean"
+      ],
+      "idx": 138,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12016
+    },
+    {
+      "key": [
+        141,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 141,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 6680
+    },
+    {
+      "key": [
+        141,
+        "none",
+        "clean"
+      ],
+      "idx": 141,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17617
+    },
+    {
+      "key": [
+        143,
+        "none",
+        "clean"
+      ],
+      "idx": 143,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12008
+    },
+    {
+      "key": [
+        145,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 145,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 30492
+    },
+    {
+      "key": [
+        146,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 146,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 13268
+    },
+    {
+      "key": [
+        149,
+        "none",
+        "clean"
+      ],
+      "idx": 149,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 13019
+    },
+    {
+      "key": [
+        151,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 151,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15688
+    },
+    {
+      "key": [
+        152,
+        "none",
+        "clean"
+      ],
+      "idx": 152,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13498
+    },
+    {
+      "key": [
+        153,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 153,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 26416
+    },
+    {
+      "key": [
+        156,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 156,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 34995
+    },
+    {
+      "key": [
+        158,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 158,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11324
+    },
+    {
+      "key": [
+        158,
+        "none",
+        "clean"
+      ],
+      "idx": 158,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 31124
+    },
+    {
+      "key": [
+        159,
+        "none",
+        "clean"
+      ],
+      "idx": 159,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13878
+    },
+    {
+      "key": [
+        161,
+        "none",
+        "clean"
+      ],
+      "idx": 161,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 21447
+    },
+    {
+      "key": [
+        163,
+        "none",
+        "clean"
+      ],
+      "idx": 163,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14939
+    },
+    {
+      "key": [
+        164,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 164,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 13765
+    },
+    {
+      "key": [
+        168,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 168,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 19384
+    },
+    {
+      "key": [
+        171,
+        "none",
+        "clean"
+      ],
+      "idx": 171,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17501
+    },
+    {
+      "key": [
+        172,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 172,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13412
+    },
+    {
+      "key": [
+        178,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 178,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 14535
+    },
+    {
+      "key": [
+        180,
+        "none",
+        "clean"
+      ],
+      "idx": 180,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12743
+    },
+    {
+      "key": [
+        194,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 194,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 8833
+    },
+    {
+      "key": [
+        194,
+        "none",
+        "clean"
+      ],
+      "idx": 194,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 7158
+    },
+    {
+      "key": [
+        201,
+        "none",
+        "clean"
+      ],
+      "idx": 201,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9054
+    },
+    {
+      "key": [
+        202,
+        "none",
+        "clean"
+      ],
+      "idx": 202,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 27956
+    },
+    {
+      "key": [
+        203,
+        "none",
+        "clean"
+      ],
+      "idx": 203,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6347
+    },
+    {
+      "key": [
+        205,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 205,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 23042
+    },
+    {
+      "key": [
+        206,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 206,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 20798
+    },
+    {
+      "key": [
+        210,
+        "none",
+        "clean"
+      ],
+      "idx": 210,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8706
+    },
+    {
+      "key": [
+        213,
+        "none",
+        "clean"
+      ],
+      "idx": 213,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14474
+    },
+    {
+      "key": [
+        215,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 215,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11168
+    },
+    {
+      "key": [
+        217,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 217,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 22462
+    },
+    {
+      "key": [
+        220,
+        "none",
+        "clean"
+      ],
+      "idx": 220,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 17499
+    },
+    {
+      "key": [
+        223,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 223,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12773
+    },
+    {
+      "key": [
+        227,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 227,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 27139
+    },
+    {
+      "key": [
+        227,
+        "none",
+        "clean"
+      ],
+      "idx": 227,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 18521
+    },
+    {
+      "key": [
+        230,
+        "none",
+        "clean"
+      ],
+      "idx": 230,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13610
+    },
+    {
+      "key": [
+        231,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 231,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11953
+    },
+    {
+      "key": [
+        234,
+        "none",
+        "clean"
+      ],
+      "idx": 234,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 14095
+    },
+    {
+      "key": [
+        237,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 237,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 18886
+    },
+    {
+      "key": [
+        237,
+        "none",
+        "clean"
+      ],
+      "idx": 237,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 27197
+    },
+    {
+      "key": [
+        240,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 240,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 31256
+    },
+    {
+      "key": [
+        242,
+        "none",
+        "clean"
+      ],
+      "idx": 242,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10422
+    },
+    {
+      "key": [
+        246,
+        "none",
+        "clean"
+      ],
+      "idx": 246,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 16795
+    },
+    {
+      "key": [
+        247,
+        "none",
+        "clean"
+      ],
+      "idx": 247,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 26045
+    },
+    {
+      "key": [
+        249,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 249,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 19380
+    },
+    {
+      "key": [
+        250,
+        "none",
+        "clean"
+      ],
+      "idx": 250,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 26397
+    },
+    {
+      "key": [
+        252,
+        "none",
+        "clean"
+      ],
+      "idx": 252,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11003
+    },
+    {
+      "key": [
+        253,
+        "none",
+        "clean"
+      ],
+      "idx": 253,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6551
+    },
+    {
+      "key": [
+        254,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 254,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 16166
+    },
+    {
+      "key": [
+        254,
+        "none",
+        "clean"
+      ],
+      "idx": 254,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 16689
+    },
+    {
+      "key": [
+        261,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 261,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15640
+    },
+    {
+      "key": [
+        263,
+        "none",
+        "clean"
+      ],
+      "idx": 263,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 28136
+    },
+    {
+      "key": [
+        264,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 264,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 14763
+    },
+    {
+      "key": [
+        264,
+        "none",
+        "clean"
+      ],
+      "idx": 264,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 20977
+    },
+    {
+      "key": [
+        270,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 270,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 34324
+    },
+    {
+      "key": [
+        270,
+        "none",
+        "clean"
+      ],
+      "idx": 270,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18467
+    },
+    {
+      "key": [
+        274,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 274,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11016
+    },
+    {
+      "key": [
+        275,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 275,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11474
+    },
+    {
+      "key": [
+        276,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 276,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12740
+    },
+    {
+      "key": [
+        281,
+        "none",
+        "clean"
+      ],
+      "idx": 281,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 97154
+    },
+    {
+      "key": [
+        283,
+        "none",
+        "clean"
+      ],
+      "idx": 283,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12999
+    },
+    {
+      "key": [
+        284,
+        "none",
+        "clean"
+      ],
+      "idx": 284,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11909
+    },
+    {
+      "key": [
+        287,
+        "none",
+        "clean"
+      ],
+      "idx": 287,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13390
+    },
+    {
+      "key": [
+        293,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 293,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 22956
+    },
+    {
+      "key": [
+        296,
+        "none",
+        "clean"
+      ],
+      "idx": 296,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 18954
+    },
+    {
+      "key": [
+        302,
+        "none",
+        "clean"
+      ],
+      "idx": 302,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 19709
+    },
+    {
+      "key": [
+        306,
+        "none",
+        "clean"
+      ],
+      "idx": 306,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 33548
+    },
+    {
+      "key": [
+        308,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 308,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 20539
+    },
+    {
+      "key": [
+        308,
+        "none",
+        "clean"
+      ],
+      "idx": 308,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 19999
+    },
+    {
+      "key": [
+        309,
+        "none",
+        "clean"
+      ],
+      "idx": 309,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 19113
+    },
+    {
+      "key": [
+        310,
+        "none",
+        "clean"
+      ],
+      "idx": 310,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 36975
+    },
+    {
+      "key": [
+        311,
+        "none",
+        "clean"
+      ],
+      "idx": 311,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 21365
+    },
+    {
+      "key": [
+        314,
+        "none",
+        "clean"
+      ],
+      "idx": 314,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 27827
+    },
+    {
+      "key": [
+        315,
+        "none",
+        "clean"
+      ],
+      "idx": 315,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13193
+    },
+    {
+      "key": [
+        316,
+        "none",
+        "clean"
+      ],
+      "idx": 316,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17401
+    },
+    {
+      "key": [
+        323,
+        "none",
+        "clean"
+      ],
+      "idx": 323,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 24346
+    },
+    {
+      "key": [
+        324,
+        "none",
+        "clean"
+      ],
+      "idx": 324,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12324
+    },
+    {
+      "key": [
+        332,
+        "none",
+        "clean"
+      ],
+      "idx": 332,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 19107
+    },
+    {
+      "key": [
+        341,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 341,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12175
+    },
+    {
+      "key": [
+        344,
+        "none",
+        "clean"
+      ],
+      "idx": 344,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11552
+    },
+    {
+      "key": [
+        345,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 345,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 29238
+    },
+    {
+      "key": [
+        347,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 347,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11694
+    },
+    {
+      "key": [
+        353,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 353,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11601
+    },
+    {
+      "key": [
+        354,
+        "none",
+        "clean"
+      ],
+      "idx": 354,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 23014
+    },
+    {
+      "key": [
+        355,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 355,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15791
+    },
+    {
+      "key": [
+        359,
+        "none",
+        "clean"
+      ],
+      "idx": 359,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 26325
+    },
+    {
+      "key": [
+        360,
+        "none",
+        "clean"
+      ],
+      "idx": 360,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13521
+    },
+    {
+      "key": [
+        367,
+        "none",
+        "clean"
+      ],
+      "idx": 367,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12465
+    },
+    {
+      "key": [
+        368,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 368,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12055
+    },
+    {
+      "key": [
+        372,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 372,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11261
+    },
+    {
+      "key": [
+        373,
+        "none",
+        "clean"
+      ],
+      "idx": 373,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11073
+    },
+    {
+      "key": [
+        377,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 377,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12002
+    },
+    {
+      "key": [
+        382,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 382,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 20473
+    },
+    {
+      "key": [
+        384,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 384,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18001
+    },
+    {
+      "key": [
+        389,
+        "none",
+        "clean"
+      ],
+      "idx": 389,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15687
+    },
+    {
+      "key": [
+        390,
+        "none",
+        "clean"
+      ],
+      "idx": 390,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15114
+    },
+    {
+      "key": [
+        401,
+        "none",
+        "clean"
+      ],
+      "idx": 401,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13681
+    },
+    {
+      "key": [
+        404,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 404,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 26978
+    },
+    {
+      "key": [
+        408,
+        "none",
+        "clean"
+      ],
+      "idx": 408,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 24306
+    },
+    {
+      "key": [
+        409,
+        "none",
+        "clean"
+      ],
+      "idx": 409,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9907
+    },
+    {
+      "key": [
+        412,
+        "none",
+        "clean"
+      ],
+      "idx": 412,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15173
+    },
+    {
+      "key": [
+        413,
+        "none",
+        "clean"
+      ],
+      "idx": 413,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13191
+    },
+    {
+      "key": [
+        417,
+        "none",
+        "clean"
+      ],
+      "idx": 417,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14236
+    },
+    {
+      "key": [
+        426,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 426,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18077
+    },
+    {
+      "key": [
+        427,
+        "none",
+        "clean"
+      ],
+      "idx": 427,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 10829
+    },
+    {
+      "key": [
+        430,
+        "none",
+        "clean"
+      ],
+      "idx": 430,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17109
+    },
+    {
+      "key": [
+        434,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 434,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15599
+    },
+    {
+      "key": [
+        437,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 437,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 26400
+    },
+    {
+      "key": [
+        440,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 440,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 48545
+    },
+    {
+      "key": [
+        443,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 443,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12269
+    },
+    {
+      "key": [
+        446,
+        "none",
+        "clean"
+      ],
+      "idx": 446,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 21981
+    },
+    {
+      "key": [
+        450,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 450,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 8732
+    },
+    {
+      "key": [
+        454,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 454,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11418
+    },
+    {
+      "key": [
+        457,
+        "none",
+        "clean"
+      ],
+      "idx": 457,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 18324
+    },
+    {
+      "key": [
+        458,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 458,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15960
+    },
+    {
+      "key": [
+        459,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 459,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 28146
+    },
+    {
+      "key": [
+        459,
+        "none",
+        "clean"
+      ],
+      "idx": 459,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17428
+    },
+    {
+      "key": [
+        460,
+        "none",
+        "clean"
+      ],
+      "idx": 460,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14836
+    },
+    {
+      "key": [
+        461,
+        "none",
+        "clean"
+      ],
+      "idx": 461,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10851
+    },
+    {
+      "key": [
+        463,
+        "none",
+        "clean"
+      ],
+      "idx": 463,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17442
+    },
+    {
+      "key": [
+        468,
+        "none",
+        "clean"
+      ],
+      "idx": 468,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7849
+    },
+    {
+      "key": [
+        470,
+        "none",
+        "clean"
+      ],
+      "idx": 470,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 19253
+    },
+    {
+      "key": [
+        472,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 472,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8871
+    },
+    {
+      "key": [
+        478,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 478,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 23452
+    },
+    {
+      "key": [
+        491,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 491,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6683
+    },
+    {
+      "key": [
+        491,
+        "none",
+        "clean"
+      ],
+      "idx": 491,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6386
+    },
+    {
+      "key": [
+        493,
+        "none",
+        "clean"
+      ],
+      "idx": 493,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 20642
+    },
+    {
+      "key": [
+        496,
+        "none",
+        "clean"
+      ],
+      "idx": 496,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 16676
+    },
+    {
+      "key": [
+        504,
+        "none",
+        "clean"
+      ],
+      "idx": 504,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12464
+    },
+    {
+      "key": [
+        506,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 506,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13051
+    },
+    {
+      "key": [
+        506,
+        "none",
+        "clean"
+      ],
+      "idx": 506,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13035
+    },
+    {
+      "key": [
+        525,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 525,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15569
+    },
+    {
+      "key": [
+        525,
+        "none",
+        "clean"
+      ],
+      "idx": 525,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 30654
+    },
+    {
+      "key": [
+        526,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 526,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13755
+    },
+    {
+      "key": [
+        530,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 530,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 32589
+    },
+    {
+      "key": [
+        530,
+        "none",
+        "clean"
+      ],
+      "idx": 530,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 18076
+    },
+    {
+      "key": [
+        533,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 533,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 14190
+    },
+    {
+      "key": [
+        536,
+        "none",
+        "clean"
+      ],
+      "idx": 536,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12935
+    },
+    {
+      "key": [
+        537,
+        "none",
+        "clean"
+      ],
+      "idx": 537,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13166
+    },
+    {
+      "key": [
+        540,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 540,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11692
+    },
+    {
+      "key": [
+        542,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 542,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 14403
+    },
+    {
+      "key": [
+        545,
+        "none",
+        "clean"
+      ],
+      "idx": 545,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 25829
+    },
+    {
+      "key": [
+        546,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 546,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 29772
+    },
+    {
+      "key": [
+        546,
+        "none",
+        "clean"
+      ],
+      "idx": 546,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 19398
+    },
+    {
+      "key": [
+        548,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 548,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 20934
+    },
+    {
+      "key": [
+        551,
+        "none",
+        "clean"
+      ],
+      "idx": 551,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 16577
+    },
+    {
+      "key": [
+        554,
+        "none",
+        "clean"
+      ],
+      "idx": 554,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 24501
+    },
+    {
+      "key": [
+        562,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 562,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 29031
+    },
+    {
+      "key": [
+        562,
+        "none",
+        "clean"
+      ],
+      "idx": 562,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 29564
+    },
+    {
+      "key": [
+        564,
+        "none",
+        "clean"
+      ],
+      "idx": 564,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12665
+    },
+    {
+      "key": [
+        571,
+        "none",
+        "clean"
+      ],
+      "idx": 571,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 23027
+    },
+    {
+      "key": [
+        575,
+        "none",
+        "clean"
+      ],
+      "idx": 575,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15673
+    },
+    {
+      "key": [
+        577,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 577,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 9408
+    },
+    {
+      "key": [
+        580,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 580,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 17258
+    },
+    {
+      "key": [
+        580,
+        "none",
+        "clean"
+      ],
+      "idx": 580,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12279
+    },
+    {
+      "key": [
+        586,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 586,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18629
+    },
+    {
+      "key": [
+        588,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 588,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 19051
+    },
+    {
+      "key": [
+        594,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 594,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10347
+    },
+    {
+      "key": [
+        596,
+        "none",
+        "clean"
+      ],
+      "idx": 596,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11921
+    },
+    {
+      "key": [
+        597,
+        "none",
+        "clean"
+      ],
+      "idx": 597,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12869
+    },
+    {
+      "key": [
+        598,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 598,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 24029
+    },
+    {
+      "key": [
+        600,
+        "none",
+        "clean"
+      ],
+      "idx": 600,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18001
+    },
+    {
+      "key": [
+        601,
+        "none",
+        "clean"
+      ],
+      "idx": 601,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10292
+    },
+    {
+      "key": [
+        602,
+        "none",
+        "clean"
+      ],
+      "idx": 602,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 10476
+    },
+    {
+      "key": [
+        607,
+        "none",
+        "clean"
+      ],
+      "idx": 607,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9876
+    },
+    {
+      "key": [
+        609,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 609,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14391
+    },
+    {
+      "key": [
+        611,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 611,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12888
+    },
+    {
+      "key": [
+        611,
+        "none",
+        "clean"
+      ],
+      "idx": 611,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11812
+    },
+    {
+      "key": [
+        613,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 613,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 17934
+    },
+    {
+      "key": [
+        614,
+        "none",
+        "clean"
+      ],
+      "idx": 614,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 17818
+    },
+    {
+      "key": [
+        618,
+        "none",
+        "clean"
+      ],
+      "idx": 618,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14177
+    },
+    {
+      "key": [
+        619,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 619,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6181
+    },
+    {
+      "key": [
+        619,
+        "none",
+        "clean"
+      ],
+      "idx": 619,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13828
+    },
+    {
+      "key": [
+        620,
+        "none",
+        "clean"
+      ],
+      "idx": 620,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12011
+    },
+    {
+      "key": [
+        627,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 627,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 19877
+    },
+    {
+      "key": [
+        628,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 628,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 34665
+    },
+    {
+      "key": [
+        633,
+        "none",
+        "clean"
+      ],
+      "idx": 633,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10406
+    },
+    {
+      "key": [
+        635,
+        "none",
+        "clean"
+      ],
+      "idx": 635,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5639
+    },
+    {
+      "key": [
+        636,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 636,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17443
+    },
+    {
+      "key": [
+        636,
+        "none",
+        "clean"
+      ],
+      "idx": 636,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17598
+    },
+    {
+      "key": [
+        637,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 637,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13543
+    },
+    {
+      "key": [
+        637,
+        "none",
+        "clean"
+      ],
+      "idx": 637,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14234
+    },
+    {
+      "key": [
+        646,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 646,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 25350
+    },
+    {
+      "key": [
+        650,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 650,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15818
+    },
+    {
+      "key": [
+        654,
+        "none",
+        "clean"
+      ],
+      "idx": 654,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 43519
+    },
+    {
+      "key": [
+        656,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 656,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15166
+    },
+    {
+      "key": [
+        665,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 665,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 24919
+    },
+    {
+      "key": [
+        667,
+        "none",
+        "clean"
+      ],
+      "idx": 667,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7816
+    },
+    {
+      "key": [
+        675,
+        "none",
+        "clean"
+      ],
+      "idx": 675,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 25548
+    },
+    {
+      "key": [
+        676,
+        "none",
+        "clean"
+      ],
+      "idx": 676,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10812
+    },
+    {
+      "key": [
+        679,
+        "none",
+        "clean"
+      ],
+      "idx": 679,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 25852
+    },
+    {
+      "key": [
+        681,
+        "none",
+        "clean"
+      ],
+      "idx": 681,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8171
+    },
+    {
+      "key": [
+        684,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 684,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9011
+    },
+    {
+      "key": [
+        687,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 687,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 23178
+    },
+    {
+      "key": [
+        692,
+        "none",
+        "clean"
+      ],
+      "idx": 692,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 22172
+    },
+    {
+      "key": [
+        696,
+        "none",
+        "clean"
+      ],
+      "idx": 696,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12307
+    },
+    {
+      "key": [
+        698,
+        "none",
+        "clean"
+      ],
+      "idx": 698,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10656
+    },
+    {
+      "key": [
+        701,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 701,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12024
+    },
+    {
+      "key": [
+        702,
+        "none",
+        "clean"
+      ],
+      "idx": 702,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14412
+    },
+    {
+      "key": [
+        706,
+        "none",
+        "clean"
+      ],
+      "idx": 706,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11071
+    },
+    {
+      "key": [
+        709,
+        "none",
+        "clean"
+      ],
+      "idx": 709,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 28365
+    },
+    {
+      "key": [
+        714,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 714,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18651
+    },
+    {
+      "key": [
+        714,
+        "none",
+        "clean"
+      ],
+      "idx": 714,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 43600
+    },
+    {
+      "key": [
+        715,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 715,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 22142
+    },
+    {
+      "key": [
+        724,
+        "none",
+        "clean"
+      ],
+      "idx": 724,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9423
+    },
+    {
+      "key": [
+        728,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 728,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 13045
+    },
+    {
+      "key": [
+        728,
+        "none",
+        "clean"
+      ],
+      "idx": 728,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 14784
+    },
+    {
+      "key": [
+        730,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 730,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 17754
+    },
+    {
+      "key": [
+        734,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 734,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8340
+    },
+    {
+      "key": [
+        734,
+        "none",
+        "clean"
+      ],
+      "idx": 734,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6100
+    },
+    {
+      "key": [
+        738,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 738,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 16666
+    },
+    {
+      "key": [
+        741,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 741,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18772
+    },
+    {
+      "key": [
+        741,
+        "none",
+        "clean"
+      ],
+      "idx": 741,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 14611
+    },
+    {
+      "key": [
+        743,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 743,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 25506
+    },
+    {
+      "key": [
+        748,
+        "none",
+        "clean"
+      ],
+      "idx": 748,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15337
+    },
+    {
+      "key": [
+        752,
+        "none",
+        "clean"
+      ],
+      "idx": 752,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 16944
+    },
+    {
+      "key": [
+        754,
+        "none",
+        "clean"
+      ],
+      "idx": 754,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5987
+    },
+    {
+      "key": [
+        756,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 756,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 21790
+    },
+    {
+      "key": [
+        760,
+        "none",
+        "clean"
+      ],
+      "idx": 760,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15936
+    },
+    {
+      "key": [
+        761,
+        "none",
+        "clean"
+      ],
+      "idx": 761,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11550
+    },
+    {
+      "key": [
+        762,
+        "none",
+        "clean"
+      ],
+      "idx": 762,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 20653
+    },
+    {
+      "key": [
+        763,
+        "none",
+        "clean"
+      ],
+      "idx": 763,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14796
+    },
+    {
+      "key": [
+        768,
+        "none",
+        "clean"
+      ],
+      "idx": 768,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15560
+    },
+    {
+      "key": [
+        770,
+        "none",
+        "clean"
+      ],
+      "idx": 770,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 9298
+    },
+    {
+      "key": [
+        773,
+        "none",
+        "clean"
+      ],
+      "idx": 773,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12395
+    },
+    {
+      "key": [
+        774,
+        "none",
+        "clean"
+      ],
+      "idx": 774,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 34878
+    },
+    {
+      "key": [
+        779,
+        "none",
+        "clean"
+      ],
+      "idx": 779,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9413
+    },
+    {
+      "key": [
+        784,
+        "none",
+        "clean"
+      ],
+      "idx": 784,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14572
+    },
+    {
+      "key": [
+        791,
+        "none",
+        "clean"
+      ],
+      "idx": 791,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12002
+    },
+    {
+      "key": [
+        806,
+        "none",
+        "clean"
+      ],
+      "idx": 806,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10837
+    },
+    {
+      "key": [
+        811,
+        "none",
+        "clean"
+      ],
+      "idx": 811,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12036
+    },
+    {
+      "key": [
+        813,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 813,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12094
+    },
+    {
+      "key": [
+        813,
+        "none",
+        "clean"
+      ],
+      "idx": 813,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 16892
+    },
+    {
+      "key": [
+        814,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 814,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 89430
+    },
+    {
+      "key": [
+        815,
+        "none",
+        "clean"
+      ],
+      "idx": 815,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 30385
+    },
+    {
+      "key": [
+        820,
+        "none",
+        "clean"
+      ],
+      "idx": 820,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10770
+    },
+    {
+      "key": [
+        823,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 823,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15711
+    },
+    {
+      "key": [
+        824,
+        "none",
+        "clean"
+      ],
+      "idx": 824,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17470
+    },
+    {
+      "key": [
+        827,
+        "none",
+        "clean"
+      ],
+      "idx": 827,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15666
+    },
+    {
+      "key": [
+        828,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 828,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15266
+    },
+    {
+      "key": [
+        832,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 832,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 23143
+    },
+    {
+      "key": [
+        834,
+        "none",
+        "clean"
+      ],
+      "idx": 834,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17332
+    },
+    {
+      "key": [
+        835,
+        "none",
+        "clean"
+      ],
+      "idx": 835,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11700
+    },
+    {
+      "key": [
+        844,
+        "none",
+        "clean"
+      ],
+      "idx": 844,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17566
+    },
+    {
+      "key": [
+        850,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 850,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 19224
+    },
+    {
+      "key": [
+        852,
+        "none",
+        "clean"
+      ],
+      "idx": 852,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 20689
+    },
+    {
+      "key": [
+        853,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 853,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 19569
+    },
+    {
+      "key": [
+        853,
+        "none",
+        "clean"
+      ],
+      "idx": 853,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 14147
+    },
+    {
+      "key": [
+        857,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 857,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 21429
+    },
+    {
+      "key": [
+        857,
+        "none",
+        "clean"
+      ],
+      "idx": 857,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 24166
+    },
+    {
+      "key": [
+        862,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 862,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 32323
+    },
+    {
+      "key": [
+        864,
+        "none",
+        "clean"
+      ],
+      "idx": 864,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7806
+    },
+    {
+      "key": [
+        867,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 867,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 19248
+    },
+    {
+      "key": [
+        870,
+        "none",
+        "clean"
+      ],
+      "idx": 870,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14838
+    },
+    {
+      "key": [
+        873,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 873,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 17405
+    },
+    {
+      "key": [
+        873,
+        "none",
+        "clean"
+      ],
+      "idx": 873,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 16053
+    },
+    {
+      "key": [
+        874,
+        "none",
+        "clean"
+      ],
+      "idx": 874,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 22044
+    },
+    {
+      "key": [
+        875,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 875,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 26400
+    },
+    {
+      "key": [
+        879,
+        "none",
+        "clean"
+      ],
+      "idx": 879,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17038
+    },
+    {
+      "key": [
+        881,
+        "none",
+        "clean"
+      ],
+      "idx": 881,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10615
+    },
+    {
+      "key": [
+        882,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 882,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 19574
+    },
+    {
+      "key": [
+        887,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 887,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 17491
+    },
+    {
+      "key": [
+        889,
+        "none",
+        "clean"
+      ],
+      "idx": 889,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10796
+    },
+    {
+      "key": [
+        891,
+        "none",
+        "clean"
+      ],
+      "idx": 891,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 7395
+    },
+    {
+      "key": [
+        897,
+        "none",
+        "clean"
+      ],
+      "idx": 897,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 21371
+    },
+    {
+      "key": [
+        900,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 900,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11364
+    },
+    {
+      "key": [
+        903,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 903,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 13699
+    },
+    {
+      "key": [
+        916,
+        "none",
+        "clean"
+      ],
+      "idx": 916,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 17895
+    },
+    {
+      "key": [
+        919,
+        "none",
+        "clean"
+      ],
+      "idx": 919,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15113
+    },
+    {
+      "key": [
+        921,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 921,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 23004
+    },
+    {
+      "key": [
+        924,
+        "none",
+        "clean"
+      ],
+      "idx": 924,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9763
+    },
+    {
+      "key": [
+        925,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 925,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9636
+    },
+    {
+      "key": [
+        928,
+        "none",
+        "clean"
+      ],
+      "idx": 928,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12761
+    },
+    {
+      "key": [
+        930,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 930,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11459
+    },
+    {
+      "key": [
+        930,
+        "none",
+        "clean"
+      ],
+      "idx": 930,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11342
+    },
+    {
+      "key": [
+        931,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 931,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 20223
+    },
+    {
+      "key": [
+        934,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 934,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12831
+    },
+    {
+      "key": [
+        935,
+        "none",
+        "clean"
+      ],
+      "idx": 935,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8889
+    },
+    {
+      "key": [
+        940,
+        "none",
+        "clean"
+      ],
+      "idx": 940,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13473
+    },
+    {
+      "key": [
+        942,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 942,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 44843
+    },
+    {
+      "key": [
+        954,
+        "none",
+        "clean"
+      ],
+      "idx": 954,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12487
+    },
+    {
+      "key": [
+        957,
+        "none",
+        "clean"
+      ],
+      "idx": 957,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11752
+    },
+    {
+      "key": [
+        959,
+        "none",
+        "clean"
+      ],
+      "idx": 959,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10438
+    },
+    {
+      "key": [
+        960,
+        "none",
+        "clean"
+      ],
+      "idx": 960,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15541
+    },
+    {
+      "key": [
+        965,
+        "none",
+        "clean"
+      ],
+      "idx": 965,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 10473
+    },
+    {
+      "key": [
+        969,
+        "none",
+        "clean"
+      ],
+      "idx": 969,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 7855
+    },
+    {
+      "key": [
+        976,
+        "none",
+        "clean"
+      ],
+      "idx": 976,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11178
+    },
+    {
+      "key": [
+        979,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 979,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 38756
+    },
+    {
+      "key": [
+        982,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 982,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 24885
+    },
+    {
+      "key": [
+        984,
+        "none",
+        "clean"
+      ],
+      "idx": 984,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17233
+    },
+    {
+      "key": [
+        988,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 988,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 19430
+    },
+    {
+      "key": [
+        990,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 990,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 32544
+    },
+    {
+      "key": [
+        990,
+        "none",
+        "clean"
+      ],
+      "idx": 990,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 23315
+    },
+    {
+      "key": [
+        994,
+        "none",
+        "clean"
+      ],
+      "idx": 994,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10834
+    },
+    {
+      "key": [
+        996,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 996,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 25315
+    },
+    {
+      "key": [
+        997,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 997,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 19307
+    },
+    {
+      "key": [
+        999,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 999,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 19180
+    }
+  ]
+}

@@ -1,0 +1,7439 @@
+{
+  "arm": "A1",
+  "status": "complete",
+  "n": 350,
+  "completed": 350,
+  "per_item": [
+    {
+      "key": [
+        4,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 4,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6649,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        12,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 12,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 4555,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Acute T cell lymphoblastic leukemia"
+        }
+      ]
+    },
+    {
+      "key": [
+        12,
+        "none",
+        "clean"
+      ],
+      "idx": 12,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 7273,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Acute T cell lymphoblastic leukemia"
+        }
+      ]
+    },
+    {
+      "key": [
+        14,
+        "none",
+        "clean"
+      ],
+      "idx": 14,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 27236,
+      "source_items_count": 8,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "dehiscence of the sternal wound"
+        },
+        {
+          "type": "D1",
+          "source_quote": "sepsis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "respiratory failure"
+        }
+      ]
+    },
+    {
+      "key": [
+        15,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 15,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9301,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        16,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 16,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7264,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        19,
+        "none",
+        "clean"
+      ],
+      "idx": 19,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 17135,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "metastatic cutaneous melanoma"
+        }
+      ]
+    },
+    {
+      "key": [
+        21,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 21,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12405,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "the provisional diagnosis for this episode was Ethambutol and Isoniazid induced psychosis."
+        }
+      ]
+    },
+    {
+      "key": [
+        22,
+        "none",
+        "clean"
+      ],
+      "idx": 22,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5349,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        27,
+        "none",
+        "clean"
+      ],
+      "idx": 27,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 78469,
+      "source_items_count": 4,
+      "defects": []
+    },
+    {
+      "key": [
+        29,
+        "none",
+        "clean"
+      ],
+      "idx": 29,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 3533,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        32,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 32,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11071,
+      "source_items_count": 4,
+      "defects": []
+    },
+    {
+      "key": [
+        36,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 36,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11941,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "diagnosed as a myofibrosarcoma via biopsy."
+        }
+      ]
+    },
+    {
+      "key": [
+        40,
+        "none",
+        "clean"
+      ],
+      "idx": 40,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7874,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        46,
+        "none",
+        "clean"
+      ],
+      "idx": 46,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12095,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "schizophrenia"
+        }
+      ]
+    },
+    {
+      "key": [
+        47,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 47,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 28824,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "portal vein thrombosis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "portal systemic encephalopathy"
+        },
+        {
+          "type": "D1",
+          "source_quote": "intracerebral hemorrhage"
+        }
+      ]
+    },
+    {
+      "key": [
+        49,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 49,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": null,
+      "parse_status": "truncated",
+      "latency_ms": 58120,
+      "source_items_count": null,
+      "defects": null
+    },
+    {
+      "key": [
+        50,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 50,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 7495,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Abdominal Aortic Aneurysm"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Successfully treated infrarenal AAA"
+        }
+      ]
+    },
+    {
+      "key": [
+        57,
+        "none",
+        "clean"
+      ],
+      "idx": 57,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4373,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        67,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 67,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 21971,
+      "source_items_count": 6,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "septic shock"
+        }
+      ]
+    },
+    {
+      "key": [
+        78,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 78,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12689,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        80,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 80,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11867,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        83,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 83,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 26857,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "meningoencephalitis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "lymphocytic meningitis"
+        }
+      ]
+    },
+    {
+      "key": [
+        84,
+        "none",
+        "clean"
+      ],
+      "idx": 84,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 68103,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        89,
+        "none",
+        "clean"
+      ],
+      "idx": 89,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8075,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        93,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 93,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11208,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "treated tuberculous lymphadenitis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "disseminated tuberculosis (probably relapse)"
+        }
+      ]
+    },
+    {
+      "key": [
+        93,
+        "none",
+        "clean"
+      ],
+      "idx": 93,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 19362,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "treated tuberculous lymphadenitis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "disseminated tuberculosis (probably relapse)"
+        }
+      ]
+    },
+    {
+      "key": [
+        94,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 94,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9186,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        98,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 98,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4818,
+      "source_items_count": 0,
+      "defects": []
+    },
+    {
+      "key": [
+        102,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 102,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9301,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        108,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 108,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6724,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        109,
+        "none",
+        "clean"
+      ],
+      "idx": 109,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14157,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        110,
+        "none",
+        "clean"
+      ],
+      "idx": 110,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 30634,
+      "source_items_count": 6,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "UTI sepsis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "secondary adrenal insufficiency"
+        }
+      ]
+    },
+    {
+      "key": [
+        112,
+        "none",
+        "clean"
+      ],
+      "idx": 112,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 52171,
+      "source_items_count": 5,
+      "defects": []
+    },
+    {
+      "key": [
+        113,
+        "none",
+        "clean"
+      ],
+      "idx": 113,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4394,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        115,
+        "none",
+        "clean"
+      ],
+      "idx": 115,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 14607,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "chronic active hepatitis"
+        }
+      ]
+    },
+    {
+      "key": [
+        118,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 118,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12785,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        120,
+        "none",
+        "clean"
+      ],
+      "idx": 120,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8674,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        121,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 121,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": null,
+      "parse_status": "truncated",
+      "latency_ms": 59795,
+      "source_items_count": null,
+      "defects": null
+    },
+    {
+      "key": [
+        121,
+        "none",
+        "clean"
+      ],
+      "idx": 121,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12453,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        126,
+        "none",
+        "clean"
+      ],
+      "idx": 126,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6314,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        127,
+        "none",
+        "clean"
+      ],
+      "idx": 127,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6795,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        129,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 129,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13163,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        131,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 131,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 10168,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "atrial fibrillation"
+        }
+      ]
+    },
+    {
+      "key": [
+        132,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 132,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4169,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        132,
+        "none",
+        "clean"
+      ],
+      "idx": 132,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7611,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        134,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 134,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6402,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        134,
+        "none",
+        "clean"
+      ],
+      "idx": 134,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9069,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        135,
+        "none",
+        "clean"
+      ],
+      "idx": 135,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8304,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        137,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 137,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6050,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        138,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 138,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 2199,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        138,
+        "none",
+        "clean"
+      ],
+      "idx": 138,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 3984,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        141,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 141,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4817,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        141,
+        "none",
+        "clean"
+      ],
+      "idx": 141,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10040,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        143,
+        "none",
+        "clean"
+      ],
+      "idx": 143,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9032,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        145,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 145,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 28367,
+      "source_items_count": 7,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "recurrent episodes of ENL"
+        },
+        {
+          "type": "D1",
+          "source_quote": "type II lepra reaction (ENL)"
+        },
+        {
+          "type": "D1",
+          "source_quote": "lepromatous leprosy"
+        },
+        {
+          "type": "D1",
+          "source_quote": "deep vein thrombosis"
+        }
+      ]
+    },
+    {
+      "key": [
+        146,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 146,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 16124,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "familial Parkinsonism"
+        },
+        {
+          "type": "D1",
+          "source_quote": "depression"
+        }
+      ]
+    },
+    {
+      "key": [
+        149,
+        "none",
+        "clean"
+      ],
+      "idx": 149,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9692,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        151,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 151,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 2441,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        152,
+        "none",
+        "clean"
+      ],
+      "idx": 152,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 16401,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        153,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 153,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12095,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "acute respiratory distress syndrome (ARDS)"
+        },
+        {
+          "type": "D1",
+          "source_quote": "peritonsillar abscess"
+        }
+      ]
+    },
+    {
+      "key": [
+        156,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 156,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7246,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        158,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 158,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 3184,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        158,
+        "none",
+        "clean"
+      ],
+      "idx": 158,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 2729,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        159,
+        "none",
+        "clean"
+      ],
+      "idx": 159,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9150,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        161,
+        "none",
+        "clean"
+      ],
+      "idx": 161,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 16124,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "- Thyroid adenoma"
+        }
+      ]
+    },
+    {
+      "key": [
+        163,
+        "none",
+        "clean"
+      ],
+      "idx": 163,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 22377,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        164,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 164,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 22668,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "presumed bipolar disorder with psychotic features"
+        },
+        {
+          "type": "D1",
+          "source_quote": "The working diagnosis at this time was considered to be encephalopathy, sepsis vs systemic inflammatory response syndrome (SIRS) from aspiration and acute hypoxic respiratory failure"
+        }
+      ]
+    },
+    {
+      "key": [
+        168,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 168,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 73859,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        171,
+        "none",
+        "clean"
+      ],
+      "idx": 171,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 2738,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        172,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 172,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8438,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        178,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 178,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 7234,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "pneumomediastinum"
+        }
+      ]
+    },
+    {
+      "key": [
+        180,
+        "none",
+        "clean"
+      ],
+      "idx": 180,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9085,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        194,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 194,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7488,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        194,
+        "none",
+        "clean"
+      ],
+      "idx": 194,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7027,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        201,
+        "none",
+        "clean"
+      ],
+      "idx": 201,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 8281,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Xanthogranulomatous pyelonephritis (XGP) with coexisting malakoplakia"
+        }
+      ]
+    },
+    {
+      "key": [
+        202,
+        "none",
+        "clean"
+      ],
+      "idx": 202,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10241,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        203,
+        "none",
+        "clean"
+      ],
+      "idx": 203,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5108,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        205,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 205,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8711,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        206,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 206,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5987,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        210,
+        "none",
+        "clean"
+      ],
+      "idx": 210,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15561,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        213,
+        "none",
+        "clean"
+      ],
+      "idx": 213,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7216,
+      "source_items_count": 0,
+      "defects": []
+    },
+    {
+      "key": [
+        215,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 215,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 20575,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "metastatic SCC"
+        },
+        {
+          "type": "D1",
+          "source_quote": "immune-related central adrenal insufficiency"
+        }
+      ]
+    },
+    {
+      "key": [
+        217,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 217,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 26071,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "attention-deficit hyperactivity disorder."
+        }
+      ]
+    },
+    {
+      "key": [
+        220,
+        "none",
+        "clean"
+      ],
+      "idx": 220,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15900,
+      "source_items_count": 4,
+      "defects": []
+    },
+    {
+      "key": [
+        223,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 223,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18429,
+      "source_items_count": 5,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Tetralogy of Fallot (TOF)"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Pulmonary Trunk Atresia (PTA)"
+        },
+        {
+          "type": "D1",
+          "source_quote": "malaligned ventricular septal defect"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Patent Ductus Arteriosus (PDA)"
+        },
+        {
+          "type": "D1",
+          "source_quote": "pulmonary hypertension"
+        }
+      ]
+    },
+    {
+      "key": [
+        227,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 227,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13673,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        227,
+        "none",
+        "clean"
+      ],
+      "idx": 227,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11121,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        230,
+        "none",
+        "clean"
+      ],
+      "idx": 230,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8740,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        231,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 231,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 9285,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "abdominal PGL"
+        }
+      ]
+    },
+    {
+      "key": [
+        234,
+        "none",
+        "clean"
+      ],
+      "idx": 234,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 8280,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "provisional diagnosis of PCV"
+        }
+      ]
+    },
+    {
+      "key": [
+        237,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 237,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6624,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        237,
+        "none",
+        "clean"
+      ],
+      "idx": 237,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9117,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        240,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 240,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 22946,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "viral gastroenteritis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "APS"
+        }
+      ]
+    },
+    {
+      "key": [
+        242,
+        "none",
+        "clean"
+      ],
+      "idx": 242,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 16755,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        246,
+        "none",
+        "clean"
+      ],
+      "idx": 246,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 10144,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "peritonitis"
+        }
+      ]
+    },
+    {
+      "key": [
+        247,
+        "none",
+        "clean"
+      ],
+      "idx": 247,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8418,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        249,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 249,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6271,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        250,
+        "none",
+        "clean"
+      ],
+      "idx": 250,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4400,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        252,
+        "none",
+        "clean"
+      ],
+      "idx": 252,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15883,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "periprosthetic fracture of the right forearm"
+        },
+        {
+          "type": "D1",
+          "source_quote": "fracture of the left tibia"
+        }
+      ]
+    },
+    {
+      "key": [
+        253,
+        "none",
+        "clean"
+      ],
+      "idx": 253,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 16391,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "facet degenerative changes"
+        },
+        {
+          "type": "D1",
+          "source_quote": "spondylosis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "failed back surgery syndrome"
+        }
+      ]
+    },
+    {
+      "key": [
+        254,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 254,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 8167,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Progressive neuropathy with associated mutation in GSN"
+        }
+      ]
+    },
+    {
+      "key": [
+        254,
+        "none",
+        "clean"
+      ],
+      "idx": 254,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8133,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        261,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 261,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15418,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        263,
+        "none",
+        "clean"
+      ],
+      "idx": 263,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4276,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        264,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 264,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 8100,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Intrinsic HD with cord ischemia."
+        }
+      ]
+    },
+    {
+      "key": [
+        264,
+        "none",
+        "clean"
+      ],
+      "idx": 264,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6379,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        270,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 270,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 16411,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Congenital Left Diaphragmatic Hernia with Volvulus and Obstruction of Herniated Part of Stomach"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Acutely Torted Intrathoracic Spleen and Stomach"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Left Part of Transverse Colon, and Small Bowel Loops"
+        }
+      ]
+    },
+    {
+      "key": [
+        270,
+        "none",
+        "clean"
+      ],
+      "idx": 270,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15144,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Congenital Left Diaphragmatic Hernia with Volvulus and Obstruction of Herniated Part of Stomach"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Acutely Torted Intrathoracic Spleen and Stomach"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Left Part of Transverse Colon, and Small Bowel Loops"
+        }
+      ]
+    },
+    {
+      "key": [
+        274,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 274,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 3723,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        275,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 275,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 40340,
+      "source_items_count": 5,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "meningitis"
+        }
+      ]
+    },
+    {
+      "key": [
+        276,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 276,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 13183,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Acute transverse myelitis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "HIV infection"
+        }
+      ]
+    },
+    {
+      "key": [
+        281,
+        "none",
+        "clean"
+      ],
+      "idx": 281,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6172,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        283,
+        "none",
+        "clean"
+      ],
+      "idx": 283,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5512,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        284,
+        "none",
+        "clean"
+      ],
+      "idx": 284,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11074,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        287,
+        "none",
+        "clean"
+      ],
+      "idx": 287,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15944,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        293,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 293,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 13757,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Community-acquired pneumonia"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Aggressive diffuse PTCL"
+        },
+        {
+          "type": "D1",
+          "source_quote": "eosinophilic pneumonitis"
+        }
+      ]
+    },
+    {
+      "key": [
+        296,
+        "none",
+        "clean"
+      ],
+      "idx": 296,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18810,
+      "source_items_count": 5,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "acute crisis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "generalized peritonitis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "duodenal perforation"
+        },
+        {
+          "type": "D1",
+          "source_quote": "renal failure"
+        }
+      ]
+    },
+    {
+      "key": [
+        302,
+        "none",
+        "clean"
+      ],
+      "idx": 302,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12227,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        306,
+        "none",
+        "clean"
+      ],
+      "idx": 306,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8826,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        308,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 308,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12882,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "The patient was diagnosed with NTI accompanying heart failure and discharged."
+        }
+      ]
+    },
+    {
+      "key": [
+        308,
+        "none",
+        "clean"
+      ],
+      "idx": 308,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 29399,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "The patient was diagnosed with NTI accompanying heart failure and discharged."
+        }
+      ]
+    },
+    {
+      "key": [
+        309,
+        "none",
+        "clean"
+      ],
+      "idx": 309,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 28054,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "acute renal failure"
+        },
+        {
+          "type": "D1",
+          "source_quote": "thrombocytopenia"
+        },
+        {
+          "type": "D1",
+          "source_quote": "HFRS"
+        }
+      ]
+    },
+    {
+      "key": [
+        310,
+        "none",
+        "clean"
+      ],
+      "idx": 310,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 32907,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "diagnosed with PTC"
+        },
+        {
+          "type": "D1",
+          "source_quote": "diagnosed with RAIR-DTC"
+        }
+      ]
+    },
+    {
+      "key": [
+        311,
+        "none",
+        "clean"
+      ],
+      "idx": 311,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12751,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "coronary artery fistula"
+        }
+      ]
+    },
+    {
+      "key": [
+        314,
+        "none",
+        "clean"
+      ],
+      "idx": 314,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6920,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        315,
+        "none",
+        "clean"
+      ],
+      "idx": 315,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4152,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        316,
+        "none",
+        "clean"
+      ],
+      "idx": 316,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 24306,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        323,
+        "none",
+        "clean"
+      ],
+      "idx": 323,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 9578,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "no recurrence of amyloid deposition."
+        }
+      ]
+    },
+    {
+      "key": [
+        324,
+        "none",
+        "clean"
+      ],
+      "idx": 324,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9666,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        332,
+        "none",
+        "clean"
+      ],
+      "idx": 332,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 38373,
+      "source_items_count": 8,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Incomplete Shone Syndrome"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Severe Mitral Stenosis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Moderate Mitral Regurgitation"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Severe Periductal Coarctation"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Large Patent Ductus Arteriosus"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Severe Pulmonary Arterial Hypertension"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Moderate Tricuspid Regurgitation"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Severe Left Ventricular Dysfunction"
+        }
+      ]
+    },
+    {
+      "key": [
+        341,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 341,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12746,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "episode of aspiration pneumonia"
+        }
+      ]
+    },
+    {
+      "key": [
+        344,
+        "none",
+        "clean"
+      ],
+      "idx": 344,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6134,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        345,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 345,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 16705,
+      "source_items_count": 5,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Progressive neurologic regression"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Focal seizures"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Aspiration pneumonia"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Diffuse encephalopathic process"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Underlying neurodegenerative disease (suspected)"
+        }
+      ]
+    },
+    {
+      "key": [
+        347,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 347,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 9988,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "pineal germ cell tumor"
+        }
+      ]
+    },
+    {
+      "key": [
+        353,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 353,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6265,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        354,
+        "none",
+        "clean"
+      ],
+      "idx": 354,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14673,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        355,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 355,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11443,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        359,
+        "none",
+        "clean"
+      ],
+      "idx": 359,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4554,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        360,
+        "none",
+        "clean"
+      ],
+      "idx": 360,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 32999,
+      "source_items_count": 5,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "refractory, sero-negative migratory arthritis"
+        }
+      ]
+    },
+    {
+      "key": [
+        367,
+        "none",
+        "clean"
+      ],
+      "idx": 367,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 3297,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        368,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 368,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12667,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "cytokines storm syndrome"
+        }
+      ]
+    },
+    {
+      "key": [
+        372,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 372,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15376,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "skin necrosis"
+        }
+      ]
+    },
+    {
+      "key": [
+        373,
+        "none",
+        "clean"
+      ],
+      "idx": 373,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10139,
+      "source_items_count": 5,
+      "defects": []
+    },
+    {
+      "key": [
+        377,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 377,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15114,
+      "source_items_count": 5,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "T8–10 myelopathy"
+        },
+        {
+          "type": "D1",
+          "source_quote": "cord compression"
+        }
+      ]
+    },
+    {
+      "key": [
+        382,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 382,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 23342,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "acute kidney injury"
+        }
+      ]
+    },
+    {
+      "key": [
+        384,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 384,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 4748,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "annular alopecia areata (AA)"
+        }
+      ]
+    },
+    {
+      "key": [
+        389,
+        "none",
+        "clean"
+      ],
+      "idx": 389,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 16239,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        390,
+        "none",
+        "clean"
+      ],
+      "idx": 390,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15625,
+      "source_items_count": 5,
+      "defects": []
+    },
+    {
+      "key": [
+        401,
+        "none",
+        "clean"
+      ],
+      "idx": 401,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15415,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        404,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 404,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5220,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        408,
+        "none",
+        "clean"
+      ],
+      "idx": 408,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12551,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "aspiration pneumonia"
+        }
+      ]
+    },
+    {
+      "key": [
+        409,
+        "none",
+        "clean"
+      ],
+      "idx": 409,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13928,
+      "source_items_count": 6,
+      "defects": []
+    },
+    {
+      "key": [
+        412,
+        "none",
+        "clean"
+      ],
+      "idx": 412,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18552,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "a suspect keratoacanthoma"
+        },
+        {
+          "type": "D1",
+          "source_quote": "invasive squamous cell carcinoma"
+        }
+      ]
+    },
+    {
+      "key": [
+        413,
+        "none",
+        "clean"
+      ],
+      "idx": 413,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14514,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        417,
+        "none",
+        "clean"
+      ],
+      "idx": 417,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6512,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        426,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 426,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15446,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        427,
+        "none",
+        "clean"
+      ],
+      "idx": 427,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11003,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        430,
+        "none",
+        "clean"
+      ],
+      "idx": 430,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9145,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        434,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 434,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14846,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        437,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 437,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11873,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "mycotic aortic aneurysm"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Descending aortic aneurysm"
+        }
+      ]
+    },
+    {
+      "key": [
+        440,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 440,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 3717,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        443,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 443,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 8419,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Acute onset respiratory distress"
+        }
+      ]
+    },
+    {
+      "key": [
+        446,
+        "none",
+        "clean"
+      ],
+      "idx": 446,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 70717,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "malignant ventricular tachyarrhythmia"
+        },
+        {
+          "type": "D1",
+          "source_quote": "hypertrophic cardiomyopathy (HCM)"
+        }
+      ]
+    },
+    {
+      "key": [
+        450,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 450,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8073,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        454,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 454,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 8229,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "retroperitoneal PGL"
+        }
+      ]
+    },
+    {
+      "key": [
+        457,
+        "none",
+        "clean"
+      ],
+      "idx": 457,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 19380,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Metastatic EGFR-mutated adenocarcinoma of the lung with primary tumor enlargement."
+        }
+      ]
+    },
+    {
+      "key": [
+        458,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 458,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10632,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        459,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 459,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5576,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        459,
+        "none",
+        "clean"
+      ],
+      "idx": 459,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11237,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        460,
+        "none",
+        "clean"
+      ],
+      "idx": 460,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9816,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        461,
+        "none",
+        "clean"
+      ],
+      "idx": 461,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13153,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        463,
+        "none",
+        "clean"
+      ],
+      "idx": 463,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15444,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "primary renal cell carcinoma (RCC)"
+        },
+        {
+          "type": "D1",
+          "source_quote": "metastatic RCC"
+        }
+      ]
+    },
+    {
+      "key": [
+        468,
+        "none",
+        "clean"
+      ],
+      "idx": 468,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4741,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        470,
+        "none",
+        "clean"
+      ],
+      "idx": 470,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9834,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        472,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 472,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 5282,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "a diagnosis of RCVS was presumed"
+        }
+      ]
+    },
+    {
+      "key": [
+        478,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 478,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8963,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        491,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 491,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4370,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        491,
+        "none",
+        "clean"
+      ],
+      "idx": 491,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4420,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        493,
+        "none",
+        "clean"
+      ],
+      "idx": 493,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9885,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        496,
+        "none",
+        "clean"
+      ],
+      "idx": 496,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5928,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        504,
+        "none",
+        "clean"
+      ],
+      "idx": 504,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6728,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        506,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 506,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 7899,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "right lower lid senile entropion"
+        }
+      ]
+    },
+    {
+      "key": [
+        506,
+        "none",
+        "clean"
+      ],
+      "idx": 506,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12281,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        525,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 525,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9645,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        525,
+        "none",
+        "clean"
+      ],
+      "idx": 525,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9471,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        526,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 526,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15153,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        530,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 530,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 82228,
+      "source_items_count": 4,
+      "defects": []
+    },
+    {
+      "key": [
+        530,
+        "none",
+        "clean"
+      ],
+      "idx": 530,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 71645,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "the diagnosis of tracheomalacia was almost confirmed."
+        }
+      ]
+    },
+    {
+      "key": [
+        533,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 533,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 17218,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Admission diagnosis: Left pelvic hematoma"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Osteoporosis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "chronic atrial fibrillation"
+        }
+      ]
+    },
+    {
+      "key": [
+        536,
+        "none",
+        "clean"
+      ],
+      "idx": 536,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6705,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        537,
+        "none",
+        "clean"
+      ],
+      "idx": 537,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 26450,
+      "source_items_count": 6,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "chronic liver disease"
+        }
+      ]
+    },
+    {
+      "key": [
+        540,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 540,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11153,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "polycystic liver and kidney diseases"
+        }
+      ]
+    },
+    {
+      "key": [
+        542,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 542,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4015,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        545,
+        "none",
+        "clean"
+      ],
+      "idx": 545,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 36295,
+      "source_items_count": 9,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "premature ventricular contraction"
+        },
+        {
+          "type": "D1",
+          "source_quote": "ventricular bigeminy"
+        },
+        {
+          "type": "D1",
+          "source_quote": "atrial flutter"
+        },
+        {
+          "type": "D1",
+          "source_quote": "atrioventricular block"
+        },
+        {
+          "type": "D1",
+          "source_quote": "paroxysmal atrial fibrillation pattern"
+        }
+      ]
+    },
+    {
+      "key": [
+        546,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 546,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 22957,
+      "source_items_count": 5,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "acute pancreatitis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "acute cholecystitis"
+        }
+      ]
+    },
+    {
+      "key": [
+        546,
+        "none",
+        "clean"
+      ],
+      "idx": 546,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 28618,
+      "source_items_count": 6,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "aconuresis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "acute pancreatitis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "acute cholecystitis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "malignant tumors"
+        }
+      ]
+    },
+    {
+      "key": [
+        548,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 548,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 78006,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "asthma"
+        },
+        {
+          "type": "D1",
+          "source_quote": "eosinophilic esophagitis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "eosinophilic sinusitis"
+        }
+      ]
+    },
+    {
+      "key": [
+        551,
+        "none",
+        "clean"
+      ],
+      "idx": 551,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 21319,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        554,
+        "none",
+        "clean"
+      ],
+      "idx": 554,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6754,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        562,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 562,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15948,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        562,
+        "none",
+        "clean"
+      ],
+      "idx": 562,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12058,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        564,
+        "none",
+        "clean"
+      ],
+      "idx": 564,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15950,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        571,
+        "none",
+        "clean"
+      ],
+      "idx": 571,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4160,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        575,
+        "none",
+        "clean"
+      ],
+      "idx": 575,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 13667,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "chronic ulceration related to focal infection"
+        }
+      ]
+    },
+    {
+      "key": [
+        577,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 577,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 16429,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        580,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 580,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 2121,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        580,
+        "none",
+        "clean"
+      ],
+      "idx": 580,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 3192,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        586,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 586,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11061,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        588,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 588,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 25602,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "hemobilia"
+        },
+        {
+          "type": "D1",
+          "source_quote": "hepatic cyst"
+        },
+        {
+          "type": "D1",
+          "source_quote": "anemia"
+        }
+      ]
+    },
+    {
+      "key": [
+        594,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 594,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 17710,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "undifferentiated carcinoma (UC)"
+        },
+        {
+          "type": "D1",
+          "source_quote": "undifferentiated pleomorphic sarcoma (UPS)"
+        }
+      ]
+    },
+    {
+      "key": [
+        596,
+        "none",
+        "clean"
+      ],
+      "idx": 596,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9796,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        597,
+        "none",
+        "clean"
+      ],
+      "idx": 597,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10715,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        598,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 598,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 3112,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        600,
+        "none",
+        "clean"
+      ],
+      "idx": 600,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11305,
+      "source_items_count": 4,
+      "defects": []
+    },
+    {
+      "key": [
+        601,
+        "none",
+        "clean"
+      ],
+      "idx": 601,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12239,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        602,
+        "none",
+        "clean"
+      ],
+      "idx": 602,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6063,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        607,
+        "none",
+        "clean"
+      ],
+      "idx": 607,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15735,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "primary leukocytoclastic vasculitis"
+        }
+      ]
+    },
+    {
+      "key": [
+        609,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 609,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 33287,
+      "source_items_count": 5,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "severe left ventricular (LV) systolic dysfunction"
+        }
+      ]
+    },
+    {
+      "key": [
+        611,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 611,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6742,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        611,
+        "none",
+        "clean"
+      ],
+      "idx": 611,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6922,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        613,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 613,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 17448,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "The patient was diagnosed with a possible glycogen storage disease"
+        }
+      ]
+    },
+    {
+      "key": [
+        614,
+        "none",
+        "clean"
+      ],
+      "idx": 614,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15130,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Hashimoto's disease"
+        }
+      ]
+    },
+    {
+      "key": [
+        618,
+        "none",
+        "clean"
+      ],
+      "idx": 618,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7373,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        619,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 619,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 8528,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "chronic rhinosinusitis"
+        }
+      ]
+    },
+    {
+      "key": [
+        619,
+        "none",
+        "clean"
+      ],
+      "idx": 619,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 13284,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "diagnosis of chronic rhinosinusitis"
+        }
+      ]
+    },
+    {
+      "key": [
+        620,
+        "none",
+        "clean"
+      ],
+      "idx": 620,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 20051,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        627,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 627,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14494,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        628,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 628,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5596,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        633,
+        "none",
+        "clean"
+      ],
+      "idx": 633,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7786,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        635,
+        "none",
+        "clean"
+      ],
+      "idx": 635,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6200,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        636,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 636,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 28847,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "abscess"
+        },
+        {
+          "type": "D1",
+          "source_quote": "pathological fracture"
+        },
+        {
+          "type": "D1",
+          "source_quote": "tuberculous osteomyelitis"
+        }
+      ]
+    },
+    {
+      "key": [
+        636,
+        "none",
+        "clean"
+      ],
+      "idx": 636,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 27871,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "pathological fracture of the base of 1st metacarpal"
+        }
+      ]
+    },
+    {
+      "key": [
+        637,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 637,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12833,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        637,
+        "none",
+        "clean"
+      ],
+      "idx": 637,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 11588,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "undifferentiated sarcoma"
+        }
+      ]
+    },
+    {
+      "key": [
+        646,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 646,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 88532,
+      "source_items_count": 5,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Stevens-Johnson Syndrome (SJS) was suspected"
+        }
+      ]
+    },
+    {
+      "key": [
+        650,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 650,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 5981,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "unruptured right MCA aneurysm"
+        }
+      ]
+    },
+    {
+      "key": [
+        654,
+        "none",
+        "clean"
+      ],
+      "idx": 654,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 51154,
+      "source_items_count": 7,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "ventricular tachycardia episodes"
+        },
+        {
+          "type": "D1",
+          "source_quote": "hepatic and renal infarctions"
+        }
+      ]
+    },
+    {
+      "key": [
+        656,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 656,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5319,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        665,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 665,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 6977,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "The patient was diagnosed with HSV encephalitis"
+        }
+      ]
+    },
+    {
+      "key": [
+        667,
+        "none",
+        "clean"
+      ],
+      "idx": 667,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4448,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        675,
+        "none",
+        "clean"
+      ],
+      "idx": 675,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 48440,
+      "source_items_count": 12,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "acute hemorrhagic gastritis"
+        }
+      ]
+    },
+    {
+      "key": [
+        676,
+        "none",
+        "clean"
+      ],
+      "idx": 676,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 31245,
+      "source_items_count": 4,
+      "defects": []
+    },
+    {
+      "key": [
+        679,
+        "none",
+        "clean"
+      ],
+      "idx": 679,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8908,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        681,
+        "none",
+        "clean"
+      ],
+      "idx": 681,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15807,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "multiple organ failure"
+        }
+      ]
+    },
+    {
+      "key": [
+        684,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 684,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 8594,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "idiopathic macular choroiditis with choroidal neovascularization (CNV)"
+        }
+      ]
+    },
+    {
+      "key": [
+        687,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 687,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 8175,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "unilateral paresis of the vocal fold"
+        }
+      ]
+    },
+    {
+      "key": [
+        692,
+        "none",
+        "clean"
+      ],
+      "idx": 692,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6754,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        696,
+        "none",
+        "clean"
+      ],
+      "idx": 696,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9197,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        698,
+        "none",
+        "clean"
+      ],
+      "idx": 698,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10784,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        701,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 701,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6648,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        702,
+        "none",
+        "clean"
+      ],
+      "idx": 702,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10056,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        706,
+        "none",
+        "clean"
+      ],
+      "idx": 706,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9359,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        709,
+        "none",
+        "clean"
+      ],
+      "idx": 709,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8443,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        714,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 714,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": null,
+      "parse_status": "truncated",
+      "latency_ms": 59968,
+      "source_items_count": null,
+      "defects": null
+    },
+    {
+      "key": [
+        714,
+        "none",
+        "clean"
+      ],
+      "idx": 714,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 33035,
+      "source_items_count": 7,
+      "defects": []
+    },
+    {
+      "key": [
+        715,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 715,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 7942,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Biopsies confirmed the diagnosis of well-differentiated infiltrating squamous cell carcinoma"
+        }
+      ]
+    },
+    {
+      "key": [
+        724,
+        "none",
+        "clean"
+      ],
+      "idx": 724,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 37651,
+      "source_items_count": 4,
+      "defects": []
+    },
+    {
+      "key": [
+        728,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 728,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 2920,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        728,
+        "none",
+        "clean"
+      ],
+      "idx": 728,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 3113,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        730,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 730,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15650,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "macula-spared retinal detachment with multiple breaks"
+        }
+      ]
+    },
+    {
+      "key": [
+        734,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 734,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4924,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        734,
+        "none",
+        "clean"
+      ],
+      "idx": 734,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4690,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        738,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 738,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14741,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        741,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 741,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18382,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "cystic astrocytoma/ganglioglioma"
+        },
+        {
+          "type": "D1",
+          "source_quote": "secondary hypothyroidism"
+        },
+        {
+          "type": "D1",
+          "source_quote": "inflamed Rathke's cleft cyst"
+        }
+      ]
+    },
+    {
+      "key": [
+        741,
+        "none",
+        "clean"
+      ],
+      "idx": 741,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 26492,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "cystic astrocytoma/ganglioglioma"
+        },
+        {
+          "type": "D1",
+          "source_quote": "secondary hypothyroidism"
+        },
+        {
+          "type": "D1",
+          "source_quote": "inflamed Rathke's cleft cyst"
+        }
+      ]
+    },
+    {
+      "key": [
+        743,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 743,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 19083,
+      "source_items_count": 5,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "congenital heart disease"
+        }
+      ]
+    },
+    {
+      "key": [
+        748,
+        "none",
+        "clean"
+      ],
+      "idx": 748,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6024,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        752,
+        "none",
+        "clean"
+      ],
+      "idx": 752,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 30000,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        754,
+        "none",
+        "clean"
+      ],
+      "idx": 754,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4888,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        756,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 756,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9510,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        760,
+        "none",
+        "clean"
+      ],
+      "idx": 760,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 19764,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "left ventricular noncompaction (LVNC)"
+        }
+      ]
+    },
+    {
+      "key": [
+        761,
+        "none",
+        "clean"
+      ],
+      "idx": 761,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 17554,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        762,
+        "none",
+        "clean"
+      ],
+      "idx": 762,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 2859,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        763,
+        "none",
+        "clean"
+      ],
+      "idx": 763,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6310,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        768,
+        "none",
+        "clean"
+      ],
+      "idx": 768,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 3951,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        770,
+        "none",
+        "clean"
+      ],
+      "idx": 770,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 26558,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "sepsis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "pneumonia"
+        }
+      ]
+    },
+    {
+      "key": [
+        773,
+        "none",
+        "clean"
+      ],
+      "idx": 773,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 32963,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "possible diaphragmatic injury"
+        }
+      ]
+    },
+    {
+      "key": [
+        774,
+        "none",
+        "clean"
+      ],
+      "idx": 774,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10184,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        779,
+        "none",
+        "clean"
+      ],
+      "idx": 779,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 16485,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "hyperbilirubinemia"
+        }
+      ]
+    },
+    {
+      "key": [
+        784,
+        "none",
+        "clean"
+      ],
+      "idx": 784,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5936,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        791,
+        "none",
+        "clean"
+      ],
+      "idx": 791,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 21689,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        806,
+        "none",
+        "clean"
+      ],
+      "idx": 806,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 14718,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "diagnosed with acute purulent appendicitis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "The contrast-enhanced computerized tomography (CT) scan of his abdomen showed an ileocecal abscess with a size of 2.3 cm x 2.9 cm."
+        }
+      ]
+    },
+    {
+      "key": [
+        811,
+        "none",
+        "clean"
+      ],
+      "idx": 811,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 14402,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        813,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 813,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 14418,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Tubular adenoma with focal high grade epithelial dysplasia involving the duodenum."
+        }
+      ]
+    },
+    {
+      "key": [
+        813,
+        "none",
+        "clean"
+      ],
+      "idx": 813,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 17659,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Residual bile duct tumor after endoscopic ampullectomy for ampullary adenoma with high grade dysplasia."
+        },
+        {
+          "type": "D1",
+          "source_quote": "Tubular adenoma with focal high grade epithelial dysplasia involving the duodenum."
+        }
+      ]
+    },
+    {
+      "key": [
+        814,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 814,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8803,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        815,
+        "none",
+        "clean"
+      ],
+      "idx": 815,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7448,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        820,
+        "none",
+        "clean"
+      ],
+      "idx": 820,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5806,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        823,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 823,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12597,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Cryptococcal ventriculitis"
+        }
+      ]
+    },
+    {
+      "key": [
+        824,
+        "none",
+        "clean"
+      ],
+      "idx": 824,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 8273,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "ECG showed atrial fibrillation with a heart rate of 90 beats/min"
+        }
+      ]
+    },
+    {
+      "key": [
+        827,
+        "none",
+        "clean"
+      ],
+      "idx": 827,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 12394,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        828,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 828,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9972,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        832,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 832,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 33039,
+      "source_items_count": 12,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "skeletal muscle myopathy"
+        },
+        {
+          "type": "D1",
+          "source_quote": "pigmentary retinopathy"
+        },
+        {
+          "type": "D1",
+          "source_quote": "heart failure"
+        },
+        {
+          "type": "D1",
+          "source_quote": "pulmonary hypertension"
+        },
+        {
+          "type": "D1",
+          "source_quote": "chronic heart block"
+        },
+        {
+          "type": "D1",
+          "source_quote": "chronic kidney disease"
+        },
+        {
+          "type": "D1",
+          "source_quote": "hypertension"
+        },
+        {
+          "type": "D1",
+          "source_quote": "hyperlipidemia"
+        },
+        {
+          "type": "D1",
+          "source_quote": "mitral valve prolapse"
+        }
+      ]
+    },
+    {
+      "key": [
+        834,
+        "none",
+        "clean"
+      ],
+      "idx": 834,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11650,
+      "source_items_count": 4,
+      "defects": []
+    },
+    {
+      "key": [
+        835,
+        "none",
+        "clean"
+      ],
+      "idx": 835,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 28370,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "stable angina pectoris lasting for two months."
+        },
+        {
+          "type": "D1",
+          "source_quote": "diabetes and high cholesterol"
+        },
+        {
+          "type": "D1",
+          "source_quote": "diabetes and high cholesterol"
+        },
+        {
+          "type": "D1",
+          "source_quote": "diffuse dissection that originated from the proximal bed of the second obtuse marginal-II branch and extended to its distal bed."
+        }
+      ]
+    },
+    {
+      "key": [
+        844,
+        "none",
+        "clean"
+      ],
+      "idx": 844,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 23810,
+      "source_items_count": 5,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "bilateral temporal lobe epilepsy"
+        },
+        {
+          "type": "D1",
+          "source_quote": "focal onset impaired awareness seizures"
+        },
+        {
+          "type": "D1",
+          "source_quote": "focal to bilateral tonic-clonic seizures"
+        }
+      ]
+    },
+    {
+      "key": [
+        850,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 850,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9043,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        852,
+        "none",
+        "clean"
+      ],
+      "idx": 852,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 3300,
+      "source_items_count": 0,
+      "defects": []
+    },
+    {
+      "key": [
+        853,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 853,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 14294,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "The patient has a known history of multiple myeloma."
+        }
+      ]
+    },
+    {
+      "key": [
+        853,
+        "none",
+        "clean"
+      ],
+      "idx": 853,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18036,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "multiple myeloma"
+        }
+      ]
+    },
+    {
+      "key": [
+        857,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 857,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12858,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Aphakic bullous keratopathy"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Corneal scarring"
+        }
+      ]
+    },
+    {
+      "key": [
+        857,
+        "none",
+        "clean"
+      ],
+      "idx": 857,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 12524,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "- Aphakic bullous keratopathy"
+        }
+      ]
+    },
+    {
+      "key": [
+        862,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 862,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 34737,
+      "source_items_count": 7,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "myocarditis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "amyloidosis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "sarcoidosis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "nonischemic cardiomyopathy"
+        },
+        {
+          "type": "D1",
+          "source_quote": "residual fibrosis from a past viral myocarditis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "viral myocarditis"
+        }
+      ]
+    },
+    {
+      "key": [
+        864,
+        "none",
+        "clean"
+      ],
+      "idx": 864,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4577,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        867,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 867,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5343,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        870,
+        "none",
+        "clean"
+      ],
+      "idx": 870,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4978,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        873,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 873,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18236,
+      "source_items_count": 4,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "The patient had a history of bronchiectasis in the right middle lobe bronchus for 30 years."
+        },
+        {
+          "type": "D1",
+          "source_quote": "no obvious complication of obstructive pneumonia developed."
+        },
+        {
+          "type": "D1",
+          "source_quote": "the patient experienced complete atelectasis of the right middle and lower lobe with the complication of right pleural effusion."
+        },
+        {
+          "type": "D1",
+          "source_quote": "right pleural effusion"
+        }
+      ]
+    },
+    {
+      "key": [
+        873,
+        "none",
+        "clean"
+      ],
+      "idx": 873,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18872,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "obstructive pneumonia"
+        }
+      ]
+    },
+    {
+      "key": [
+        874,
+        "none",
+        "clean"
+      ],
+      "idx": 874,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6070,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        875,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 875,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5488,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        879,
+        "none",
+        "clean"
+      ],
+      "idx": 879,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 18732,
+      "source_items_count": 6,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "prostate cancer"
+        }
+      ]
+    },
+    {
+      "key": [
+        881,
+        "none",
+        "clean"
+      ],
+      "idx": 881,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 13862,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "multiorgan failure"
+        }
+      ]
+    },
+    {
+      "key": [
+        882,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 882,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 11096,
+      "source_items_count": 4,
+      "defects": []
+    },
+    {
+      "key": [
+        887,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 887,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 70950,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        889,
+        "none",
+        "clean"
+      ],
+      "idx": 889,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 8361,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        891,
+        "none",
+        "clean"
+      ],
+      "idx": 891,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4740,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        897,
+        "none",
+        "clean"
+      ],
+      "idx": 897,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 10379,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "history of anxiety"
+        }
+      ]
+    },
+    {
+      "key": [
+        900,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 900,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4572,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        903,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 903,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 6360,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        916,
+        "none",
+        "clean"
+      ],
+      "idx": 916,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15708,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "metastatic skull tumor"
+        }
+      ]
+    },
+    {
+      "key": [
+        919,
+        "none",
+        "clean"
+      ],
+      "idx": 919,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4275,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        921,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 921,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9628,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        924,
+        "none",
+        "clean"
+      ],
+      "idx": 924,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 10056,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "The differential diagnosis included DFSP and Dermatofibroma."
+        }
+      ]
+    },
+    {
+      "key": [
+        925,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 925,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 4954,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "refractory chyluria"
+        }
+      ]
+    },
+    {
+      "key": [
+        928,
+        "none",
+        "clean"
+      ],
+      "idx": 928,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 5002,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        930,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 930,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 23676,
+      "source_items_count": 7,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "hypocortisolism"
+        },
+        {
+          "type": "D1",
+          "source_quote": "craniopharyngioma"
+        },
+        {
+          "type": "D1",
+          "source_quote": "GCT"
+        },
+        {
+          "type": "D1",
+          "source_quote": "diabetes insipidus"
+        },
+        {
+          "type": "D1",
+          "source_quote": "secondary amenorrhea"
+        }
+      ]
+    },
+    {
+      "key": [
+        930,
+        "none",
+        "clean"
+      ],
+      "idx": 930,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 10791,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "craniopharyngioma"
+        },
+        {
+          "type": "D1",
+          "source_quote": "GCT"
+        }
+      ]
+    },
+    {
+      "key": [
+        931,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 931,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10713,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        934,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 934,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 32925,
+      "source_items_count": 8,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "pulmonary edema"
+        }
+      ]
+    },
+    {
+      "key": [
+        935,
+        "none",
+        "clean"
+      ],
+      "idx": 935,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9582,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        940,
+        "none",
+        "clean"
+      ],
+      "idx": 940,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 21217,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "diagnosis of rhabdomyolysis"
+        }
+      ]
+    },
+    {
+      "key": [
+        942,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 942,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 13339,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        954,
+        "none",
+        "clean"
+      ],
+      "idx": 954,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10328,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        957,
+        "none",
+        "clean"
+      ],
+      "idx": 957,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 14908,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Moderately differentiated SCC arising from bowenoid dysplasia"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Bowen's disease"
+        }
+      ]
+    },
+    {
+      "key": [
+        959,
+        "none",
+        "clean"
+      ],
+      "idx": 959,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 16005,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Small bowel obstruction in the midabdomen encased by a thickened peritoneum due to peritoneal fibrosis."
+        }
+      ]
+    },
+    {
+      "key": [
+        960,
+        "none",
+        "clean"
+      ],
+      "idx": 960,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 3014,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        965,
+        "none",
+        "clean"
+      ],
+      "idx": 965,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 16432,
+      "source_items_count": 3,
+      "defects": []
+    },
+    {
+      "key": [
+        969,
+        "none",
+        "clean"
+      ],
+      "idx": 969,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 4560,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        976,
+        "none",
+        "clean"
+      ],
+      "idx": 976,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 19523,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        979,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 979,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 9124,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        982,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 982,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 10059,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Mixed germ cell sex cord stromal tumor"
+        }
+      ]
+    },
+    {
+      "key": [
+        984,
+        "none",
+        "clean"
+      ],
+      "idx": 984,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 40168,
+      "source_items_count": 8,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "massive upper gastrointestinal bleeding"
+        },
+        {
+          "type": "D1",
+          "source_quote": "normochromic normocytic anemia"
+        },
+        {
+          "type": "D1",
+          "source_quote": "hepatocellular insufficiency"
+        },
+        {
+          "type": "D1",
+          "source_quote": "acute kidney failure"
+        },
+        {
+          "type": "D1",
+          "source_quote": "multiple liver hydatidosis"
+        },
+        {
+          "type": "D1",
+          "source_quote": "refractory hemorrhagic shock"
+        },
+        {
+          "type": "D1",
+          "source_quote": "disseminated intravenous coagulation"
+        }
+      ]
+    },
+    {
+      "key": [
+        988,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 988,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 1,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 15847,
+      "source_items_count": 7,
+      "defects": []
+    },
+    {
+      "key": [
+        990,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 990,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 7486,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        990,
+        "none",
+        "clean"
+      ],
+      "idx": 990,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 3081,
+      "source_items_count": 1,
+      "defects": []
+    },
+    {
+      "key": [
+        994,
+        "none",
+        "clean"
+      ],
+      "idx": 994,
+      "error_type": "none",
+      "condition": "clean",
+      "tau": 0,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 15534,
+      "source_items_count": 2,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Rickettsia tsutsugamushi was considered a differential diagnosis."
+        }
+      ]
+    },
+    {
+      "key": [
+        996,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 996,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 0,
+      "parse_status": "ok",
+      "latency_ms": 10820,
+      "source_items_count": 2,
+      "defects": []
+    },
+    {
+      "key": [
+        997,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 997,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 0,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 36447,
+      "source_items_count": 3,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "myodystrophy changes"
+        },
+        {
+          "type": "D1",
+          "source_quote": "suffered from retinoblastoma"
+        },
+        {
+          "type": "D1",
+          "source_quote": "Progressive muscular myodystrophy"
+        }
+      ]
+    },
+    {
+      "key": [
+        999,
+        "diagnosis",
+        "corrupted"
+      ],
+      "idx": 999,
+      "error_type": "diagnosis",
+      "condition": "corrupted",
+      "tau": 1,
+      "llama": 1,
+      "qwen": 0,
+      "nemotron": 1,
+      "parse_status": "ok",
+      "latency_ms": 13679,
+      "source_items_count": 1,
+      "defects": [
+        {
+          "type": "D1",
+          "source_quote": "Transverse fracture of the left little finger proximal phalanx with ulnar displacement of the phalangeal head and an undisplaced fracture of the basal metaphysis of the middle phalanx"
+        }
+      ]
+    }
+  ]
+}

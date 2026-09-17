@@ -761,6 +761,7 @@ scripts/
   compute_null_baseline.py       Null-rater baseline (constant-UNSAFE + random-47%); validates collateral tie-break
   compute_split_half.py          Fix 3: split-half out-of-sample validation under the deployed gate prompt
   compute_consensus_accuracy.py  Consensus-accuracy baseline vs Φ_V decomposition (majority-vote bal-acc)
+  run_vagt_loop_experiment.py    VAGT prescribes-then-verifies loop: A0 gate-prompt vs A1 scoped-D1 Nemotron on the diagnosis stratum (n=350; pre-registered thresholds; paired bootstrap; Llama/Qwen held fixed)
 logs/
   train_v2.json.gz               v2 training log — Nebius Job aijob-e00rwxv72fe81f54we, 8,523s, per-epoch eval_loss
 docs/
@@ -804,6 +805,9 @@ results/pool_candidate_cis.json        Per-candidate ΔΦ_V + 95% CI (all 6 cand
 results/null_baseline_cis.json         Null-rater control (nulls net-negative; Nemotron net-positive +0.037)
 results/split_half_validation.json     Fix 3: split-half out-of-sample (diagnosis ΔΦ_V +0.052 [+0.030,+0.075] survives)
 results/consensus_accuracy.json        Consensus-accuracy vs Φ_V (majority-vote bal-acc drops on diagnosis 60.5%→58.3%)
+results/vagt_loop_summary.json         VAGT loop result — pre-registered NULL: scoped rubric ΔΦ_V(Youden) −0.083 [−0.240,+0.069], all 3 thresholds fail; FP is paraphrase-mismatch, not scope (harness reproduces README Φ_V 0.472≈0.476)
+results/vagt_loop_A0.json              Per-item A0 arm (deployed gate prompt) verdicts — same-harness baseline
+results/vagt_loop_A1.json              Per-item A1 arm (scoped D1 rubric) verdicts + source_items_count/defects — paraphrase-FP evidence (e.g. idx 12: "leukemia"→"fast-growing blood cancer" flagged as dropped)
 results/physician_review.csv           Blinded 50-case physician spreadsheet (seed=42; 6 contested + 44 stratified)
 results/physician_review_KEY.csv       De-blinding key (Case# → orig_index → stratum → source)
 results/audit_panel_live_receipt.json  Live /v1/audit_panel receipt (Nano recommended, +0.0706, CI [0.0552, 0.0866])
