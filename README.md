@@ -766,6 +766,7 @@ logs/
   train_v2.json.gz               v2 training log — Nebius Job aijob-e00rwxv72fe81f54we, 8,523s, per-epoch eval_loss
 docs/
   ADJUDICATION_BRIEF.md          unified 50-case blinded physician protocol (5 categories matching VAGT strata, spreadsheet recording)
+  NEMOTRON_INSIGHTS.md           five mechanism-backed findings from working with Nemotron Nano + Super (diversity judge, budget, logprobs, paraphrase-null, teacher gap)
   REPRODUCIBILITY.md             container image digests + adapter storage flow + rebuild steps
 app/
   demo.jsx                       React single-page demo — Act 1 (gate catches drop) + Act 2 (audit_panel leaderboard)
