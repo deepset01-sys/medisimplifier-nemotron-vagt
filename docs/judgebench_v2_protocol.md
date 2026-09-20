@@ -87,8 +87,17 @@ logged; we do not quietly lower the bar.
   apples-to-apples with the +0.071) and the deployed-gate prompt.
 - Run the 6-candidate pool (`gen_pool_verdicts`) on v2 diagnosis for the audit_panel
   recompute.
-- Non-diagnosis strata verdicts are REUSED unchanged, contingent on the Section-1
-  spot-audit confirming them sound.
+- Non-diagnosis strata verdicts (per the Section-1 spot-audit, now COMPLETE):
+  * **Lateral: REUSE as-is** — 50/50 (100%) genuine.
+  * **Dose: FILTER first** — ~22% contaminated (the dose regex catches lab values
+    `g/dL`·`units/mL`, organ/blood volumes, and decimal substrings that are non-changes);
+    restrict to medication context (adjacent drug name), drop those matches, re-verify
+    before reuse.
+  * **Negation: FILTER / CAVEAT** — ~36% borderline (flips on simplifier-added
+    definitional glosses, garbled surface, or boilerplate; no hard non-errors); filter
+    those out or disclose the rate.
+  * **Diagnosis: REBUILD** — 6% genuine (this protocol).
+  * (dose/negation/lateral rates are n=50 samples ±~13%; diagnosis is a full census.)
 - Est. cost ~$15, ~1 day.
 
 ## 8. Analysis plan + PRE-REGISTERED BANDS (fixed before running)
