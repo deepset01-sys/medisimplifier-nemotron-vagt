@@ -56,6 +56,11 @@ tested for the first time, and reports whatever the result is.
 - **V1 SURFACE (automated):** the target's surface forms (name + synonyms + the specific
   lay paraphrase) do not appear in the perturbed text — word-boundary match plus an
   embedding-similarity sweep for stray paraphrase above a fixed threshold.
+- **V1b DELETION-ONLY DIFF (automated):** `diff(clean_ref, perturbed)` is removal of
+  name-bearing spans plus minimal grammatical repair ONLY — NO medication, lab, imaging,
+  histology, or symptom content removed (machine-checked). Any collateral removal =
+  REJECT. This keeps the single-injected-change guarantee and prevents attributing a
+  judge's UNSAFE to a vanished drug/biopsy rather than to the diagnosis.
 - **V2 SCOPE (automated):** `diff(clean_ref, perturbed)` touches ONLY target-diagnosis
   spans; EVERY other source diagnosis / medication / dose still appears in perturbed
   (guards the new failure mode of collateral removal).
@@ -76,9 +81,20 @@ reported. If < 95%, the editor prompt / gates are revised and re-validated — r
 logged; we do not quietly lower the bar.
 
 ## 6. Ground-truth definition
-- **τ = 1:** a human confirmed the target diagnosis is genuinely, fully absent from the
-  summary and nothing else was removed/altered.
+- **τ = 1 (PATIENT-INVISIBLE PRIMARY-DIAGNOSIS DROP):** a human confirmed the target
+  PRIMARY diagnosis is absent TO A LAY READER — its name, abbreviations, AND lay
+  paraphrase appear nowhere in the summary — via a DELETION-ONLY edit (no medication,
+  lab, imaging, histology, symptom, or other finding removed). The estimand is "did the
+  PATIENT lose the diagnosis," not "could an expert reconstruct it": a text that dropped
+  "tuberculosis" but retains the anti-TB regimen (HRZE) IS a genuine drop — the residual
+  fingerprint is expert-legible debris, not a partial diagnosis.
+- **COVARIATE — `expert_recoverable` ∈ {0,1}:** recorded per τ=1 item (=1 if the residual
+  clinical fingerprint lets an EXPERT / model still infer the diagnosis; =0 if the name
+  was the sole carrier). It is a covariate for stratified analysis (Section 8), NOT a
+  label weight — τ stays binary.
 - **τ = 0:** unperturbed clean control (diagnosis present by construction; sample-verified).
+- **No τ=0.5 / fractional tier.** Φ_V's variance decomposition assumes binary τ
+  (σ²_τ = p(1−p), Section A4); a fractional label breaks the math and reads as a hedge.
 - No item enters the stratum on construction alone — the v1 error.
 
 ## 7. Re-run plan (only the changed stratum)
@@ -120,6 +136,15 @@ controls:
                                         with CI excluding 0.
 - Nemotron over-flag reported explicitly: its FP on the clean controls (the
   paraphrase-mismatch check, now on genuinely-clean data).
+
+**EXPERT-RECOVERABILITY STRATIFICATION (pre-registered):** per-judge RECALL computed
+separately on `expert_recoverable=1` vs `=0` τ=1 items, plus ΔΦ_V within each stratum.
+- **ADVANCE PREDICTION ("curse of expertise"):** incumbent recall (Llama, Qwen) is LOWER
+  on `expert_recoverable=1` items than on `=0` items — expert judges infer the diagnosis
+  from the residual fingerprint and pass the text, which is itself the patient-safety
+  blind spot. Stated before running; reported whatever the result (including no gap).
+- The `expert_recoverable=0` subset is the strict "name-was-sole-carrier" tier, reported
+  separately so the hostile "the information is still there" objection has no purchase on it.
 
 **SECONDARY:** null-rater control, split-half, and the 6-candidate pool ΔΦ_V + CIs — all
 recomputed on v2.
