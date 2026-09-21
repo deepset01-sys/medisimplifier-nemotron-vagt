@@ -88,10 +88,21 @@ logged; we do not quietly lower the bar.
   PATIENT lose the diagnosis," not "could an expert reconstruct it": a text that dropped
   "tuberculosis" but retains the anti-TB regimen (HRZE) IS a genuine drop — the residual
   fingerprint is expert-legible debris, not a partial diagnosis.
+- **PATIENT-RECOVERABILITY IS A GATE (not a covariate):** τ=1 additionally requires that an
+  ordinary patient CANNOT tell the diagnosis from the remaining plain-language content
+  (`patient_recoverable = 0`; oracle Q_lay = NO). A diagnosis whose lay mechanism/description
+  is itself the identifier (e.g. "pencil lead bits in the eye" for a carbon-particle eye
+  injury) is NOT patient-invisible and is REJECTED; such injury/mechanism targets are filtered
+  at selection. Distinct from expert-recoverability: lay-inferable = gate (reject),
+  expert-inferable = covariate (keep).
 - **COVARIATE — `expert_recoverable` ∈ {0,1}:** recorded per τ=1 item (=1 if the residual
   clinical fingerprint lets an EXPERT / model still infer the diagnosis; =0 if the name
-  was the sole carrier). It is a covariate for stratified analysis (Section 8), NOT a
-  label weight — τ stays binary.
+  was the sole carrier). A covariate for stratified analysis (Section 8), NOT a label weight —
+  τ stays binary. Distinct from `patient_recoverable` (expert-inferable ≠ lay-inferable).
+- **COVARIATE — `category_retained` ∈ {0,1}:** recorded when the specific diagnosis is removed
+  but its broad parent category remains (e.g. "brain cancer" for glioblastoma, "rare liver
+  cancer" for UESL). A covariate, NOT a rejection criterion — the specific diagnosis is still
+  patient-invisible; category retention is reported and analysed, never failed. [Decision 1]
 - **τ = 0:** unperturbed clean control (diagnosis present by construction; sample-verified).
 - **No τ=0.5 / fractional tier.** Φ_V's variance decomposition assumes binary τ
   (σ²_τ = p(1−p), Section A4); a fractional label breaks the math and reads as a hedge.
