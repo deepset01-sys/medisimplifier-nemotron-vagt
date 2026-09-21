@@ -16,12 +16,19 @@ tested for the first time, and reports whatever the result is.
 - Build **≥ 100 GENUINE, hand-verified PRIMARY-diagnosis drops** (the clinically
   meaningful case). A clearly-stated SECONDARY diagnosis may be used only when the primary
   cannot be cleanly removed; each such case is labeled as secondary in the item metadata.
-- Reuse the **200 unperturbed CLEAN CONTROLS** (τ=0); spot-verify a sample that each still
-  states its diagnosis.
+- **CLEAN CONTROLS (τ=0)** are drawn from the `GuyDor007/medisimplifier-dataset` **test split
+  (1001 rows)**. The original **200** calibration clean controls are included; **additional
+  test-split rows (up to 801 more) are added as needed** to reach ≥100 genuine primary-diagnosis
+  drops. The exact set of control idx actually used is recorded (calibration rows keep their idx;
+  added rows are tagged, e.g. `hf<row>`), and a sample is spot-verified to still state its diagnosis.
+  [§1 amendment 2026-09-21: the 200-control pool caps extractable primary diagnoses at ~167 → ~91
+  named-dx candidates → ~50-70 genuine, short of ≥100; the full test split holds 844 extractable
+  (~677 in the addable rows), removing the ceiling.]
 - **Spot-audit 50 each of dose / negation / lateral** (hand) to confirm those strata are
   sound (their perturbations are targeted substitutions, expected clean — but verified,
   not assumed). If any is contaminated, flag and treat like diagnosis.
-- Source: the same `GuyDor007/medisimplifier-dataset` test split v1 used.
+- Source: the same `GuyDor007/medisimplifier-dataset` **test split (1001 rows)** v1 used; v1 sampled
+  200 of these as controls, this rebuild may use more.
 - The v1 contaminated stratum is KEPT and published as DEPRECATED (transparency), not
   deleted.
 
