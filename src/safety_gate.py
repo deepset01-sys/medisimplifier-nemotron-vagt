@@ -12,6 +12,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 LLAMA = "meta-llama/Llama-3.3-70B-Instruct"
+LLAMA_DEDICATED = "dedicated/meta-llama/Llama-3.3-70B-Instruct-KrpmhZ"   # Llama-3.3-70B via dedicated Nebius endpoint (serverless returns 403 on this account)
 QWEN  = "Qwen/Qwen3-32B"   # canonical model name (the dedicated endpoint serves this)
 QWEN_DEDICATED = "dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6"   # Qwen3-32B via dedicated Nebius endpoint (not Token Factory serverless)
 NEMOTRON_NANO = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
@@ -100,7 +101,7 @@ def evaluate_safety(original: str, simplified: str, safety_mode: str = "flag") -
     # reasoning), not the sum. Each _call_judge bounds its HTTP call at 60s (3 retries)
     # and returns "ERROR" on failure rather than hanging.
     jobs = {
-        "llama":    (LLAMA, 2000),
+        "llama":    (LLAMA_DEDICATED, 2000),   # dedicated endpoint (serverless Llama 403s on this account)
         "qwen":     (QWEN_DEDICATED, 8000),   # reasoning model → 8000 max_tokens; served via dedicated endpoint
         "nemotron": (NEMOTRON_NANO, 8000),   # reasoning model → 8000 max_tokens
     }
