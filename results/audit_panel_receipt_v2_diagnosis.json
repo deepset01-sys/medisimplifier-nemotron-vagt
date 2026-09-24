@@ -1,0 +1,203 @@
+{
+  "type": "offline_recompute",
+  "NOT_an_endpoint_capture": true,
+  "scope": "diagnosis_stratum_only",
+  "stratum_version": "v2_clean_labels",
+  "benchmark": "MedSimp-JudgeBench v2 (diagnosis stratum, hand-verified genuine drops)",
+  "tau1_n": 120,
+  "tau0_n": 120,
+  "tau0_design": "primary_paired (clean_ref of each tau=1 item)",
+  "incumbent_panel": [
+    "meta-llama/Llama-3.3-70B-Instruct",
+    "Qwen/Qwen3-32B"
+  ],
+  "incumbent_phi_v": 0.4764,
+  "prompt": "deployed gate (safety_gate.py JUDGE_PROMPT)",
+  "method": "vagt_core.py verbatim; SEED=42; n_boot=1000; paired item bootstrap; complete-case",
+  "recommendation": {
+    "model": "openai/gpt-oss-120b",
+    "reason": "highest detection-corrected ΔΦ_V, 0 errors, best specificity",
+    "expected_Phi_V_lift": 0.122,
+    "ci_95": [
+      0.1,
+      0.1416
+    ],
+    "note": "gpt-oss and deepseek-ai/DeepSeek-V4-Flash-0731 are statistically tied at the top (overlapping CIs); gpt-oss preferred for 0 ERROR rows and higher specificity (73% vs 66%)."
+  },
+  "pool_table": [
+    {
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "slug": "DeepSeek-V4-Flash-0731",
+      "delta_phi_v": 0.1238,
+      "ci_95": [
+        0.1024,
+        0.144
+      ],
+      "band": "POSITIVE",
+      "candidate_recall_tau1": "118/119",
+      "candidate_spec_tau0": "75/114",
+      "n": 233,
+      "errors_dropped": 7,
+      "detection_corrected_delta_phi_v": 0.1009,
+      "null_perm_p": 0.001,
+      "null_mean": 0.0229,
+      "null_detection_specific": true,
+      "split_half_A": 0.1182,
+      "split_half_B": 0.1285,
+      "split_half_both": "POSITIVE"
+    },
+    {
+      "model": "openai/gpt-oss-120b",
+      "slug": "gpt-oss-120b",
+      "delta_phi_v": 0.122,
+      "ci_95": [
+        0.1,
+        0.1416
+      ],
+      "band": "POSITIVE",
+      "candidate_recall_tau1": "114/120",
+      "candidate_spec_tau0": "88/120",
+      "n": 240,
+      "errors_dropped": 0,
+      "detection_corrected_delta_phi_v": 0.1037,
+      "null_perm_p": 0.001,
+      "null_mean": 0.0183,
+      "null_detection_specific": true,
+      "split_half_A": 0.1217,
+      "split_half_B": 0.1217,
+      "split_half_both": "POSITIVE"
+    },
+    {
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "slug": "Nemotron-3-Ultra-550b-a55b",
+      "delta_phi_v": 0.0781,
+      "ci_95": [
+        0.0552,
+        0.1003
+      ],
+      "band": "POSITIVE",
+      "candidate_recall_tau1": "107/120",
+      "candidate_spec_tau0": "70/120",
+      "n": 240,
+      "errors_dropped": 0,
+      "detection_corrected_delta_phi_v": 0.0581,
+      "null_perm_p": 0.001,
+      "null_mean": 0.02,
+      "null_detection_specific": true,
+      "split_half_A": 0.0746,
+      "split_half_B": 0.0809,
+      "split_half_both": "POSITIVE"
+    },
+    {
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "slug": "NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "delta_phi_v": 0.0765,
+      "ci_95": [
+        0.0516,
+        0.0992
+      ],
+      "band": "POSITIVE",
+      "candidate_recall_tau1": "110/120",
+      "candidate_spec_tau0": "67/120",
+      "n": 240,
+      "errors_dropped": 0,
+      "detection_corrected_delta_phi_v": 0.0558,
+      "null_perm_p": 0.001,
+      "null_mean": 0.0207,
+      "null_detection_specific": true,
+      "split_half_A": 0.0735,
+      "split_half_B": 0.0789,
+      "split_half_both": "POSITIVE"
+    },
+    {
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "slug": "nemotron-3-super-120b-a12b",
+      "delta_phi_v": 0.048,
+      "ci_95": [
+        0.0225,
+        0.072
+      ],
+      "band": "NULL/ATTENUATED",
+      "candidate_recall_tau1": "112/120",
+      "candidate_spec_tau0": "35/120",
+      "n": 240,
+      "errors_dropped": 0,
+      "detection_corrected_delta_phi_v": 0.0247,
+      "null_perm_p": 0.001,
+      "null_mean": 0.0233,
+      "null_detection_specific": true,
+      "split_half_A": 0.0362,
+      "split_half_B": 0.0582,
+      "split_half_both": "NULL"
+    },
+    {
+      "model": "google/gemma-3-27b-it",
+      "slug": "gemma-3-27b-it",
+      "delta_phi_v": 0.0066,
+      "ci_95": [
+        -0.0108,
+        0.0261
+      ],
+      "band": "NULL/ATTENUATED",
+      "candidate_recall_tau1": "57/120",
+      "candidate_spec_tau0": "91/120",
+      "n": 240,
+      "errors_dropped": 0,
+      "detection_corrected_delta_phi_v": 0.001,
+      "null_perm_p": 0.4486,
+      "null_mean": 0.0056,
+      "null_detection_specific": false,
+      "split_half_A": -0.0177,
+      "split_half_B": 0.0286,
+      "split_half_both": "NULL"
+    }
+  ],
+  "validation": {
+    "null_control": {
+      "method": "tau-blind permutation, N=1000, SEED=42",
+      "gpt-oss_perm_p": 0.001,
+      "detection_specific_candidates": [
+        "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "nvidia/Nemotron-3-Ultra-550b-a55b",
+        "nvidia/nemotron-3-super-120b-a12b",
+        "openai/gpt-oss-120b",
+        "deepseek-ai/DeepSeek-V4-Flash-0731"
+      ],
+      "null_failed": [
+        "google/gemma-3-27b-it"
+      ],
+      "flag_rate_contribution_approx": "+0.018 to +0.023 per candidate (balanced stratum)"
+    },
+    "split_half": {
+      "method": "patient-level 60/60, SEED=42, n_boot=1000",
+      "gpt-oss": "POSITIVE both halves (+0.1217/+0.1217)",
+      "deepseek": "POSITIVE both halves (+0.1182/+0.1285)",
+      "both_positive": [
+        "NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "Nemotron-3-Ultra-550b-a55b",
+        "gpt-oss-120b",
+        "DeepSeek-V4-Flash-0731"
+      ]
+    },
+    "vs_v1": {
+      "v1_contaminated_diagnosis_delta_phi_v": 0.0706,
+      "v1_clean_tau_recompute": -0.144,
+      "v1_verdict": "REFUTED (label contamination)",
+      "v2_clean_labels_delta_phi_v": 0.122,
+      "v2_verdict": "POSITIVE (real detection)",
+      "note": "the artifact is reversed on clean hand-verified labels"
+    }
+  },
+  "provenance": {
+    "source_files": [
+      "results/judgebench_v2_tau1_final.json",
+      "results/judgebench_v2_clean_controls.json",
+      "results/judgebench_v2_panel_gate.json",
+      "results/judgebench_v2_pool_table.json",
+      "results/judgebench_v2_null_control.json",
+      "results/judgebench_v2_split_half.json"
+    ],
+    "computed": "2026-09-23",
+    "v1_receipt": "preserved unchanged at results/audit_panel_live_receipt.json"
+  }
+}

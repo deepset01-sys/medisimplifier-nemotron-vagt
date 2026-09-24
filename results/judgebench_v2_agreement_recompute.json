@@ -1,0 +1,19 @@
+{
+  "description": "Fleiss kappa and Krippendorff alpha recomputed on v2 hand-verified clean stratum (N=240: 120 tau=1 + 120 tau=0). Bootstrap n=1000, seed=42. Source: results/judgebench_v2_panel_gate.json.",
+  "panels": {
+    "incumbent_llama_qwen_2rater": {"fleiss_kappa": 0.2144, "krippendorff_alpha": 0.2160},
+    "deployed_nemotron_qwen_2rater": {"fleiss_kappa": 0.1324, "krippendorff_alpha": 0.1342},
+    "3rater_llama_qwen_nemotron": {"fleiss_kappa": 0.1788, "krippendorff_alpha": 0.1799}
+  },
+  "paired_deltas_vs_incumbent": {
+    "nemotron_qwen_minus_incumbent": {
+      "delta_fleiss_kappa": -0.0820, "ci_95": [-0.2411, 0.0770], "significant": false,
+      "delta_kripp_alpha": -0.0818, "ci_95": [-0.2406, 0.0768], "significant": false
+    },
+    "3rater_minus_incumbent": {
+      "delta_fleiss_kappa": -0.0356, "ci_95": [-0.1310, 0.0565], "significant": false,
+      "delta_kripp_alpha": -0.0361, "ci_95": [-0.1314, 0.0557], "significant": false
+    }
+  },
+  "note": "Agreement does NOT go negative on clean stratum. The automated-calibration-pass result (kappa goes negative) was a contamination artifact. Directional decoupling holds in sign (kappa down, Phi_V up) but the agreement drop is not statistically significant on the hand-verified stratum."
+}

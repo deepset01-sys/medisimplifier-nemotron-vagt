@@ -1,0 +1,104 @@
+{
+  "purpose": "6-candidate audit-pool delta-Phi_V recompute on clean JudgeBench v2 diagnosis stratum",
+  "method": "vagt_core verbatim; incumbent Llama+Qwen from panel_gate; SEED=42 n_boot=1000; deployed prompt",
+  "incumbent_phi_v_llama_qwen": 0.4764,
+  "recommended": "deepseek-ai/DeepSeek-V4-Flash-0731",
+  "candidates_ranked": [
+    {
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "slug": "DeepSeek-V4-Flash-0731",
+      "n": 233,
+      "dropped": 7,
+      "candidate_recall_tau1": "118/119",
+      "candidate_spec_tau0": "75/114",
+      "phi_incumbent_llama_qwen": 0.4764,
+      "phi_full": 0.5967,
+      "delta_phi_v": 0.1238,
+      "ci95": [
+        0.1024,
+        0.144
+      ],
+      "band": "POSITIVE"
+    },
+    {
+      "model": "openai/gpt-oss-120b",
+      "slug": "gpt-oss-120b",
+      "n": 240,
+      "dropped": 0,
+      "candidate_recall_tau1": "114/120",
+      "candidate_spec_tau0": "88/120",
+      "phi_incumbent_llama_qwen": 0.4764,
+      "phi_full": 0.5984,
+      "delta_phi_v": 0.122,
+      "ci95": [
+        0.1,
+        0.1416
+      ],
+      "band": "POSITIVE"
+    },
+    {
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "slug": "Nemotron-3-Ultra-550b-a55b",
+      "n": 240,
+      "dropped": 0,
+      "candidate_recall_tau1": "107/120",
+      "candidate_spec_tau0": "70/120",
+      "phi_incumbent_llama_qwen": 0.4764,
+      "phi_full": 0.5545,
+      "delta_phi_v": 0.0781,
+      "ci95": [
+        0.0552,
+        0.1003
+      ],
+      "band": "POSITIVE"
+    },
+    {
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "slug": "NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "n": 240,
+      "dropped": 0,
+      "candidate_recall_tau1": "110/120",
+      "candidate_spec_tau0": "67/120",
+      "phi_incumbent_llama_qwen": 0.4764,
+      "phi_full": 0.5529,
+      "delta_phi_v": 0.0765,
+      "ci95": [
+        0.0516,
+        0.0992
+      ],
+      "band": "POSITIVE"
+    },
+    {
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "slug": "nemotron-3-super-120b-a12b",
+      "n": 240,
+      "dropped": 0,
+      "candidate_recall_tau1": "112/120",
+      "candidate_spec_tau0": "35/120",
+      "phi_incumbent_llama_qwen": 0.4764,
+      "phi_full": 0.5244,
+      "delta_phi_v": 0.048,
+      "ci95": [
+        0.0225,
+        0.072
+      ],
+      "band": "NULL/ATTENUATED"
+    },
+    {
+      "model": "google/gemma-3-27b-it",
+      "slug": "gemma-3-27b-it",
+      "n": 240,
+      "dropped": 0,
+      "candidate_recall_tau1": "57/120",
+      "candidate_spec_tau0": "91/120",
+      "phi_incumbent_llama_qwen": 0.4764,
+      "phi_full": 0.483,
+      "delta_phi_v": 0.0066,
+      "ci95": [
+        -0.0108,
+        0.0261
+      ],
+      "band": "NULL/ATTENUATED"
+    }
+  ]
+}

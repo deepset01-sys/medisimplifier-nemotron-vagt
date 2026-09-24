@@ -1,0 +1,126 @@
+{
+  "purpose": "Clean-tau recompute \u2014 quantitative receipt for the MedSimp-JudgeBench diagnosis-stratum contamination audit. Only tau changed; identical vagt_core pipeline (SEED=42, n_boot=1000, complete-case).",
+  "verdict_source": "nemotron_calibration_full.json (per_sample, calibration/CoT prompt, 3 raters) \u2014 the set behind the published +0.071",
+  "labels_source": "results/tau_hand_labels_150.json (hand-verified: 128 PRESENT, 9 ABSENT, 13 BORDERLINE)",
+  "raters": {
+    "incumbent": [
+      "llama_verdict",
+      "qwen_verdict"
+    ],
+    "candidate": "nemotron_verdict"
+  },
+  "preregistered_bands": {
+    "HOLDS": ">= +0.05",
+    "ATTENUATED": "+0.02 to +0.05",
+    "REFUTED": "<= +0.02 or negative"
+  },
+  "reference_contaminated_tau": {
+    "phi_2rater": 0.4059,
+    "phi_3rater": 0.4764,
+    "delta_phi_v": 0.0706,
+    "ci95": [
+      0.0527,
+      0.0868
+    ],
+    "n": 333,
+    "pos_tau1": 138,
+    "neg_tau0": 195,
+    "gate_reproduces_published_0.476_and_+0.071": true
+  },
+  "cells": [
+    {
+      "cell": "Option B / strict",
+      "option": "B",
+      "borderline": "strict",
+      "primary": true,
+      "n": 333,
+      "pos_tau1": 9,
+      "neg_tau0": 324,
+      "dropped_errorNone": 17,
+      "phi_2rater": 0.3495,
+      "phi_3rater": 0.2057,
+      "delta_phi_v": -0.1438,
+      "ci95": [
+        -0.1945,
+        -0.0979
+      ],
+      "verdict": "REFUTED"
+    },
+    {
+      "cell": "Option B / generous",
+      "option": "B",
+      "borderline": "generous",
+      "primary": false,
+      "n": 333,
+      "pos_tau1": 20,
+      "neg_tau0": 313,
+      "dropped_errorNone": 17,
+      "phi_2rater": 0.4362,
+      "phi_3rater": 0.3381,
+      "delta_phi_v": -0.0982,
+      "ci95": [
+        -0.1498,
+        -0.0509
+      ],
+      "verdict": "REFUTED"
+    },
+    {
+      "cell": "Option A / strict",
+      "option": "A",
+      "borderline": "strict",
+      "primary": false,
+      "n": 204,
+      "pos_tau1": 9,
+      "neg_tau0": 195,
+      "dropped_errorNone": 5,
+      "phi_2rater": 0.503,
+      "phi_3rater": 0.3742,
+      "delta_phi_v": -0.1288,
+      "ci95": [
+        -0.2618,
+        -0.0422
+      ],
+      "verdict": "REFUTED"
+    },
+    {
+      "cell": "Option A / generous",
+      "option": "A",
+      "borderline": "generous",
+      "primary": false,
+      "n": 215,
+      "pos_tau1": 20,
+      "neg_tau0": 195,
+      "dropped_errorNone": 7,
+      "phi_2rater": 0.5054,
+      "phi_3rater": 0.4768,
+      "delta_phi_v": -0.0286,
+      "ci95": [
+        -0.1095,
+        0.0239
+      ],
+      "verdict": "REFUTED"
+    }
+  ],
+  "primary_cell": "Option B / strict",
+  "split_f_diagnostic": {
+    "llama_verdict": {
+      "fp_pristine_controls": 0.0154,
+      "n_pristine": 195,
+      "fp_relabeled_present_borderline": 0.1473,
+      "n_relabeled": 129
+    },
+    "qwen_verdict": {
+      "fp_pristine_controls": 0.0051,
+      "n_pristine": 195,
+      "fp_relabeled_present_borderline": 0.062,
+      "n_relabeled": 129
+    },
+    "nemotron_verdict": {
+      "fp_pristine_controls": 0.3436,
+      "n_pristine": 195,
+      "fp_relabeled_present_borderline": 0.6512,
+      "n_relabeled": 129
+    }
+  },
+  "conclusion": "All four clean-tau cells REFUTED. Primary (B/strict) delta_phi_v = -0.144 [-0.195,-0.098]; every cell negative; most generous (A/generous) -0.029, CI straddles 0, never positive. The published +0.071 reverses sign under hand-verified labels: it was a label-contamination artifact \u2014 Nemotron's over-flagging (65% FP on perturbed-but-faithful items vs 34% on pristine controls) was credited as recall against the ~85%-mislabeled positive class. Caveat: positive class small (9-20), CIs wide, tau still synthetic; a real diagnosis-drop claim requires physician-anchored tau."
+}

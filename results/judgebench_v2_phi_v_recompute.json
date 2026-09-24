@@ -1,0 +1,71 @@
+{
+  "purpose": "Phi_V (VAGT) recompute on the clean hand-verified JudgeBench v2 diagnosis stratum.",
+  "method": "vagt_core.py verbatim; SEED=42, n_boot=1000; paired item bootstrap; complete-case.",
+  "incumbent": "Llama + Qwen (2-rater)",
+  "candidate": "Nemotron (3-rater)",
+  "delta_definition": "delta_phi_v = Phi_V(3-rater) - Phi_V(2-rater) = Nemotron's added value",
+  "controls": "all 120 tau=0 clean controls in every cell (option a)",
+  "bands": {
+    "POSITIVE": "delta >= +0.05 AND ci_lower > 0",
+    "NEGATIVE": "delta <= -0.02 AND ci_upper < 0",
+    "NULL": "CI includes 0 (otherwise)"
+  },
+  "cells": {
+    "deployed_full": {
+      "n": 240,
+      "pos_tau1": 120,
+      "neg_tau0": 120,
+      "dropped_incomplete": 0,
+      "phi_2rater_llama_qwen": 0.4764,
+      "phi_3rater_plus_nemotron": 0.5529,
+      "delta_phi_v": 0.0765,
+      "ci95": [
+        0.0516,
+        0.0992
+      ],
+      "band": "POSITIVE"
+    },
+    "deployed_strict": {
+      "n": 167,
+      "pos_tau1": 47,
+      "neg_tau0": 120,
+      "dropped_incomplete": 0,
+      "phi_2rater_llama_qwen": 0.5221,
+      "phi_3rater_plus_nemotron": 0.5383,
+      "delta_phi_v": 0.0163,
+      "ci95": [
+        -0.0228,
+        0.0526
+      ],
+      "band": "NULL"
+    },
+    "calibration_full": {
+      "n": 240,
+      "pos_tau1": 120,
+      "neg_tau0": 120,
+      "dropped_incomplete": 0,
+      "phi_2rater_llama_qwen": 0.4745,
+      "phi_3rater_plus_nemotron": 0.5337,
+      "delta_phi_v": 0.0591,
+      "ci95": [
+        0.0387,
+        0.0802
+      ],
+      "band": "POSITIVE"
+    },
+    "calibration_strict": {
+      "n": 167,
+      "pos_tau1": 47,
+      "neg_tau0": 120,
+      "dropped_incomplete": 0,
+      "phi_2rater_llama_qwen": 0.3719,
+      "phi_3rater_plus_nemotron": 0.4186,
+      "delta_phi_v": 0.0466,
+      "ci95": [
+        0.0275,
+        0.0702
+      ],
+      "band": "NULL"
+    }
+  }
+}
