@@ -8,6 +8,10 @@
 - A9: reproduces only automated pipeline — needs clean-stratum pipeline reference (build_judgebench_v2.py, run_pool_judgebench_v2.py, run_phi_v_recompute.py, run_split_half_v2.py) — LAST Track-A residual
 
 ### Completed this session
+- v2 results + pipeline scripts committed (2f70ad3): 13 README-cited results/ JSONs
+   + build_judgebench_v2.py + verify_tau.py now tracked. All README citations resolve
+   in a fresh clone. (NOT committed: tau1_final.json, clean_controls.json, panel_calib.json —
+   these are still untracked, and several clean-stratum scripts read them as inputs.)
 - ✅ Line 119 (A2 Provenance): τ labels removed from "v1 artifact" list; data provenance
    (benchmark items + perturbation types → v1 repo) separated from research provenance
    (VAGT τ-anchoring, calibration, hand-verified diagnosis τ, Nemotron refs → new in v2);
