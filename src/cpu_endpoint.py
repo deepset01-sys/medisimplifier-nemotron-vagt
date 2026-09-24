@@ -34,11 +34,12 @@ app.add_middleware(
 # (pool_loader / selector / schemas) resolve identically.
 sys.path.insert(0, str(Path(__file__).resolve().parent / "audit_panel"))
 try:
-    from router import audit_router, POOL_OK, POOL_ERROR
+    from router import audit_router, POOL, POOL_OK, POOL_ERROR
     app.include_router(audit_router, prefix="/v1")
     AUDIT_OK = True
 except Exception as e:          # mount failure -> /health reports it; app still starts
     AUDIT_OK = False
+    POOL = None
     POOL_OK = False
     POOL_ERROR = str(e)
 
@@ -50,6 +51,7 @@ def health():
         "service": "audit_panel-cpu",
         "audit_panel": AUDIT_OK,
         "pool_loaded": bool(POOL_OK),
+        "benchmark": POOL.benchmark if (AUDIT_OK and POOL_OK) else None,
         "ready": bool(AUDIT_OK and POOL_OK),
         "pool_error": None if POOL_OK else POOL_ERROR,
     }

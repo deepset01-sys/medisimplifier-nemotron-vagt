@@ -18,7 +18,8 @@ from pydantic import BaseModel
 class AuditRequest(BaseModel):
     incumbent_panel: List[str]                                   # >= 2 pooled model ids
     candidate_pool: List[str]
-    benchmark: Literal["MedSimp-JudgeBench"] = "MedSimp-JudgeBench"  # only value accepted at v1
+    # None = the pool this service loaded; if given, must match it (router → 400 otherwise)
+    benchmark: Optional[Literal["MedSimp-JudgeBench", "MedSimp-JudgeBench-v2"]] = None
     bootstrap_iters: int = 1000
     seed: int = 42
 
@@ -37,6 +38,8 @@ class RankedCandidate(BaseModel):
     mean_delta_Phi_V: float
     per_stratum_delta_Phi_V: Dict[str, float]
     per_stratum_delta_sigma_B: Dict[str, float]
+    error_rows: Optional[int] = None
+    specificity_clean: Optional[float] = None
 
 
 class Recommendation(BaseModel):
@@ -44,6 +47,8 @@ class Recommendation(BaseModel):
     target_blind_spot: str
     expected_Phi_V_lift: float
     ci_95: List[float]
+    tied_top_candidates: List[str] = []
+    selected_among_ties_by: Optional[str] = None
     caveat: Optional[str] = None
 
 

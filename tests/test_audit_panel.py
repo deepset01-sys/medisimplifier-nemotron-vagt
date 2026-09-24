@@ -9,7 +9,8 @@ TWO layers:
   • test_v2_* — the CURRENT truth, on the clean hand-verified JudgeBench v2 diagnosis
     stratum (120 τ=1 + 120 paired τ=0). CURRENT RECOMMENDATION: openai/gpt-oss-120b
     (ΔΦ_V ≈ +0.1220). See results/audit_panel_receipt_v2_diagnosis.json. These read the
-    (untracked) v2 result files and SKIP if absent.
+    committed v2 result files (SKIP if absent).
+  • test_v2_pool_* — the SELECTOR on audit_pool_v2/ (what the redeployed endpoint serves).
 
 Unchanged: blindest-stratum, CI-excludes-zero, pool-loader, unseen-candidate, endpoint,
 and health tests (not refuted by v2).
@@ -43,10 +44,19 @@ ALL_EIGHT = {LLAMA, QWEN, NEMOTRON, GEMMA, GPT_OSS, SUPER, DEEPSEEK, ULTRA}
 CANDIDATES = [NEMOTRON, GEMMA, GPT_OSS, SUPER, DEEPSEEK, ULTRA]  # non-incumbent pool
 
 V2_POOL_TABLE = REPO / "results" / "judgebench_v2_pool_table.json"
+V2_POOL = REPO / "audit_pool_v2"
 
 
 def _pool():
     return Pool.load(REPO / "audit_pool")
+
+
+def _v2_pool():
+    return Pool.load(V2_POOL)
+
+
+def _audit_v2(candidates, incumbent=INCUMBENT):
+    return selector.audit_panel(_v2_pool(), incumbent, candidates)
 
 
 def _audit(candidates):
@@ -163,6 +173,52 @@ def test_v2_gemma_is_null():
 def test_v2_recommended_ci_excludes_zero():
     lo = _v2_rows()[GPT_OSS]["ci95"][0]
     assert lo > 0.0, f"v2 gpt-oss diagnosis ΔΦ_V CI lower={lo:.4f} should exclude 0"
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# v2 POOL — selector over audit_pool_v2/ (diagnosis-only, reliability tie-break).
+# ══════════════════════════════════════════════════════════════════════════════
+def test_v2_pool_loads_240_rows_eight_models():
+    pool = _v2_pool()
+    assert pool.benchmark == "MedSimp-JudgeBench-v2"
+    assert pool.models == ALL_EIGHT
+    assert len(pool.records) == 240
+
+
+def test_v2_pool_strata_diagnosis_only_v1_unchanged():
+    assert selector.pool_strata(_v2_pool().records) == ["diagnosis"]
+    assert selector.pool_strata(_pool().records) == vc.STRATA
+
+
+def test_v2_pool_recommends_gpt_oss():
+    rec = _audit_v2(CANDIDATES)["recommendation"]
+    assert rec["model"] == GPT_OSS
+    assert rec["target_blind_spot"] == "diagnosis"
+    assert rec["expected_Phi_V_lift"] == 0.122
+    assert rec["ci_95"] == [0.1, 0.1416]
+    assert set(rec["tied_top_candidates"]) >= {GPT_OSS, DEEPSEEK}
+    assert rec["caveat"] is None
+
+
+def test_v2_pool_tiebreak_is_reliability():
+    ranked = {c["model"]: c for c in _audit_v2(CANDIDATES)["candidates_ranked"]}
+    assert ranked[DEEPSEEK]["error_rows"] == 7 and ranked[GPT_OSS]["error_rows"] == 0
+    assert ranked[GPT_OSS]["specificity_clean"] > ranked[DEEPSEEK]["specificity_clean"]
+
+
+def test_v2_pool_ranked_deltas_match_pool_table():
+    rows = _v2_rows()
+    ranked = {c["model"]: c for c in _audit_v2(CANDIDATES)["candidates_ranked"]}
+    for model, row in rows.items():
+        assert ranked[model]["per_stratum_delta_Phi_V"]["diagnosis"] == row["delta_phi_v"], model
+
+
+def test_pool_dir_env_resolution(monkeypatch):
+    import router
+    monkeypatch.setenv("AUDIT_POOL_DIR", "audit_pool_v2")
+    assert router.resolve_pool_dir() == REPO / "audit_pool_v2"
+    monkeypatch.delenv("AUDIT_POOL_DIR")
+    assert router.resolve_pool_dir() is None
 
 
 # ══════════════════════════════════════════════════════════════════════════════

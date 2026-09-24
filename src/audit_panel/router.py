@@ -9,6 +9,7 @@ Flat imports (pool_loader / selector / schemas) match the rest of src/audit_pane
 and the test suite; safe_endpoint.py puts this directory on sys.path before import.
 """
 
+import os
 import sys
 from pathlib import Path
 
@@ -24,10 +25,20 @@ from schemas import AuditRequest, AuditResponse  # noqa: E402
 
 audit_router = APIRouter()
 
+
+def resolve_pool_dir(value=None):
+    """AUDIT_POOL_DIR selects the pool; unset/empty → Pool.load() default (audit_pool/, v1).
+    A relative value resolves against the app root (parent of src/), not the cwd."""
+    value = os.environ.get("AUDIT_POOL_DIR", "") if value is None else value
+    if not value:
+        return None
+    p = Path(value)
+    return p if p.is_absolute() else _HERE.parents[1] / p
+
 # Load once at import. A missing/broken pool is surfaced (503) rather than crashing
 # the whole app — safe_endpoint.py also guards the mount so /v1/simplify survives.
 try:
-    POOL = Pool.load()
+    POOL = Pool.load(resolve_pool_dir())
     POOL_OK = True
     POOL_ERROR = None
 except Exception as e:  # pragma: no cover
@@ -43,6 +54,9 @@ def audit_panel_route(req: AuditRequest):
     Pure CPU over pre-computed verdicts — no live judge calls."""
     if not POOL_OK:
         raise HTTPException(status_code=503, detail=f"audit pool unavailable: {POOL_ERROR}")
+    if req.benchmark is not None and req.benchmark != POOL.benchmark:
+        raise HTTPException(status_code=400,
+                            detail=f"this service serves {POOL.benchmark!r}, not {req.benchmark!r}")
     try:
         return selector.audit_panel(
             POOL, req.incumbent_panel, req.candidate_pool,

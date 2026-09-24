@@ -19,6 +19,7 @@ RUN pip install --no-cache-dir \
 COPY src/audit_panel/    ./src/audit_panel/
 COPY src/cpu_endpoint.py ./src/cpu_endpoint.py
 COPY audit_pool/         ./audit_pool/
+COPY audit_pool_v2/      ./audit_pool_v2/
 COPY scripts/start_cpu_endpoint.sh /start.sh
 RUN chmod +x /start.sh
 
@@ -26,5 +27,7 @@ RUN chmod +x /start.sh
 # model. It physically CANNOT run the gate or the simplifier — only the panel selector.
 
 ENV PYTHONUNBUFFERED=1
+# Serve the v2 clean-stratum pool (hand-verified diagnosis, 240 items). Unset → v1 audit_pool/.
+ENV AUDIT_POOL_DIR=audit_pool_v2
 EXPOSE 8000
 CMD ["/start.sh"]
