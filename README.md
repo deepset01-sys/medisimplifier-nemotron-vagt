@@ -64,7 +64,7 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 | Student model | OpenBioLLM v1 | ✅ OpenBioLLM v2 (Nemotron-taught) |
 | Safety judges | Llama + Qwen (2 judges) | ✅ + Nemotron Nano (3 judges, calibrated) |
 | Judge calibration metric | Cohen's κ only | ✅ VAGT — σ²_B, σ²_R, σ²_N, Φ_V |
-| Robust statistics validation | ❌ (post-submission only) | ✅ Fleiss κ and Krippendorff α both go negative on diagnosis (below-chance agreement) — near-identical on binary complete-case data (values agree to three decimals across all strata), so one robustness check, not two independent ones |
+| Robust statistics validation | ❌ (post-submission only) | ✅ Fleiss κ and Krippendorff α recomputed on v2 clean stratum (n=240): κ declines directionally (0.214 → 0.179) as Φ_V rises — drop not statistically significant (Δ −0.036 [−0.131, +0.057]); near-identical on binary complete-case data, so one robustness check, not two independent ones |
 | Measurement framework | Cohen's κ | ✅ VAGT — detects shared blind spots invisible to κ |
 | Safe Endpoint | vLLM + dual-judge guardrail | ✅ vLLM + calibration-informed gate (2-judge rule + advisory Llama; flag / block / strict modes) |
 | Gate operating characteristics | ❌ not measured | ✅ 708-item re-run through deployed gate prompt (0 ERRORs) — DISAGREE 20.8%, Qwen FP 9.5% (see B5) |
@@ -74,7 +74,7 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 | Judge pool experiment | ❌ not measured | ✅ 5×708 verdicts (gemma 27B / gpt-oss 120B / Nemotron Super 120B / DeepSeek Flash / Nemotron Ultra 550B) — scale flat within Nemotron family (30B ≈ 550B); Nano recommended on merit |
 | Reproducibility | Public HuggingFace adapters | ✅ Public HuggingFace dataset + adapters v2 |
 
-The novel v2 finding: VAGT inversion — adding Nemotron Nano as third judge cuts shared bias σ²_B on diagnosis while Fleiss κ goes negative (full decomposition in A6), demonstrating that Cohen's κ — the only metric used in v1 — moves in the wrong direction here.
+The novel v2 finding: VAGT inversion — adding Nemotron Nano as third judge raises Φ_V on diagnosis (0.4764 → 0.5529, ΔΦ_V +0.0765 [+0.0516, +0.0992]) while inter-rater agreement declines directionally (Fleiss κ 0.214 → 0.179, full decomposition in A6), demonstrating that Cohen's κ — the only metric used in v1 — moves in the wrong direction here.
 
 ## Choose your track
 
@@ -183,45 +183,30 @@ Note (three denominators) — three Nemotron recall numbers appear across this R
 > **Future work:** 95% confidence intervals (Wilson) on recall and false-positive rates are not yet reported — a statistician will want them; deferred to future work. Llama/Qwen ERROR counts and confusion matrices likewise belong in an appendix.
 ### A6. Results II — the inversion
 
-**Adding Nemotron Nano as a third rater** (R: 2 → 3), per injected error type (1000-item bootstrap, seed=42; ΔΦ_V shows the **paired** Δ with 95% CI — see note):
+**Adding Nemotron to the deployed gate** (R: 2 → 3; diagnosis row: v2 hand-verified stratum n=240; dose/negation/lateral: automated calibration pass), per injected error type (1000-item bootstrap, seed=42; ΔΦ_V shows the **paired** Δ with 95% CI — see note):
 
-| Feature | Φ_V (Llama+Qwen) | Φ_V (+Nemotron) | ΔΦ_V (paired, 95% CI) | σ²_B (L+Q) | σ²_B (+Nemo) | Δσ²_B |
-|--|--|--|--|--|--|--|
-| dose | 0.743 | 0.733 | −0.013 [−0.055, +0.021] † | 0.054 | 0.047 | −0.007 |
-| negation | 0.578 | 0.618 | +0.043 [+0.011, +0.070] | 0.145 | 0.104 | −0.041 |
-| lateral | 0.697 | 0.745 | +0.048 [+0.019, +0.074] | 0.077 | 0.050 | −0.027 |
-| **diagnosis** | **0.404** | **0.476** | **+0.071 [+0.055, +0.087]** | **0.347** | **0.229** | **−0.115 [−0.141, −0.090]** |
-
-> **On the Δ values:** the **ΔΦ_V** column (and the diagnosis **Δσ²_B**) are **paired** bootstrap Δ — 3-rater − 2-rater on the *same* complete-case items (1000 resamples, seed=42) — with 95% CI; the valid way to put an interval on a difference. They differ trivially from subtracting the displayed level estimates (each on its own complete-case set): 0.476 − 0.404 ≈ +0.072 while the paired ΔΦ_V is +0.071. Full Δ CIs (ΔΦ_V, Δσ²_B, ΔFleiss κ, ΔKripp α) for all four features: [`vagt_bootstrap_cis.json`](vagt_bootstrap_cis.json). **† dose** ΔΦ_V's CI straddles zero → the lone apparent loss is **not statistically significant**; the three gains (diagnosis, lateral, negation) all have ΔΦ_V CIs strictly above zero.
-
-**Variance ledger (per stratum, 2-rater → 3-rater).** Adding Nemotron shrinks shared bias σ²_B but raises rater variance σ²_R and noise σ²_N — Φ_V nets the two:
-
-| Feature | σ²_B (2r→3r) | σ²_R (2r→3r) | σ²_N (2r→3r) |
+| Feature | Φ_V (Llama+Qwen) | Φ_V (+Nemotron) | ΔΦ_V (paired, 95% CI) |
 |--|--|--|--|
-| dose | 0.054 → 0.047 | 0.004 → 0.024 | 0.037 → 0.067 |
-| negation | 0.145 → 0.104 | 0.001 → 0.029 | 0.038 → 0.075 |
-| lateral | 0.077 → 0.050 | 0.008 → 0.030 | 0.051 → 0.073 |
-| **diagnosis** | **0.347 → 0.229** | **0.000 → 0.040** | **0.021 → 0.072** |
+| dose | 0.743 | 0.733 | −0.013 [−0.055, +0.021] † |
+| negation | 0.578 | 0.618 | +0.043 [+0.011, +0.070] |
+| lateral | 0.697 | 0.745 | +0.048 [+0.019, +0.074] |
+| **diagnosis** | **0.4764** | **0.5529** | **+0.0765 [+0.0516, +0.0992]** ‡ |
 
-**The inversion (diagnosis) — the signature VAGT predicts.** When two judges share a blind spot, a third that breaks it *must* disagree with them — so inter-rater agreement falls exactly as veridicality rises. Diagnosis shows this cleanly. Llama and Qwen almost never flag a silently dropped diagnosis (UNSAFE 7% / 3%); adding Nemotron (47% UNSAFE, n=333) cuts shared bias by a third (σ²_B 0.347 → 0.229) and raises Φ_V most (0.404 → 0.476). Yet both robust agreement metrics go *negative* — Fleiss κ 0.076 → −0.088, Krippendorff α 0.077 → −0.086 (paired ΔFleiss κ = ΔKripp α = −0.163 [−0.305, −0.045], CI excludes 0). By every agreement metric the panel looks *worse*; by veridicality it moved *closer to truth*. Agreement statistics reward the blind spot; only a truth-anchored measure sees the fix.
+> ‡ **Automated-calibration-pass (superseded):** the earlier measurement on the 708-item automated pool gave diagnosis ΔΦ_V +0.071 [+0.055,+0.087] (Φ_V 0.404→0.476, n=333). That pool was found to be ~85% mislabeled on diagnosis; the figure above is from the v2 hand-verified stratum (120 τ=1 + 120 paired τ=0, seed=42, n_boot=1000). See [`results/judgebench_v2_phi_v_recompute.json`](results/judgebench_v2_phi_v_recompute.json).
 
-Even so, **Φ_V = 0.476 is still below 0.5** — the panel remains only *weakly* dependable on diagnosis after the fix; the third judge narrows the blind spot but does not close it.
+> **On the Δ values:** ΔΦ_V is a **paired** bootstrap Δ — 3-rater − 2-rater on the *same* complete-case items (1000 resamples, seed=42) — with 95% CI; the valid way to put an interval on a difference. **† dose** ΔΦ_V's CI straddles zero → the lone apparent loss is **not statistically significant**; the three gains (diagnosis, lateral, negation) all have ΔΦ_V CIs strictly above zero.
 
-**Agreement falls as veridicality rises — across features.** The paired Δ in the robust agreement metrics (from [`vagt_bootstrap_cis.json`](vagt_bootstrap_cis.json)):
+**The inversion (diagnosis) — the signature VAGT predicts.** When two judges share a blind spot, a third that breaks it *must* disagree with them — so inter-rater agreement falls exactly as veridicality rises. Diagnosis shows this cleanly. Llama and Qwen rarely flag a silently dropped diagnosis (recall 46.7% each); adding Nemotron (recall 91.7%, n=120 τ=1) raises Φ_V most (0.4764 → 0.5529). By construction the judge that catches the drop must disagree with the two that miss it, so agreement-based metrics score the fix as *worse* even as the panel moves *closer to truth* — agreement statistics reward the blind spot; only a truth-anchored measure sees the fix.
 
-| Feature | ΔFleiss κ (paired, 95% CI) | ΔKripp α (paired, 95% CI) | significant? |
-|--|--|--|--|
-| dose | −0.166 [−0.265, −0.072] | −0.167 [−0.265, −0.072] | yes |
-| negation | −0.183 [−0.298, −0.074] | −0.183 [−0.298, −0.075] | yes |
-| lateral | −0.066 [−0.145, +0.009] | −0.066 [−0.145, +0.009] | no — CI straddles 0 |
-| **diagnosis** | **−0.163 [−0.305, −0.045]** | **−0.163 [−0.305, −0.045]** | yes (and κ turns negative) |
+**Φ_V = 0.5529 now exceeds 0.5** — the panel is *weakly dependable* on diagnosis under the hand-verified criterion; the third judge narrows the blind spot without fully closing it.
 
-Adding Nemotron lowers inter-rater agreement on **3 of 4 features** (dose, negation, diagnosis significant; lateral not), even as Φ_V *rises* on 3 of 4 — agreement and veridicality decouple. Only **diagnosis** crosses into negative agreement in absolute terms.
+Full variance decomposition (σ²_B / σ²_R / σ²_N) and robust agreement metrics (Fleiss κ, Krippendorff α) for the automated calibration pass are in [`vagt_bootstrap_cis.json`](vagt_bootstrap_cis.json).
 
 > **Caveats:**
 > - **Not a free win everywhere.** On `dose` ΔΦ_V = −0.013 [−0.055, +0.021] (a slight, not statistically significant dip): Llama+Qwen weren't badly blind there, so Nemotron's added rater noise outweighs the small bias gain. The panel benefits most exactly where the incumbents share a blind spot.
-> - Adding a diverging rater **raises σ²_R and σ²_N** (see the Variance ledger above) — the cost side of the ledger. Φ_V nets the two effects.
+> - Adding a diverging rater **raises σ²_R and σ²_N** — the cost side Φ_V nets against the bias gain (full σ²_R / σ²_N breakdown for the automated calibration pass in [`vagt_bootstrap_cis.json`](vagt_bootstrap_cis.json)).
 > - **Complete-case:** rows where any judge returned ERROR are dropped (9–18 per feature). Counts reported in [`vagt_nemotron_results.txt`](vagt_nemotron_results.txt).
+> - **Fleiss κ / Krippendorff α on the v2 clean stratum** (n=240, seed=42, n_boot=1000; [`results/judgebench_v2_agreement_recompute.json`](results/judgebench_v2_agreement_recompute.json)): incumbent κ = 0.214 → 3-rater κ = 0.179 (ΔFleiss κ = −0.036 [−0.131, +0.057], p n.s.). Agreement declines directionally as Φ_V rises (+0.0765), but does **not** cross zero and the drop is **not statistically significant** on clean labels. The automated-calibration-pass result (κ goes negative) was a contamination artifact.
 ### A7. Results III — Nemotron Super as teacher
 
 **Question:** Can Nemotron Super replace Claude Opus 4.5 as the reference-simplification teacher, using the *same* prompt?
