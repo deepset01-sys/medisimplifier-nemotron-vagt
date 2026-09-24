@@ -311,6 +311,16 @@ python nemotron_teacher.py --workers 12 --max-tokens 16000 \
 # 4. Nemotron Super teacher — full training set (9,999, resume-capable)
 python nemotron_training_data.py --limit 5                 # smoke
 python nemotron_training_data.py --workers 12              # full run (resumes on restart)
+
+# 5. Clean-stratum pipeline (v2 hand-verified, 120 τ=1 + 120 τ=0)
+#    Inputs (committed): results/judgebench_v2_tau1_final.json,
+#                        results/judgebench_v2_clean_controls.json,
+#                        results/judgebench_v2_panel_gate.json,
+#                        results/judgebench_v2_panel_calib.json
+python scripts/run_pool_judgebench_v2.py --analyze-only  # rebuild table from committed pool files → results/judgebench_v2_pool_table.json
+python scripts/run_phi_v_recompute.py                    # → ΔΦ_V +0.0765 [+0.0516, +0.0992] (deployed_full)
+python scripts/run_split_half_v2.py                      # → both halves POSITIVE (+0.0735, +0.0789)
+python scripts/run_null_control_v2.py                    # → null-rater control
 ```
 
 > **Reasoning-model reminder:** all Nemotron generation uses `--max-tokens 16000` (Super) / `8000+` (Nano). Too small a budget returns empty output — the scripts flag and retry, never save a truncated result. Runs checkpoint every 50 records; `nemotron_training_data.py` resumes from the output file.
