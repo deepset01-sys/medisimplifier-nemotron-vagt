@@ -5,10 +5,13 @@
 ## CURRENT STATUS (README Track-A audit — HEAD = 2b462ff)
 
 ### Track-A residuals (open)
-- A9: reproduces only automated pipeline — needs clean-stratum pipeline reference (build_judgebench_v2.py, run_pool_judgebench_v2.py, run_phi_v_recompute.py, run_split_half_v2.py)
-- Line 119: "benchmark is a v1 artifact" framing
+- A9: reproduces only automated pipeline — needs clean-stratum pipeline reference (build_judgebench_v2.py, run_pool_judgebench_v2.py, run_phi_v_recompute.py, run_split_half_v2.py) — LAST Track-A residual
 
 ### Completed this session
+- ✅ Line 119 (A2 Provenance): τ labels removed from "v1 artifact" list; data provenance
+   (benchmark items + perturbation types → v1 repo) separated from research provenance
+   (VAGT τ-anchoring, calibration, hand-verified diagnosis τ, Nemotron refs → new in v2);
+   HF-publish gap noted. Committed 1579085.
 - A6: full rewrite (db79b9c)
 - Lines 67+77: top-section corrected (db79b9c)
 - A5: audit pass — per-row provenance, clean recall 92/47/47, consensus-accuracy paragraph scoped, FP scoped (7a386d3)
