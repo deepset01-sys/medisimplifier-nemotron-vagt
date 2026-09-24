@@ -71,7 +71,7 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 | Diagnosis-retention audit | ❌ not measured | ✅ 1,001 student outputs through gate + dual-auditor review (Claude Sonnet 5 + Gemini 2.5 Pro); 2/20 confirmed drops (see B5) |
 | Safety enforcement modes | flag/block only | ✅ + strict mode: DISAGREE blocks (Nemotron diagnosis-drop tripwire enforces) |
 | VAGT panel-selection service | ❌ not built | ✅ /v1/audit_panel — callable Nebius service: given any incumbent panel + candidate pool, recommends the judge to add (ΔΦ_V on blindest stratum + bootstrap CI); 6-candidate pool validated on MedSimp-JudgeBench (see Why VAGT) |
-| Judge pool experiment | ❌ not measured | ✅ 5×708 verdicts (gemma 27B / gpt-oss 120B / Nemotron Super 120B / DeepSeek Flash / Nemotron Ultra 550B) — scale flat within Nemotron family (30B ≈ 550B); Nano recommended on merit |
+| Judge pool experiment | ❌ not measured | ✅ 5×708 verdicts (gemma 27B / gpt-oss 120B / Nemotron Super 120B / DeepSeek Flash / Nemotron Ultra 550B) — scale flat within Nemotron family (30B ≈ 550B); Nano recommended on merit (automated calibration pass; on clean pool gpt-oss 120B leads, ΔΦ_V +0.1220) |
 | Reproducibility | Public HuggingFace adapters | ✅ Public HuggingFace dataset + adapters v2 |
 
 The novel v2 finding: VAGT inversion — adding Nemotron Nano as third judge raises Φ_V on diagnosis (0.4764 → 0.5529, ΔΦ_V +0.0765 [+0.0516, +0.0992]) while inter-rater agreement declines directionally (Fleiss κ 0.214 → 0.179, full decomposition in A6), demonstrating that Cohen's κ — the only metric used in v1 — moves in the wrong direction here.
@@ -110,7 +110,7 @@ This README is organized into two tracks — read whichever fits:
 
 200 clean + 508 corrupted = 708.
 
-**Operationalizing "silent drop."** A diagnosis-corrupted item removes one **secondary** diagnosis from the simplification with no replacement and no other change — e.g. idx 146, a Parkinson-disease discharge summary noting *"familial Parkinsonism and depression,"* where the simplification keeps the Parkinsonism but silently omits depression. That single injected change is what makes τ known by construction.
+**Operationalizing "silent drop."** A diagnosis-corrupted item removes one **secondary** diagnosis from the simplification with no replacement and no other change (automated 708-item pool construct; the v2 hand-verified stratum uses **primary**-diagnosis drops — see A6 and [`docs/judgebench_v2_protocol.md`](docs/judgebench_v2_protocol.md)) — e.g. idx 146, a Parkinson-disease discharge summary noting *"familial Parkinsonism and depression,"* where the simplification keeps the Parkinsonism but silently omits depression. That single injected change is what makes τ known by construction.
 
 **Ground-truth coding.** Each item carries τ_i ∈ {0,1}: **τ=1** if corrupted, **τ=0** if clean. This constructed label — not any model's judgment — is the ground truth that every recall, Φ_V, and calibration figure is measured against (full coding in A4).
 
