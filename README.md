@@ -116,7 +116,7 @@ This README is organized into two tracks — read whichever fits:
 
 **Reference generation (v2).** The benchmark's reference simplifications were regenerated with Nemotron Super for v2: **519 unique calls fanned out to 708 records, 0 errors** ([`nemotron_references.json`](nemotron_references.json)). The reported calibration and pool-verdict generation judged the v1 references (`calibration_verdicts.json` — authored by the v1 teacher, Claude Opus 4.5); `nemotron_references.json` is a Nemotron-Super regeneration of those references, generated but **not** the judged text behind any reported recall or Φ_V figure.
 
-**Provenance.** The benchmark itself — items, perturbations, and τ labels — is a **v1 artifact**; the **Nemotron references are new in v2**. Published: [`chambul/MedSimp-JudgeBench`](https://huggingface.co/datasets/chambul/MedSimp-JudgeBench).
+**Provenance.** The benchmark items and perturbation types are from the v1 repo; the VAGT τ-anchoring and calibration, the hand-verified diagnosis τ, and the **Nemotron references are new in v2**. The v2 hand-verified stratum (120 τ=1 + 120 τ=0) is not yet published to HuggingFace. Published (v1 benchmark): [`chambul/MedSimp-JudgeBench`](https://huggingface.co/datasets/chambul/MedSimp-JudgeBench).
 ### A3. Judge panel & protocol
 
 Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qwen3-32B (cross-family) as a third safety judge, all via Token Factory. Judge prompt is the 4-step CoT-with-anti-sycophancy prompt (`safety_eval_v2.py`) developed and run in v1 (Llama+Qwen dual-judge, Cohen's κ), reused verbatim for v2's VAGT calibration — VAGT is new in v2.
