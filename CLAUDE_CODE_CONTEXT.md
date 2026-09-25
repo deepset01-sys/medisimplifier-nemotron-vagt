@@ -125,6 +125,15 @@ Deployed gate: Qwen3-32B + Nemotron Nano 30B
 v2 recommendation (audit_panel): gpt-oss-120b — as the gate's third judge (Qwen3-32B + gpt-oss)
   v2 performance: 116/120 drops caught, 40/120 false positives
 
+Construction circularity (found 2026-09-25, after 63e1a28): the v2 τ=1 items were built with gpt-oss-120b as
+ORACLE (target selection + τ=1 acceptance gates) and DeepSeek-V4-Pro as EDITOR (scripts/build_judgebench_v2.py:22,39).
+The protocol's independence guarantee covers the panel judges only (docs/judgebench_v2_protocol.md:43-48). So the
+gpt-oss and DeepSeek figures on v2 are partly in-sample / by construction; Nano's (ΔΦ_V +0.0765; gate 110/120,
+58 FP) is the clean one.
+
+Candidate to TEST, not ship: Qwen + (Nano AND gpt-oss) — 106/120 caught, 28/120 FP (offline, same verdict files;
+same circularity caveat). For reference: Qwen + (Nano OR gpt-oss) — 120/120 caught, 70/120 FP.
+
 Decision pending before video/headline. Options:
   A) Keep Nano — NVIDIA Nemotron (sponsor tech) at the gate's centre; latency/cost unmeasured vs gpt-oss
   B) Swap gate judge to gpt-oss-120b — better v2 performance on both recall and FP
@@ -234,7 +243,8 @@ OWNER STILL OPEN: rotate the Nebius key AND the HuggingFace token; stop the dedi
 endpoints if still running (per-GPU-hr; no record they were stopped); decide whether to delete the old CPU
 service instance (tunnel already 404s); optional endpoint-v5 rebuild if Tier 2 should serve v2; cosmetic:
 phone-width second-line wrap on the top two bars; HF cards: JudgeBench label caveat + Nemotron dataset
-license; publish JudgeBench v2; gate decision (Nano vs gpt-oss — see "Gate decision" block).
+license; publish JudgeBench v2; gate decision (Nano vs gpt-oss — see "Gate decision" block; disclose the
+construction circularity — README A8 threat 10 — before the video/headline).
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical

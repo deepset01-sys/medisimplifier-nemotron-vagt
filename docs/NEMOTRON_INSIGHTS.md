@@ -20,7 +20,7 @@ result that surprised us. We lead with the surprise.
 
 | # | Role | Outcome | One-line takeaway for Nemotron users |
 |---|------|---------|--------------------------------------|
-| 1 | Nano — third judge in a validity panel | **Real, detection-specific lift** (+0.0765 Φ_V) | A 30B Nano matches a 550B Nemotron; two other families added more — choose judges against verified labels, not agreement |
+| 1 | Nano — third judge in a validity panel | **Real, detection-specific lift** (+0.0765 Φ_V) | A 30B Nano matches a 550B Nemotron; two other families added more (partly by construction — see Finding 1) — choose judges against verified labels, not agreement |
 | 2 | Super — reasoning budget | `content=None` at 1024 tokens; needs ~16k | Budget the *reasoning* tokens, not just the answer — a silent `content=None` if under-budgeted |
 | 3 | Both — verdict extraction | Regex-scraped from 8k-token reasoning | Expose/use logprobs for classification verdicts — unlocks thresholds and cuts latency |
 | 4 | Nano — scoped faithfulness gate | Pre-registered **null** | Name-match verification penalizes correct paraphrase; wrong tool for a simplification task |
@@ -62,7 +62,10 @@ detection** — Nano matched Ultra-550B — so try the smallest Nemotron first i
 many-call safety loop. But **measure candidates against a verified criterion before
 choosing**: on our benchmark two other families added ~1.6× as much validity, and our
 own panel-selection endpoint (`/v1/audit_panel`) recommends gpt-oss-120b for this
-panel. Agreement statistics would not have shown any of this.
+panel (caveat: the benchmark's τ=1 items were screened by gpt-oss-120b as oracle and
+edited by DeepSeek-V4-Pro, so those two families' lead is partly by construction;
+Nano's measurement is free of this — the panel judges were kept out of benchmark
+construction, see README A8). Agreement statistics would not have shown any of this.
 
 *An earlier version of this finding reported +0.071 on an automated benchmark whose
 diagnosis labels were later found ~85% wrong; see the project README (A6, A8).*
