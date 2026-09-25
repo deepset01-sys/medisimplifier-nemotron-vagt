@@ -784,7 +784,7 @@ src/
   merge_adapter.py               Merge LoRA adapter into base model → HuggingFace publish
   safe_endpoint.py               Safe Simplification Endpoint v5 — FastAPI: vLLM + calibration-informed gate (2-judge rule + advisory Llama)
   cpu_endpoint.py                CPU-only always-on service — FastAPI: /v1/audit_panel + /health ONLY (no vLLM, no gate, no key)
-  safety_gate.py                 calibration-informed safety gate — Qwen + Nemotron Nano decide, Llama advisory (Qwen3-32B via dedicated endpoint)
+  safety_gate.py                 calibration-informed safety gate — Qwen + Nemotron Nano decide, Llama advisory (Qwen3-32B and Llama-3.3-70B via Token Factory dedicated endpoints)
   serve_vllm.py                  vLLM inference server (legacy standalone)
   run_gate_calibration.py        708-item calibration through the deployed gate prompt → gate_calibration_full.json
   run_student_audit.py           1,001 v2 student outputs → gate (2-judge rule + advisory Llama; student self-audit) → student_audit.json
@@ -816,18 +816,26 @@ scripts/
   start_cpu_endpoint.sh          Boot the CPU-only audit_panel service (uvicorn cpu_endpoint:app)
   build_physician_review.py      Build blinded 50-case physician spreadsheet (seed=42)
   merge_physician_labels.py      Merge physician labels → human-anchored τ + inter-rater κ
-  compute_pool_cis.py            Per-candidate paired bootstrap CIs (all 5 pool candidates × 4 strata)
-  compute_null_baseline.py       Null-rater baseline (constant-UNSAFE + random-47%); validates collateral tie-break
-  compute_split_half.py          Fix 3: split-half out-of-sample validation under the deployed gate prompt
-  compute_consensus_accuracy.py  Consensus-accuracy baseline vs Φ_V decomposition (majority-vote bal-acc)
+  compute_pool_cis.py            Per-candidate paired bootstrap CIs (all 5 pool candidates × 4 strata; automated pass)
+  compute_null_baseline.py       Null-rater baseline (constant-UNSAFE + random-47%); validates collateral tie-break (automated pass)
+  compute_split_half.py          Split-half out-of-sample validation under the deployed gate prompt (automated pass)
+  compute_consensus_accuracy.py  Consensus-accuracy baseline vs Φ_V decomposition (majority-vote bal-acc; automated pass)
   run_vagt_loop_experiment.py    VAGT prescribes-then-verifies loop: A0 gate-prompt vs A1 scoped-D1 Nemotron on the diagnosis stratum (n=350; pre-registered thresholds; paired bootstrap; Llama/Qwen held fixed)
   build_audit_pool_v2.py         Build audit_pool_v2/ from the committed v2 results; self-verifies vs judgebench_v2_pool_table.json
+  build_judgebench_v2.py         JudgeBench v2 diagnosis-drop generator (candidate primary-diagnosis drops + auto-gates; every accepted item human-reviewed)
+  verify_tau.py                  LLM-assisted triage harness for the 150-item hand audit of the automated diagnosis labels (human audits every call)
+  run_panel_judgebench_v2.py     3-judge gate panel over the 240 v2 items (deployed + calibration prompts)
+  run_pool_judgebench_v2.py      6-candidate pool ΔΦ_V on the v2 stratum (--analyze-only rebuilds the table offline)
+  run_phi_v_recompute.py         Φ_V recompute on the hand-verified v2 stratum (full + strict cells)
+  run_null_control_v2.py         τ-blind permutation null for the pool ΔΦ_V (N_PERM=1000)
+  run_split_half_v2.py           Patient-level 60/60 split-half validation of the pool ΔΦ_V
 logs/
   train_v2.json.gz               v2 training log — Nebius Job aijob-e00rwxv72fe81f54we, 8,523s, per-epoch eval_loss
 docs/
   ADJUDICATION_BRIEF.md          unified 50-case blinded physician protocol (5 categories matching VAGT strata, spreadsheet recording)
   NEMOTRON_INSIGHTS.md           five mechanism-backed findings from working with Nemotron Nano + Super (diversity judge, budget, logprobs, paraphrase-null, teacher gap)
   REPRODUCIBILITY.md             container image digests + adapter storage flow + rebuild steps
+  judgebench_v2_protocol.md      FROZEN pre-registration for the diagnosis-stratum rebuild (committed before any judge ran)
 app/
   demo.jsx                       React single-page demo — Act 1 (gate catches drop) + Act 2 (audit_panel leaderboard)
   index.html                     Vite entry point
@@ -854,23 +862,23 @@ nemotron_teacher.py              Nemotron Super teacher — JudgeBench reference
 nemotron_training_data.py        Nemotron Super teacher — full 9,999-record training set (resume-capable)
 vagt_nemotron_analysis.py        VAGT 3-rater decomposition (σ²_τ/σ²_B/σ²_R/σ²_N/Φ_V + bootstrap CIs)
 compare_teachers.py              ROUGE-L comparison: Claude Opus vs Nemotron Super references
-nemotron_calibration_full.json   708-sample 3-judge verdicts (Llama + Qwen + Nemotron Nano)
-nemotron_references.json         708 JudgeBench references (Nemotron Super)
+nemotron_calibration_full.json   708-sample 3-judge verdicts (Llama + Qwen + Nemotron Nano; automated 708-item pass)
+nemotron_references.json         708 JudgeBench references (Nemotron Super; generated, not used in any reported number — A2)
 teacher_comparison.json          ROUGE-L 0.525 Claude vs Nemotron (9,976 pairs)
 results/eval_v2_results.json     v2 eval: ROUGE-L 0.5254 / SARI 60.36 / BERTScore 0.9113 / FK 8.87
 results/eval_v2_nemotron_results.json  v2 eval vs Nemotron refs: ROUGE-L 0.6010 / BERTScore 0.9321 / SARI 64.18 (n=998)
-results/endpoint_smoke_test.json       live endpoint SAFE capture (~27s, all-SAFE verdict)
+results/endpoint_smoke_test.json       earlier SAFE capture (pre-v5, no capture metadata; superseded by endpoint_v5_smoke_test.json)
 results/models_verified.json           both Nemotron model strings verified via /v1/models
 results/disagree_case_gate.json        gate-level DISAGREE capture — JudgeBench idx 146, Nemotron UNSAFE / Llama+Qwen SAFE
 results/gate_calibration_full.json     708-item deployed-gate calibration (0 ERRORs; DISAGREE 20.8%, Qwen FP 9.5%)
 results/student_audit.json             1,001 student outputs through the gate (SAFE 47.4% / flagged 52.0%, plus 0.6% ERROR)
 results/student_audit_review.json      30-case dual-auditor review (Claude + Gemini; 2/20 confirmed drops; human_judgment on 6 contested)
 results/reference_fk_grade.json        FK-Grade: Claude refs 7.2 / Nemotron refs 10.08 (Δ+2.88, textstat 0.7.13, n=9,976)
-results/pool_candidate_cis.json        Per-candidate ΔΦ_V + 95% CI (all 6 candidates × 4 strata)
-results/null_baseline_cis.json         Null-rater control (nulls net-negative; Nemotron net-positive +0.037)
+results/pool_candidate_cis.json        Per-candidate ΔΦ_V + 95% CI (all 6 candidates × 4 strata; automated pass)
+results/null_baseline_cis.json         Null-rater control, automated pass (nulls net-negative; Nemotron net-positive +0.037)
 results/split_half_validation.json     Automated-pass split-half (decision rule; diagnosis result superseded — see A8)
-results/consensus_accuracy.json        Consensus-accuracy vs Φ_V (majority-vote bal-acc drops on diagnosis 60.5%→58.3%)
-results/vagt_loop_summary.json         VAGT loop result — pre-registered NULL: scoped rubric ΔΦ_V(Youden) −0.083 [−0.240,+0.069], all 3 thresholds fail; FP is paraphrase-mismatch, not scope (harness reproduces README Φ_V 0.472≈0.476)
+results/consensus_accuracy.json        Consensus-accuracy vs Φ_V, automated pass (majority-vote bal-acc drops on diagnosis 60.5%→58.3%)
+results/vagt_loop_summary.json         VAGT loop result — pre-registered NULL: scoped rubric ΔΦ_V(Youden) −0.083 [−0.240,+0.069], all 3 thresholds fail; FP is paraphrase-mismatch, not scope (harness reproduces the automated-pass 3-rater Φ_V 0.472≈0.476)
 results/vagt_loop_A0.json              Per-item A0 arm (deployed gate prompt) verdicts — same-harness baseline
 results/vagt_loop_A1.json              Per-item A1 arm (scoped D1 rubric) verdicts + source_items_count/defects — paraphrase-FP evidence (e.g. idx 12: "leukemia"→"fast-growing blood cancer" flagged as dropped)
 results/physician_review.csv           Blinded 50-case physician spreadsheet (seed=42; 6 contested + 44 stratified)
@@ -878,14 +886,27 @@ results/physician_review_KEY.csv       De-blinding key (Case# → orig_index →
 results/audit_panel_live_receipt.json  Live /v1/audit_panel receipt, earlier automated pool (superseded: Nano, +0.0706, CI [0.0552, 0.0866])
 results/audit_panel_live_receipt_v2.json  Live /v1/audit_panel receipt, v2 pool (gpt-oss-120b, +0.122, CI [0.100, 0.142])
 results/tau_hand_labels_150.json       Hand audit of the 150 automated "dropped diagnosis" items (128 PRESENT / 9 ABSENT / 13 BORDERLINE)
+results/tau_recompute_summary.json     Automated labels re-scored with the hand audit: primary cell ΔΦ_V −0.1438 [−0.1945, −0.0979] (REFUTED)
+results/judgebench_v2_tau1_final.json  v2 stratum: 120 hand-verified primary-diagnosis drops (τ=1)
+results/judgebench_v2_clean_controls.json  292 controls: 120 primary-paired (used) + 172 supplementary
+results/judgebench_v2_panel_gate.json  240-item panel, deployed gate prompt (0 ERROR)
+results/judgebench_v2_panel_calib.json 240-item panel, calibration prompt
+results/judgebench_v2_phi_v_recompute.json  Φ_V on v2: deployed full +0.0765 [+0.0516, +0.0992]
+results/judgebench_v2_pool_table.json  6-candidate pool on v2 (gpt-oss +0.1220, DeepSeek +0.1238, …)
+results/judgebench_v2_pool_<model>.json  per-candidate 240-row verdicts (5 files)
+results/judgebench_v2_null_control.json  τ-blind permutation null per candidate
+results/judgebench_v2_split_half.json  patient-level split-half per candidate
+results/judgebench_v2_agreement_recompute.json  Fleiss/Krippendorff on v2 (incumbent vs +Nemotron)
+results/audit_panel_receipt_v2_diagnosis.json  Offline v2 receipt: gpt-oss-120b +0.1220 [0.1000, 0.1416]
+results/gate_calibration_full.INVALID-qwen-removal.json  Archived invalid gate run (146 Qwen ERRORs from the Qwen3-32B removal mid-run; 47880b9)
 results/endpoint_v5_smoke_test.json    endpoint-v5 smoke test (SAFE capture; honest note on non-determinism)
-vagt_nemotron_results.txt        VAGT decomposition output (per-feature, both rater sets)
-vagt_bootstrap_cis.json               paired-Δ 95% CIs: ΔΦ_V +0.071 [+0.055,+0.087] on diagnosis
-FINDINGS.md                      Full findings write-up (calibration + VAGT + caveats)
-requirements.txt                 openai · numpy · requests · tqdm · datasets
+vagt_nemotron_results.txt        VAGT decomposition output (per-feature, both rater sets; automated 708-item pass)
+vagt_bootstrap_cis.json               paired-Δ 95% CIs, automated pass (+0.071 [+0.055,+0.087] on diagnosis, superseded — A6)
+FINDINGS.md                      Automated-pass findings write-up (2026-08-27; diagnosis results superseded — A6/A8)
+requirements.txt                 openai · numpy · requests · tqdm (training deps: docker/requirements_train.txt)
 CLAUDE_CODE_CONTEXT.md           Implementation context for Claude Code (model strings, paths)
 prepare_hf_dataset.py            Prepare and publish HuggingFace dataset
-docker/build_and_push.sh         Build and push Docker images to both registries
+docker/build_and_push.sh         Legacy build script — builds/pushes train-v28 to Docker Hub only (later images built manually; see REPRODUCIBILITY.md)
 docker/requirements_train.txt    Pinned training dependencies (cryptography==48.0.1)
 ```
 
@@ -900,16 +921,18 @@ Full container image digests and rebuild steps → [docs/REPRODUCIBILITY.md](doc
 | Resource | Link / string | License |
 |--|--|--|
 | Source dataset | [`GuyDor007/medisimplifier-dataset`](https://huggingface.co/datasets/GuyDor007/medisimplifier-dataset) — 9,999 samples (train 7,999 / val 999 / test 1,001), public (Claude references) | — |
-| Nemotron training dataset | [`chambul/medisimplifier-nemotron-dataset`](https://huggingface.co/datasets/chambul/medisimplifier-nemotron-dataset) — 7,983 train / 995 val / 998 test (9,976 valid after teacher filtering) | CC-BY-NC-SA-4.0 |
-| Judge benchmark | [`chambul/MedSimp-JudgeBench`](https://huggingface.co/datasets/chambul/MedSimp-JudgeBench) — 708 samples, 4 error types, 3-judge verdicts (incl. Nemotron Nano) | CC-BY-NC-SA-4.0 |
+| Nemotron training dataset | [`chambul/medisimplifier-nemotron-dataset`](https://huggingface.co/datasets/chambul/medisimplifier-nemotron-dataset) — 7,983 train / 995 val / 998 test (9,976 valid after teacher filtering) | CC-BY-NC-SA-4.0 (inherited; not yet on HF card) |
+| Judge benchmark (v1, automated labels) | [`chambul/MedSimp-JudgeBench`](https://huggingface.co/datasets/chambul/MedSimp-JudgeBench) — 708 samples, 4 error types, **2-judge** verdicts (Llama-3.3-70B + Qwen3-32B); Claude Opus 4.5 references. Diagnosis-drop labels are automated and ~85% mislabeled (A8) — the published card carries no such caveat. Nemotron verdicts are in this repo (`nemotron_calibration_full.json`), not on HF. | CC-BY-NC-SA-4.0 |
+| Judge benchmark v2 (**pending HF publication**) | 240-item hand-verified diagnosis stratum — 120 primary-diagnosis drops + 120 paired controls; in-repo: `results/judgebench_v2_tau1_final.json` + `results/judgebench_v2_clean_controls.json` (pre-registration: `docs/judgebench_v2_protocol.md`) | — (on publication) |
 | Merged Model v2 | [`chambul/MediSimplifier-OpenBioLLM-v2-merged`](https://huggingface.co/chambul/MediSimplifier-OpenBioLLM-v2-merged) — OpenBioLLM-8B v2 (base: `aaditya/Llama3-OpenBioLLM-8B`), ready for vLLM | [Llama 3 Community License](https://llama.meta.com/llama3/license/) |
 | Merged Model v1 | [`chambul/MediSimplifier-OpenBioLLM-merged`](https://huggingface.co/chambul/MediSimplifier-OpenBioLLM-merged) — v1 baseline | — |
 | Adapters (Technion-era) | [`GuyDor007/MediSimplifier-LoRA-Adapters`](https://huggingface.co/GuyDor007/MediSimplifier-LoRA-Adapters) | — |
 | Teacher model | `nvidia/nemotron-3-super-120b-a12b` (Token Factory) | — |
 | Safety judge (new) | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` (Token Factory) | — |
-| Safety judges (v1) | `meta-llama/Llama-3.3-70B-Instruct` · `Qwen/Qwen3-32B` | — |
+| Safety judges (v1) | `meta-llama/Llama-3.3-70B-Instruct` · `Qwen/Qwen3-32B` — Token Factory dedicated endpoints in the current gate (`src/safety_gate.py:15-17`) | — |
+| Judge-pool candidates (`/v1/audit_panel`) | `openai/gpt-oss-120b` (**v2 recommendation**) · `deepseek-ai/DeepSeek-V4-Flash-0731` · `nvidia/Nemotron-3-Ultra-550b-a55b` · `nvidia/nemotron-3-super-120b-a12b` · `google/gemma-3-27b-it` (+ Nemotron Nano) — Token Factory | — |
 | Token Factory endpoint | `https://api.studio.nebius.ai/v1/` | — |
-| Docker images | Training/eval/merge + Safe Endpoint v5 → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) | — |
+| Docker images | Training/eval/merge + Safe Endpoint v5 + always-on `audit-cpu-v2` → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) | — |
 | v1 project | [github.com/deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius) 🥇 | — |
 
 > Underlying clinical notes: [Asclepius-Synthetic-Clinical-Notes](https://huggingface.co/datasets/starmpcc/Asclepius-Synthetic-Clinical-Notes) (CC-BY-NC-SA-4.0) — anonymized synthetic notes, no real patient data. CC-BY-NC-SA-4.0 restricts commercial use and requires derivatives to share under the same license.
@@ -920,14 +943,20 @@ Apache 2.0 — see [LICENSE](LICENSE).
 
 ## Future Work & Limitations
 
-**Deployment Posture:** MediSimplifier v2 is a research prototype — not validated for clinical use. The Safe Simplification Endpoint v5 is unauthenticated demo infrastructure — do not route real patient data through it. Nemotron Super references in the training set are LLM-generated, not clinician-validated. ROUGE-L measures similarity to these LLM-generated references, not to human-expert output quality.
+**Deployment Posture:** MediSimplifier v2 is a research prototype — not validated for clinical use. The Safe Simplification Endpoint v5 is unauthenticated demo infrastructure (as is the always-on CPU `/v1/audit_panel` service) — do not route real patient data through it. Nemotron Super references in the training set are LLM-generated, not clinician-validated. ROUGE-L measures similarity to these LLM-generated references, not to human-expert output quality.
 
 | Area | Limitation | Future Work |
 |------|-----------|-------------|
 | Teacher | Nemotron Super references not expert-reviewed | Human-expert validation of teacher quality |
 | Training | No ablation on Nemotron dataset — used v1 winner config directly | Ablation study on Nemotron-taught dataset |
-| Safety | Nemotron Nano: ~30–35% FP on clean text (35.2% calibration-prompt all-strata; 30.5% gate-prompt diagnosis-stratum). A substantial share reflects paraphrase-mismatch: correctly-simplified diagnoses (e.g. "leukemia" → "fast-growing blood cancer") flagged as dropped. Prompt-scope restriction does not help (pre-registered null n=350, results/vagt_loop_summary.json). | Semantic grounding — verify whether the plain phrase is clinically equivalent to the technical term (medical NLI or physician judgment). Null-rater baseline validates the collateral tie-break despite the FP (results/null_baseline_cis.json). |
-| Safety | Scale/family confound in judge disagreement (Qwen-72B unavailable on Token Factory) | 5-candidate pool experiment across families and scales (gemma/gpt-oss/DeepSeek/Super/Ultra) — scale-flat within Nemotron family confirmed (see Why VAGT) |
-| Safety | Diagnosis-drop partially addressed (Nemotron 68% vs 14%/7% v1 judges) | Physician-labeled 50-case validation in progress (blinded sheet + merge pipeline committed; docs/ADJUDICATION_BRIEF.md) |
-| VAGT | Bootstrap CIs are 95% point estimates (seed=42) — not full power analysis | Per-candidate paired CIs computed (results/pool_candidate_cis.json); null-rater baseline added (results/null_baseline_cis.json) |
-| VAGT | 3-rater empirical application only — formal estimand developed post-v1 submission | Formal publication of VAGT estimand |
+| Safety | Nemotron Nano over-flags clean text: 35.2% (calibration prompt) / 30.5% (gate prompt) on the 200 automated clean controls; **44.2% (53/120) on the v2 paired controls**. A substantial share reflects paraphrase-mismatch: correctly-simplified diagnoses (e.g. "leukemia" → "fast-growing blood cancer") flagged as dropped. Prompt-scope restriction does not help (pre-registered null n=350, results/vagt_loop_summary.json). | Semantic grounding — verify whether the plain phrase is clinically equivalent to the technical term (medical NLI or physician judgment). On v2 the τ-blind permutation null confirms the lift is detection, not flag-rate (results/judgebench_v2_null_control.json). |
+| Safety | Diagnosis-drop detection measured on hand-verified (author-verified, not clinician-verified) labels: Nemotron 91.7% vs Llama 46.7% / Qwen 46.7% (v2, deployed prompt). The automated 68%/14%/7% is superseded (A8). | Physician-labeled validation: blinded 50-case sheet + merge pipeline committed (def028d, 0d75341; docs/ADJUDICATION_BRIEF.md); **no labels returned yet** (0/50). |
+| VAGT | Bootstrap CIs (seed=42, 1,000 resamples) — no formal power analysis | On v2: per-candidate CIs (results/judgebench_v2_pool_table.json), τ-blind permutation null (results/judgebench_v2_null_control.json), patient-level split-half (results/judgebench_v2_split_half.json). Power analysis still open. |
+| VAGT | Applied to one benchmark: 2-judge incumbent + 6 candidates, any 2+ judge panel via `/v1/audit_panel` (vagt_core generalized, 4f8688a); formal estimand developed post-v1 submission | Formal publication of the VAGT estimand; replication on a second benchmark/domain |
+| Safety | The gate checks for dropped content, not added content (B8 item 6) | Addition/hallucination check |
+| Benchmark | v2 rebuilt the **diagnosis** stratum only; dose/negation/lateral keep automated labels (A8) | Hand-verify the other strata |
+| Benchmark | JudgeBench v2 not yet published; the published v1 card has no label caveat (Dataset and models) | Publish v2 + correct the v1 card |
+| Product | `/v1/audit_panel` ranks a fixed, pre-computed pool; a new judge needs its verdicts generated first | Live scoring of new judges |
+| Deployment | endpoint-v5's `/v1/audit_panel` serves the earlier pool (B8 item 3) | Rebuild endpoint-v5 on the v2 pool |
+
+**Addressed in this submission:** scale/family confound — pool experiment across 5 families and scales, confirmed on v2 (results/judgebench_v2_pool_table.json).

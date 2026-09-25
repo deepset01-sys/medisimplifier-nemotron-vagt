@@ -1,5 +1,7 @@
 # Findings — MediSimplifier v2 (Nemotron × VAGT)
 
+> ⚠️ **Automated-pass write-up (2026-08-27).** Diagnosis results superseded by the hand-verified v2 benchmark — see README A6/A8.
+
 ## 1. Nemotron Nano as a safety judge — full calibration (n=708)
 
 Nemotron-3 Nano (`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`) run as a faithfulness
