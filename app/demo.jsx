@@ -162,7 +162,11 @@ const CASE_SAFE = {
 
 /* ===================== audit_panel — Act 2 (live) ====================== */
 
-const AUDIT_ENDPOINT = "https://port8000-n5qwhak1n451qq2.tunnel.applications.eu-north1.nebius.cloud/v1/audit_panel"; // always-on CPU service (CORS-enabled); deterministic — same answer every call
+const AUDIT_ENDPOINT = "https://port8000-y1sj2wa6m10y8qp.tunnel.applications.eu-north1.nebius.cloud/v1/audit_panel"; // always-on CPU service (audit-cpu-v2, CORS-enabled); deterministic — same answer every call
+// Only a response from the v2 clean-stratum pool is shown live; anything else (e.g. a stale v1
+// service) is treated as unavailable, so the page never displays numbers the chart contradicts.
+const AUDIT_BENCHMARK = "MedSimp-JudgeBench-v2";
+const REPO_URL = "https://github.com/deepset01-sys/medisimplifier-nemotron-vagt";
 const AUDIT_REQUEST = {
   incumbent_panel: ["meta-llama/Llama-3.3-70B-Instruct", "Qwen/Qwen3-32B"],
   candidate_pool: [
@@ -175,15 +179,17 @@ const AUDIT_REQUEST = {
   ],
 };
 
-// Static ΔΦ_V chart (diagnosis stratum) from results/audit_panel_live_receipt.json.
+// Static ΔΦ_V chart — v2 hand-verified diagnosis stratum (240 items), incumbent Llama+Qwen.
+// Source: results/audit_panel_receipt_v2_diagnosis.json + results/judgebench_v2_pool_table.json.
 const PANEL_CANDIDATES = [
-  { name: "Nemotron Nano", delta: 0.0706, ci: [0.0552, 0.0866], recommended: true },
-  { name: "gpt-oss-120b", delta: 0.0719 },
-  { name: "Ultra 550B", delta: 0.0721 },
-  { name: "DeepSeek Flash", delta: 0.0597 },
-  { name: "gemma-27B", delta: 0.0017 },
+  { name: "gpt-oss-120b", delta: 0.122, ci: [0.1, 0.1416], recommended: true },
+  { name: "DeepSeek Flash", delta: 0.1238, ci: [0.1024, 0.144], note: "tied · 7 errors" },
+  { name: "Ultra 550B", delta: 0.0781 },
+  { name: "Nemotron Nano", delta: 0.0765 },
+  { name: "Super 120B", delta: 0.048 },
+  { name: "gemma-27B", delta: 0.0066, note: "CI includes 0" },
 ];
-const PANEL_MAX = 0.0721; // longest bar (Ultra) → normalizes bar widths
+const PANEL_MAX = 0.1238; // longest bar (DeepSeek) → normalizes bar widths
 
 /* ---- interactive panel explorer: the full 8-model pool ---- */
 const EXPLORER_MODELS = [
@@ -407,7 +413,8 @@ const CSS = `
 .ms-act2-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
 .ms-act2-sub { font-size: 12.5px; color: var(--ink-faint); margin-bottom: 16px; }
 .ms-bars { display: flex; flex-direction: column; gap: 9px; }
-.ms-bar-row { display: grid; grid-template-columns: 104px 1fr auto; align-items: center; gap: 12px; font-size: 13px; }
+.ms-bar-row { display: grid; grid-template-columns: 104px 1fr 64px; align-items: center; gap: 12px; row-gap: 2px; font-size: 13px; }
+.ms-bar-extra { grid-column: 2 / 4; font-size: 11.5px; color: var(--ink-faint); }
 .ms-bar-name { color: var(--ink-soft); font-weight: 500; text-align: right; }
 .ms-bar-row.rec .ms-bar-name { color: var(--brand); font-weight: 700; }
 .ms-bar-track { height: 16px; background: #eef2f7; border-radius: 4px; overflow: hidden; }
@@ -417,7 +424,13 @@ const CSS = `
 .ms-bar-row.rec .ms-bar-val { color: var(--ink); font-weight: 600; }
 .ms-bar-ci { color: var(--ink-faint); font-weight: 400; }
 .ms-bar-tag { color: var(--brand); font-weight: 700; margin-left: 6px; font-size: 11.5px; }
+.ms-bar-note { color: var(--ink-faint); font-weight: 500; margin-left: 6px; font-size: 11.5px; }
 .ms-act2-caption { margin: 16px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
+.ms-changed { margin-top: 12px; font-size: 13px; line-height: 1.55; color: var(--ink-soft); }
+.ms-changed summary { cursor: pointer; color: var(--brand); font-weight: 600; }
+.ms-changed ol { margin: 8px 0 6px; padding-left: 20px; }
+.ms-changed li { margin-bottom: 4px; }
+.ms-changed a { color: var(--brand); font-weight: 600; }
 .ms-audit-live { margin-top: 16px; }
 
 /* interactive panel explorer */
@@ -506,6 +519,7 @@ export default function App() {
       clearTimeout(timer);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const data = await res.json();
+      if (data.benchmark !== AUDIT_BENCHMARK) throw new Error("unexpected pool: " + data.benchmark);
       setAudit({ status: "success", data });
     } catch (e) {
       setAudit({ status: "error", data: null });
@@ -537,6 +551,7 @@ export default function App() {
       clearTimeout(timer);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const data = await res.json();
+      if (data.benchmark !== AUDIT_BENCHMARK) throw new Error("unexpected pool: " + data.benchmark);
       setExplore({ status: "success", data });
     } catch (e) {
       setExplore({ status: "error", data: null });
@@ -630,7 +645,9 @@ export default function App() {
           {/* Act 2 — why you can trust the panel (audit_panel) */}
           <div className="ms-act2">
             <div className="ms-act2-title">Which judge best fixes the panel's blind spot?</div>
-            <div className="ms-act2-sub">ΔΦ_V on the diagnosis stratum — the panel's blindest</div>
+            <div className="ms-act2-sub">
+              ΔΦ_V on the hand-verified diagnosis stratum — 120 real dropped diagnoses + 120 paired controls
+            </div>
 
             <div className="ms-bars">
               {PANEL_CANDIDATES.map((c) => (
@@ -639,19 +656,47 @@ export default function App() {
                   <span className="ms-bar-track">
                     <span className="ms-bar-fill" style={{ width: (c.delta / PANEL_MAX) * 100 + "%" }} />
                   </span>
-                  <span className="ms-bar-val">
-                    +{c.delta.toFixed(4)}
-                    {c.recommended && <span className="ms-bar-ci"> [{c.ci[0]}, {c.ci[1]}]</span>}
-                    {c.recommended && <span className="ms-bar-tag">← recommended</span>}
-                  </span>
+                  <span className="ms-bar-val">+{c.delta.toFixed(4)}</span>
+                  {(c.ci || c.recommended || c.note) && (
+                    <span className="ms-bar-extra">
+                      {c.ci && <span className="ms-bar-ci">95% CI [{c.ci[0].toFixed(4)}, {c.ci[1].toFixed(4)}]</span>}
+                      {c.recommended && <span className="ms-bar-tag">← recommended</span>}
+                      {c.note && <span className="ms-bar-note">{c.note}</span>}
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
 
             <p className="ms-act2-caption">
-              VAGT ranked five candidate judges by truth-anchored dependability. The tool picked the small NVIDIA
-              model on the numbers — over a 550B sibling and an OpenAI model.
+              VAGT ranked six candidate judges by truth-anchored dependability on 240 hand-verified items. gpt-oss-120b
+              and DeepSeek Flash are statistically tied; the tool picks gpt-oss because it returned no errors and has
+              higher specificity. An earlier, automated pass recommended Nemotron Nano — that result did not survive
+              hand-verified labels.
             </p>
+
+            <details className="ms-changed">
+              <summary>What changed and why</summary>
+              <ol>
+                <li>
+                  <strong>Automated pass.</strong> Diagnosis-drop labels were generated by script. On those labels,
+                  Nemotron Nano was recommended: ΔΦ_V +0.0706.
+                </li>
+                <li>
+                  <strong>Our own audit.</strong> We read all 150 “dropped diagnosis” items by hand: 128 (85%) still
+                  contained the diagnosis, and only 9 were genuine drops. Re-scored on the same items with corrected
+                  labels, Nano’s ΔΦ_V reversed to −0.144 [−0.195, −0.098].
+                </li>
+                <li>
+                  <strong>Rebuild.</strong> A new benchmark of 120 hand-verified real drops + 120 paired controls: Nano
+                  +0.0765, gpt-oss +0.1220 (recommended). These use the deployed gate prompt; under the calibration
+                  prompt used in steps 1–2, Nano scores +0.0591.
+                </li>
+              </ol>
+              <a href={REPO_URL + "#why-vagt--the-panel-selection-finding"} target="_blank" rel="noopener noreferrer">
+                Full account in the README →
+              </a>
+            </details>
 
             {/* live, deterministic audit_panel call (proxied by Vite) */}
             <div className="ms-audit-live">
@@ -673,6 +718,7 @@ export default function App() {
               {audit.status === "success" && audit.data && (() => {
                 const rec = audit.data.recommendation || {};
                 const ci = rec.ci_95 || [];
+                const others = (rec.tied_top_candidates || []).filter((m) => m !== rec.model);
                 return (
                   <div className="ms-live-result">
                     <div className="ms-live-badge">
@@ -687,13 +733,19 @@ export default function App() {
                         </span>
                       )}
                     </div>
+                    {others.length > 0 && (
+                      <div className="ms-live-meta">
+                        Tied with {others.map((m) => EXPLORER_LABEL[m] || m).join(", ")} — chosen by{" "}
+                        {rec.selected_among_ties_by}.
+                      </div>
+                    )}
                   </div>
                 );
               })()}
 
               {audit.status === "error" && (
                 <div className="ms-live-error">
-                  <span>⚠️ Endpoint offline — showing the committed receipt above.</span>
+                  <span>⚠️ Live service unavailable — the chart above is the committed v2 receipt.</span>
                   <button className="ms-retry" onClick={runAudit}>Try again</button>
                 </div>
               )}
@@ -707,9 +759,9 @@ export default function App() {
         <section className="ms-explorer">
           <div className="ms-exp-title">Try a different panel</div>
           <p className="ms-exp-sub">
-            Pick the judges you'd run (at least 2). VAGT measures the panel's blind spot and recommends which judge to
-            add — live, deterministic, over the 8-model MedSimp-JudgeBench pool. Change the panel and the recommendation
-            changes.
+            Pick the judges you'd run (at least 2). VAGT measures how dependably your panel catches dropped diagnoses
+            and recommends which judge to add — live, deterministic, over the 8-model pool on the 240-item hand-verified
+            diagnosis stratum. Change the panel and the recommendation changes.
           </p>
 
           <div className="ms-exp-grid">
@@ -751,12 +803,21 @@ export default function App() {
             const rec = d.recommendation || {};
             const ci = rec.ci_95 || [];
             const blind = d.incumbent && d.incumbent.blindest_stratum;
+            const phi = d.incumbent && d.incumbent.Phi_V_by_stratum && d.incumbent.Phi_V_by_stratum[blind];
             const label = EXPLORER_LABEL[rec.model] || rec.model;
             const straddles = ci.length === 2 && ci[0] <= 0;
+            const others = (rec.tied_top_candidates || []).filter((m) => m !== rec.model);
+            const tieNote = others.length
+              ? ` Statistically tied with ${others.map((m) => EXPLORER_LABEL[m] || m).join(", ")}; chosen by ${rec.selected_among_ties_by}.`
+              : "";
             return (
               <div className="ms-exp-result">
                 <div className="ms-live-badge"><span className="live-dot" aria-hidden="true" />Live · deterministic</div>
-                {blind && <div className="ms-exp-blind">Your panel's blind spot: <strong>{blind}</strong></div>}
+                {blind && phi != null && (
+                  <div className="ms-exp-blind">
+                    Your panel on <strong>{blind}</strong> drops: Φ_V {phi}
+                  </div>
+                )}
                 {rec.model ? (
                   <>
                     <div className="ms-exp-rec">
@@ -771,12 +832,12 @@ export default function App() {
                     </div>
                     <p className="ms-exp-why">
                       {straddles
-                        ? `${label} is the best available add, but its 95% CI straddles zero — no candidate in the pool clearly improves this panel's weakest stratum (${blind}). Sometimes the honest answer is "none of these clearly helps."`
-                        : `This panel is weakest on ${blind}. Of the remaining models, ${label} most improves it — the largest gain on the blind spot, with the least collateral damage elsewhere.${rec.caveat ? " Caveat: " + rec.caveat : ""}`}
+                        ? `${label} is the best available add, but its 95% CI straddles zero — no candidate in the pool clearly improves this panel on ${blind} drops. Sometimes the honest answer is "none of these clearly helps."`
+                        : `Of the remaining models, ${label} most improves this panel on ${blind} drops.${tieNote}${rec.caveat ? " Caveat: " + rec.caveat : ""}`}
                     </p>
                   </>
                 ) : (
-                  <p className="ms-exp-why">No candidate in the pool improves this panel's blind spot.</p>
+                  <p className="ms-exp-why">No candidate in the pool improves this panel on {blind} drops.</p>
                 )}
               </div>
             );
@@ -790,8 +851,8 @@ export default function App() {
           )}
 
           <p className="ms-exp-scope">
-            8-model pool · MedSimp-JudgeBench (708 items) · pre-computed verdicts, no live model calls · same panel →
-            same answer.
+            8-model pool · JudgeBench v2 diagnosis stratum (240 hand-verified items) · pre-computed verdicts, no live
+            model calls · same panel → same answer.
           </p>
         </section>
 
