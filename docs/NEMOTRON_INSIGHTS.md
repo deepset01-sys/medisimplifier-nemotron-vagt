@@ -20,7 +20,7 @@ result that surprised us. We lead with the surprise.
 
 | # | Role | Outcome | One-line takeaway for Nemotron users |
 |---|------|---------|--------------------------------------|
-| 1 | Nano — diversity judge in a 3-rater panel | **Net-positive, only rater to help** (+0.071 validity) | A 30B-class Nano *raises* panel validity where a 550B alone does not — diversity beats scale |
+| 1 | Nano — third judge in a validity panel | **Real, detection-specific lift** (+0.0765 Φ_V) | A 30B Nano matches a 550B Nemotron; two other families added more — choose judges against verified labels, not agreement |
 | 2 | Super — reasoning budget | `content=None` at 1024 tokens; needs ~16k | Budget the *reasoning* tokens, not just the answer — a silent `content=None` if under-budgeted |
 | 3 | Both — verdict extraction | Regex-scraped from 8k-token reasoning | Expose/use logprobs for classification verdicts — unlocks thresholds and cuts latency |
 | 4 | Nano — scoped faithfulness gate | Pre-registered **null** | Name-match verification penalizes correct paraphrase; wrong tool for a simplification task |
@@ -28,32 +28,44 @@ result that surprised us. We lead with the surprise.
 
 ---
 
-## Finding 1 — Nano earns its seat: diversity beats scale in a validity panel
+## Finding 1 — Nano earns its seat; scale doesn't help within the family, other families help more
 
 **Role.** Nemotron Nano (30B-class, A3B MoE) added as a third judge alongside
 Llama-3.3-70B and Qwen3-32B in an ensemble that decides whether a simplified
 clinical summary dropped a diagnosis.
 
-**Outcome.** Adding Nano raised diagnosis-detection validity **Φ_V 0.404 → 0.476
-(ΔΦ_V +0.0706, 95% CI [0.0552, 0.0866])** on calibration, and **+0.052 [0.030, 0.075]
-out-of-sample** under the deployed prompt. Nano was the **only** rater, of every
-candidate we tested, that was net-positive across all corruption strata. On the
-diagnosis stratum it was **statistically indistinguishable from Ultra-550B and
-gpt-oss-120B** (overlapping CIs) — at ~18× fewer total parameters and a fraction
-of the cost.
+**Outcome.** On a hand-verified benchmark — 120 patient-invisible primary-diagnosis
+drops plus 120 paired faithful controls — adding Nano raised diagnosis-detection
+validity **Φ_V 0.4764 → 0.5529 (ΔΦ_V +0.0765, 95% CI [+0.0516, +0.0992])** under the
+deployed gate prompt (0.4745 → 0.5337, +0.0591 [+0.0387, +0.0802] under the
+calibration prompt). It holds out-of-sample — split by patient, **+0.0735 [0.036,
+0.104]** and **+0.0789 [0.047, 0.109]** on the two halves — and it is detection, not
+flag-rate: the lift sits far outside a τ-blind permutation null (p = 0.001). Nano
+**matches Nemotron Ultra-550B** (+0.0781 [0.0552, 0.1003]; overlapping CIs) at ~18×
+fewer total parameters. It is **not** the strongest addition: **gpt-oss-120b**
+(+0.1220 [0.1000, 0.1416]) and **DeepSeek-V4-Flash** (+0.1238 [0.1024, 0.1440]) sit
+entirely above Nano's CI. Of six candidates, five pass the permutation null (gemma-3-27b
+does not, p = 0.449).
 
-**Mechanism.** Counter-intuitively, adding Nano *lowered* inter-rater agreement
-(Fleiss κ / Krippendorff α went negative) while *raising* validity against known
-ground truth. Nano's errors are **decorrelated** from the two incumbents rather
-than redundant with them, so it contributes independent signal exactly where the
-larger, more-agreeing raters share a blind spot. Agreement is not validity; a
-diverse small judge can be worth more than a bigger, more-consensual one.
+**Mechanism.** The two incumbents share a blind spot: both pass **41 of the 120**
+genuine drops as SAFE. Nano flags **33 of those 41** — its signal lands exactly where
+the incumbents are jointly wrong (gpt-oss flags 38). Adding Nano also lowers
+inter-rater agreement slightly (Fleiss κ 0.2144 → 0.1788; Krippendorff α 0.216 →
+0.1799) while raising validity, but on this benchmark the agreement drop is **not
+significant** (Δκ −0.0356 [−0.1314, +0.0557]) — agreement simply carries no signal
+about which judge helps. The cost is over-flagging: in 47 of 120 patients Nano flags
+both the version missing the diagnosis and the faithful one; in 63 it flags only the
+lossy version.
 
-**Implication for Nemotron users.** For ensemble/verifier use cases, **pick Nano
-for decorrelation, not for raw capability**. Selecting judges by inter-rater
-agreement will actively reject the model that helps most. Nano's MoE efficiency
-(A3B active) makes it the right *dose* of diversity — the smallest per-item cost
-penalty we measured — which is precisely what you want in a many-call safety loop.
+**Implication for Nemotron users.** Within the Nemotron family, **scale did not buy
+detection** — Nano matched Ultra-550B — so try the smallest Nemotron first in a
+many-call safety loop. But **measure candidates against a verified criterion before
+choosing**: on our benchmark two other families added ~1.6× as much validity, and our
+own panel-selection endpoint (`/v1/audit_panel`) recommends gpt-oss-120b for this
+panel. Agreement statistics would not have shown any of this.
+
+*An earlier version of this finding reported +0.071 on an automated benchmark whose
+diagnosis labels were later found ~85% wrong; see the project README (A6, A8).*
 
 ---
 
@@ -113,8 +125,8 @@ diagnosis?" verifier, pre-registered against explicit success thresholds.
 **Outcome.** A clean **null**. The scoped rubric failed all three pre-registered
 thresholds: ΔΦ (Youden) **−0.083 [−0.240, +0.069]** vs a +0.10 target; false-positive
 rate did **not** fall (ΔF +0.015). n=350 diagnosis stratum, 347 complete-case, parse
-failures 0.86%. The harness reproduces the published headline (3-rater Φ_V 0.472 ≈
-0.476), so the null is real, not a plumbing artifact.
+failures 0.86%. The harness reproduces the original pipeline's automated-pass 3-rater
+Φ_V on the same items (0.472 ≈ 0.476), so the null is real, not a plumbing artifact.
 
 **Mechanism.** 100% of the clean-item false positives were *in-scope*, and the cause
 is **paraphrase-mismatch**. Smoking gun (item idx=12): source *"Acute T-cell
@@ -160,14 +172,20 @@ audience-specific rewriting. "Good judge" does not imply "good author."
 - **Pre-registration:** Finding 4's thresholds were fixed before we looked at the
   eval split; we report the null it produced.
 - **Same-harness baselines:** we re-ran comparisons in one harness rather than diffing
-  stored numbers, and the harness reproduces our published headline (Φ_V 0.472 ≈ 0.476).
+  stored numbers, and the harness reproduces the original pipeline's automated-pass Φ_V (0.472 ≈ 0.476).
+- **Hand-verified benchmark:** Finding 1 is measured on 120 hand-verified drops + 120 paired
+  controls, pre-registered before any judge ran (`docs/judgebench_v2_protocol.md`).
 - **Honest mix:** one favorable result (Finding 1), two actionable engineering gotchas
   (2, 3), two capability characterizations (4, 5). The negatives are credible *because*
   the method also produced a positive.
 
 ## Reproduce
-- Ensemble validity + CIs: `scripts/compute_pool_cis.py`, `results/pool_candidate_cis.json`
-- Out-of-sample validation: `scripts/compute_split_half.py`
+- Benchmark (hand-verified v2): `results/judgebench_v2_tau1_final.json`, `results/judgebench_v2_clean_controls.json`
+- Ensemble validity + CIs: `scripts/run_phi_v_recompute.py`, `scripts/run_pool_judgebench_v2.py`,
+  `results/judgebench_v2_phi_v_recompute.json`, `results/judgebench_v2_pool_table.json`
+- Detection vs flag-rate (permutation null): `scripts/run_null_control_v2.py`, `results/judgebench_v2_null_control.json`
+- Out-of-sample validation: `scripts/run_split_half_v2.py`, `results/judgebench_v2_split_half.json`
+- Agreement: `results/judgebench_v2_agreement_recompute.json`
 - Pre-registered scoped-gate null: `scripts/run_vagt_loop_experiment.py`,
   `results/vagt_loop_{A0,A1,summary}.json`
 - Core metric: `src/audit_panel/vagt_core.py`
