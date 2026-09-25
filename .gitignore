@@ -99,3 +99,6 @@ nemotron_judge_test_results.json
 
 # 58MB training references — data lives on HuggingFace (chambul/medisimplifier-nemotron-dataset)
 nemotron_training_references.json
+
+# Local review-prompt draft (not part of the submission)
+review_prompt_bonus_v3.txt
