@@ -7,10 +7,29 @@
 ## Track-A STATUS: COMPLETE
 All 9 residuals closed. Commits: db79b9c, 7a386d3, 32dc694, 2b462ff, 1579085, 2f70ad3, 0fa51fb, dc6d1c0.
 
-## Track-B — next audit target
-Status: full audit not yet started. Scope: B1–B5. NOTE: B2 (Tier 1/Tier 2) and B3
-(/v1/audit_panel contract, CPU /health) were updated for v2 in eeffe79 — re-read them as
-part of the audit, don't assume they're untouched.
+## Track-B — CURRENT AUDIT (scope B1–B9)
+Status: step 0 (CCC cleanup) done in this commit; audit B1→B9 next. B2 (Tier 1/Tier 2) and B3
+(/v1/audit_panel contract, CPU /health) were already updated for v2 in eeffe79 — re-verify, don't assume.
+
+Ordered task list:
+- [ ] B1 What you get — pipeline diagram + value prop vs v2 (not yet audited).
+- [ ] B2 Quickstart — re-verify eeffe79 Tier 1/2; Tier 2 lists 2 endpoints but the gate now also calls a
+      DEDICATED Llama endpoint (safety_gate.py:15, since 59c0908); the deployed endpoint-v5 image predates
+      59c0908 → calls serverless Llama (403 on this account) → expect llama_verdict ERROR live (advisory,
+      consensus unaffected) — VERIFY before writing.
+- [ ] B3 API contract — strict-mode line "on the deployed gate, 34.7% of DISAGREEs are false alarms" is the
+      708-item calibration figure; needs the same scope label line 23 got in 414ff38 (v2-stratum re-derivation
+      ≈37.5% clean-FP per the 414ff38 record — re-verify before citing).
+- [ ] B4 Safety gate — stale rationale comment safety_gate.py:136 "trust Qwen's specificity (0.5% FP)":
+      0.5% is the calibration prompt; deployed gate prompt = 9.5% (19/200, gate_calibration_full.json).
+- [ ] B5 Operating characteristics — scope-label automated-708 figures vs the v2 stratum
+      (v2 deployed recall Nemotron 110/120, Llama 56/120, Qwen 56/120; spec 67 / 88 / 107 of 120).
+- [ ] B6 Model card — check; nothing known wrong.
+- [ ] B7 + B9 Deployment — document the CPU service deploy (Console-only, not in repo); add the dedicated
+      Llama endpoint as a prerequisite; note endpoint-v5's /v1/audit_panel serves the earlier pool.
+- [ ] B8 Known issues — endpoint-v5 pool mismatch; Llama 403 → dedicated dependency; model-catalog volatility (#25).
+- [ ] Carried (Track-B-adjacent): #12 + #10 billing export (Console; also reconciles CCC $225.45 vs README
+      $248.10), #23 DISAGREE-selection disclosure (idx 146), #22 image changelog (train-v29…v32).
 
 ### Completed this session (2026-09-25) — demo + always-on backend moved to the v2 clean stratum
 Goal: the public demo and its live endpoint still showed the refuted automated-pass result
@@ -97,14 +116,23 @@ A9 step 5 (dc6d1c0); clean-stratum inputs tracked (0fa51fb); v2 results + script
 (2f70ad3); line 119 provenance (1579085); A6 rewrite + lines 67/77 (db79b9c); A5 (7a386d3);
 A8+A3 (32dc694); line 74 + A2 line 113 (2b462ff); B5 line 568 + line 23 (414ff38).
 
-### Stale sections further down this file (not rewritten this session)
-`### ENDPOINT` (old GPU URL port8000-qzv93…), `STRATEGIC PIVOT`/Step-6 pool table (automated-pass
-numbers), `VAGT RESULTS`, `DIAGNOSIS RECALL`, `AUDIT_PANEL BUILD` receipt (Nano +0.071) — all
-describe the superseded automated pass. Treat README + results/ as source of truth.
+### Stale sections further down this file (marked in place 2026-09-25, not rewritten)
+Each carries a one-line ⚠️ SUPERSEDED / ✅ RESOLVED marker under its heading pointing here. Automated-pass
+figures: STRATEGIC PIVOT (Step-6 table), ### ENDPOINT, DIAGNOSIS RECALL, VAGT RESULTS, NEMOTRON CALIBRATION,
+AUDIT_PANEL BUILD. Resolved/obsolete: QWEN JUDGE REMOVAL, ENDPOINT ARCHITECTURE, MASTER ACTION LIST,
+PENDING TASKS, README STATUS, SCHEDULE. Corrected in place: MODELS (Llama/Qwen dedicated), INFRASTRUCTURE
+(build VM IP), DOCKER IMAGES (build method), KEY NUMBERS (cost → README $248.10), SAFE ENDPOINT DECISION
+RULE (0.5% vs 9.5% note). Source of truth = README + results/.
 
-OWNER STILL OPEN: rotate the Nebius key; decide whether to delete the old CPU service
-instance in the Console (its tunnel already 404s); optional endpoint-v5 rebuild if Tier 2
-should serve v2; cosmetic: phone-width second-line wrap on the top two bars.
+### Still-open items carried from the old lists
+#10/#12 billing export · #19 raw API captures (Nemotron @1024 empty; enable_thinking ineffective) · #20
+independent v2 quality measure · #22 image changelog · #23 DISAGREE-selection disclosure · #25 catalog
+volatility caveat (→ B8).
+
+OWNER STILL OPEN: rotate the Nebius key AND the HuggingFace token; stop the dedicated Qwen3-32B + Llama-3.3-70B
+endpoints if still running (per-GPU-hr; no record they were stopped); decide whether to delete the old CPU
+service instance (tunnel already 404s); optional endpoint-v5 rebuild if Tier 2 should serve v2; cosmetic:
+phone-width second-line wrap on the top two bars.
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
@@ -128,6 +156,8 @@ should serve v2; cosmetic: phone-width second-line wrap on the top two bars.
 ---
 
 ## STRATEGIC PIVOT — VAGT as Product
+
+> ⚠️ SUPERSEDED (2026-09-25): Step-6 table + "Nano on merit" are the automated 708-item pass. v2 recommendation = gpt-oss-120b +0.1220 [0.1000, 0.1416] (see CURRENT STATUS).
 
 Key insight (from `vagt_section.md` + `vagt_estimand.md` analysis):
 
@@ -374,6 +404,9 @@ dca6961 - feat: VAGT loop experiment committed (run_vagt_loop_experiment.py + A0
 - results/eval_v2_nemotron_results.json + README companion table committed (fd36ae2)
 
 ### ENDPOINT
+
+> ⚠️ SUPERSEDED: GPU endpoint is a persistent Nebius Endpoint (not serverless), URL now port8000-vjbksde9vzhgtcx (stopped between demos); always-on CPU service = port8000-y1sj2wa6m10y8qp.
+
 - URL: https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud
 - Latency: ~27s (3-judge Token Factory gate; corrected from ~73s)
 - Live Nebius serverless endpoint — permanent URL, scales to zero, wakes on request (~27s cold start)
@@ -402,6 +435,7 @@ rotate, then redeploy endpoint with the new key so the live URL keeps working.
 | Training samples | 7,983 | chambul/medisimplifier-nemotron-dataset |
 | Training time | 8,523s (~2.4h) | logs/train_v2.json.gz (train_runtime) |
 | Total cost v2 | $225.45 | Nebius Console actual billing (incl. dedicated endpoint 21.95 GPU-hr + gate calibration) |
+| Total cost v2 (current) | $248.10 | README Hardware-and-cost table (a8aae74: + pool runs, exact Console figures). The $225.45 row + NEBIUS BILLING table below are the earlier snapshot; no billing export committed yet (#12). |
 | H100 hours | 10.22 | Nebius Console |
 | Nemotron Super cost | $75.19 | Nebius Console Token Factory |
 | Nemotron Nano cost | $2.17 | Nebius Console Token Factory (calibration + 1,001-item student audit) |
@@ -409,6 +443,8 @@ rotate, then redeploy endpoint with the new key so the live URL keeps working.
 ---
 
 ## DIAGNOSIS RECALL NUMBERS — RECONCILIATION
+
+> ⚠️ SUPERSEDED for diagnosis: automated 708-item labels (~85% mislabeled). v2 deployed-gate recall: Nemotron 110/120 (91.7%), Llama 56/120, Qwen 56/120 (46.7%).
 
 Three numbers appear in README — all correct, different denominators (see README footnote in Medical Safety Evaluation):
 - **84.2%** = Nemotron overall recall across all 4 error types (421 of 500 non-ERROR corrupted; 508 corrupted total)
@@ -420,6 +456,8 @@ Sources: nemotron_calibration_full.json (recall) + vagt_nemotron_results.txt (47
 ---
 
 ## VAGT RESULTS (from vagt_nemotron_results.txt; paired-Δ 95% CIs committed in vagt_bootstrap_cis.json, 88085fe)
+
+> ⚠️ Diagnosis row SUPERSEDED: v2 ΔΦ_V +0.0765 [+0.0516, +0.0992] (Φ_V 0.4764→0.5529, n=240). Dose/negation/lateral rows remain automated-pass figures.
 
 | Feature | Φ_V (L+Q) | Φ_V (+Nemo) | ΔΦ_V | σ²_B (L+Q) | σ²_B (+Nemo) | Δσ²_B |
 |---------|-----------|-------------|------|------------|--------------|-------|
@@ -435,6 +473,8 @@ Diagnosis inversion is significant on both axes (Φ_V up, κ down, CIs exclude 0
 ---
 
 ## NEMOTRON CALIBRATION (from nemotron_calibration_full.json, n=708)
+
+> ⚠️ Automated 708-item pass, calibration prompt. Diagnosis recall 68/14/7 superseded (see DIAGNOSIS RECALL marker); deployed-gate-prompt Qwen FP = 9.5%, not 0.5%.
 
 | Judge | Recall | FP Rate | Balanced Acc |
 |-------|--------|---------|--------------|
@@ -458,7 +498,7 @@ Bucket v2: medisimplifier-adapters-v2
   eval_v2/              → evaluation results (Claude refs)
   eval_v2_nemotron/     → predictions.json + results.json (Fix #3 run)
 CR path: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:<tag>
-Build host: VM ubuntu@195.242.30.65 (nebius_vm key); has nebius CLI + boto3 + ~/.aws/credentials
+Build host: VM ubuntu@89.169.121.54 (as of 2026-09-24; nebius_vm key; host computeinstance-e00krk6v948cndendb — same instance, public IP changes across restarts: earlier 195.242.30.65 / .28.221 / .10.164); has nebius CLI + boto3 + ~/.aws/credentials + docker (Docker Hub login chambul)
 ```
 
 ---
@@ -478,7 +518,7 @@ Build host: VM ubuntu@195.242.30.65 (nebius_vm key); has nebius CLI + boto3 + ~/
 | audit-cpu-v2 | sha256:44cec5211cd0904d568e4f6715dcd865d5daed406c247bd32203a957d30d0d67 | CPU-only audit_panel service, v2 pool (AUDIT_POOL_DIR=audit_pool_v2) — **LIVE** at port8000-y1sj2wa6m10y8qp tunnel; recommends gpt-oss +0.122 [0.1, 0.1416] |
 
 **Critical:** cryptography==48.0.1 pinned via post-install step in Dockerfile.train
-**Build method:** manual `docker build` dual-tagged to Docker Hub + Nebius CR, tag bumped per version (build_and_push.sh is STALE — hardcodes v28, Docker-Hub only). CR login: `nebius iam get-access-token | docker login cr.eu-north1.nebius.cloud --username iam --password-stdin`.
+**Build method:** manual `docker build` dual-tagged to Docker Hub + Nebius CR, tag bumped per version — EXCEPT audit-cpu / audit-cpu-v2 (Docker Hub only). build_and_push.sh is STALE (hardcodes v28, Docker-Hub only). CR login: `nebius iam get-access-token | docker login cr.eu-north1.nebius.cloud --username iam --password-stdin`.
 
 ---
 
@@ -488,8 +528,8 @@ Build host: VM ubuntu@195.242.30.65 (nebius_vm key); has nebius CLI + boto3 + ~/
 |-------|--------|---------|
 | Nemotron Super | nvidia/nemotron-3-super-120b-a12b | Teacher |
 | Nemotron Nano | nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B | Safety judge |
-| Llama | meta-llama/Llama-3.3-70B-Instruct | Safety judge |
-| Qwen | Qwen/Qwen3-32B (calibration; deployed gate now Qwen/Qwen3-30B-A3B-Instruct-2507 — 32B removed from TF) | Safety judge |
+| Llama | meta-llama/Llama-3.3-70B-Instruct — gate calls `dedicated/meta-llama/Llama-3.3-70B-Instruct-KrpmhZ` (serverless 403 on this account; since 59c0908) | Safety judge (advisory, not in rule) |
+| Qwen | Qwen/Qwen3-32B — gate calls `dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6` (removed from TF serverless; restored 3afc059; the 30B-A3B swap was reverted) | Safety judge (decides) |
 | Base model | aaditya/Llama3-OpenBioLLM-8B | Student (gated — requires HF access) |
 | Token Factory base URL | https://api.studio.nebius.ai/v1/ | |
 
@@ -507,6 +547,8 @@ if nemotron=="UNSAFE" and qwen=="SAFE": → DISAGREE + "diagnosis-drop risk"
 elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 # Parallel: ThreadPoolExecutor(max_workers=3), ~27s total
 ```
+Note: "0.5% FP" is the calibration-prompt figure; under the deployed gate prompt Qwen FP = 9.5% (19/200,
+results/gate_calibration_full.json). The same stale comment is in safety_gate.py:136 → Track-B B4 task.
 
 ---
 
@@ -540,6 +582,8 @@ elif "ERROR" in (nemotron, qwen): → ERROR  # fail-safe
 ---
 
 ## README STATUS — COMPLETE ✅ (HEAD = dca6961)
+
+> ⚠️ SUPERSEDED: README restructured into Track A/B; Track-A audit complete; Track-B in progress (CURRENT STATUS).
 
 All sections committed. All v4 review fixes landed:
 - v4 Fix #1: real live-endpoint SAFE curl + response + gate-level UNSAFE trace (c2cc0a4)
@@ -766,6 +810,8 @@ empirically in v2." The deeper-history mention later in the README was left unto
 
 ## AUDIT_PANEL BUILD (/v1/audit_panel — the "win move")
 
+> ✅ Steps 1–8 COMPLETE. Current served pool = audit_pool_v2 (240 items) via audit-cpu-v2; the Nano +0.071 receipt below is the earlier pool.
+
 Spec: audit_panel_clarification_response.txt (Opus 4.7). Turns VAGT into a reusable Nebius-native
 judge-panel calibration tool: given an incumbent panel + candidate pool, recommend the third rater that
 best raises Φ_V on the panel's blindest stratum, with a paired-bootstrap CI receipt.
@@ -801,6 +847,8 @@ document their generating prompt.
 
 ## QWEN JUDGE REMOVAL (Token Factory catalog change, 2026-09-03)
 
+> ✅ RESOLVED: Qwen3-32B restored via dedicated endpoint (3afc059); gate recalibrated 708/708, 0 ERRORs (f5cb9d4). The Qwen3-30B-A3B swap below was reverted.
+
 `Qwen/Qwen3-32B` was REMOVED from Nebius Token Factory mid-project (catalog shrank 31→26; `/v1/models` now
 404s on that id). Impact + handling:
 - Gate fix (8ec5e73): safety_gate.py QWEN → `Qwen/Qwen3-30B-A3B-Instruct-2507` (nearest live instruct model).
@@ -820,6 +868,9 @@ document their generating prompt.
 ---
 
 ## ENDPOINT ARCHITECTURE (v1 vs v2 — forensics this session)
+
+> ✅ RESOLVED (79c1733, e8bbb6d, 79afd0d): documented as a Nebius Endpoint with a verified CLI + Console path.
+
 - v1 (VERIFIED): deployed via `nebius ai endpoint create --public --container-port 8000` — a PERSISTENT Nebius
   Endpoint ("stays up and answers requests", per the v1 blog). Image endpoint-v2, /start.sh (vLLM :8001 +
   FastAPI gate :8000), H100.
@@ -836,6 +887,9 @@ document their generating prompt.
 ---
 
 ## MASTER ACTION LIST (assembled from Fable 5 v2 + endpoint forensics — REVIEW/ADJUST)
+
+> ✅ MOSTLY RESOLVED: #1 (bcd7489), #2–#3 (3afc059/f5cb9d4), #4 + #13 (README restructure complete), #26 (f7f8472). Still open → CURRENT STATUS "Still-open items".
+
 Reconstructed from this session's verified findings — not a verbatim prior list. Priority order:
 
 ### 🔴 CRITICAL — Gate integrity
@@ -900,6 +954,8 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
     B3 (API contract — define block behavior for all consensus classes) + B8 (known issues). Verified 2026-09-05.
 
 ## PENDING TASKS (PRIORITY ORDER)
+
+> ⚠️ SUPERSEDED except: rotate Nebius key + HF token; deliverables (video, Devpost, blog). Decisions below are resolved. See CURRENT STATUS.
 
 ### 🔴 SECURITY — URGENT
 - [ ] Rotate Nebius API key (exposed in transcript) → then redeploy endpoint with new key so live URL survives
@@ -967,6 +1023,8 @@ build/label the A/B sections so the opening isn't over-promising. #13 (structure
 
 ## SCHEDULE
 
+> ⚠️ Past items (Sept, Tel Aviv event on Sept 15). Remaining before Oct 30: Track-B audit, video, Devpost, HF v2 publish, blog, final review.
+
 ```
 September (remaining):
   - Rotate keys + redeploy endpoint
@@ -997,6 +1055,8 @@ Late September – October:
 ---
 
 ## IMPORTANT NOTES
+
+> ⚠️ Some bullets are historical ("σ²_B appears 2×", "Next: fix v2 inconsistencies"); CURRENT STATUS is authoritative.
 
 - v1 repo: github.com/deepset01-sys/medisimplifier-nebius (🥇 First Place, $320.20)
 - VAGT post-v1 files are in v1 repo but NOT part of v1 submission
