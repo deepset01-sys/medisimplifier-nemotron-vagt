@@ -133,7 +133,7 @@ def evaluate_safety(original: str, simplified: str, safety_mode: str = "flag") -
     elif nemotron == "UNSAFE" and qwen == "UNSAFE":
         consensus = "UNSAFE"                       # both high-recall + high-spec agree
     elif qwen == "UNSAFE":
-        consensus = "UNSAFE"                       # trust Qwen's specificity (0.5% FP)
+        consensus = "UNSAFE"                       # Qwen UNSAFE decides (0.5% FP under the calibration prompt; 9.5% under this gate prompt — README B4/B5)
     elif nemotron == "UNSAFE" and qwen == "SAFE":
         # Nemotron flags, Qwen clears — likely a diagnosis drop Qwen misses (7% recall)
         consensus = "DISAGREE"
