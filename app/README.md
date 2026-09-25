@@ -22,11 +22,17 @@ Toggle between them with the **"Show SAFE example" / "Show FLAGGED example"** bu
 auditor-confirmed. The red highlight shows exactly what was dropped.
 
 **Act 2 — why trust the panel?** *"We don't trust one call. We measured it."* The
-audit_panel ΔΦ_V leaderboard ranks 5 candidate judges by how much each fixes the
-panel's diagnosis blind spot. Nemotron Nano recommended: +0.0706, CI [0.0552, 0.0866].
+audit_panel ΔΦ_V leaderboard ranks 6 candidate judges on 240 hand-verified items
+(120 real dropped diagnoses + 120 paired controls). gpt-oss-120b recommended: +0.1220,
+CI [0.1000, 0.1416] — statistically tied with DeepSeek-V4-Flash, chosen on reliability.
+A collapsed **"What changed and why"** note explains that an earlier automated pass
+recommended Nemotron Nano, and why that result did not survive hand-verified labels.
 
 **"Run audit_panel live →" button:** calls `/v1/audit_panel` — deterministic (same
 answer every call, pure CPU). Returns the same recommendation every time.
+
+**"Try a different panel":** pick any 2+ of the 8 judges; the same endpoint recommends
+which judge to add for that panel.
 
 ## Setup
 
@@ -35,22 +41,24 @@ npm install && npm run dev
 ```
 → http://localhost:5173
 
-## Live button — always-on CPU service
+## Live calls — always-on CPU service
 
-The demo makes exactly **one** live call: the **"Run audit_panel live →"** button,
-which POSTs to `/v1/audit_panel` (proxied by Vite to the **always-on CPU service**).
+The demo makes live calls from two places — the **"Run audit_panel live →"** button and
+**"Try a different panel"** — both POSTing directly to `/v1/audit_panel` on the
+**always-on CPU service** (CORS-enabled; the URL is `AUDIT_ENDPOINT` in `demo.jsx`).
 That route is **pure CPU** — it re-ranks pre-computed verdict files and calls no
 models — so it returns in ~1 s, deterministically, the same recommendation every time.
 
-That route is served by the **always-on CPU service** (`chambul/medisimplifier:audit-cpu`)
+That route is served by the **always-on CPU service** (`chambul/medisimplifier:audit-cpu-v2`)
 — a slim CPU-only container with no vLLM, no GPU, and no API key. It is **always warm**
 (no cold start, ~$1–3/day), so there is **nothing to start** before presenting — the
 button just works. It does **not** touch the H100 endpoint, the Qwen3-32B dedicated
 judge, or any GPU inference — audit_panel touches none of them.
 
-If the CPU service is ever unreachable, the button falls back gracefully to *"showing
-the committed receipt"* (the same numbers as the static Act 2 chart), so the demo still
-works fully — you just don't get the live round-trip.
+A live result is shown only if the response reports `benchmark: "MedSimp-JudgeBench-v2"`.
+If the service is unreachable — or answers from any other pool — the button shows
+*"Live service unavailable — the chart above is the committed v2 receipt"*, so the demo
+still works fully and never displays numbers that contradict the chart.
 
 Note: **Act 1 (the gate verdicts) is cached** — the demo does *not* call `/v1/simplify`
 live — so the DISAGREE result and the auditor confirmation display with no endpoint

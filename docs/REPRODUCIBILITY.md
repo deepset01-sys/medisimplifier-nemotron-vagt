@@ -75,29 +75,31 @@ committed `audit_pool/` verdict files, so it needs **no API key** and no GPU. Th
 the always-on demo floor (the deterministic VAGT panel selector), decoupled from the
 H100 endpoint (~$1–3/day instead of ~$4/hr).
 
-- **Image:** `chambul/medisimplifier:audit-cpu`
-- **Digest:** `sha256:3df2a39ead023bc2ca79feddccd43d6988366f0197966b43ed36aa8e457cb06d`
-- **Size:** 370 MB (vs ~8.8 GB for the GPU endpoint — vLLM/torch/CUDA dropped)
+- **Image:** `chambul/medisimplifier:audit-cpu-v2` (current — serves the v2 hand-verified pool, `audit_pool_v2/`)
+- **Digest:** `sha256:44cec5211cd0904d568e4f6715dcd865d5daed406c247bd32203a957d30d0d67`
+- **Earlier image:** `chambul/medisimplifier:audit-cpu` @ `sha256:3df2a39ead023bc2ca79feddccd43d6988366f0197966b43ed36aa8e457cb06d` (earlier automated pool; superseded, kept for reproducibility)
+- **Pool selection:** `AUDIT_POOL_DIR` (the v2 image sets `audit_pool_v2`; run with `-e AUDIT_POOL_DIR=` to serve the earlier `audit_pool/`)
 - **Serves:** `POST /v1/audit_panel` + `GET /health` ONLY
 - **Built from:** `docker/Dockerfile.cpu` (app `src/cpu_endpoint.py`, launcher `scripts/start_cpu_endpoint.sh`)
 
 Pull and run:
 ```bash
-docker pull chambul/medisimplifier@sha256:3df2a39ead023bc2ca79feddccd43d6988366f0197966b43ed36aa8e457cb06d
-docker run -p 8000:8000 chambul/medisimplifier:audit-cpu
+docker pull chambul/medisimplifier@sha256:44cec5211cd0904d568e4f6715dcd865d5daed406c247bd32203a957d30d0d67
+docker run -p 8000:8000 chambul/medisimplifier@sha256:44cec5211cd0904d568e4f6715dcd865d5daed406c247bd32203a957d30d0d67
 ```
 
 Verify:
 ```bash
 curl localhost:8000/health
-# → {"service":"audit_panel-cpu","audit_panel":true,"pool_loaded":true,"ready":true,"pool_error":null}
+# → {"service":"audit_panel-cpu","audit_panel":true,"pool_loaded":true,"benchmark":"MedSimp-JudgeBench-v2","ready":true,"pool_error":null}
 ```
 
 Rebuild:
 ```bash
 cd ~/medisimplifier-nemotron-vagt && git pull
-docker build -t chambul/medisimplifier:audit-cpu -f docker/Dockerfile.cpu .
-docker push chambul/medisimplifier:audit-cpu
+docker build -t chambul/medisimplifier:audit-cpu-v2 -f docker/Dockerfile.cpu .
+docker push chambul/medisimplifier:audit-cpu-v2
+# Deploy: Nebius Console → point the CPU service at the new digest (the deploy is not scripted in this repo)
 ```
 
 ## Deploy the endpoint

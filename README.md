@@ -47,7 +47,7 @@ Three findings:
 
 **Out-of-sample check** (split-half, deployed prompt): splitting the 120 patients 60/60 so no patient appears in both halves ([`scripts/run_split_half_v2.py`](scripts/run_split_half_v2.py), [`results/judgebench_v2_split_half.json`](results/judgebench_v2_split_half.json)), the top tier holds on **both** held-out halves — gpt-oss **+0.122 / +0.122** and DeepSeek **+0.118 / +0.129**, POSITIVE on each; Nemotron Nano and Ultra hold too. The weaker candidates don't: Nemotron-Super is POSITIVE in one half but null in the other (CI-width at n ≈ 120), and gemma is null in both. The recommendation survives the split that matters.
 
-The **[`/v1/audit_panel`](#b3-api-contract)** endpoint runs exactly this analysis on any incumbent panel + candidate pool, returning the recommended judge, its ΔΦ_V, and a bootstrap CI. The **v2 recommendation is gpt-oss-120b (+0.1220, CI [+0.1000, +0.1416])** — an offline recompute on the clean stratum in [`results/audit_panel_receipt_v2_diagnosis.json`](results/audit_panel_receipt_v2_diagnosis.json). The live endpoint still serves the **earlier automated** pool, so its captured receipt ([`results/audit_panel_live_receipt.json`](results/audit_panel_live_receipt.json)) records the now-**superseded** earlier pick (Nemotron Nano, +0.0706) and is preserved unchanged as a genuine capture. The endpoint re-ranks **pre-computed** verdict files (`audit_pool/verdicts/`) on CPU in milliseconds; it does not call the candidate models live, so adding a genuinely new judge means generating its verdicts first (`gen_pool_verdicts.py`).
+The **[`/v1/audit_panel`](#b3-api-contract)** endpoint runs exactly this analysis on any incumbent panel + candidate pool, returning the recommended judge, its ΔΦ_V, and a bootstrap CI. The **v2 recommendation is gpt-oss-120b (+0.1220, CI [+0.1000, +0.1416])** — an offline recompute on the clean stratum in [`results/audit_panel_receipt_v2_diagnosis.json`](results/audit_panel_receipt_v2_diagnosis.json). The always-on endpoint now **serves this v2 pool** and returns the same answer live — captured in [`results/audit_panel_live_receipt_v2.json`](results/audit_panel_live_receipt_v2.json). The earlier live receipt ([`results/audit_panel_live_receipt.json`](results/audit_panel_live_receipt.json)) records the **superseded** pick from the automated pool (Nemotron Nano, +0.0706) and is preserved unchanged as a genuine capture. The endpoint re-ranks **pre-computed** verdict files (`audit_pool_v2/verdicts/`; the earlier pool stays in `audit_pool/`) on CPU in milliseconds; it does not call the candidate models live, so adding a genuinely new judge means generating its verdicts first (`gen_pool_verdicts.py`).
 
 ## What this project does
 
@@ -392,18 +392,18 @@ python scripts/run_null_control_v2.py                    # → null-rater contro
 **🔗 Live demo:** https://deepset01-sys.github.io/medisimplifier-nemotron-vagt/
 
 **Two live interactive elements** (CPU, no GPU):
-1. **"Run audit_panel live →"** — the deterministic VAGT recommendation for *our* gate panel (Llama + Qwen): **Nemotron Nano, +0.0706, CI [0.0552, 0.0866]** — same answer every call.
+1. **"Run audit_panel live →"** — the deterministic VAGT recommendation for *our* gate panel (Llama + Qwen) on the 240-item hand-verified diagnosis stratum: **gpt-oss-120b, +0.122, CI [0.100, 0.142]** — statistically tied with DeepSeek-V4-Flash, chosen on reliability (0 errors vs 7). Same answer every call.
 2. **"Try a different panel"** — pick any **2+ of the 8** pooled judges and VAGT recommends which judge to add for *your* panel (the recommendation changes with the panel).
 
 No account, no GPU, nothing to install.
 
-**Serves `/v1/audit_panel` only** — pure CPU over pre-computed verdicts. No GPU, no key, no cold start (backed by the always-on CPU service `chambul/medisimplifier:audit-cpu`).
+**Serves `/v1/audit_panel` only** — pure CPU over pre-computed verdicts. No GPU, no key, no cold start (backed by the always-on CPU service `chambul/medisimplifier:audit-cpu-v2`, serving `audit_pool_v2/`).
 
 #### Tier 2 — Full pipeline (GPU, on-demand)
 
 The full simplify-and-gate pipeline requires **two** Nebius endpoints running — both started from the Nebius Console (see [REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) for redeploy instructions):
 
-1. **endpoint-v5** (H100, ~10–15 min cold start) — serves `POST /v1/simplify` (student rewrite); `POST /v1/audit_panel` is also available here.
+1. **endpoint-v5** (H100, ~10–15 min cold start) — serves `POST /v1/simplify` (student rewrite). Its `POST /v1/audit_panel` still serves the **earlier automated pool** (the v5 image predates the v2 pool); for the current v2 answer use the Tier 1 service.
 2. **qwen3-32b-judge** (dedicated endpoint) — supplies the Qwen verdict. Without it, `qwen_verdict = ERROR`, and the gate's decision rule (Qwen3-32B + Nemotron decide) cannot be applied.
 
 > **Live endpoint (Nebius GPU Endpoint — application-tunnel URL, stopped between demos):**
@@ -482,6 +482,10 @@ Maximum input length and input language are **not formally constrained** in the 
 ```json
 {"vllm": true, "token_factory": true, "audit_panel": true, "ready": true}
 ```
+On the always-on CPU service, `/health` also names the served pool:
+```json
+{"service": "audit_panel-cpu", "audit_panel": true, "pool_loaded": true, "benchmark": "MedSimp-JudgeBench-v2", "ready": true, "pool_error": null}
+```
 
 **Error semantics:**
 - **`consensus: "ERROR"`** — a Token Factory judge call failed or timed out (each judge bounds its HTTP call at 60 s with 3 retries, then returns `ERROR`).
@@ -490,12 +494,13 @@ Maximum input length and input language are **not formally constrained** in the 
 
 #### `POST /v1/audit_panel`
 
-Given an incumbent judge panel and a candidate pool, ranks the candidates and recommends the single judge to add that best raises truth-anchored dependability (Φ_V) on the panel's **blindest stratum**. Pure CPU over the committed pre-scored verdict pool — **no live judge calls**. Request body (JSON):
+Given an incumbent judge panel and a candidate pool, ranks the candidates and recommends the single judge to add that best raises truth-anchored dependability (Φ_V) on the panel's **blindest stratum** (the v2 pool has one stratum, diagnosis). Pure CPU over the committed pre-scored verdict pool — **no live judge calls**. The served pool is selected by `AUDIT_POOL_DIR` (unset → the earlier `audit_pool/`; the always-on image sets `audit_pool_v2`). Request body (JSON):
 
 | Field | Type | Required | Default | Notes |
 |--|--|--|--|--|
 | `incumbent_panel` | string[] | yes | — | ≥2 pooled model ids (the current panel) |
 | `candidate_pool` | string[] | yes | — | model ids to rank as the added rater; must be an explicit list. Unknown ids are returned in `unseen_candidates`, never ranked |
+| `benchmark` | string | no | the served pool | `"MedSimp-JudgeBench-v2"` or `"MedSimp-JudgeBench"`; if given and it doesn't match the pool this service loaded → **400** |
 | `bootstrap_iters` | int | no | 1000 | paired-bootstrap resamples for the recommended candidate's CI |
 | `seed` | int | no | 42 | bootstrap seed (chained-rng — reproduces the committed receipt) |
 
@@ -507,7 +512,7 @@ curl -X POST <BASE_URL>/v1/audit_panel -H "Content-Type: application/json" \
                           "deepseek-ai/DeepSeek-V4-Flash-0731", "nvidia/Nemotron-3-Ultra-550b-a55b"]}'
 ```
 
-Response — an `incumbent` summary (per-stratum Φ_V, σ²_B, blindest stratum), the full `candidates_ranked` list, and a `recommendation`:
+Response — `benchmark` (the pool that answered), an `incumbent` summary (per-stratum Φ_V, σ²_B, blindest stratum), the full `candidates_ranked` list, and a `recommendation`:
 
 | Field | Notes |
 |--|--|
@@ -516,11 +521,11 @@ Response — an `incumbent` summary (per-stratum Φ_V, σ²_B, blindest stratum)
 | `recommendation.expected_Phi_V_lift` | ΔΦ_V point estimate on that stratum |
 | `recommendation.ci_95` | bootstrap 95% CI for the lift |
 | `recommendation.tied_top_candidates` | candidates within `TIE_BAND` (statistical tie) of the top |
-| `recommendation.selected_among_ties_by` | tie-break rule (least collateral on non-blind strata) |
+| `recommendation.selected_among_ties_by` | tie-break rule: least collateral on non-blind strata (multi-stratum pools), then fewest ERROR verdicts, then specificity on clean controls |
 | `recommendation.caveat` | any stratum whose ΔΦ_V CI straddles zero |
-| `candidates_ranked[]` | full pool ranking (per-stratum ΔΦ_V + Δσ²_B per candidate) |
+| `candidates_ranked[]` | full pool ranking (per-stratum ΔΦ_V + Δσ²_B per candidate, plus `error_rows` and `specificity_clean` used by the tie-break) |
 
-Live receipt (Llama+Qwen incumbent, 6-candidate pool → recommends **Nemotron Nano**, +0.0706, CI **[0.0552, 0.0866]**, gemma ranked last): [`results/audit_panel_live_receipt.json`](results/audit_panel_live_receipt.json).
+Live receipt, v2 pool (Llama+Qwen incumbent, 6-candidate pool → recommends **gpt-oss-120b**, +0.122, CI **[0.100, 0.142]**, tied with DeepSeek-V4-Flash, gemma ranked last): [`results/audit_panel_live_receipt_v2.json`](results/audit_panel_live_receipt_v2.json). The same request against the earlier automated pool recommended Nemotron Nano, +0.0706 — preserved in [`results/audit_panel_live_receipt.json`](results/audit_panel_live_receipt.json).
 ### B4. The safety gate — how a verdict is produced
 
 The three judges are called via Token Factory; the verdict follows a **calibration-informed decision rule** (`safety_gate.py`) over the Qwen and Nemotron verdicts:
@@ -731,16 +736,16 @@ src/
   run_disagree_capture.py        Capture live DISAGREE case from endpoint
   audit_panel/                   /v1/audit_panel service (Steps 1-6):
     vagt_core.py                 generalized VAGT decomposition (σ²/Φ_V + paired bootstrap CIs)
-    pool_loader.py               load audit_pool verdicts + ground truth (merge by row_id)
-    selector.py                  blind-spot-first ranking (TIE_BAND + collateral tie-break) → recommendation
+    pool_loader.py               load a verdict pool + ground truth (merge by row_id)
+    selector.py                  blind-spot-first ranking; pool-derived strata; ties → least collateral, then reliability (errors, specificity)
     schemas.py                   FastAPI request/response models
-    router.py                    POST /v1/audit_panel route (mounted in safe_endpoint.py)
+    router.py                    POST /v1/audit_panel route (mounted in safe_endpoint.py + cpu_endpoint.py; AUDIT_POOL_DIR selects the pool)
     build_pool.py                reshape calibration → audit_pool/ (lossless, self-validating)
     gen_pool_verdicts.py         Step 6: generate a candidate's 708-row verdicts (dual-registry)
 docker/
   Dockerfile.train               Builds train-v29/v30/v31/v32 (cryptography==48.0.1 pinned)
   Dockerfile.endpoint            Safe Endpoint v5 image (endpoint-v5)
-  Dockerfile.cpu                 CPU-only audit_panel image (audit-cpu; no vLLM/torch/CUDA; ~370MB)
+  Dockerfile.cpu                 CPU-only audit_panel image (audit-cpu-v2; ships both pools, serves audit_pool_v2/; no vLLM/torch/CUDA)
 jobs/
   job_train_v2.yaml              v2 fine-tuning job (train-v29, sha256:bbbf6df1..., Nemotron dataset, adapters-v2 bucket)
   job_eval_v2.yaml               v2 evaluation job (train-v30, sha256:6c3cd4cd..., GuyDor007 test)
@@ -757,6 +762,7 @@ scripts/
   compute_split_half.py          Fix 3: split-half out-of-sample validation under the deployed gate prompt
   compute_consensus_accuracy.py  Consensus-accuracy baseline vs Φ_V decomposition (majority-vote bal-acc)
   run_vagt_loop_experiment.py    VAGT prescribes-then-verifies loop: A0 gate-prompt vs A1 scoped-D1 Nemotron on the diagnosis stratum (n=350; pre-registered thresholds; paired bootstrap; Llama/Qwen held fixed)
+  build_audit_pool_v2.py         Build audit_pool_v2/ from the committed v2 results; self-verifies vs judgebench_v2_pool_table.json
 logs/
   train_v2.json.gz               v2 training log — Nebius Job aijob-e00rwxv72fe81f54we, 8,523s, per-epoch eval_loss
 docs/
@@ -775,11 +781,15 @@ app/
 .github/
   workflows/deploy.yml           GitHub Actions — build app/ (Vite) → gh-pages → public demo URL
 audit_pool/
-  ground_truth.json              708-item ground truth (τ labels, stratum, row_id)
+  ground_truth.json              708-item ground truth (τ labels, stratum, row_id) — earlier automated pool (superseded on diagnosis)
   candidates.yaml                pool manifest (pooled + pending candidates)
   verdicts/                      per-judge 708-row verdict files (8: 3 incumbents + 5 additional models)
+audit_pool_v2/                   v2 hand-verified pool — served by the always-on /v1/audit_panel
+  ground_truth.json              240 items: 120 τ=1 primary-diagnosis drops + 120 τ=0 paired controls
+  candidates.yaml                manifest + v2 provenance (generated)
+  verdicts/                      per-judge 240-row verdict files (same 8 models, deployed gate prompt)
 tests/
-  test_audit_panel.py            14-test suite: pool integrity, Nano recommended (not gemma), CI = committed receipt [0.0552, 0.0866]
+  test_audit_panel.py            25-test suite: v1 historical lock (Nano, [0.0552, 0.0866]) + v2 pool (gpt-oss, [0.1000, 0.1416], reliability tie-break) + mechanics
 nemotron_judge_test.py           Nemotron Nano as safety judge (3-judge calibration, checkpointed)
 nemotron_teacher.py              Nemotron Super teacher — JudgeBench references
 nemotron_training_data.py        Nemotron Super teacher — full 9,999-record training set (resume-capable)
@@ -806,7 +816,9 @@ results/vagt_loop_A0.json              Per-item A0 arm (deployed gate prompt) ve
 results/vagt_loop_A1.json              Per-item A1 arm (scoped D1 rubric) verdicts + source_items_count/defects — paraphrase-FP evidence (e.g. idx 12: "leukemia"→"fast-growing blood cancer" flagged as dropped)
 results/physician_review.csv           Blinded 50-case physician spreadsheet (seed=42; 6 contested + 44 stratified)
 results/physician_review_KEY.csv       De-blinding key (Case# → orig_index → stratum → source)
-results/audit_panel_live_receipt.json  Live /v1/audit_panel receipt (Nano recommended, +0.0706, CI [0.0552, 0.0866])
+results/audit_panel_live_receipt.json  Live /v1/audit_panel receipt, earlier automated pool (superseded: Nano, +0.0706, CI [0.0552, 0.0866])
+results/audit_panel_live_receipt_v2.json  Live /v1/audit_panel receipt, v2 pool (gpt-oss-120b, +0.122, CI [0.100, 0.142])
+results/tau_hand_labels_150.json       Hand audit of the 150 automated "dropped diagnosis" items (128 PRESENT / 9 ABSENT / 13 BORDERLINE)
 results/endpoint_v5_smoke_test.json    endpoint-v5 smoke test (SAFE capture; honest note on non-determinism)
 vagt_nemotron_results.txt        VAGT decomposition output (per-feature, both rater sets)
 vagt_bootstrap_cis.json               paired-Δ 95% CIs: ΔΦ_V +0.071 [+0.055,+0.087] on diagnosis

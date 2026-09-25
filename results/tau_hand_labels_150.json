@@ -1,0 +1,902 @@
+[
+  {
+    "idx": 4,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Condition at Discharge: Stable",
+    "reason": "administrative (Condition at Discharge); esophageal fistula + aortic aneurysm dx present"
+  },
+  {
+    "idx": 12,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "A test of the bone marrow showed the patient had a fast-growing blood cancer in certain white blood cells.",
+    "reason": "bone-marrow confirmation dropped; fast-growing blood cancer dx in Diagnosis line"
+  },
+  {
+    "idx": 15,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The doctors first thought the baby had a serious blood infection.",
+    "reason": "sepsis suspicion restated in Admitting Diagnosis; malaria dx present"
+  },
+  {
+    "idx": 16,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnosis: The patient was diagnosed with a non-cancerous wart-like growth in the food pipe.",
+    "reason": "definition line; non-cancerous wart-like growth (papilloma) in narrative"
+  },
+  {
+    "idx": 21,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The scan showed signs of TB infection in the brain, including the covering of the brain and brain tissue.",
+    "reason": "brain-TB scan detail; TB in prostate and brain in Main Diagnosis"
+  },
+  {
+    "idx": 32,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Treatment to kill the germ was started, but follow-up tests showed the infection was still there.",
+    "reason": "treatment-failure detail; H. pylori infection dx present"
+  },
+  {
+    "idx": 36,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The disease did not go away and eventually spread.",
+    "reason": "prognosis (disease spread); rhabdomyosarcoma/myofibrosarcoma present"
+  },
+  {
+    "idx": 47,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnosis at discharge: Liver scarring caused by Hepatitis B virus with a blood clot in a major liver vein, confusion caused by liver proble...",
+    "reason": "discharge-dx restatement; admitting dx + brain bleed present"
+  },
+  {
+    "idx": 49,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "She should continue to manage her other health conditions including heart disease, high blood pressure, and high cholesterol.",
+    "reason": "comorbidity-management advice; myeloma/lymphoma primary present, comorbidities in history line"
+  },
+  {
+    "idx": 50,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Summary: Patient Name: Not Provided Medical Record Number: Not Provided Gender: Female Age: 100 years Admission Date: [Date] Disch...",
+    "reason": "header dropped; AAA conveyed in narrative"
+  },
+  {
+    "idx": 67,
+    "verdict": "BORDERLINE",
+    "dropped_sentence_short": "On day 21 after surgery, he was not awake and died from a serious blood infection that spread through his whole body.",
+    "reason": "fatal systemic sepsis + death; summary says only several infections"
+  },
+  {
+    "idx": 78,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The patient's parents were told to watch for any signs of infection.",
+    "reason": "advice to watch for infection; tufting enteropathy + Bacillus line infection present"
+  },
+  {
+    "idx": 80,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Summary: Patient Information: Name: [Redacted] Age: 73 Gender: Female Admission Date: [Redacted] Discharge Date: [Redacted] Diagno...",
+    "reason": "header came-for-a-heart-test; CAD/angina conveyed in narrative"
+  },
+  {
+    "idx": 83,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "A bone marrow test was also done to check for blood cancer.",
+    "reason": "rule-out bone-marrow test; RA affecting brain covering present"
+  },
+  {
+    "idx": 93,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Treatment The patient received treatment for the fungal infection following the hospital's standard care plan.",
+    "reason": "treatment sentence; Cryptococcus fungal infection + disseminated TB present"
+  },
+  {
+    "idx": 94,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Condition: The patient went home in stable condition with no problems.",
+    "reason": "administrative discharge condition; pancreatic pseudocyst + recurrent pancreatitis present"
+  },
+  {
+    "idx": 98,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnostic Assessment: The patient was sent for a special scan of her neck called an MRI.",
+    "reason": "test-ordering sentence; cervical vascular-loop nerve compression present"
+  },
+  {
+    "idx": 102,
+    "verdict": "BORDERLINE",
+    "dropped_sentence_short": "Lab tests showed it was a rare, non-cancerous muscle tumor.",
+    "reason": "plain non-cancerous-muscle-tumor label dropped; benign histology retained"
+  },
+  {
+    "idx": 108,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Condition When Leaving: The patient left the hospital in stable condition.",
+    "reason": "administrative; 8% electrical-flame burns present"
+  },
+  {
+    "idx": 118,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The patient left the hospital in stable condition.",
+    "reason": "administrative; paraplegia/spasticity present"
+  },
+  {
+    "idx": 121,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The patient was started on two medicines that help the immune system fight cancer, called ipilimumab and nivolumab.",
+    "reason": "treatment (ipilimumab+nivolumab); RCC with liver mets present, meds reappear"
+  },
+  {
+    "idx": 129,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Condition on Discharge: The patient healed well after surgery with no bleeding or other problems.",
+    "reason": "administrative outcome; vulvar tubular neoplasm present"
+  },
+  {
+    "idx": 131,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Three weeks after restarting dasatinib, abnormal cancer cells came back in the blood.",
+    "reason": "relapse event; Ph+ ALL leukemia present"
+  },
+  {
+    "idx": 132,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "DISCHARGE SUMMARY Admitting Diagnosis: Repeated episodes of growing swelling in the kneecap area in both knees.",
+    "reason": "header/admitting-dx; knee swelling + Globoid cell leukodystrophy in body"
+  },
+  {
+    "idx": 134,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "FINAL DIAGNOSIS: Very heavy menstrual bleeding caused by one noncancerous growth in the uterus wall.",
+    "reason": "FINAL DIAGNOSIS duplicate; identical DISCHARGE DIAGNOSIS remains"
+  },
+  {
+    "idx": 137,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "DISCHARGE SUMMARY Patient Name: Not Provided Gender: Female Age: 31 years Admission Date: Not Provided Discharge Date: Not Provided Admittin...",
+    "reason": "header discharge-dx; parasitic/hydatid bone cysts in narrative"
+  },
+  {
+    "idx": 138,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Scans can show different patterns for this kind of cancer.",
+    "reason": "imaging-discussion sentence; Follicular Lymphoma present verbatim"
+  },
+  {
+    "idx": 141,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "This pointed to a condition called eosinophilic gastroenteritis, where allergy cells cause gut inflammation.",
+    "reason": "eosinophilic gastroenteritis restated in Course Summary"
+  },
+  {
+    "idx": 145,
+    "verdict": "BORDERLINE",
+    "dropped_sentence_short": "Diagnostic Testing: An ultrasound of the leg veins showed a blood clot in the right thigh vein.",
+    "reason": "leg DVT finding removed; PE/lung clots (primary) retained"
+  },
+  {
+    "idx": 146,
+    "verdict": "ABSENT",
+    "dropped_sentence_short": "He has a family history of Parkinson disease and also has depression.",
+    "reason": "depression (secondary dx) removed, nowhere else; Parkinsons stays"
+  },
+  {
+    "idx": 151,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Other lab tests on Day 17 helped confirm this diagnosis.",
+    "reason": "confirmation detail; low platelets + lung clots in discharge dx"
+  },
+  {
+    "idx": 153,
+    "verdict": "BORDERLINE",
+    "dropped_sentence_short": "The patient had serious breathing problems after surgery to drain a pocket of infection near the tonsils.",
+    "reason": "ARDS lay-described; peritonsillar-abscess antecedent orphaned"
+  },
+  {
+    "idx": 156,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnosis: The patient was diagnosed with a bulging disc at L4-L5.",
+    "reason": "Diagnosis header; bulging L4-L5 disc + intradural extrusion in narrative"
+  },
+  {
+    "idx": 158,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The size of the tumor, larger than one centimeter, also made surgery necessary.",
+    "reason": "size-justification detail; papillary fibroelastoma present"
+  },
+  {
+    "idx": 164,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "However, the fluid around her brain and spine showed a high number of white blood cells, mostly a type that fights infection.",
+    "reason": "CSF pleocytosis finding; anti-NMDA encephalitis + working dx present"
+  },
+  {
+    "idx": 168,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnostic Findings: Blood tests showed the kidneys, liver, pancreas, and thyroid were all working normally.",
+    "reason": "normal-findings sentence; IgG4 immune disorder present"
+  },
+  {
+    "idx": 172,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge diagnosis: Meningitis, which is swelling of the protective layers around the brain and spinal cord.",
+    "reason": "discharge-dx line; identical meningitis definition in narrative"
+  },
+  {
+    "idx": 178,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnostic Assessment: Blood tests showed the white blood cell count was 6.8 thousand per microliter.",
+    "reason": "WBC lab value; pneumomediastinum finding retained"
+  },
+  {
+    "idx": 194,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Summary Patient Name: [redacted] Medical Record Number: [redacted] Admission Date: [redacted] Discharge Date: [redacted] Diagnosis...",
+    "reason": "header + presentation; granular cell tumor named in body"
+  },
+  {
+    "idx": 205,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "DISCHARGE DIAGNOSIS: Broken bones in the hand that were shattered into pieces at the base of the third hand bone.",
+    "reason": "DISCHARGE DIAGNOSIS line; identical fracture description in narrative"
+  },
+  {
+    "idx": 206,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "After 13 days of treatment and getting stable, the patient left the hospital in good condition.",
+    "reason": "outcome; LVAD pump thrombosis present"
+  },
+  {
+    "idx": 215,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The scan also showed no cancer spread to the brain.",
+    "reason": "negative finding (no brain spread); oral SCC + adrenal insufficiency present"
+  },
+  {
+    "idx": 217,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "DISCHARGE DIAGNOSIS: 1.",
+    "reason": "truncated fragment DISCHARGE DIAGNOSIS 1.; IPSVS shunt + hepatic mass present"
+  },
+  {
+    "idx": 223,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Condition at Discharge: The patient's health got worse.",
+    "reason": "outcome (deceased in header); TOF/PTA/VSD/PDA present"
+  },
+  {
+    "idx": 227,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Summary: Patient Name: N/A Gender: Female Age: 42 years Hospital Number: N/A Date of Admission: N/A Date of Discharge: N/A Admitti...",
+    "reason": "header admitting-dx; ischemic stroke in Discharge-Dx line"
+  },
+  {
+    "idx": 231,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Current Condition: The patient has been stable since starting the hormone-blocking drugs.",
+    "reason": "status line; abdominal paraganglioma + bone mets present"
+  },
+  {
+    "idx": 237,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The patient left the hospital in good condition.",
+    "reason": "administrative; cervical cord-compression injury present"
+  },
+  {
+    "idx": 240,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "These visits will check how his brain is working and watch for changes in his blood vessel disease.",
+    "reason": "follow-up advice; cerebellar infarct/atherosclerosis present"
+  },
+  {
+    "idx": 249,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "A condition called serotonin syndrome was suspected, and the patient was given fluids through a vein and lorazepam.",
+    "reason": "duplicate; Suspected serotonin syndrome in discharge dx"
+  },
+  {
+    "idx": 254,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "DISCHARGE DIAGNOSIS: Nerve damage that is getting worse over time, caused by a change in the GSN gene DISCHARGE MEDICATIONS: [No medication ...",
+    "reason": "discharge-dx restatement; admitting nerve-damage-worsening + GSN gene in narrative"
+  },
+  {
+    "idx": 261,
+    "verdict": "BORDERLINE",
+    "dropped_sentence_short": "A 3D scan showed an infection at the root tips of the front tooth and an extra root that was more toward the front of the mouth than normal.",
+    "reason": "periapical-infection finding removed; extra-root primary + dark-area-near-root-tip present"
+  },
+  {
+    "idx": 264,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "This was done to make sure there was no tumor.",
+    "reason": "rule-out rationale; Hirayama Disease present"
+  },
+  {
+    "idx": 270,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Summary: Patient Name: [Insert Name] Medical Record Number: [Insert Number] Admission Date: [Insert Date] Discharge Date: [Insert ...",
+    "reason": "header Diagnosis; congenital diaphragmatic hernia conveyed in narrative"
+  },
+  {
+    "idx": 274,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Treatment: The patient received medicine to fight the fungal infection.",
+    "reason": "treatment; disseminated histoplasmosis present"
+  },
+  {
+    "idx": 275,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Hospital Course: The patient was started on medicines to treat a possible brain infection.",
+    "reason": "empiric-tx line; neurosyphilis/HIV/HLH confirmed dx present"
+  },
+  {
+    "idx": 276,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Summary: Patient Information: Name: [redacted] Age: 35 Gender: Male Admission Date: [redacted] Discharge Date: [redacted] Reason f...",
+    "reason": "header Final Diagnosis HIV + myelitis; both in narrative"
+  },
+  {
+    "idx": 293,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Summary Patient Name: [REDACTED] Medical Record Number: [REDACTED] Date of Admission: [REDACTED] Date of Discharge: [REDACTED] Adm...",
+    "reason": "header PTCL name; T-cell-cancer/fast-spreading-blood-cancer concept in narrative"
+  },
+  {
+    "idx": 308,
+    "verdict": "BORDERLINE",
+    "dropped_sentence_short": "The patient was found to have thyroid problems along with heart failure and was sent home.",
+    "reason": "heart-failure/NTI label dropped; HF signs + thyroid disease present"
+  },
+  {
+    "idx": 341,
+    "verdict": "ABSENT",
+    "dropped_sentence_short": "After surgery, the patient developed a lung infection caused by food or liquid getting into the lungs.",
+    "reason": "aspiration pneumonia (secondary dx) genuinely removed, not elsewhere"
+  },
+  {
+    "idx": 345,
+    "verdict": "BORDERLINE",
+    "dropped_sentence_short": "She had a brain disease affecting the whole brain.",
+    "reason": "one enumerated dx (diffuse encephalopathy) dropped; overlaps retained neurodegenerative"
+  },
+  {
+    "idx": 347,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diet: N/A Activity: N/A Condition on Discharge: Stable Signed, N/A",
+    "reason": "administrative footer; pineal germ cell tumor present"
+  },
+  {
+    "idx": 353,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Doctors used a focused radiation treatment called Gamma Knife to treat the returned cancer.",
+    "reason": "treatment (Gamma Knife); recurrent glioblastoma present"
+  },
+  {
+    "idx": 355,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Condition at Discharge: The patient's condition was much better when she left the hospital.",
+    "reason": "outcome; chronic leg ulcer present (Admission+Final Dx)"
+  },
+  {
+    "idx": 368,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Doctors thought he might have a severe immune reaction from COVID-19 or a bacterial infection after his virus.",
+    "reason": "differential; final dx Adult Onset Stills disease present"
+  },
+  {
+    "idx": 372,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Condition: The patient left the hospital in better health after treatment for his dark toe color and dying skin tissue.",
+    "reason": "outcome/status; Raynauds + toe necrosis present"
+  },
+  {
+    "idx": 377,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "This is a rare disease where abnormal cells build up and can damage bones.",
+    "reason": "definition; Langerhans cell histiocytosis named"
+  },
+  {
+    "idx": 382,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The patient was sent to an infection specialist for follow-up care.",
+    "reason": "follow-up; complex liver abscess/mass present"
+  },
+  {
+    "idx": 384,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Summary: The patient was diagnosed with a type of hair loss called alopecia areata.",
+    "reason": "dx-name line dropped; defining lay description (ring-shaped biopsy-confirmed hair loss) present"
+  },
+  {
+    "idx": 404,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "A small tissue sample proved it was a central giant cell tumor, a non-cancerous growth.",
+    "reason": "tissue-sample line; central giant cell tumor in header+narrative"
+  },
+  {
+    "idx": 426,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnosis: Low-grade bone cancer in the left shoulder blade that has not spread.",
+    "reason": "Diagnosis header; identical chondrosarcoma dx in narrative"
+  },
+  {
+    "idx": 434,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "DISCHARGE DIAGNOSIS: Sudden airway blockage caused by ticagrelor HOSPITAL COURSE SUMMARY: Two hours after getting ticagrelor, the patient be...",
+    "reason": "discharge-dx; ticagrelor airway-blockage conveyed in narrative + stop-ticagrelor"
+  },
+  {
+    "idx": 437,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The patient also had a serious infection.",
+    "reason": "severity qualifier dropped; bulge-caused-by-an-infection retained"
+  },
+  {
+    "idx": 440,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Special eye imaging tests showed the cancer was going away.",
+    "reason": "response finding; primary intraocular lymphoma present"
+  },
+  {
+    "idx": 443,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Condition at Discharge: The patient was in stable condition when she left the hospital.",
+    "reason": "administrative; COVID-19 + respiratory distress + HIV listed"
+  },
+  {
+    "idx": 450,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Lab results showed the fluid was caused by infection or disease rather than pressure buildup.",
+    "reason": "exudate-classification detail; pleural/chylous effusion + helminth + Klebsiella present"
+  },
+  {
+    "idx": 454,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "After many tests, doctors found a rare tumor behind her belly area.",
+    "reason": "phrase repeated in Course Summary; paraganglioma + SDHB gene present"
+  },
+  {
+    "idx": 458,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Doctors first thought it might be a type of tuberculosis in the spine or possibly a cancer called lymphoma.",
+    "reason": "differential (spinal TB/lymphoma); actinomycosis present"
+  },
+  {
+    "idx": 459,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Current Medications Upon Discharge: None provided Follow-Up Care: The patient should keep going to check-up visits so doctors can watch his ...",
+    "reason": "admin/follow-up; synovial chondromatosis present"
+  },
+  {
+    "idx": 472,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "(none - no sentence removed)",
+    "reason": "n_dropped=0 anomaly (no sentence removed); RCVS present"
+  },
+  {
+    "idx": 478,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Later, the patient developed a burst appendix under the liver with a pocket of infection.",
+    "reason": "restated in Treatment; sepsis-from-pneumonia primary present"
+  },
+  {
+    "idx": 491,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnostic Tests No tests were done.",
+    "reason": "no-tests-done line; neuropathic chest-pain + scar present"
+  },
+  {
+    "idx": 506,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnosis: Based on the medical report, no specific diagnosis was given for the bump.",
+    "reason": "states no dx existed; senile entropion present"
+  },
+  {
+    "idx": 525,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "This finding matched a condition called mastocytosis.",
+    "reason": "intermediate matched-mastocytosis; xanthelasmoid mastocytosis named"
+  },
+  {
+    "idx": 526,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnosis: Muscle breakdown caused by two medicines called simvastatin and clarithromycin Treatment: Fluids given through a vein, insulin wi...",
+    "reason": "Diagnosis/Treatment block; rhabdomyolysis + COPD/IHD restated in Summary"
+  },
+  {
+    "idx": 530,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "However, there was no cancer.",
+    "reason": "negative finding (no cancer); goiter/tracheomalacia present"
+  },
+  {
+    "idx": 533,
+    "verdict": "BORDERLINE",
+    "dropped_sentence_short": "Hospital Course Summary Patient: Female, 83 years old Admission date: TBD Discharge date: Day 25 Admission diagnosis: Blood clot in the left...",
+    "reason": "PMH osteoporosis + chronic AF only weakly implied (warfarin); pelvic hematoma present"
+  },
+  {
+    "idx": 540,
+    "verdict": "BORDERLINE",
+    "dropped_sentence_short": "Discharge Summary Patient name: [Name] Medical record number: [Number] Date of admission: [Date] Date of discharge: [Date] Hospital Course: ...",
+    "reason": "liver-cyst disease conveyed; polycystic KIDNEY component not restated"
+  },
+  {
+    "idx": 542,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "HOSPITAL COURSE SUMMARY: Patient name: M.K Age: 9 months Date of admission: [insert date] Date of discharge: [insert date] Admission diagnos...",
+    "reason": "header admission-dx; HLH named in Discharge-diagnosis line"
+  },
+  {
+    "idx": 546,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "A full body scan showed cancer that had spread to many parts of the body.",
+    "reason": "near-duplicate present (full-body PET-CT spread); Burkitt lymphoma present"
+  },
+  {
+    "idx": 548,
+    "verdict": "ABSENT",
+    "dropped_sentence_short": "Hospital Admission: Stomach and digestive problems History: A 70-year-old woman has asthma and a condition where too many white blood cells ...",
+    "reason": "asthma + eosinophilic esophagitis + sinusitis (3 comorbid dx) removed; only high-white-cells hinted"
+  },
+  {
+    "idx": 562,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "This made the doctors unsure about that diagnosis.",
+    "reason": "uncertainty note; Leber congenital amaurosis present"
+  },
+  {
+    "idx": 577,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnostic Tests: The chest X-ray showed the heart was larger than normal.",
+    "reason": "cardiomegaly finding; lung-mass-invading-heart cancer present"
+  },
+  {
+    "idx": 580,
+    "verdict": "ABSENT",
+    "dropped_sentence_short": "The care team gave advice on how to handle the patient's lung disease, called COPD, which makes breathing harder.",
+    "reason": "COPD (comorbid dx) removed, named nowhere else; AML primary stays"
+  },
+  {
+    "idx": 586,
+    "verdict": "BORDERLINE",
+    "dropped_sentence_short": "Discharge Diagnosis: Growth near the bottom area before birth and lipoblastoma, a harmless fatty tumor Discharge Condition: Stable Discharge...",
+    "reason": "perianal mass conveyed (admission dx); specific lipoblastoma histology likely dropped"
+  },
+  {
+    "idx": 588,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnosis and Treatment: Doctors believe the patient had bleeding in her bile system caused by a fluid-filled sac on her liver.",
+    "reason": "Diagnosis/Treatment line; hemobilia + hepatic cysts restated"
+  },
+  {
+    "idx": 594,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The lump was mainly made up of two types of cancer.",
+    "reason": "both cancers named in Final Diagnosis"
+  },
+  {
+    "idx": 598,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Hospital Course: The patient was admitted with medium-grade cancer in the right side of the colon.",
+    "reason": "colon adenocarcinoma in Chief Complaint + stage-III narrative"
+  },
+  {
+    "idx": 609,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Summary: Patient: 71-year-old male with a history of heart disease and recent heart surgery.",
+    "reason": "header PMH; restated in closing Summary; subclavian stenosis/LV dysfunction present"
+  },
+  {
+    "idx": 611,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Doctors first thought it might be cancer in the mouth area.",
+    "reason": "differential (oral cancer); cysticercosis present"
+  },
+  {
+    "idx": 613,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "This is a rare condition where the body cannot break down certain fats properly.",
+    "reason": "definition; Wolman Disease/CESD + LAL deficiency named"
+  },
+  {
+    "idx": 619,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Summary: Patient Name: [redacted] Sex: Male Age: 39 Admission Date: [redacted] Discharge Date: [redacted] Diagnosis: Allergic to k...",
+    "reason": "header allergy-dx + sinus reason; allergy stated in narrative, sinus surgery implied"
+  },
+  {
+    "idx": 627,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Tests ruled out liver disease caused by the immune system and infections.",
+    "reason": "rule-out; T1D + hepatic glycogenosis + DKA present"
+  },
+  {
+    "idx": 628,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "This is a non-cancerous tumor that grows from the covering of a nerve.",
+    "reason": "definition; Schwannoma named in Discharge Diagnosis"
+  },
+  {
+    "idx": 636,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The patient had surgery to drain the infection and clean out the damaged tissue.",
+    "reason": "treatment; TB bone infection present"
+  },
+  {
+    "idx": 637,
+    "verdict": "BORDERLINE",
+    "dropped_sentence_short": "There was also a fast-growing cancer that had no specific features.",
+    "reason": "undifferentiated-sarcoma component name lost but described; Sertoli cell sarcoma named"
+  },
+  {
+    "idx": 646,
+    "verdict": "ABSENT",
+    "dropped_sentence_short": "She also had a lung condition called bronchiolitis obliterans and a serious fungal lung infection called invasive pulmonary aspergillosis.",
+    "reason": "bronchiolitis obliterans + invasive pulmonary aspergillosis removed; only lymphoma+PNP remain"
+  },
+  {
+    "idx": 650,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Condition: The patient was sent home in stable condition.",
+    "reason": "administrative; unruptured MCA aneurysm present"
+  },
+  {
+    "idx": 656,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The patient had surgery to remove the tumor and parts of the pancreas and small intestine.",
+    "reason": "treatment; sarcoidosis + Frantz tumor in Diagnoses"
+  },
+  {
+    "idx": 665,
+    "verdict": "ABSENT",
+    "dropped_sentence_short": "The patient was diagnosed with brain swelling caused by this virus.",
+    "reason": "HSV encephalitis gone; summary says only virus found and treated, not encephalitis"
+  },
+  {
+    "idx": 684,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnosis: Swelling in the back of the eye with abnormal blood vessel growth, cause unknown Hospital Course: The eye exam showed blurry visi...",
+    "reason": "Diagnosis header; same dx restated in Hospital Course narrative"
+  },
+  {
+    "idx": 687,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The patient had visible blood vessel spots in the mouth, which is common with this condition.",
+    "reason": "a sign; HHT present"
+  },
+  {
+    "idx": 701,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The tissue was studied and showed a rare, non-cancerous bone tumor called chondroblastoma.",
+    "reason": "chondroblastoma named in Diagnosis line"
+  },
+  {
+    "idx": 714,
+    "verdict": "ABSENT",
+    "dropped_sentence_short": "Hospital Course Summary: Admission Date: [date] Discharge Date: [date] Patient Name: [name] Age: 68 years Sex: Male Medical History: Prostat...",
+    "reason": "PMH prostate cancer + polyps + constipation removed; acute mesenteric bleed stays"
+  },
+  {
+    "idx": 715,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "At the third check-up one month after that, the lower lip had healed and showed no signs of cancer.",
+    "reason": "follow-up; lip SCC present + no-cancer restated at 2yr"
+  },
+  {
+    "idx": 728,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "No one in the patient's family had lung cancer before.",
+    "reason": "negative family history; lung giant-cell carcinoma + emphysema present"
+  },
+  {
+    "idx": 730,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnosis: Stage 3 hole in the macula.",
+    "reason": "stage-3 macular hole in opening sentence"
+  },
+  {
+    "idx": 734,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "DIAGNOSIS: Break in the bone under the left eye with tissue pushing into the air space in the cheekbone.",
+    "reason": "DIAGNOSIS line; identical orbital-floor fracture in narrative"
+  },
+  {
+    "idx": 738,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnostic Assessment: A small sample of skin was taken from a dark spot on the back of the hand.",
+    "reason": "biopsy-procedure sentence; reticulate pigmentary skin condition in Conclusion"
+  },
+  {
+    "idx": 741,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Doctors first thought it might be a type of brain tumor.",
+    "reason": "differential (brain tumor); Rathke cleft cyst + secondary hypothyroidism present"
+  },
+  {
+    "idx": 743,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The patient received medicine to prevent heart infection.",
+    "reason": "endocarditis prophylaxis (treatment); VSD+PAH+regurgitation present"
+  },
+  {
+    "idx": 756,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnosis: Lab tests on the removed tissue showed that part of the intestine had folded into itself.",
+    "reason": "intussusception + endometrioid adenocarcinoma in narrative"
+  },
+  {
+    "idx": 813,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Diagnosis: The patient has a non-cancerous growth with some cells that look very abnormal.",
+    "reason": "discharge-dx; admission dx conveys leftover tumor cells-close-to-cancer in small intestine"
+  },
+  {
+    "idx": 814,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Impressions: This patient had bile duct cancer near the liver and later developed a different type of slow-growing cancer called NET G2 that...",
+    "reason": "Impressions duplicate; bile duct cancer + NET G2 in narrative"
+  },
+  {
+    "idx": 823,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Fungal infection in the brain fluid spaces 4.",
+    "reason": "list item cryptococcal ventriculitis; fungal brain infection in Hospital Course narrative"
+  },
+  {
+    "idx": 828,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "After several tests, doctors found a lung infection caused by Legionella bacteria.",
+    "reason": "near-identical sentence present (Legionella pneumonia)"
+  },
+  {
+    "idx": 832,
+    "verdict": "ABSENT",
+    "dropped_sentence_short": "He had many health problems including weak muscles, an eye disease, heart failure, fast heartbeats from the lower heart chambers, high blood...",
+    "reason": "KSS comorbidity list (HF/CKD/pulm-HTN/heart block/valve) removed; summary vaguely affects-many-parts"
+  },
+  {
+    "idx": 850,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Cushing's disease, a condition where the body makes too much stress hormone Treatment: 1.",
+    "reason": "fragment; Cushings disease named in narrative"
+  },
+  {
+    "idx": 853,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "This is a type of blood cancer.",
+    "reason": "definition; multiple myeloma named in Comorbidities"
+  },
+  {
+    "idx": 857,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The patient also received antibiotic eye drops to prevent infection.",
+    "reason": "treatment; aphakic bullous keratopathy + corneal scarring present"
+  },
+  {
+    "idx": 862,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The doctors found that the patient had scarring left over from a past infection that caused heart swelling.",
+    "reason": "myocarditis conveyed as differential; heart-muscle scarring stated"
+  },
+  {
+    "idx": 867,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The patient was then started on hormone therapy and a bone-protecting medicine called denosumab to keep the cancer under control.",
+    "reason": "treatment (hormone therapy+denosumab); invasive lobular carcinoma + mets present"
+  },
+  {
+    "idx": 873,
+    "verdict": "ABSENT",
+    "dropped_sentence_short": "The patient had a lung condition called widened airways in the right middle part of his lung for 30 years.",
+    "reason": "bronchiectasis (underlying dx) removed, never restated; only acute hemoptysis remains"
+  },
+  {
+    "idx": 875,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnosis: Spinal Fluid Leak Procedure: Repair of spinal fluid leak through the front of the neck.",
+    "reason": "Diagnosis/Procedure line; CSF leak conveyed in narrative"
+  },
+  {
+    "idx": 882,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Genetic testing found a missing piece of genetic material linked to DiGeorge syndrome.",
+    "reason": "near-identical present + DiGeorge in Diagnoses list"
+  },
+  {
+    "idx": 887,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Summary Patient Name: [Name] Age: 37 Sex: Female Date of Admission: [Admission Date] Date of Discharge: [Discharge Date] Admitting...",
+    "reason": "header Primary Diagnosis Hives; urticaria conveyed in narrative"
+  },
+  {
+    "idx": 900,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Condition: The patient left the hospital in stable condition.",
+    "reason": "administrative; HAM (HTLV-I myelopathy) present"
+  },
+  {
+    "idx": 903,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Condition at Discharge: When the patient left the hospital, the patient's condition had gotten much better.",
+    "reason": "outcome; gout + Achilles MSU crystal deposition present"
+  },
+  {
+    "idx": 921,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "(none - no sentence removed)",
+    "reason": "n_dropped=0 anomaly (no sentence removed); septic leg infection present"
+  },
+  {
+    "idx": 925,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "DISCHARGE CONDITION: The patient is in stable condition at discharge.",
+    "reason": "administrative; refractory chyluria present"
+  },
+  {
+    "idx": 930,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Diagnosis: Doctors first thought it might be one of two types of brain tumors.",
+    "reason": "differential (2 brain tumors); germinoma final dx present"
+  },
+  {
+    "idx": 931,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "There were no signs of cancer.",
+    "reason": "negative finding (no cancer); uterine fibroid present"
+  },
+  {
+    "idx": 934,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "She was treated with fluids through a vein, medicines to fight infection, and medicines to raise blood pressure.",
+    "reason": "near-identical treatment sentence present; gastric dilatation + pneumonia present"
+  },
+  {
+    "idx": 942,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Disposition: The patient's vision was steady and the condition got better over two weeks.",
+    "reason": "outcome; malignant glaucoma present"
+  },
+  {
+    "idx": 979,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The scan showed no new cancer spread.",
+    "reason": "negative finding (no new spread); stage IV ovarian carcinoma + comorbidities present"
+  },
+  {
+    "idx": 982,
+    "verdict": "BORDERLINE",
+    "dropped_sentence_short": "Lab tests on the growth showed it was a type of tumor made of mixed cell types.",
+    "reason": "ovarian mass conveyed; specific mixed germ-cell tumor histology likely dropped"
+  },
+  {
+    "idx": 988,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "The patient received two rounds of cancer-fighting drug treatments.",
+    "reason": "near-identical treatment present; DLBCL + Turner/comorbidities present"
+  },
+  {
+    "idx": 990,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "They should watch the patient's condition closely.",
+    "reason": "advice; West syndrome present"
+  },
+  {
+    "idx": 996,
+    "verdict": "BORDERLINE",
+    "dropped_sentence_short": "She had a breathing tube placed in her neck 6 years before because of a serious lung infection.",
+    "reason": "night-ventilation conveyed; past bronchopneumonia/tracheostomy dx dropped"
+  },
+  {
+    "idx": 997,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "He was diagnosed with slowly worsening weakness in his legs that started when he was about 1 year old.",
+    "reason": "presenting complaint; progressive muscular dystrophy present (Discharge Dx)"
+  },
+  {
+    "idx": 999,
+    "verdict": "PRESENT",
+    "dropped_sentence_short": "Discharge Summary: Patient Name: [redacted] Age: 15 Gender: Male Date of Admission: [redacted] Date of Discharge: [redacted] Admitting Diagn...",
+    "reason": "header admitting-dx; pinky fracture fully described in narrative"
+  }
+]

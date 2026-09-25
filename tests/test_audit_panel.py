@@ -131,8 +131,10 @@ def test_v1_historical_dose_not_significant():
 
 
 def test_v1_historical_endpoint_receipt():
-    # The live endpoint still serves the v1 pool → Nano/+0.071/CI. If/when the endpoint is
-    # redeployed against a v2 pool, replace this with a v2 endpoint assertion.
+    # Runs in-process on the DEFAULT pool (AUDIT_POOL_DIR unset → v1 audit_pool/), so it locks
+    # the historical v1 receipt (Nano/+0.071/CI). The deployed always-on service sets
+    # AUDIT_POOL_DIR=audit_pool_v2; its v2 answer is locked by test_v2_pool_* and captured in
+    # results/audit_panel_live_receipt_v2.json. (Run the suite with AUDIT_POOL_DIR unset.)
     body = {"incumbent_panel": INCUMBENT, "candidate_pool": [NEMOTRON]}
     r = _client().post("/v1/audit_panel", json=body)
     assert r.status_code == 200, r.text

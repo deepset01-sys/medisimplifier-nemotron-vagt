@@ -1,0 +1,150 @@
+{
+  "_capture": {
+    "endpoint_url": "https://port8000-y1sj2wa6m10y8qp.tunnel.applications.eu-north1.nebius.cloud",
+    "route": "POST /v1/audit_panel",
+    "image": "audit-cpu-v2@sha256:44cec5211cd0904d568e4f6715dcd865d5daed406c247bd32203a957d30d0d67",
+    "image_note": "digest as built/pushed and deployed via the Nebius Console; /health does not report a digest — served pool identified by response.benchmark",
+    "captured_utc": "2026-09-25T01:10:31.178598+00:00",
+    "http_status": 200,
+    "health": {
+      "service": "audit_panel-cpu",
+      "audit_panel": true,
+      "pool_loaded": true,
+      "benchmark": "MedSimp-JudgeBench-v2",
+      "ready": true,
+      "pool_error": null
+    },
+    "request_identical_to": "results/audit_panel_live_receipt.json (v1 capture)"
+  },
+  "request": {
+    "incumbent_panel": [
+      "meta-llama/Llama-3.3-70B-Instruct",
+      "Qwen/Qwen3-32B"
+    ],
+    "candidate_pool": [
+      "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "google/gemma-3-27b-it",
+      "openai/gpt-oss-120b",
+      "nvidia/nemotron-3-super-120b-a12b",
+      "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "nvidia/Nemotron-3-Ultra-550b-a55b"
+    ]
+  },
+  "response": {
+    "benchmark": "MedSimp-JudgeBench-v2",
+    "incumbent": {
+      "panel": [
+        "meta-llama/Llama-3.3-70B-Instruct",
+        "Qwen/Qwen3-32B"
+      ],
+      "per_judge_sigma_R": {
+        "meta-llama/Llama-3.3-70B-Instruct": 0.0016,
+        "Qwen/Qwen3-32B": 0.0016
+      },
+      "panel_sigma_B_by_stratum": {
+        "diagnosis": 0.2315
+      },
+      "Phi_V_by_stratum": {
+        "diagnosis": 0.4764
+      },
+      "blindest_stratum": "diagnosis"
+    },
+    "candidates_ranked": [
+      {
+        "model": "openai/gpt-oss-120b",
+        "worst_stratum_delta_Phi_V": 0.122,
+        "mean_delta_Phi_V": 0.122,
+        "per_stratum_delta_Phi_V": {
+          "diagnosis": 0.122
+        },
+        "per_stratum_delta_sigma_B": {
+          "diagnosis": -0.1076
+        },
+        "error_rows": 0,
+        "specificity_clean": 0.7333
+      },
+      {
+        "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+        "worst_stratum_delta_Phi_V": 0.1238,
+        "mean_delta_Phi_V": 0.1238,
+        "per_stratum_delta_Phi_V": {
+          "diagnosis": 0.1238
+        },
+        "per_stratum_delta_sigma_B": {
+          "diagnosis": -0.1137
+        },
+        "error_rows": 7,
+        "specificity_clean": 0.6579
+      },
+      {
+        "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+        "worst_stratum_delta_Phi_V": 0.0781,
+        "mean_delta_Phi_V": 0.0781,
+        "per_stratum_delta_Phi_V": {
+          "diagnosis": 0.0781
+        },
+        "per_stratum_delta_sigma_B": {
+          "diagnosis": -0.0757
+        },
+        "error_rows": 0,
+        "specificity_clean": 0.5833
+      },
+      {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "worst_stratum_delta_Phi_V": 0.0765,
+        "mean_delta_Phi_V": 0.0765,
+        "per_stratum_delta_Phi_V": {
+          "diagnosis": 0.0765
+        },
+        "per_stratum_delta_sigma_B": {
+          "diagnosis": -0.0745
+        },
+        "error_rows": 0,
+        "specificity_clean": 0.5583
+      },
+      {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "worst_stratum_delta_Phi_V": 0.048,
+        "mean_delta_Phi_V": 0.048,
+        "per_stratum_delta_Phi_V": {
+          "diagnosis": 0.048
+        },
+        "per_stratum_delta_sigma_B": {
+          "diagnosis": -0.0585
+        },
+        "error_rows": 0,
+        "specificity_clean": 0.2917
+      },
+      {
+        "model": "google/gemma-3-27b-it",
+        "worst_stratum_delta_Phi_V": 0.0066,
+        "mean_delta_Phi_V": 0.0066,
+        "per_stratum_delta_Phi_V": {
+          "diagnosis": 0.0066
+        },
+        "per_stratum_delta_sigma_B": {
+          "diagnosis": 0.0024
+        },
+        "error_rows": 0,
+        "specificity_clean": 0.7583
+      }
+    ],
+    "recommendation": {
+      "model": "openai/gpt-oss-120b",
+      "target_blind_spot": "diagnosis",
+      "expected_Phi_V_lift": 0.122,
+      "ci_95": [
+        0.1,
+        0.1416
+      ],
+      "tied_top_candidates": [
+        "openai/gpt-oss-120b",
+        "deepseek-ai/DeepSeek-V4-Flash-0731"
+      ],
+      "selected_among_ties_by": "fewest ERROR verdicts, then highest specificity on clean controls",
+      "caveat": null
+    },
+    "unseen_candidates": [],
+    "note": "Fixed benchmark + pre-scored candidate pool; unauthenticated demo. Verdicts are pre-computed — no live judge calls at request time."
+  }
+}
