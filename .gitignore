@@ -102,3 +102,6 @@ nemotron_training_references.json
 
 # Local review-prompt draft (not part of the submission)
 review_prompt_bonus_v3.txt
+
+# Local HuggingFace release build output (scripts/build_hf_judgebench_v2.py) — not committed
+hf_release/
