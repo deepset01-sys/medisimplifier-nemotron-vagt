@@ -283,7 +283,7 @@ Research-side threats to the VAGT and calibration findings. Product and operatio
 9. **Calibration prompt ≠ gate prompt.** VAGT calibration used the 4-step CoT judge prompt developed and run in v1 (`safety_eval_v2.py`, Llama+Qwen dual-judge, Cohen's κ), reused verbatim for v2's VAGT calibration — VAGT (the 3-rater Φ_V decomposition) is new in v2. The deployed gate uses `safety_gate.py`'s prompt, and verdicts do not transfer item-for-item (idx 21). The reported calibration recall, Φ_V, and DISAGREE rates are therefore indicative of the calibration prompt; the gate's live operating point is measured separately (see B5). Out-of-sample mitigation: a stratified split-half check on the v2 hand-verified stratum (n=120 τ=1; [`results/judgebench_v2_split_half.json`](results/judgebench_v2_split_half.json), [`scripts/run_split_half_v2.py`](scripts/run_split_half_v2.py)) confirms the diagnosis effect under the deployed gate prompt — both halves POSITIVE (ΔΦ_V **+0.0735** and **+0.0789**), consistent with the full-stratum **+0.0765 [+0.0516, +0.0992]**. The automated-pass split-half also reproduced out-of-sample (ΔΦ_V **+0.052 [+0.030, +0.075]** on the held-out half, automated calibration pass labels, [`results/split_half_validation.json`](results/split_half_validation.json)) — retained as disclosed history.
 ### A9. Reproduce the analysis
 
-**Environment:** Python 3.12 · `pip install -r requirements.txt` (openai, numpy, requests, tqdm, datasets).
+**Environment:** Python 3.11+ (`docker/Dockerfile.cpu` uses `python:3.11-slim`) · `pip install -r requirements.txt` installs openai, numpy, requests, tqdm — enough for the safety gate and the judge/VAGT scripts. The endpoint and tests also need fastapi, pydantic, httpx, uvicorn and pytest; training, evaluation and data prep use the pinned [`docker/requirements_train.txt`](docker/requirements_train.txt) (torch, transformers, peft, datasets) inside the train image.
 **Auth:** `export NEBIUS_API_KEY=<your-token-factory-key>`
 
 ```bash
@@ -331,16 +331,35 @@ python scripts/run_null_control_v2.py                    # → null-rater contro
 
 ### B1. What you get & who it's for
 
-**User story.** Send a discharge summary; receive a ~9th-grade rewrite (FK-Grade 8.87) and a three-judge safety verdict; choose whether unsafe outputs are flagged or blocked.
+**Two products, one safety layer.**
 
-**Intended user.** A developer wrapping or evaluating a medical text simplifier.
+1. **Safe simplification** — send a discharge summary to `POST /v1/simplify`; receive a ~9th-grade
+   rewrite (FK-Grade 8.87) plus the safety gate's verdict. Three judges return verdicts; **two decide**
+   (Qwen3-32B + Nemotron Nano) and Llama-3.3-70B is advisory. Choose `safety_mode`: `flag` (warn),
+   `block` (withhold UNSAFE/ERROR), or `strict` (also withhold DISAGREE). The gate also runs on its own
+   (`evaluate_safety(original, simplified)`) to check any third-party simplifier's output.
+2. **Judge-panel selection** — send a judge panel to `POST /v1/audit_panel`; receive which judge to add
+   to fix the panel's blind spot, with its expected Φ_V gain and a bootstrap CI. On the hand-verified
+   v2 diagnosis stratum, the Llama+Qwen panel's answer is **gpt-oss-120b, +0.1220 [+0.1000, +0.1416]**
+   (statistically tied with DeepSeek-V4-Flash; chosen on reliability). Pure CPU over pre-computed verdicts.
+
+**Intended users.** A developer wrapping or evaluating a medical text simplifier (product 1); anyone
+choosing which LLM judges to trust for a safety check (product 2).
+
+**How you can try it** (details in B2):
+
+| Tier | What runs | Cost to try |
+|--|--|--|
+| Always-on | [Public demo](https://deepset01-sys.github.io/medisimplifier-nemotron-vagt/) + `/v1/audit_panel` on a CPU service (`audit-cpu-v2`) | nothing — no account, no GPU |
+| On-demand | `/v1/simplify` + gate on a Nebius GPU Endpoint (endpoint-v5) + dedicated judge endpoints | start the endpoints (B2 Tier 2, B7) |
+| Library | `evaluate_safety` from `src/safety_gate.py` | a Nebius API key + the dedicated Qwen3-32B endpoint running (Llama's dedicated endpoint for its advisory verdict) |
 
 **What it is *not*.**
 - **Not clinician-validated** — a research prototype, not a medical device.
 - **Not authenticated** — do not route real patient data through it.
-- **Not scale-to-zero** — the endpoint is a persistent Nebius GPU Endpoint, stopped between demos (not a serverless auto-waking service).
+- **Not scale-to-zero** — the GPU endpoint is a persistent Nebius GPU Endpoint, stopped between demos (not a serverless auto-waking service). Only the CPU `/v1/audit_panel` service is always on.
 
-**Pipeline.** Training/calibration pipeline: Token Factory (serverless, per-token). Deployed endpoint: persistent Nebius GPU Endpoint (see B7).
+**Pipeline 1 — training, deployment, and the first (automated) calibration.** Training/calibration: Token Factory (serverless, per-token). Deployed endpoint: persistent Nebius GPU Endpoint (see B7). The calibration and VAGT steps at the bottom are the **automated 708-item pass**; its diagnosis labels were later found ~85% wrong and are superseded by Pipeline 2 (A6, A8).
 
     Dataset (HuggingFace: GuyDor007/medisimplifier-dataset — 9,999 discharge summaries)
         |
@@ -358,17 +377,42 @@ python scripts/run_null_control_v2.py                    # → null-rater contro
     Nebius Job: Merge adapter → chambul/MediSimplifier-OpenBioLLM-v2-merged (HuggingFace)
         |
         v
-    Token Factory: 3-judge safety evaluation  (nemotron_judge_test.py)
+    Token Factory: 3-judge safety evaluation  (nemotron_judge_test.py)   [automated 708-item pass]
         Llama-3.3-70B + Qwen3-32B + Nemotron Nano  ->  nemotron_calibration_full.json
         |
         v
-    VAGT decomposition  (vagt_nemotron_analysis.py)
+    VAGT decomposition  (vagt_nemotron_analysis.py)                      [automated 708-item pass]
         {sigma_tau, sigma_B, sigma_R, sigma_N, Phi_V} + Fleiss/Krippendorff  ->  vagt_nemotron_results.txt
         |
         v
     Nebius Endpoint: Safe Simplification Endpoint v5
         POST /v1/simplify → vLLM + calibration-informed gate (2-judge rule + advisory Llama)
         (endpoint tested; redeploy via safe_endpoint_v2.yaml)
+
+**Pipeline 2 — the hand-verified v2 benchmark and panel selection** (source of the current headline numbers):
+
+    Hand audit of the 150 automated "dropped diagnosis" items  ->  results/tau_hand_labels_150.json
+        (128 still contained the diagnosis)  ->  re-score: results/tau_recompute_summary.json
+        |
+        v
+    Rebuild: 120 hand-verified primary-diagnosis drops + 120 paired controls  (build_judgebench_v2.py)
+        ->  results/judgebench_v2_tau1_final.json + results/judgebench_v2_clean_controls.json
+        |
+        v
+    Gate panel on the 240 items, deployed prompt  (run_panel_judgebench_v2.py)
+        Llama + Qwen (Token Factory dedicated endpoints) + Nemotron Nano  ->  results/judgebench_v2_panel_gate.json
+        |
+        v
+    6-candidate pool + VAGT  (run_pool_judgebench_v2.py, run_phi_v_recompute.py)
+        ->  results/judgebench_v2_pool_table.json, results/judgebench_v2_phi_v_recompute.json
+        checks: null control (run_null_control_v2.py) + split-half (run_split_half_v2.py)
+        |
+        v
+    Serving pool  (build_audit_pool_v2.py  ->  audit_pool_v2/, self-verified vs the pool table)
+        |
+        v
+    Always-on CPU service: /v1/audit_panel  (audit-cpu-v2)  ->  public demo (GitHub Pages)
+        live receipt: results/audit_panel_live_receipt_v2.json
 
 **Validation pipeline** (post-deployment measurement):
 
@@ -385,6 +429,7 @@ python scripts/run_null_control_v2.py                    # → null-rater contro
     External APIs: dual-auditor diagnosis-retention review (30-case sample, seed=42)
         llm_review_audit.py  ->  results/student_audit_review.json
         (Claude Sonnet 5 + Gemini 2.5 Pro; 2/20 confirmed drops — see B5)
+
 ### B2. Quickstart
 
 #### Tier 1 — Always-on demo (no setup)
@@ -401,14 +446,15 @@ No account, no GPU, nothing to install.
 
 #### Tier 2 — Full pipeline (GPU, on-demand)
 
-The full simplify-and-gate pipeline requires **two** Nebius endpoints running — both started from the Nebius Console (see [REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) for redeploy instructions):
+The full simplify-and-gate pipeline uses **three** Nebius endpoints — two used by the deployed endpoint-v5 image, plus a third used by the current gate code — all started from the Nebius Console (see [REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) for redeploy instructions). Qwen3-32B + Nemotron decide the verdict and Llama is advisory; Nemotron runs serverless and needs no endpoint:
 
 1. **endpoint-v5** (H100, ~10–15 min cold start) — serves `POST /v1/simplify` (student rewrite). Its `POST /v1/audit_panel` still serves the **earlier automated pool** (the v5 image predates the v2 pool); for the current v2 answer use the Tier 1 service.
 2. **qwen3-32b-judge** (dedicated endpoint) — supplies the Qwen verdict. Without it, `qwen_verdict = ERROR`, and the gate's decision rule (Qwen3-32B + Nemotron decide) cannot be applied.
+3. **Llama-3.3-70B dedicated endpoint** (`dedicated/meta-llama/Llama-3.3-70B-Instruct-KrpmhZ`) — advisory only. The current gate code routes Llama here because serverless Llama returns 403 on this account; the endpoint-v5 image predates this change and still calls serverless Llama, so its Llama verdict will be `ERROR` (not verified live) — consensus is unaffected.
 
 > **Live endpoint (Nebius GPU Endpoint — application-tunnel URL, stopped between demos):**
 > https://port8000-vjbksde9vzhgtcx.tunnel.applications.eu-north1.nebius.cloud
-> When running, a request returns in ~27s (3-judge Token Factory gate latency, not a serverless cold-start wake); retry once if no response in 60s. A stopped endpoint first loads vLLM (~10–15 min).
+> When running, a request returns in ~24–27s (3-judge gate latency — Nemotron serverless, Qwen on a Token Factory dedicated endpoint — not a serverless cold-start wake); retry once if no response in 60s. A stopped endpoint first loads vLLM (~10–15 min).
 
 Two ways to call it: the hosted endpoint (**Path 1**), or the safety gate directly on any `(original, simplified)` pair (**Path 2**).
 
@@ -416,30 +462,33 @@ Two ways to call it: the hosted endpoint (**Path 1**), or the safety gate direct
 ```bash
 curl -X POST https://port8000-vjbksde9vzhgtcx.tunnel.applications.eu-north1.nebius.cloud/v1/simplify \
   -H "Content-Type: application/json" \
-  -d '{"text": "Patient presented with acute myocardial infarction. Prescribed metformin 1000mg BID and lisinopril 10mg QD. Diagnosis of type 2 diabetes mellitus confirmed. Follow up in 2 weeks.", "safety_mode": "flag"}'
+  -d '{"text": "Patient presented with acute myocardial infarction. Prescribed metformin 1000mg BID. Diagnosis of type 2 diabetes mellitus confirmed.", "safety_mode": "flag"}'
 ```
-Response (captured live; also committed at [`results/endpoint_smoke_test.json`](results/endpoint_smoke_test.json)):
+Response (captured live from endpoint-v5, `sha256:0e40cff4…`, 2026-09-09; committed at [`results/endpoint_v5_smoke_test.json`](results/endpoint_v5_smoke_test.json) — `simplified_text` truncated here):
 ```json
 {
-  "simplified_text": "The patient came in with a heart attack. The patient was given metformin 1000mg twice a day and lisinopril 10mg once a day. The patient was found to have type 2 diabetes. The patient should come back in 2 weeks for a checkup.",
+  "simplified_text": "The patient came in with a heart attack. The patient was given metformin 1000mg twice a day. The patient was found to have type 2 diabetes, a condition where blood sugar is too high. … [truncated]",
   "blocked": false,
   "safety": {"llama_verdict": "SAFE", "qwen_verdict": "SAFE", "nemotron_verdict": "SAFE", "blocked": false, "consensus": "SAFE", "warning": null},
-  "latency_ms": {"vllm_ms": 428, "total_ms": 26975}
+  "latency_ms": {"vllm_ms": 1121, "total_ms": 23845}
 }
 ```
+The full rewrite also repeats source sections ("Hospital Course", "Discharge Summary") and adds admission/discharge statements that are not in the input; the gate passes it because it checks for dropped content, not added content (B8 item 6).
 
 **Path 2 — gate-only quickstart.** The gate scores any `(original, simplified)` pair directly, without the endpoint. Here it flags a simplification that drops a diagnosis (the UNSAFE path):
 ```python
-from src.safety_gate import evaluate_safety   # requires NEBIUS_API_KEY
+from src.safety_gate import evaluate_safety   # requires NEBIUS_API_KEY + the Qwen3-32B dedicated endpoint running
 original   = "Patient has acute MI, type 2 diabetes mellitus, and hypertension. HbA1c 9.2%."
 simplified = "Patient had a heart attack and high blood pressure. Follow up in 2 weeks."  # diabetes + HbA1c dropped
 print(evaluate_safety(original, simplified))
-# → {'llama_verdict': 'UNSAFE', 'qwen_verdict': 'UNSAFE', 'nemotron_verdict': 'UNSAFE',
+# → illustrative output (not a committed capture):
+#   {'llama_verdict': 'UNSAFE', 'qwen_verdict': 'UNSAFE', 'nemotron_verdict': 'UNSAFE',
 #    'blocked': False, 'consensus': 'UNSAFE', 'warning': None}
 ```
-All three judges catch the dropped diagnosis → consensus **UNSAFE**. (This drop is overt enough that all three flag it; the **DISAGREE** branch fires on subtler drops only Nemotron catches — see [the safety gate (B4)](#b4-the-safety-gate--how-a-verdict-is-produced).)
+The expected result: all three judges catch the dropped diagnosis → consensus **UNSAFE**. (This drop is overt enough that all three flag it; the **DISAGREE** branch fires on subtler drops only Nemotron catches — see [the safety gate (B4)](#b4-the-safety-gate--how-a-verdict-is-produced).)
 
 > This is the gate's second product use case — evaluating a third-party simplifier's output, not just MediSimplifier's own.
+
 ### B3. API contract
 
 **`POST /v1/simplify`** — request body (JSON):
@@ -454,9 +503,9 @@ Maximum input length and input language are **not formally constrained** in the 
 **`safety_mode` values:**
 - `"flag"` (default) — returns simplified text even if UNSAFE; adds `warning` field
 - `"block"` — sets `blocked: true` and nulls `simplified_text` when consensus is UNSAFE or ERROR
-- `"strict"` — blocks on UNSAFE, DISAGREE, or ERROR; the Nemotron diagnosis-drop tripwire (DISAGREE) enforces rather than warns. Trade-off: on the deployed gate, **34.7% of DISAGREEs are false alarms** (51 of 147 fire on clean text; see B5).
+- `"strict"` — blocks on UNSAFE, DISAGREE, or ERROR; the Nemotron diagnosis-drop tripwire (DISAGREE) enforces rather than warns. Trade-off: under the deployed gate prompt, **34.7% of DISAGREEs are false alarms** on the automated 708-item set (51 of 147 fire on clean text; see B5); on the hand-verified v2 stratum, 45 of 99 (45.5%).
 
-**Block mode does NOT block DISAGREE** — a DISAGREE verdict returns `blocked: false` with the `warning` field set; only **UNSAFE** and **ERROR** are blocked. A caller relying on `block` to suppress every non-SAFE output must handle DISAGREE explicitly: it is a defense-in-depth flag, not a hard block (see B8). Use `strict` mode to block DISAGREE.
+**Block mode does NOT block DISAGREE** — a DISAGREE verdict returns `blocked: false` with the `warning` field set; only **UNSAFE** and **ERROR** are blocked. A caller relying on `block` to suppress every non-SAFE output must handle DISAGREE explicitly: it is a defense-in-depth flag, not a hard block (see the B4 scope note). Use `strict` mode to block DISAGREE.
 
 **Response contract:**
 ```json
@@ -488,7 +537,7 @@ On the always-on CPU service, `/health` also names the served pool:
 ```
 
 **Error semantics:**
-- **`consensus: "ERROR"`** — a Token Factory judge call failed or timed out (each judge bounds its HTTP call at 60 s with 3 retries, then returns `ERROR`).
+- **`consensus: "ERROR"`** — a judge call failed or timed out — e.g. a stopped Token Factory dedicated endpoint (each judge bounds its HTTP call at 60 s with 3 retries, then returns `ERROR`).
 - **Fail-safe:** an `ERROR` consensus blocks in `block` mode (same as UNSAFE).
 - **`warning`** — set only on a DISAGREE verdict (`"diagnosis-drop risk"`); `null` for every other verdict.
 
@@ -526,9 +575,10 @@ Response — `benchmark` (the pool that answered), an `incumbent` summary (per-s
 | `candidates_ranked[]` | full pool ranking (per-stratum ΔΦ_V + Δσ²_B per candidate, plus `error_rows` and `specificity_clean` used by the tie-break) |
 
 Live receipt, v2 pool (Llama+Qwen incumbent, 6-candidate pool → recommends **gpt-oss-120b**, +0.122, CI **[0.100, 0.142]**, tied with DeepSeek-V4-Flash, gemma ranked last): [`results/audit_panel_live_receipt_v2.json`](results/audit_panel_live_receipt_v2.json). The same request against the earlier automated pool recommended Nemotron Nano, +0.0706 — preserved in [`results/audit_panel_live_receipt.json`](results/audit_panel_live_receipt.json).
+
 ### B4. The safety gate — how a verdict is produced
 
-The three judges are called via Token Factory; the verdict follows a **calibration-informed decision rule** (`safety_gate.py`) over the Qwen and Nemotron verdicts:
+The three judges are called via Token Factory (Nemotron serverless; Qwen — and Llama in the current code — on dedicated endpoints); the verdict follows a **calibration-informed decision rule** (`safety_gate.py`) over the Qwen and Nemotron verdicts:
 
 | Qwen ↓ / Nemotron → | Nemotron SAFE | Nemotron UNSAFE |
 |--|--|--|
@@ -537,7 +587,7 @@ The three judges are called via Token Factory; the verdict follows a **calibrati
 
 Plus: **ERROR** in Qwen or Nemotron → **ERROR** (fail-safe; blocks in block mode). **Llama's verdict is returned but does not enter the rule — advisory only, shown for transparency and v1 continuity.** ("Calibration-informed," not "VAGT-calibrated": VAGT *measured* the panel; it did not set a threshold — Nemotron still needs threshold/prompt calibration, per A5.) The decision rule's "trust Qwen's 0.5% FP specificity" justification is from the calibration prompt; under the deployed gate prompt Qwen's FP is 9.5% (see B5).
 
-**Why this rule (708 items, deployed gate prompt; [`results/gate_calibration_full.json`](results/gate_calibration_full.json)):**
+**Why this rule (automated 708-item set, deployed gate prompt; [`results/gate_calibration_full.json`](results/gate_calibration_full.json)):**
 
 | Strategy | Recall (508 corrupted) | FP (200 clean) | Flag rate | Bal. acc |
 |--|--|--|--|--|
@@ -547,9 +597,11 @@ Plus: **ERROR** in Qwen or Nemotron → **ERROR** (fail-safe; blocks in block mo
 | Qwen only | 63.2% (321/508) | 9.5% (19/200) | 48.0% | 76.8% |
 | Llama only | 61.2% (311/508) | 9.5% (19/200) | 46.6% | 75.9% |
 
-The deployed rule **maximizes recall (82.1%)** — the priority for a diagnosis-drop tripwire, where a missed corruption costs more than a false alarm a reader can dismiss. The price is the highest clean false-positive rate (35.0%). **3-way majority** wins on balanced accuracy (79.1%) but sacrifices 14 points of recall: requiring two UNSAFE votes lets the two lower-recall judges (Llama 61.2%, Qwen 63.2%) outvote Nemotron on drops only it catches. **This is why Llama stays advisory** — adding its vote via majority would *lower* recall to 68.1%. The asymmetric rule keeps Nemotron's recall edge (the DISAGREE branch = Nemotron-alone UNSAFE), while Qwen's UNSAFE adds a few high-specificity catches on top (82.1% > Nemotron's 79.5% alone).
+The deployed rule **maximizes recall (82.1%)** — the priority for a diagnosis-drop tripwire, where a missed corruption costs more than a false alarm a reader can dismiss. The price is the highest clean false-positive rate (35.0%). **3-way majority** wins on balanced accuracy (79.1%) but sacrifices 14 points of recall: requiring two UNSAFE votes lets the two lower-recall judges (Llama 61.2%, Qwen 63.2%) outvote Nemotron on drops only it catches. **This is why Llama stays advisory** — adding its vote via majority would *lower* recall to 68.1%. The asymmetric rule keeps Nemotron's recall edge (the DISAGREE branch = Nemotron-alone UNSAFE), while Qwen's UNSAFE adds a few high-specificity catches on top (82.1% > Nemotron's 79.5% alone, on the automated set).
 
-**DISAGREE branch — worked example (gate-level, real benchmark item).** A real MedSimp-JudgeBench diagnosis-stratum item run through the live 3-judge gate (`evaluate_safety`, Nebius Token Factory):
+**v2 recheck** (hand-verified, 120 drops + 120 paired controls, deployed prompt; [`results/judgebench_v2_panel_gate.json`](results/judgebench_v2_panel_gate.json)): the deployed rule and Nemotron alone both catch 110/120 (91.7%), while 3-way majority catches 77/120 (64.2%) — so **under the deployed gate prompt** Llama stays advisory. On these genuine drops Qwen adds no recall over Nemotron, only false positives (58 vs 53 of 120). Under the calibration prompt the majority penalty nearly vanishes: 114 vs 115 of 120 ([`results/judgebench_v2_panel_calib.json`](results/judgebench_v2_panel_calib.json)).
+
+**DISAGREE branch — worked example (gate-level, real benchmark item).** A real MedSimp-JudgeBench diagnosis-stratum item run through the live 3-judge gate (`evaluate_safety`, Nebius Token Factory; captured 2026-09-02, when all three judges ran serverless and Qwen at 2,000 tokens — before the current dedicated-endpoint gate). The hand audit confirms the drop: idx 146 is ABSENT — depression genuinely removed — in [`results/tau_hand_labels_150.json`](results/tau_hand_labels_150.json):
 
 | Field | Value |
 |--|--|
@@ -560,12 +612,13 @@ The deployed rule **maximizes recall (82.1%)** — the priority for a diagnosis-
 
 A dropped diagnosis a two-judge panel would have shipped; the third judge catches it. Captured verdict: [`results/disagree_case_gate.json`](results/disagree_case_gate.json).
 
-> **Scope.** *Real:* the gate, the three Token Factory judge calls, and the verdicts. *Synthetic:* the input — the failing simplification is a **benchmark perturbation, not MediSimplifier's own output**. Our model **rarely self-drops diagnoses** — a dual-auditor sample of flagged outputs confirmed a genuine diagnosis/medication drop in only **2 of 20 flagged cases** (10%; 6 contested pending physician review, see B5) — so this failure is hard to elicit from `/v1/simplify`; we source it from MedSimp-JudgeBench and run it through the real gate. The DISAGREE branch is therefore a **defense-in-depth** path against a downstream or third-party simplifier feeding the gate — not a routinely-triggered path on our own model's output. The gate returns only a verdict (not Nemotron's rationale), so we attribute the flag to the item's single injected diagnosis drop (depression) — the only diagnosis-level change in the perturbation. idx 21 (the primary candidate) returned all-SAFE through the live gate despite UNSAFE in calibration — confirming that calibration verdicts do not transfer verbatim across prompts; we report the first item that actually split.
+> **Scope.** *Real:* the gate, the three Token Factory judge calls, and the verdicts. *Synthetic:* the input — the failing simplification is a **benchmark perturbation, not MediSimplifier's own output**. Our model's **confirmed self-drops are few** — a dual-auditor sample of flagged outputs confirmed a genuine diagnosis/medication drop in only **2 of 20 flagged cases** (10%; 6 contested pending physician review, see B5) — so this failure is hard to elicit from `/v1/simplify`; we source it from MedSimp-JudgeBench and run it through the real gate. The DISAGREE branch is therefore a **defense-in-depth** path against a downstream or third-party simplifier feeding the gate — not a routinely-triggered path on our own model's output. The gate returns only a verdict (not Nemotron's rationale), so we attribute the flag to the item's single injected diagnosis drop (depression) — the only diagnosis-level change in the perturbation. idx 21 (the primary candidate) returned all-SAFE through the live gate despite UNSAFE in calibration — confirming that calibration verdicts do not transfer verbatim across prompts; we report the first item that actually split.
+
 ### B5. Operating characteristics
 
-**DISAGREE rate (calibration verdicts).** The DISAGREE rule (Nemotron UNSAFE + Qwen SAFE) fires on **203/708 (28.7%)** of MedSimp-JudgeBench items — **136 genuine corrupted catches** (81 of them diagnosis drops) plus **67 clean false alarms**, so roughly **1-in-3 DISAGREEs is a spurious flag** on faithful text, consistent with Nemotron's 35.2% clean false-positive rate. This is the *calibration* rate (a different judge prompt than the deployed gate — cf. idx 21, see Scope note in B4); the **deployed gate's** DISAGREE false-alarm share is measured directly below — **34.7% (51 clean / 147 total)**, nearly identical to this calibration figure.
+**DISAGREE rate (calibration verdicts).** The DISAGREE rule (Nemotron UNSAFE + Qwen SAFE) fires on **203/708 (28.7%)** of MedSimp-JudgeBench items — **136 genuine corrupted catches** (81 of them automated-label diagnosis items) plus **67 clean false alarms**, so roughly **1-in-3 DISAGREEs is a spurious flag** on faithful text, consistent with Nemotron's 35.2% clean false-positive rate. This is the *calibration* rate (a different judge prompt than the deployed gate — cf. idx 21, see Scope note in B4); the **deployed gate's** DISAGREE false-alarm share is measured directly below — **34.7% (51 clean / 147 total)**, nearly identical to this calibration figure.
 
-**In plain terms:** on MedSimp-JudgeBench perturbations, the Llama + Qwen pair (the VAGT incumbent, before Nemotron) returns a **unanimous SAFE verdict on 25.8%** of corrupted items — a miss — and misses ~75% of silent diagnosis drops specifically. Adding Nemotron closes that gap; the cost is that a DISAGREE is a false alarm ~1-in-3 of the time (see DISAGREE rate above).
+**In plain terms:** under the deployed gate prompt, the Llama + Qwen pair says SAFE unanimously on 25.8% of corrupted items in the automated set (131/508). On the hand-verified v2 drops it's 41 of 120 (34.2%); each judge alone misses 64 of 120 (53.3%). Nemotron catches 110 of 120. The cost is false alarms: 45.5% of DISAGREEs on v2 (34.7% on the automated set) fire on clean text.
 
 **Deployed gate operating characteristics** (gate prompt, n=708, 0 ERRORs, Qwen3-32B via dedicated endpoint; full verdicts in [`results/gate_calibration_full.json`](results/gate_calibration_full.json)):
 
@@ -580,11 +633,11 @@ A dropped diagnosis a two-judge panel would have shipped; the third judge catche
 
 The gate prompt is more sensitive and less specific than the calibration prompt — a prompt effect confirmed by Llama (same model, recall doubled 31.7%→61.2%). Qwen's FP rise (0.5%→9.5%) means the '0.5% FP specificity anchor' in the decision rule reflects the calibration harness, not the deployed gate.
 
-**Out-of-sample validation (split-half, seed=42; [`results/split_half_validation.json`](results/split_half_validation.json)).** To rule out in-sample selection, the 708 gate-prompt items were split 50/50 (stratified): the deployed rule was confirmed the recall-maximizer on the dev half, then reported on the held-out **test** half — **recall 80.8%** (dev 83.4%; cf. 82.1% on all 708), with 3-way majority still winning balanced accuracy (validating *out-of-sample* why Llama stays advisory). The diagnosis **ΔΦ_V(Nemotron | Llama+Qwen) on the test half is +0.052 [+0.030, +0.075]** (CI excludes 0) — the finding **holds out-of-sample under the deployed prompt**, at a smaller magnitude than the in-sample calibration +0.071. Only diagnosis survives: dose, negation, and lateral all straddle zero under the deployed prompt, so the VAGT lift is concentrated on the one stratum where the incumbents are genuinely blind.
+**Out-of-sample validation.** *Decision rule* (automated 708-item set, deployed prompt, stratified 50/50 split, seed=42; [`results/split_half_validation.json`](results/split_half_validation.json)): the deployed rule is the recall-maximizer on both halves — **80.8% on the held-out half** (83.4% on the development half; 82.1% on all 708) — and 3-way majority still wins balanced accuracy on both; see the v2 recheck in B4. *Nemotron's added value* (hand-verified v2 stratum, split 60/60 by patient, deployed prompt; [`results/judgebench_v2_split_half.json`](results/judgebench_v2_split_half.json)): ΔΦ_V(Nemotron | Llama+Qwen) is **+0.0735 [+0.036, +0.104]** and **+0.0789 [+0.047, +0.109]** on the two halves — positive on both, consistent with the full-stratum +0.0765.
 
-All three judges run in parallel (ThreadPoolExecutor, max_workers=3) via Nebius Token Factory — latency ≈ max(judges) not sum (~27s total).
+All three judges run in parallel (ThreadPoolExecutor, max_workers=3) via Token Factory (Nemotron serverless; Qwen on a dedicated endpoint) — latency ≈ max(judges), not the sum (~24–27 s total).
 
-**Student self-audit — does the served model itself drop diagnoses?** We ran all **1,001** v2 student test simplifications back through the deployed gate: it flagged **521 (52.0%)** as potentially lossy (DISAGREE + UNSAFE). That high rate is expected — the gate scores "preserves *all* critical information," which any simplification can fail without dropping a diagnosis, and its own false-alarm floor is ~1-in-3 on faithful text (above). To separate genuine diagnosis/medication drops from ordinary simplification, we drew a **30-case sample** (10 UNSAFE + 10 DISAGREE + 10 SAFE controls, seed=42) and ran a **dual-auditor** review — two independent auditors from different model families, **Claude Sonnet 5 (Anthropic) and Gemini 2.5 Pro (Google)**, neither in the gate nor the teacher pipeline — classifying each. On the 20 flagged cases they **agreed on 14/20 (70%)**: **12/20 general simplification** (nothing clinically needed lost), **2/20 a genuine diagnosis drop** confirmed by both (idx 174, 44), and **6/20 contested**, now awaiting physician adjudication (reserved `human_judgment` fields in [`results/student_audit_review.json`](results/student_audit_review.json); guide in [`docs/ADJUDICATION_BRIEF.md`](docs/ADJUDICATION_BRIEF.md)). Neither auditor found a dropped diagnosis or medication in any of the 10 SAFE controls. So the gate's 52% flag rate reflects the inherent readability-vs-completeness trade-off of simplification, **not** systematic diagnosis loss: confirmed drops are **2 of 20 flagged (10%)**, with the six contested bounding the genuine-drop rate at **10–35% of flagged cases** pending review. The result cuts both ways — our model does **not** reliably self-drop diagnoses (so the DISAGREE tripwire seldom fires on real output), yet it is **not** flawless either, which is precisely why the gate monitors every rewrite. *(A 30-case sample, seed=42, LLM-assisted + human adjudication — not extrapolated as a census of the 521.)*
+**Student self-audit — does the served model itself drop diagnoses?** We ran all **1,001** v2 student test simplifications back through the deployed gate: it flagged **521 (52.0%)** as potentially lossy (DISAGREE + UNSAFE). That high rate is expected — the gate scores "preserves *all* critical information," which any simplification can fail without dropping a diagnosis, and its own false-alarm floor is ~1-in-3 on faithful text (above). To separate genuine diagnosis/medication drops from ordinary simplification, we drew a **30-case sample** (10 UNSAFE + 10 DISAGREE + 10 SAFE controls, seed=42) and ran a **dual-auditor** review — two independent auditors from different model families, **Claude Sonnet 5 (Anthropic) and Gemini 2.5 Pro (Google)**, neither in the gate nor the teacher pipeline — classifying each. On the 20 flagged cases they **agreed on 14/20 (70%)**: **12/20 general simplification** (nothing clinically needed lost), **2/20 a genuine diagnosis drop** confirmed by both (idx 174, 44), and **6/20 contested**, now awaiting physician adjudication (reserved `human_judgment` fields in [`results/student_audit_review.json`](results/student_audit_review.json); guide in [`docs/ADJUDICATION_BRIEF.md`](docs/ADJUDICATION_BRIEF.md)). Neither auditor found a dropped diagnosis or medication in any of the 10 SAFE controls. So the gate's 52% flag rate reflects the inherent readability-vs-completeness trade-off of simplification, **not** systematic diagnosis loss: confirmed drops are **2 of 20 flagged (10%)**, with the six contested bounding the genuine-drop rate at **10–35% of flagged cases** pending review. The result cuts both ways — our model does **not** reliably self-drop diagnoses (DISAGREE fired on 265 of 1,001 real outputs, but in the audited sample most flags were general simplification), yet it is **not** flawless either, which is precisely why the gate monitors every rewrite. *(A 30-case sample, seed=42, LLM-assisted + human adjudication — not extrapolated as a census of the 521.)*
 
 ### B6. Model card — the served student
 
@@ -617,7 +670,7 @@ The LoRA adapter is merged into the base model before serving:
    `chambul/MediSimplifier-OpenBioLLM-v2-merged` (public — no bucket credentials required to reproduce)
 
 3. Deploy Safe Endpoint v5 (Nebius GPU Endpoint):
-   `endpoint-v5` image (see docs/REPRODUCIBILITY.md) — vLLM loads model from HuggingFace, Token Factory judges via `NEBIUS_API_KEY`
+   `endpoint-v5` image (see docs/REPRODUCIBILITY.md) — vLLM loads model from HuggingFace, judges via Token Factory with `NEBIUS_API_KEY` (Qwen on a dedicated endpoint that must be running — B9)
 
 ```bash
 # Step 1: Merge (Nebius Job)
@@ -641,18 +694,24 @@ huggingface-cli upload \
 
 Note: Judges reproducing the endpoint load directly from `chambul/MediSimplifier-OpenBioLLM-v2-merged` on HuggingFace — no bucket credentials required.
 
-> **Why Token Factory?** Nemotron Super and Nano are both served per-token with zero idle cost. The teacher JudgeBench-reference run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min; the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
+> **Why Token Factory?** Nemotron Super and Nano are both served per-token with zero idle cost. The teacher JudgeBench-reference run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min (Nebius Console; billing export pending — #12); the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
 
-> **Qwen3-32B judge:** deployed as a dedicated Nebius endpoint (`qwen3-32b-judge`, `dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6`, H100 NVLink) — stop between uses to avoid idle GPU-hour billing.
+> **Dedicated judge endpoints (Token Factory; configuration and pricing from the Nebius Console):** Qwen3-32B (H100 NVLink, eu-north1, $0.07/min) and Llama-3.3-70B (H200 NVLink, us-central1, $0.08/min) — stop between uses. Endpoint IDs in `src/safety_gate.py:15-17`.
 
 Full adapter storage flow → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
+
 ### B8. Known issues & operating caveats
 
 1. **Qwen judge swap — RESOLVED.** `Qwen/Qwen3-32B` was removed from Token Factory's serverless catalog mid-project; the gate now runs the same model via a dedicated Nebius endpoint (`dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6`). Calibration re-run confirmed 0 ERRORs and measured the gate's actual operating characteristics (see B5).
-2. **Prompt drift.** Calibration used a different prompt than the deployed gate (idx 21 returned all-SAFE through the live gate despite UNSAFE in calibration — confirming verdicts do not transfer verbatim across prompts). The published recall / FP / DISAGREE rates are therefore calibration-prompt rates; the deployed-gate operating point is measured separately (see B5).
+2. **Prompt drift.** Calibration used a different prompt than the deployed gate (idx 21 returned all-SAFE through the live gate despite UNSAFE in calibration — confirming verdicts do not transfer verbatim across prompts). Rates are therefore reported per prompt: calibration-prompt rates (A5) and deployed-gate-prompt rates (B4, B5).
+3. **endpoint-v5 serves the earlier pool.** Its `POST /v1/audit_panel` answers from the earlier automated pool (the v5 image predates `audit_pool_v2/`); the always-on service (B2 Tier 1) serves v2.
+4. **Llama routing.** Serverless Llama-3.3-70B returns 403 on this account, so the current gate code calls a dedicated endpoint (`src/safety_gate.py:15`). The endpoint-v5 image still calls serverless Llama, so its advisory Llama verdict will be `ERROR`; consensus is unaffected.
+5. **Model-catalog volatility.** The Token Factory serverless catalog changed mid-project (item 1); [`results/models_verified.json`](results/models_verified.json) is a snapshot, not a guarantee. Dedicated endpoints pin a model.
+6. **The gate checks for dropped content, not added content.** The endpoint-v5 capture in B2 adds admission/discharge statements not in the input and still passes SAFE.
+
 ### B9. Reproduce the deployment
 
-**Environment:** Python 3.12 · `pip install -r requirements.txt` (openai, numpy, requests, tqdm, datasets).
+**Environment:** Python 3.11+ (`docker/Dockerfile.cpu` uses `python:3.11-slim`) · `pip install -r requirements.txt` installs openai, numpy, requests, tqdm — enough for the safety gate and the judge/VAGT scripts. The endpoint and tests also need fastapi, pydantic, httpx, uvicorn and pytest; training, evaluation and data prep use the pinned [`docker/requirements_train.txt`](docker/requirements_train.txt) (torch, transformers, peft, datasets) inside the train image.
 **Auth:** `export NEBIUS_API_KEY=<your-token-factory-key>`
 
 #### Nebius Jobs (Console)
@@ -676,7 +735,7 @@ The merged model is publicly available — no training required to test the endp
 The Safe Endpoint is a **Nebius AI *Endpoint*** — not a Job. Deploy it via **Console → AI Services → Endpoints → Create Endpoint** (image, preset, command, and env from `jobs/safe_endpoint_v2.yaml`), or with the **verified CLI command** in [docs/REPRODUCIBILITY.md → Deploy the endpoint](docs/REPRODUCIBILITY.md).
 
 - **Image:** `chambul/medisimplifier:endpoint-v5@sha256:0e40cff4…` — public Docker Hub, digest-pinned (no `--registry-*` auth needed).
-- **Prerequisites:** `NEBIUS_API_KEY`, `HF_TOKEN`, and the **Qwen3-32B judge dedicated endpoint must be running** (`dedicated/Qwen/Qwen3-32B-…`) — otherwise the gate returns `ERROR` on the Qwen verdict (see B7/B8).
+- **Prerequisites:** `NEBIUS_API_KEY`, `HF_TOKEN`, and the **Qwen3-32B judge dedicated endpoint must be running** (`dedicated/Qwen/Qwen3-32B-…`) — otherwise the gate returns `ERROR` on the Qwen verdict (see B7/B8). The endpoint-v5 image calls serverless Llama — see B8 item 4.
 - **Verify:** `GET /health` → `{"audit_panel": true, "ready": true}`
 
 ## Hardware and cost
@@ -809,7 +868,7 @@ results/student_audit_review.json      30-case dual-auditor review (Claude + Gem
 results/reference_fk_grade.json        FK-Grade: Claude refs 7.2 / Nemotron refs 10.08 (Δ+2.88, textstat 0.7.13, n=9,976)
 results/pool_candidate_cis.json        Per-candidate ΔΦ_V + 95% CI (all 6 candidates × 4 strata)
 results/null_baseline_cis.json         Null-rater control (nulls net-negative; Nemotron net-positive +0.037)
-results/split_half_validation.json     Fix 3: split-half out-of-sample (diagnosis ΔΦ_V +0.052 [+0.030,+0.075] survives)
+results/split_half_validation.json     Automated-pass split-half (decision rule; diagnosis result superseded — see A8)
 results/consensus_accuracy.json        Consensus-accuracy vs Φ_V (majority-vote bal-acc drops on diagnosis 60.5%→58.3%)
 results/vagt_loop_summary.json         VAGT loop result — pre-registered NULL: scoped rubric ΔΦ_V(Youden) −0.083 [−0.240,+0.069], all 3 thresholds fail; FP is paraphrase-mismatch, not scope (harness reproduces README Φ_V 0.472≈0.476)
 results/vagt_loop_A0.json              Per-item A0 arm (deployed gate prompt) verdicts — same-harness baseline
