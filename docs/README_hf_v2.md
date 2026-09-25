@@ -11,6 +11,12 @@ tags:
 size_categories:
 - n<1K
 pretty_name: MedSimp-JudgeBench v2 (diagnosis stratum)
+configs:
+- config_name: drops
+  data_files: data/drops.jsonl
+  default: true
+- config_name: controls
+  data_files: data/controls.jsonl
 ---
 
 # MedSimp-JudgeBench v2 — diagnosis stratum
