@@ -62,7 +62,8 @@ detection** — Nano matched Ultra-550B — so try the smallest Nemotron first i
 many-call safety loop. But **measure candidates against a verified criterion before
 choosing**: on our benchmark two other families added ~1.6× as much validity, and our
 own panel-selection endpoint (`/v1/audit_panel`) recommends gpt-oss-120b for this
-panel (caveat: the benchmark's τ=1 items were screened by gpt-oss-120b as oracle and
+panel (statistically tied with DeepSeek-V4-Flash; the fewest-errors tie-break that picks
+gpt-oss was added after the result was known. Caveat: the benchmark's τ=1 items were screened by gpt-oss-120b as oracle and
 edited by DeepSeek-V4-Pro, so those two families' lead is partly by construction;
 Nano's measurement is free of this — the panel judges were kept out of benchmark
 construction, see README A8). Agreement statistics would not have shown any of this.

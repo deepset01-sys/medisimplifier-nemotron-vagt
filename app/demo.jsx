@@ -670,8 +670,9 @@ export default function App() {
 
             <p className="ms-act2-caption">
               VAGT ranked six candidate judges by truth-anchored dependability on 240 hand-verified items. gpt-oss-120b
-              and DeepSeek Flash are statistically tied; the tool picks gpt-oss because it returned no errors and has
-              higher specificity. An earlier, automated pass recommended Nemotron Nano — that result did not survive
+              and DeepSeek Flash are statistically tied; the tool picks gpt-oss because it returned no errors (DeepSeek: 7)
+              — a tie-break we added after seeing this result. DeepSeek's errors were truncations from a smaller token budget; at a
+              matched budget gpt-oss still wins, on specificity. An earlier, automated pass recommended Nemotron Nano — that result did not survive
               hand-verified labels.
             </p>
 

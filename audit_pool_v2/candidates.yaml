@@ -9,8 +9,9 @@
 # diagnosis_delta_phi_v / ci95: candidate appended to the Llama+Qwen incumbent, copied from
 #   results/judgebench_v2_pool_table.json (vagt_core, SEED=42, n_boot=1000, complete-case).
 # Recommendation (results/audit_panel_receipt_v2_diagnosis.json): DeepSeek (+0.1238) and
-#   gpt-oss (+0.1220) are statistically tied; gpt-oss preferred on reliability
-#   (0 ERROR rows; specificity 88/120 vs 75/114).
+#   gpt-oss (+0.1220) are statistically tied; gpt-oss is selected by fewest ERROR rows (0 vs 7).
+#   Specificity (88/120 vs 75/114) is the next key and is not reached. This tie-break was
+#   added to the selector after the v2 result was known.
 benchmark: MedSimp-JudgeBench-v2
 n: 240
 

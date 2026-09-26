@@ -16,13 +16,14 @@
   "method": "vagt_core.py verbatim; SEED=42; n_boot=1000; paired item bootstrap; complete-case",
   "recommendation": {
     "model": "openai/gpt-oss-120b",
-    "reason": "highest detection-corrected ΔΦ_V, 0 errors, best specificity",
+    "reason": "tied with DeepSeek-V4-Flash on ΔΦ_V; selected by fewest ERROR rows (0 vs 7), the deciding tie-break key; also highest detection-corrected ΔΦ_V (0.1037 vs 0.1009); specificity 88/120 = 73% is higher than DeepSeek's 75/114 = 66% but not the pool's highest (gemma-3-27b-it 91/120 = 76%)",
+    "correction_2026_09_27": "reason previously read 'highest detection-corrected ΔΦ_V, 0 errors, best specificity' — 'best specificity' was false (gemma-3-27b-it is higher). The fewest-errors tie-break that selects gpt-oss was added to src/audit_panel/selector.py (commit 6948067) after this result was known; the selector's earlier tie-break (higher mean ΔΦ_V) selects DeepSeek. DeepSeek's 7 ERROR rows are max_tokens truncations (4000 vs gpt-oss 8000; results/judgebench_v2_deepseek_budget_check.json); with them re-run at 8000, DeepSeek has 0 errors, ΔΦ_V +0.1208 [0.1001, 0.141], and the tie-break selects gpt-oss on specificity (88/120 vs 79/120).",
     "expected_Phi_V_lift": 0.122,
     "ci_95": [
       0.1,
       0.1416
     ],
-    "note": "gpt-oss and deepseek-ai/DeepSeek-V4-Flash-0731 are statistically tied at the top (overlapping CIs); gpt-oss preferred for 0 ERROR rows and higher specificity (73% vs 66%)."
+    "note": "gpt-oss and deepseek-ai/DeepSeek-V4-Flash-0731 are statistically tied at the top (overlapping CIs); gpt-oss selected on 0 ERROR rows vs DeepSeek's 7 — the error count decides; specificity (73% vs 66%) is the next tie-break key and is not reached."
   },
   "pool_table": [
     {
