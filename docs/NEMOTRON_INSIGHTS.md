@@ -38,13 +38,14 @@ clinical summary dropped a diagnosis.
 drops plus 120 paired faithful controls — adding Nano raised diagnosis-detection
 validity **Φ_V 0.4764 → 0.5529 (ΔΦ_V +0.0765, 95% CI [+0.0516, +0.0992])** under the
 deployed gate prompt (0.4745 → 0.5337, +0.0591 [+0.0387, +0.0802] under the
-calibration prompt). It holds out-of-sample — split by patient, **+0.0735 [0.036,
+calibration prompt). It replicates across patients — split by patient, **+0.0735 [0.036,
 0.104]** and **+0.0789 [0.047, 0.109]** on the two halves — and it is detection, not
 flag-rate: the lift sits far outside a τ-blind permutation null (p = 0.001). Nano
 **matches Nemotron Ultra-550B** (+0.0781 [0.0552, 0.1003]; overlapping CIs) at ~18×
 fewer total parameters. It is **not** the strongest addition: **gpt-oss-120b**
-(+0.1220 [0.1000, 0.1416]) and **DeepSeek-V4-Flash** (+0.1238 [0.1024, 0.1440]) sit
-entirely above Nano's CI. Of six candidates, five pass the permutation null (gemma-3-27b
+(+0.1220 [0.1000, 0.1416]) and **DeepSeek-V4-Flash** (+0.1238 [0.1024, 0.1440]) add
+more, though on the same rows their CIs only just clear Nano's or overlap it (gpt-oss +0.1000
+vs Nano's upper +0.0992 on all 240 rows; DeepSeek +0.1024 vs +0.1056 on its 233 completed rows). Of six candidates, five pass the permutation null (gemma-3-27b
 does not, p = 0.449).
 
 **Mechanism.** The two incumbents share a blind spot: both pass **41 of the 120**
@@ -187,7 +188,7 @@ audience-specific rewriting. "Good judge" does not imply "good author."
 - Ensemble validity + CIs: `scripts/run_phi_v_recompute.py`, `scripts/run_pool_judgebench_v2.py`,
   `results/judgebench_v2_phi_v_recompute.json`, `results/judgebench_v2_pool_table.json`
 - Detection vs flag-rate (permutation null): `scripts/run_null_control_v2.py`, `results/judgebench_v2_null_control.json`
-- Out-of-sample validation: `scripts/run_split_half_v2.py`, `results/judgebench_v2_split_half.json`
+- Split-half replication (patient-disjoint): `scripts/run_split_half_v2.py`, `results/judgebench_v2_split_half.json`
 - Agreement: `results/judgebench_v2_agreement_recompute.json`
 - Scoped gate, v2 (pre-registered, git-enforced): `docs/vagt_loop_v2_preregistration.md`, `scripts/run_vagt_loop_v2.py`, `results/vagt_loop_v2_{summary,calls,pilot}.json`, `results/vagt_loop_v2_deviations.md`. `run_meta` in the summary holds HEAD `d69f506` and the blob ids of the note and the runner.
 - Scoped gate, v1 (automated labels; disclosed history): `scripts/run_vagt_loop_experiment.py`, `results/vagt_loop_{A0,A1,summary}.json`

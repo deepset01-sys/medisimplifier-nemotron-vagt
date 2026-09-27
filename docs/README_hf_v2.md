@@ -118,7 +118,7 @@ no patient with the paired set.
 | `expert_recoverable` | 90 | 30 |
 | `patient_recoverable` | 0 | 120 (by definition) |
 
-The pre-registered **strict subset** is `category_retained = 0` (47 items), reported separately.
+The protocol's pre-registered strict tier is `expert_recoverable = 0` (30 items: the name was the only clue). `category_retained = 0` (47 items: even the broad category is gone) is a covariate subset. The repository analyses both, with paired controls (`results/judgebench_v2_phi_v_recompute.json`).
 
 ## Leaderboard
 

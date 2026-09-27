@@ -1,6 +1,7 @@
 # Findings — MediSimplifier v2 (Nemotron × VAGT)
 
 > ⚠️ **Automated-pass write-up (2026-08-27).** Diagnosis results superseded by the hand-verified v2 benchmark — see README A6/A8.
+> σ²_B and σ²_N below were recomputed on 2026-09-27 with an unbiased noise estimator (README A4); Φ_V values are unchanged.
 
 ## 1. Nemotron Nano as a safety judge — full calibration (n=708)
 
@@ -58,10 +59,10 @@ Reproduce: `python vagt_nemotron_analysis.py` →
 
 | feature | Φ_V (L+Q) | Φ_V (+Nemo) | ΔΦ_V | σ²_B (L+Q) | σ²_B (+Nemo) | Δσ²_B |
 |---|---|---|---|---|---|---|
-| dose | 0.743 | 0.733 | **−0.010** | 0.054 | 0.047 | −0.007 |
-| negation | 0.578 | 0.618 | +0.040 | 0.145 | 0.104 | −0.041 |
-| lateral | 0.697 | 0.745 | +0.047 | 0.077 | 0.050 | −0.027 |
-| **diagnosis** | **0.404** | **0.476** | **+0.072** | **0.347** | **0.229** | **−0.118** |
+| dose | 0.743 | 0.733 | **−0.010** | 0.035 | 0.036 | +0.000 |
+| negation | 0.578 | 0.618 | +0.040 | 0.126 | 0.091 | −0.035 |
+| lateral | 0.697 | 0.745 | +0.047 | 0.051 | 0.037 | −0.014 |
+| **diagnosis** | **0.404** | **0.476** | **+0.072** | **0.337** | **0.217** | **−0.119** |
 
 Full per-feature decomposition (σ²_τ, σ²_B, σ²_R, σ²_N, Φ_V, Fleiss κ,
 Krippendorff α, pairwise Cohen κ, and per-rater bias α_r) with 95% bootstrap CIs
@@ -69,11 +70,11 @@ is in [`vagt_nemotron_results.txt`](vagt_nemotron_results.txt).
 
 ### The diagnosis inversion (the whole point of VAGT)
 
-On `diagnosis`, Llama + Qwen share a massive blind spot — σ²_B = 0.347, Φ_V =
+On `diagnosis`, Llama + Qwen share a massive blind spot — σ²_B = 0.337, Φ_V =
 0.404 (worst of all features); both almost never flag diagnosis omissions
 (UNSAFE rates 7% / 3%). Adding Nemotron (47% UNSAFE on diagnosis):
 
-- **cuts shared bias by a third** — σ²_B 0.347 → 0.229 (largest reduction of any feature),
+- **cuts shared bias by a third** — σ²_B 0.337 → 0.217 (largest reduction of any feature),
 - **raises dependability most** — Φ_V 0.404 → 0.476 (+0.072),
 - **yet Fleiss κ and Krippendorff α go *negative*** — 0.076 → **−0.088**.
 
@@ -93,13 +94,14 @@ the consensus toward the truth.
 ## 3. Honest caveats
 
 - **Nemotron is not a free win everywhere.** On `dose`, ΔΦ_V = **−0.010**
-  (slight *loss*): Llama+Qwen weren't badly blind there (σ²_B only 0.054), so
-  Nemotron's added rater noise outweighs the small bias gain. The panel benefits
+  (slight *loss*): Llama+Qwen weren't badly blind there (σ²_B only 0.035), so
+  Nemotron gives no detectable cut in shared bias while widening the spread between raters. The panel benefits
   most exactly where the two incumbents share a blind spot (diagnosis, negation,
   lateral) and least where they don't (dose).
 - **Adding a diverging rater raises σ²_R and σ²_N across the board.** σ²_R goes
   from ~0 (the two-rater case, where Llama+Qwen fail together) to 0.024–0.040;
-  σ²_N roughly doubles. Φ_V nets the veridicality gain against this added noise —
+  σ²_N rises too (about 1.1× on lateral to 2.5× on diagnosis) but does not enter Φ_V;
+  Φ_V nets the veridicality gain against the added rater spread σ²_R —
   a positive ΔΦ_V means the gain wins. This cost side is printed explicitly per
   feature, not hidden.
 - **35.2% false-positive rate on clean controls** is the elephant in the room:
