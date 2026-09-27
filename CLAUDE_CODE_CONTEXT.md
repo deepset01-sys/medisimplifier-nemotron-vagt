@@ -63,6 +63,11 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
   protocol-deviations file listing the §12 deliverables never produced.
 - HF card :64: it says Opus "proposed an ACCEPT/RETRY verdict for each item; the author confirmed each one"; the owner
   describes Opus as having "surfaced items … for me to review". Owner to confirm or reword.
+- Results-file notes (Q1 draft; owner, 2026-09-28): the pattern — dated explanatory notes, values unchanged — is
+  approved, but the six drafted notes stay unapplied until the "Project v1" naming fix, the landing date, and the
+  selector / null-control / Project-v1-citation decisions are settled; then each gets its exact diff for sign-off.
+  #6 (judgebench_v2_prevalence_sensitivity.json: selector pick under both tie rules) adds new computed values — a
+  different category from a note; it needs its own separate yes and is out of this round.
 
 ## CURRENT STATUS (HEAD = 4808ff2 on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); Q1 pass drafted, not written — see SETTLED FACTS above first)
 
