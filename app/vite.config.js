@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/v1': {
-        target: 'https://port8000-y1sj2wa6m10y8qp.tunnel.applications.eu-north1.nebius.cloud',
+        target: 'https://port8000-vnvvxqt68q703dy.tunnel.applications.eu-north1.nebius.cloud',
         changeOrigin: true,
         secure: false,
       },

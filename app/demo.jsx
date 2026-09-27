@@ -162,7 +162,7 @@ const CASE_SAFE = {
 
 /* ===================== audit_panel — Act 2 (live) ====================== */
 
-const AUDIT_ENDPOINT = "https://port8000-y1sj2wa6m10y8qp.tunnel.applications.eu-north1.nebius.cloud/v1/audit_panel"; // always-on CPU service (audit-cpu-v2, CORS-enabled); deterministic — same answer every call
+const AUDIT_ENDPOINT = "https://port8000-vnvvxqt68q703dy.tunnel.applications.eu-north1.nebius.cloud/v1/audit_panel"; // CPU audit_panel service (audit-cpu-v2.1, CORS-enabled), started for judging windows; deterministic — same answer every call
 // Only a response from the v2 clean-stratum pool is shown live; anything else (e.g. a stale v1
 // service) is treated as unavailable, so the page never displays numbers the chart contradicts.
 const AUDIT_BENCHMARK = "MedSimp-JudgeBench-v2";
