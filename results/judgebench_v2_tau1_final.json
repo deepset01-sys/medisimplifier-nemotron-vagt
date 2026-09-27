@@ -20,7 +20,8 @@
   "1": 90,
   "0": 30
  },
- "human_arbiter": "V4 (Claude Opus 4.8), full-text one-at-a-time review; RETRY-cleared",
+ "human_arbiter": "V4: the author, full-text one-at-a-time review of every item; Claude Opus 4.8 was a drafting aid that surfaced items that had passed every automated stage for the author's review; RETRY-cleared",
+ "human_arbiter_note_2026_09_28": "Corrected: this field previously named Claude Opus 4.8 as the V4 reviewer. The V4 review was the author's; Opus was a drafting aid.",
  "items": [
   {
    "idx": "960",

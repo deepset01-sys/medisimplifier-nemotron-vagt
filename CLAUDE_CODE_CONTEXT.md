@@ -21,11 +21,10 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
      RETRY-cleared"` in results/judgebench_v2_tau1_final.json (added in 0fa51fb). It wrongly names Opus as the
      reviewer. No script reads this field. The published HF data files (data/drops.jsonl, data/controls.jsonl) carry
      no arbiter field and no mention of Opus.
-   - Fix shape approved by the owner: correct that one field and note the correction; touch nothing a script reads.
-     NOT YET APPLIED — the exact diff needs the owner's explicit sign-off. Proposed 2026-09-28: new value "V4: the
-     author, full-text one-at-a-time review of every item; Claude Opus 4.8 was a drafting aid that surfaced items that
-     had passed every automated stage for the author's review; RETRY-cleared", plus a `human_arbiter_note_2026_09_28`
-     field recording the correction.
+   - Fix applied 2026-09-28 with the owner's sign-off on the exact diff: human_arbiter now reads "V4: the author,
+     full-text one-at-a-time review of every item; Claude Opus 4.8 was a drafting aid that surfaced items that had
+     passed every automated stage for the author's review; RETRY-cleared", plus human_arbiter_note_2026_09_28. Items
+     and every other key unchanged; no script reads the field.
    - Withdrawn: a 2026-09-28 priority note that "the only backstop [for audit #22] is the V4 review, and the dataset's
      human_arbiter field names an LLM for that step". Wrong — the backstop was the owner's review.
 2. **VAGT and Project v1 (items 40/35 in the 2026-09-28 Q1 discussion).**
@@ -48,6 +47,9 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
    facts. Re-opening already-clarified points has cost days across multiple audit passes.
 2. The stratum stays clean and untouched. If an audit finds a real inconsistency, the fix is to the protocol/documentation
    text — so the protocol matches what actually happened — never to the data or results.
+   Clarified (owner, 2026-09-28): rule 2 is about values, not metadata. Correcting a metadata field, or adding a dated
+   correction note with values unchanged, does not count as touching data or results — each still needs sign-off on its
+   exact diff.
 3. Don't re-derive facts the owner has already settled from another repo's evidence — ask the owner instead.
 4. No corrections apply anywhere — repo, dataset, endpoint, demo, or protocol docs — without the owner's explicit sign-off
    on the exact diff. If anything is unclear, ask the owner directly; don't guess, don't infer.
@@ -61,9 +63,6 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
   protocol-deviations file listing the §12 deliverables never produced.
 - HF card :64: it says Opus "proposed an ACCEPT/RETRY verdict for each item; the author confirmed each one"; the owner
   describes Opus as having "surfaced items … for me to review". Owner to confirm or reword.
-- Asked 2026-09-28: does standing rule 2 ("never to the data or results") also cover (a) dated correction-note fields
-  added to results JSON with values untouched (the Q1 draft proposes these in five results files), and (b) item 34's
-  field correction in results/judgebench_v2_tau1_final.json (shape approved)? Until answered, both need explicit sign-off.
 
 ## CURRENT STATUS (HEAD = 4808ff2 on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); Q1 pass drafted, not written — see SETTLED FACTS above first)
 
