@@ -1,0 +1,2368 @@
+{
+  "purpose": "How the v2 diagnosis-stratum Phi_V figures depend on the drop share (prevalence). The stratum is 50% drops by design; the same verdicts are reweighted to other shares.",
+  "status": "post hoc sensitivity analysis; not part of the pre-registered protocol (docs/judgebench_v2_protocol.md)",
+  "method": {
+    "reweighting": "each drop weighted p/n1, each control (1-p)/n0; every mean over rows in vagt_core.vagt is weighted (means over raters are not); all rows and pairs kept",
+    "ci": "paired item bootstrap, index stream of vagt_core.paired_delta_cis (SEED=42, n_boot=1000); each resampled row keeps its weight, so a replicate's prevalence varies around p as it varies around 0.50 in the published CIs. The *_fixed_p_runs repeat the grid CI runs with the weights recomputed inside each replicate (prevalence exactly p); the conventions can move a threshold by one or two grid points",
+    "no_reweighted_null": "no permutation null is reported: permuting a verdict column within the benchmark sample keeps the benchmark's flag rate, not the candidate's flag rate at p (flag_rate_by_prevalence), so real minus null would mix detection with a flag-rate mismatch. The published null (results/judgebench_v2_null_control.json) is for the benchmark's own composition",
+    "reproduces_published": "equal weights reproduce vagt_core.vagt and all six rows of results/judgebench_v2_pool_table.json; at p=0.50 the five 240-row candidates reproduce it exactly (asserted)",
+    "deepseek_rows": "DeepSeek-V4-Flash-0731 is on its 233 complete-case rows (119 drops, 114 controls), as in the pool table, so its published +0.1238 is at p = 0.511, not 0.50",
+    "assumption": "drops and controls behave at other prevalences as they do here; this does not address harder real-world drops (README A8 threat 4)"
+  },
+  "bands": {
+    "POSITIVE": "delta >= +0.05 AND ci_lower > 0",
+    "WEAK-POS": "+0.02 <= delta < +0.05 AND ci_lower > 0",
+    "NULL": "CI includes 0 AND |delta| < 0.05",
+    "NEGATIVE": "delta <= -0.02 AND ci_upper < 0",
+    "OUTSIDE BANDS": "none of the above (not defined by the protocol)"
+  },
+  "bands_scope": "protocol §8 pre-registers these bands for the primary metric at the benchmark's own composition (p = 0.50); here they are applied descriptively",
+  "prevalences": [
+    0.5,
+    0.33,
+    0.2,
+    0.1,
+    0.05
+  ],
+  "grid": "0.01 to 0.99 in steps of 0.01",
+  "candidates": {
+    "NVIDIA-Nemotron-3-Nano-30B-A3B": {
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "n": 240,
+      "drops": 120,
+      "controls": 120,
+      "benchmark_prevalence": 0.5,
+      "recall": "110/120",
+      "specificity": "67/120",
+      "flag_rate_by_prevalence": {
+        "0.50": 0.679,
+        "0.33": 0.598,
+        "0.20": 0.537,
+        "0.10": 0.489,
+        "0.05": 0.465
+      },
+      "by_prevalence": {
+        "0.50": {
+          "phi_incumbent": 0.4764,
+          "phi_with_candidate": 0.5529,
+          "delta_phi_v": 0.0765,
+          "ci95": [
+            0.0516,
+            0.0992
+          ],
+          "band": "POSITIVE"
+        },
+        "0.33": {
+          "phi_incumbent": 0.5015,
+          "phi_with_candidate": 0.5436,
+          "delta_phi_v": 0.0421,
+          "ci95": [
+            0.0125,
+            0.0684
+          ],
+          "band": "WEAK-POS"
+        },
+        "0.20": {
+          "phi_incumbent": 0.4736,
+          "phi_with_candidate": 0.4802,
+          "delta_phi_v": 0.0066,
+          "ci95": [
+            -0.0264,
+            0.0384
+          ],
+          "band": "NULL"
+        },
+        "0.10": {
+          "phi_incumbent": 0.3819,
+          "phi_with_candidate": 0.3547,
+          "delta_phi_v": -0.0272,
+          "ci95": [
+            -0.0614,
+            0.0066
+          ],
+          "band": "NULL"
+        },
+        "0.05": {
+          "phi_incumbent": 0.2682,
+          "phi_with_candidate": 0.23,
+          "delta_phi_v": -0.0382,
+          "ci95": [
+            -0.0708,
+            -0.0072
+          ],
+          "band": "NEGATIVE"
+        }
+      },
+      "band_runs": [
+        {
+          "from": 0.01,
+          "to": 0.01,
+          "value": "OUTSIDE BANDS"
+        },
+        {
+          "from": 0.02,
+          "to": 0.07,
+          "value": "NEGATIVE"
+        },
+        {
+          "from": 0.08,
+          "to": 0.28,
+          "value": "NULL"
+        },
+        {
+          "from": 0.29,
+          "to": 0.36,
+          "value": "WEAK-POS"
+        },
+        {
+          "from": 0.37,
+          "to": 0.96,
+          "value": "POSITIVE"
+        },
+        {
+          "from": 0.97,
+          "to": 0.98,
+          "value": "WEAK-POS"
+        },
+        {
+          "from": 0.99,
+          "to": 0.99,
+          "value": "OUTSIDE BANDS"
+        }
+      ],
+      "delta_sign_runs": [
+        {
+          "from": 0.01,
+          "to": 0.17,
+          "value": "negative"
+        },
+        {
+          "from": 0.18,
+          "to": 0.99,
+          "value": "positive"
+        }
+      ],
+      "ci_lower_above_0_runs": [
+        {
+          "from": 0.01,
+          "to": 0.28,
+          "value": false
+        },
+        {
+          "from": 0.29,
+          "to": 0.99,
+          "value": true
+        }
+      ],
+      "ci_upper_below_0_runs": [
+        {
+          "from": 0.01,
+          "to": 0.07,
+          "value": true
+        },
+        {
+          "from": 0.08,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "ci_lower_above_0_fixed_p_runs": [
+        {
+          "from": 0.01,
+          "to": 0.27,
+          "value": false
+        },
+        {
+          "from": 0.28,
+          "to": 0.99,
+          "value": true
+        }
+      ],
+      "ci_upper_below_0_fixed_p_runs": [
+        {
+          "from": 0.01,
+          "to": 0.07,
+          "value": true
+        },
+        {
+          "from": 0.08,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "delta_ge_0_05_runs": [
+        {
+          "from": 0.01,
+          "to": 0.36,
+          "value": false
+        },
+        {
+          "from": 0.37,
+          "to": 0.96,
+          "value": true
+        },
+        {
+          "from": 0.97,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_incumbent_ge_0_5_runs": [
+        {
+          "from": 0.01,
+          "to": 0.3,
+          "value": false
+        },
+        {
+          "from": 0.31,
+          "to": 0.37,
+          "value": true
+        },
+        {
+          "from": 0.38,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_with_candidate_ge_0_5_runs": [
+        {
+          "from": 0.01,
+          "to": 0.22,
+          "value": false
+        },
+        {
+          "from": 0.23,
+          "to": 0.67,
+          "value": true
+        },
+        {
+          "from": 0.68,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_incumbent_max_on_grid": {
+        "p": 0.34,
+        "phi_v": 0.5016
+      },
+      "phi_runs_note": "the Phi_V >= 0.5 runs and the maximum are point estimates",
+      "mechanism": {
+        "drop_side_mean_b2": [
+          0.4375,
+          0.237
+        ],
+        "control_side_mean_b2": [
+          0.1104,
+          0.1481
+        ],
+        "pairs_are": "[Llama+Qwen, with candidate]; within-side means, independent of p",
+        "mean_b2_breakeven": {
+          "p": 0.158,
+          "reason": "adding the candidate lowers drop-side and raises control-side mean b^2; below p it raises the weighted total"
+        },
+        "note": "sigma_R/R also enters Phi_V, so the Delta Phi_V zero crossing differs from this break-even",
+        "sigma_R_at_0_50": [
+          0.0016,
+          0.0286
+        ]
+      },
+      "subsample_check": {
+        "0.50": {
+          "drops_drawn": 120,
+          "controls": 120,
+          "actual_p": 0.5,
+          "median": 0.0765,
+          "draw_range_2_5_97_5": [
+            0.0765,
+            0.0765
+          ]
+        },
+        "0.33": {
+          "drops_drawn": 59,
+          "controls": 120,
+          "actual_p": 0.33,
+          "median": 0.0422,
+          "draw_range_2_5_97_5": [
+            0.0279,
+            0.0537
+          ]
+        },
+        "0.20": {
+          "drops_drawn": 30,
+          "controls": 120,
+          "actual_p": 0.2,
+          "median": 0.0064,
+          "draw_range_2_5_97_5": [
+            -0.012,
+            0.0241
+          ]
+        },
+        "0.10": {
+          "drops_drawn": 13,
+          "controls": 120,
+          "actual_p": 0.098,
+          "median": -0.0276,
+          "draw_range_2_5_97_5": [
+            -0.0471,
+            -0.0099
+          ]
+        },
+        "0.05": {
+          "drops_drawn": 6,
+          "controls": 120,
+          "actual_p": 0.048,
+          "median": -0.0377,
+          "draw_range_2_5_97_5": [
+            -0.0525,
+            -0.0246
+          ]
+        }
+      }
+    },
+    "Nemotron-3-Ultra-550b-a55b": {
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "n": 240,
+      "drops": 120,
+      "controls": 120,
+      "benchmark_prevalence": 0.5,
+      "recall": "107/120",
+      "specificity": "70/120",
+      "flag_rate_by_prevalence": {
+        "0.50": 0.654,
+        "0.33": 0.573,
+        "0.20": 0.512,
+        "0.10": 0.464,
+        "0.05": 0.44
+      },
+      "by_prevalence": {
+        "0.50": {
+          "phi_incumbent": 0.4764,
+          "phi_with_candidate": 0.5545,
+          "delta_phi_v": 0.0781,
+          "ci95": [
+            0.0552,
+            0.1003
+          ],
+          "band": "POSITIVE"
+        },
+        "0.33": {
+          "phi_incumbent": 0.5015,
+          "phi_with_candidate": 0.5481,
+          "delta_phi_v": 0.0466,
+          "ci95": [
+            0.0207,
+            0.0743
+          ],
+          "band": "WEAK-POS"
+        },
+        "0.20": {
+          "phi_incumbent": 0.4736,
+          "phi_with_candidate": 0.4874,
+          "delta_phi_v": 0.0138,
+          "ci95": [
+            -0.0173,
+            0.046
+          ],
+          "band": "NULL"
+        },
+        "0.10": {
+          "phi_incumbent": 0.3819,
+          "phi_with_candidate": 0.3635,
+          "delta_phi_v": -0.0184,
+          "ci95": [
+            -0.0545,
+            0.0167
+          ],
+          "band": "NULL"
+        },
+        "0.05": {
+          "phi_incumbent": 0.2682,
+          "phi_with_candidate": 0.2378,
+          "delta_phi_v": -0.0304,
+          "ci95": [
+            -0.0657,
+            -0.0002
+          ],
+          "band": "NEGATIVE"
+        }
+      },
+      "band_runs": [
+        {
+          "from": 0.01,
+          "to": 0.01,
+          "value": "OUTSIDE BANDS"
+        },
+        {
+          "from": 0.02,
+          "to": 0.05,
+          "value": "NEGATIVE"
+        },
+        {
+          "from": 0.06,
+          "to": 0.25,
+          "value": "NULL"
+        },
+        {
+          "from": 0.26,
+          "to": 0.34,
+          "value": "WEAK-POS"
+        },
+        {
+          "from": 0.35,
+          "to": 0.95,
+          "value": "POSITIVE"
+        },
+        {
+          "from": 0.96,
+          "to": 0.98,
+          "value": "WEAK-POS"
+        },
+        {
+          "from": 0.99,
+          "to": 0.99,
+          "value": "OUTSIDE BANDS"
+        }
+      ],
+      "delta_sign_runs": [
+        {
+          "from": 0.01,
+          "to": 0.15,
+          "value": "negative"
+        },
+        {
+          "from": 0.16,
+          "to": 0.99,
+          "value": "positive"
+        }
+      ],
+      "ci_lower_above_0_runs": [
+        {
+          "from": 0.01,
+          "to": 0.25,
+          "value": false
+        },
+        {
+          "from": 0.26,
+          "to": 0.99,
+          "value": true
+        }
+      ],
+      "ci_upper_below_0_runs": [
+        {
+          "from": 0.01,
+          "to": 0.05,
+          "value": true
+        },
+        {
+          "from": 0.06,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "ci_lower_above_0_fixed_p_runs": [
+        {
+          "from": 0.01,
+          "to": 0.24,
+          "value": false
+        },
+        {
+          "from": 0.25,
+          "to": 0.99,
+          "value": true
+        }
+      ],
+      "ci_upper_below_0_fixed_p_runs": [
+        {
+          "from": 0.01,
+          "to": 0.04,
+          "value": true
+        },
+        {
+          "from": 0.05,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "delta_ge_0_05_runs": [
+        {
+          "from": 0.01,
+          "to": 0.34,
+          "value": false
+        },
+        {
+          "from": 0.35,
+          "to": 0.95,
+          "value": true
+        },
+        {
+          "from": 0.96,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_incumbent_ge_0_5_runs": [
+        {
+          "from": 0.01,
+          "to": 0.3,
+          "value": false
+        },
+        {
+          "from": 0.31,
+          "to": 0.37,
+          "value": true
+        },
+        {
+          "from": 0.38,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_with_candidate_ge_0_5_runs": [
+        {
+          "from": 0.01,
+          "to": 0.21,
+          "value": false
+        },
+        {
+          "from": 0.22,
+          "to": 0.67,
+          "value": true
+        },
+        {
+          "from": 0.68,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_incumbent_max_on_grid": {
+        "p": 0.34,
+        "phi_v": 0.5016
+      },
+      "phi_runs_note": "the Phi_V >= 0.5 runs and the maximum are point estimates",
+      "mechanism": {
+        "drop_side_mean_b2": [
+          0.4375,
+          0.2435
+        ],
+        "control_side_mean_b2": [
+          0.1104,
+          0.1417
+        ],
+        "pairs_are": "[Llama+Qwen, with candidate]; within-side means, independent of p",
+        "mean_b2_breakeven": {
+          "p": 0.139,
+          "reason": "adding the candidate lowers drop-side and raises control-side mean b^2; below p it raises the weighted total"
+        },
+        "note": "sigma_R/R also enters Phi_V, so the Delta Phi_V zero crossing differs from this break-even",
+        "sigma_R_at_0_50": [
+          0.0016,
+          0.0248
+        ]
+      },
+      "subsample_check": {
+        "0.50": {
+          "drops_drawn": 120,
+          "controls": 120,
+          "actual_p": 0.5,
+          "median": 0.0781,
+          "draw_range_2_5_97_5": [
+            0.0781,
+            0.0781
+          ]
+        },
+        "0.33": {
+          "drops_drawn": 59,
+          "controls": 120,
+          "actual_p": 0.33,
+          "median": 0.0464,
+          "draw_range_2_5_97_5": [
+            0.0313,
+            0.0604
+          ]
+        },
+        "0.20": {
+          "drops_drawn": 30,
+          "controls": 120,
+          "actual_p": 0.2,
+          "median": 0.0135,
+          "draw_range_2_5_97_5": [
+            -0.0048,
+            0.0309
+          ]
+        },
+        "0.10": {
+          "drops_drawn": 13,
+          "controls": 120,
+          "actual_p": 0.098,
+          "median": -0.0193,
+          "draw_range_2_5_97_5": [
+            -0.0382,
+            0.0
+          ]
+        },
+        "0.05": {
+          "drops_drawn": 6,
+          "controls": 120,
+          "actual_p": 0.048,
+          "median": -0.0301,
+          "draw_range_2_5_97_5": [
+            -0.0444,
+            -0.0169
+          ]
+        }
+      }
+    },
+    "nemotron-3-super-120b-a12b": {
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "n": 240,
+      "drops": 120,
+      "controls": 120,
+      "benchmark_prevalence": 0.5,
+      "recall": "112/120",
+      "specificity": "35/120",
+      "flag_rate_by_prevalence": {
+        "0.50": 0.821,
+        "0.33": 0.783,
+        "0.20": 0.753,
+        "0.10": 0.731,
+        "0.05": 0.72
+      },
+      "by_prevalence": {
+        "0.50": {
+          "phi_incumbent": 0.4764,
+          "phi_with_candidate": 0.5244,
+          "delta_phi_v": 0.048,
+          "ci95": [
+            0.0225,
+            0.072
+          ],
+          "band": "WEAK-POS"
+        },
+        "0.33": {
+          "phi_incumbent": 0.5015,
+          "phi_with_candidate": 0.4986,
+          "delta_phi_v": -0.0029,
+          "ci95": [
+            -0.0318,
+            0.0254
+          ],
+          "band": "NULL"
+        },
+        "0.20": {
+          "phi_incumbent": 0.4736,
+          "phi_with_candidate": 0.4221,
+          "delta_phi_v": -0.0515,
+          "ci95": [
+            -0.0815,
+            -0.0204
+          ],
+          "band": "NEGATIVE"
+        },
+        "0.10": {
+          "phi_incumbent": 0.3819,
+          "phi_with_candidate": 0.2936,
+          "delta_phi_v": -0.0883,
+          "ci95": [
+            -0.1248,
+            -0.056
+          ],
+          "band": "NEGATIVE"
+        },
+        "0.05": {
+          "phi_incumbent": 0.2682,
+          "phi_with_candidate": 0.1807,
+          "delta_phi_v": -0.0875,
+          "ci95": [
+            -0.1286,
+            -0.0555
+          ],
+          "band": "NEGATIVE"
+        }
+      },
+      "band_runs": [
+        {
+          "from": 0.01,
+          "to": 0.25,
+          "value": "NEGATIVE"
+        },
+        {
+          "from": 0.26,
+          "to": 0.42,
+          "value": "NULL"
+        },
+        {
+          "from": 0.43,
+          "to": 0.5,
+          "value": "WEAK-POS"
+        },
+        {
+          "from": 0.51,
+          "to": 0.96,
+          "value": "POSITIVE"
+        },
+        {
+          "from": 0.97,
+          "to": 0.98,
+          "value": "WEAK-POS"
+        },
+        {
+          "from": 0.99,
+          "to": 0.99,
+          "value": "OUTSIDE BANDS"
+        }
+      ],
+      "delta_sign_runs": [
+        {
+          "from": 0.01,
+          "to": 0.33,
+          "value": "negative"
+        },
+        {
+          "from": 0.34,
+          "to": 0.99,
+          "value": "positive"
+        }
+      ],
+      "ci_lower_above_0_runs": [
+        {
+          "from": 0.01,
+          "to": 0.42,
+          "value": false
+        },
+        {
+          "from": 0.43,
+          "to": 0.99,
+          "value": true
+        }
+      ],
+      "ci_upper_below_0_runs": [
+        {
+          "from": 0.01,
+          "to": 0.25,
+          "value": true
+        },
+        {
+          "from": 0.26,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "ci_lower_above_0_fixed_p_runs": [
+        {
+          "from": 0.01,
+          "to": 0.4,
+          "value": false
+        },
+        {
+          "from": 0.41,
+          "to": 0.99,
+          "value": true
+        }
+      ],
+      "ci_upper_below_0_fixed_p_runs": [
+        {
+          "from": 0.01,
+          "to": 0.27,
+          "value": true
+        },
+        {
+          "from": 0.28,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "delta_ge_0_05_runs": [
+        {
+          "from": 0.01,
+          "to": 0.5,
+          "value": false
+        },
+        {
+          "from": 0.51,
+          "to": 0.96,
+          "value": true
+        },
+        {
+          "from": 0.97,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_incumbent_ge_0_5_runs": [
+        {
+          "from": 0.01,
+          "to": 0.3,
+          "value": false
+        },
+        {
+          "from": 0.31,
+          "to": 0.37,
+          "value": true
+        },
+        {
+          "from": 0.38,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_with_candidate_ge_0_5_runs": [
+        {
+          "from": 0.01,
+          "to": 0.33,
+          "value": false
+        },
+        {
+          "from": 0.34,
+          "to": 0.63,
+          "value": true
+        },
+        {
+          "from": 0.64,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_incumbent_max_on_grid": {
+        "p": 0.34,
+        "phi_v": 0.5016
+      },
+      "phi_runs_note": "the Phi_V >= 0.5 runs and the maximum are point estimates",
+      "mechanism": {
+        "drop_side_mean_b2": [
+          0.4375,
+          0.2241
+        ],
+        "control_side_mean_b2": [
+          0.1104,
+          0.1926
+        ],
+        "pairs_are": "[Llama+Qwen, with candidate]; within-side means, independent of p",
+        "mean_b2_breakeven": {
+          "p": 0.278,
+          "reason": "adding the candidate lowers drop-side and raises control-side mean b^2; below p it raises the weighted total"
+        },
+        "note": "sigma_R/R also enters Phi_V, so the Delta Phi_V zero crossing differs from this break-even",
+        "sigma_R_at_0_50": [
+          0.0016,
+          0.0552
+        ]
+      },
+      "subsample_check": {
+        "0.50": {
+          "drops_drawn": 120,
+          "controls": 120,
+          "actual_p": 0.5,
+          "median": 0.048,
+          "draw_range_2_5_97_5": [
+            0.048,
+            0.048
+          ]
+        },
+        "0.33": {
+          "drops_drawn": 59,
+          "controls": 120,
+          "actual_p": 0.33,
+          "median": -0.0032,
+          "draw_range_2_5_97_5": [
+            -0.0187,
+            0.0106
+          ]
+        },
+        "0.20": {
+          "drops_drawn": 30,
+          "controls": 120,
+          "actual_p": 0.2,
+          "median": -0.0512,
+          "draw_range_2_5_97_5": [
+            -0.074,
+            -0.0329
+          ]
+        },
+        "0.10": {
+          "drops_drawn": 13,
+          "controls": 120,
+          "actual_p": 0.098,
+          "median": -0.0889,
+          "draw_range_2_5_97_5": [
+            -0.1141,
+            -0.0673
+          ]
+        },
+        "0.05": {
+          "drops_drawn": 6,
+          "controls": 120,
+          "actual_p": 0.048,
+          "median": -0.0859,
+          "draw_range_2_5_97_5": [
+            -0.1041,
+            -0.0707
+          ]
+        }
+      }
+    },
+    "gpt-oss-120b": {
+      "model": "openai/gpt-oss-120b",
+      "n": 240,
+      "drops": 120,
+      "controls": 120,
+      "benchmark_prevalence": 0.5,
+      "recall": "114/120",
+      "specificity": "88/120",
+      "flag_rate_by_prevalence": {
+        "0.50": 0.608,
+        "0.33": 0.492,
+        "0.20": 0.403,
+        "0.10": 0.335,
+        "0.05": 0.301
+      },
+      "by_prevalence": {
+        "0.50": {
+          "phi_incumbent": 0.4764,
+          "phi_with_candidate": 0.5984,
+          "delta_phi_v": 0.122,
+          "ci95": [
+            0.1,
+            0.1416
+          ],
+          "band": "POSITIVE"
+        },
+        "0.33": {
+          "phi_incumbent": 0.5015,
+          "phi_with_candidate": 0.5999,
+          "delta_phi_v": 0.0984,
+          "ci95": [
+            0.0704,
+            0.1232
+          ],
+          "band": "POSITIVE"
+        },
+        "0.20": {
+          "phi_incumbent": 0.4736,
+          "phi_with_candidate": 0.5472,
+          "delta_phi_v": 0.0736,
+          "ci95": [
+            0.0414,
+            0.103
+          ],
+          "band": "POSITIVE"
+        },
+        "0.10": {
+          "phi_incumbent": 0.3819,
+          "phi_with_candidate": 0.4262,
+          "delta_phi_v": 0.0443,
+          "ci95": [
+            0.0094,
+            0.0779
+          ],
+          "band": "WEAK-POS"
+        },
+        "0.05": {
+          "phi_incumbent": 0.2682,
+          "phi_with_candidate": 0.2912,
+          "delta_phi_v": 0.0229,
+          "ci95": [
+            -0.0085,
+            0.0551
+          ],
+          "band": "NULL"
+        }
+      },
+      "band_runs": [
+        {
+          "from": 0.01,
+          "to": 0.07,
+          "value": "NULL"
+        },
+        {
+          "from": 0.08,
+          "to": 0.11,
+          "value": "WEAK-POS"
+        },
+        {
+          "from": 0.12,
+          "to": 0.96,
+          "value": "POSITIVE"
+        },
+        {
+          "from": 0.97,
+          "to": 0.98,
+          "value": "WEAK-POS"
+        },
+        {
+          "from": 0.99,
+          "to": 0.99,
+          "value": "OUTSIDE BANDS"
+        }
+      ],
+      "delta_sign_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": "positive"
+        }
+      ],
+      "ci_lower_above_0_runs": [
+        {
+          "from": 0.01,
+          "to": 0.07,
+          "value": false
+        },
+        {
+          "from": 0.08,
+          "to": 0.99,
+          "value": true
+        }
+      ],
+      "ci_upper_below_0_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "ci_lower_above_0_fixed_p_runs": [
+        {
+          "from": 0.01,
+          "to": 0.06,
+          "value": false
+        },
+        {
+          "from": 0.07,
+          "to": 0.99,
+          "value": true
+        }
+      ],
+      "ci_upper_below_0_fixed_p_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "delta_ge_0_05_runs": [
+        {
+          "from": 0.01,
+          "to": 0.11,
+          "value": false
+        },
+        {
+          "from": 0.12,
+          "to": 0.96,
+          "value": true
+        },
+        {
+          "from": 0.97,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_incumbent_ge_0_5_runs": [
+        {
+          "from": 0.01,
+          "to": 0.3,
+          "value": false
+        },
+        {
+          "from": 0.31,
+          "to": 0.37,
+          "value": true
+        },
+        {
+          "from": 0.38,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_with_candidate_ge_0_5_runs": [
+        {
+          "from": 0.01,
+          "to": 0.14,
+          "value": false
+        },
+        {
+          "from": 0.15,
+          "to": 0.73,
+          "value": true
+        },
+        {
+          "from": 0.74,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_incumbent_max_on_grid": {
+        "p": 0.34,
+        "phi_v": 0.5016
+      },
+      "phi_runs_note": "the Phi_V >= 0.5 runs and the maximum are point estimates",
+      "mechanism": {
+        "drop_side_mean_b2": [
+          0.4375,
+          0.2148
+        ],
+        "control_side_mean_b2": [
+          0.1104,
+          0.1083
+        ],
+        "pairs_are": "[Llama+Qwen, with candidate]; within-side means, independent of p",
+        "mean_b2_breakeven": {
+          "p": null,
+          "reason": "adding the candidate does not raise mean b^2 on either side, so at no p"
+        },
+        "note": "sigma_R/R also enters Phi_V, so the Delta Phi_V zero crossing differs from this break-even",
+        "sigma_R_at_0_50": [
+          0.0016,
+          0.0186
+        ]
+      },
+      "subsample_check": {
+        "0.50": {
+          "drops_drawn": 120,
+          "controls": 120,
+          "actual_p": 0.5,
+          "median": 0.122,
+          "draw_range_2_5_97_5": [
+            0.122,
+            0.122
+          ]
+        },
+        "0.33": {
+          "drops_drawn": 59,
+          "controls": 120,
+          "actual_p": 0.33,
+          "median": 0.0982,
+          "draw_range_2_5_97_5": [
+            0.0857,
+            0.1096
+          ]
+        },
+        "0.20": {
+          "drops_drawn": 30,
+          "controls": 120,
+          "actual_p": 0.2,
+          "median": 0.0739,
+          "draw_range_2_5_97_5": [
+            0.0572,
+            0.0879
+          ]
+        },
+        "0.10": {
+          "drops_drawn": 13,
+          "controls": 120,
+          "actual_p": 0.098,
+          "median": 0.0435,
+          "draw_range_2_5_97_5": [
+            0.0267,
+            0.058
+          ]
+        },
+        "0.05": {
+          "drops_drawn": 6,
+          "controls": 120,
+          "actual_p": 0.048,
+          "median": 0.0224,
+          "draw_range_2_5_97_5": [
+            0.0096,
+            0.032
+          ]
+        }
+      }
+    },
+    "DeepSeek-V4-Flash-0731": {
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "n": 233,
+      "drops": 119,
+      "controls": 114,
+      "benchmark_prevalence": 0.511,
+      "recall": "118/119",
+      "specificity": "75/114",
+      "flag_rate_by_prevalence": {
+        "0.50": 0.667,
+        "0.33": 0.556,
+        "0.20": 0.472,
+        "0.10": 0.407,
+        "0.05": 0.375
+      },
+      "by_prevalence": {
+        "0.50": {
+          "phi_incumbent": 0.4761,
+          "phi_with_candidate": 0.5983,
+          "delta_phi_v": 0.1222,
+          "ci95": [
+            0.1003,
+            0.1428
+          ],
+          "band": "POSITIVE"
+        },
+        "0.33": {
+          "phi_incumbent": 0.5018,
+          "phi_with_candidate": 0.5938,
+          "delta_phi_v": 0.092,
+          "ci95": [
+            0.0638,
+            0.1203
+          ],
+          "band": "POSITIVE"
+        },
+        "0.20": {
+          "phi_incumbent": 0.4746,
+          "phi_with_candidate": 0.5351,
+          "delta_phi_v": 0.0606,
+          "ci95": [
+            0.026,
+            0.0965
+          ],
+          "band": "POSITIVE"
+        },
+        "0.10": {
+          "phi_incumbent": 0.3836,
+          "phi_with_candidate": 0.4094,
+          "delta_phi_v": 0.0258,
+          "ci95": [
+            -0.0101,
+            0.0665
+          ],
+          "band": "NULL"
+        },
+        "0.05": {
+          "phi_incumbent": 0.2701,
+          "phi_with_candidate": 0.2748,
+          "delta_phi_v": 0.0047,
+          "ci95": [
+            -0.0288,
+            0.0408
+          ],
+          "band": "NULL"
+        }
+      },
+      "band_runs": [
+        {
+          "from": 0.01,
+          "to": 0.12,
+          "value": "NULL"
+        },
+        {
+          "from": 0.13,
+          "to": 0.16,
+          "value": "WEAK-POS"
+        },
+        {
+          "from": 0.17,
+          "to": 0.97,
+          "value": "POSITIVE"
+        },
+        {
+          "from": 0.98,
+          "to": 0.99,
+          "value": "WEAK-POS"
+        }
+      ],
+      "delta_sign_runs": [
+        {
+          "from": 0.01,
+          "to": 0.03,
+          "value": "negative"
+        },
+        {
+          "from": 0.04,
+          "to": 0.99,
+          "value": "positive"
+        }
+      ],
+      "ci_lower_above_0_runs": [
+        {
+          "from": 0.01,
+          "to": 0.12,
+          "value": false
+        },
+        {
+          "from": 0.13,
+          "to": 0.99,
+          "value": true
+        }
+      ],
+      "ci_upper_below_0_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "ci_lower_above_0_fixed_p_runs": [
+        {
+          "from": 0.01,
+          "to": 0.12,
+          "value": false
+        },
+        {
+          "from": 0.13,
+          "to": 0.99,
+          "value": true
+        }
+      ],
+      "ci_upper_below_0_fixed_p_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "delta_ge_0_05_runs": [
+        {
+          "from": 0.01,
+          "to": 0.16,
+          "value": false
+        },
+        {
+          "from": 0.17,
+          "to": 0.97,
+          "value": true
+        },
+        {
+          "from": 0.98,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_incumbent_ge_0_5_runs": [
+        {
+          "from": 0.01,
+          "to": 0.29,
+          "value": false
+        },
+        {
+          "from": 0.3,
+          "to": 0.37,
+          "value": true
+        },
+        {
+          "from": 0.38,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_with_candidate_ge_0_5_runs": [
+        {
+          "from": 0.01,
+          "to": 0.16,
+          "value": false
+        },
+        {
+          "from": 0.17,
+          "to": 0.74,
+          "value": true
+        },
+        {
+          "from": 0.75,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_incumbent_max_on_grid": {
+        "p": 0.34,
+        "phi_v": 0.5018
+      },
+      "phi_runs_note": "the Phi_V >= 0.5 runs and the maximum are point estimates",
+      "mechanism": {
+        "drop_side_mean_b2": [
+          0.4391,
+          0.1998
+        ],
+        "control_side_mean_b2": [
+          0.1096,
+          0.1179
+        ],
+        "pairs_are": "[Llama+Qwen, with candidate]; within-side means, independent of p",
+        "mean_b2_breakeven": {
+          "p": 0.033,
+          "reason": "adding the candidate lowers drop-side and raises control-side mean b^2; below p it raises the weighted total"
+        },
+        "note": "sigma_R/R also enters Phi_V, so the Delta Phi_V zero crossing differs from this break-even",
+        "sigma_R_at_0_50": [
+          0.0014,
+          0.0268
+        ]
+      },
+      "subsample_check": {
+        "0.50": {
+          "drops_drawn": 114,
+          "controls": 114,
+          "actual_p": 0.5,
+          "median": 0.122,
+          "draw_range_2_5_97_5": [
+            0.1202,
+            0.125
+          ]
+        },
+        "0.33": {
+          "drops_drawn": 56,
+          "controls": 114,
+          "actual_p": 0.329,
+          "median": 0.092,
+          "draw_range_2_5_97_5": [
+            0.0807,
+            0.1017
+          ]
+        },
+        "0.20": {
+          "drops_drawn": 28,
+          "controls": 114,
+          "actual_p": 0.197,
+          "median": 0.0595,
+          "draw_range_2_5_97_5": [
+            0.0412,
+            0.0733
+          ]
+        },
+        "0.10": {
+          "drops_drawn": 13,
+          "controls": 114,
+          "actual_p": 0.102,
+          "median": 0.0271,
+          "draw_range_2_5_97_5": [
+            0.0083,
+            0.0429
+          ]
+        },
+        "0.05": {
+          "drops_drawn": 6,
+          "controls": 114,
+          "actual_p": 0.05,
+          "median": 0.0052,
+          "draw_range_2_5_97_5": [
+            -0.0082,
+            0.0158
+          ]
+        }
+      }
+    },
+    "gemma-3-27b-it": {
+      "model": "google/gemma-3-27b-it",
+      "n": 240,
+      "drops": 120,
+      "controls": 120,
+      "benchmark_prevalence": 0.5,
+      "recall": "57/120",
+      "specificity": "91/120",
+      "flag_rate_by_prevalence": {
+        "0.50": 0.358,
+        "0.33": 0.319,
+        "0.20": 0.288,
+        "0.10": 0.265,
+        "0.05": 0.253
+      },
+      "by_prevalence": {
+        "0.50": {
+          "phi_incumbent": 0.4764,
+          "phi_with_candidate": 0.483,
+          "delta_phi_v": 0.0066,
+          "ci95": [
+            -0.0108,
+            0.0261
+          ],
+          "band": "NULL"
+        },
+        "0.33": {
+          "phi_incumbent": 0.5015,
+          "phi_with_candidate": 0.5043,
+          "delta_phi_v": 0.0028,
+          "ci95": [
+            -0.0154,
+            0.0229
+          ],
+          "band": "NULL"
+        },
+        "0.20": {
+          "phi_incumbent": 0.4736,
+          "phi_with_candidate": 0.472,
+          "delta_phi_v": -0.0016,
+          "ci95": [
+            -0.0223,
+            0.0221
+          ],
+          "band": "NULL"
+        },
+        "0.10": {
+          "phi_incumbent": 0.3819,
+          "phi_with_candidate": 0.3757,
+          "delta_phi_v": -0.0062,
+          "ci95": [
+            -0.0312,
+            0.0224
+          ],
+          "band": "NULL"
+        },
+        "0.05": {
+          "phi_incumbent": 0.2682,
+          "phi_with_candidate": 0.2605,
+          "delta_phi_v": -0.0077,
+          "ci95": [
+            -0.0324,
+            0.0196
+          ],
+          "band": "NULL"
+        }
+      },
+      "band_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": "NULL"
+        }
+      ],
+      "delta_sign_runs": [
+        {
+          "from": 0.01,
+          "to": 0.24,
+          "value": "negative"
+        },
+        {
+          "from": 0.25,
+          "to": 0.99,
+          "value": "positive"
+        }
+      ],
+      "ci_lower_above_0_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "ci_upper_below_0_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "ci_lower_above_0_fixed_p_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "ci_upper_below_0_fixed_p_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "delta_ge_0_05_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_incumbent_ge_0_5_runs": [
+        {
+          "from": 0.01,
+          "to": 0.3,
+          "value": false
+        },
+        {
+          "from": 0.31,
+          "to": 0.37,
+          "value": true
+        },
+        {
+          "from": 0.38,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_with_candidate_ge_0_5_runs": [
+        {
+          "from": 0.01,
+          "to": 0.28,
+          "value": false
+        },
+        {
+          "from": 0.29,
+          "to": 0.41,
+          "value": true
+        },
+        {
+          "from": 0.42,
+          "to": 0.99,
+          "value": false
+        }
+      ],
+      "phi_incumbent_max_on_grid": {
+        "p": 0.34,
+        "phi_v": 0.5016
+      },
+      "phi_runs_note": "the Phi_V >= 0.5 runs and the maximum are point estimates",
+      "mechanism": {
+        "drop_side_mean_b2": [
+          0.4375,
+          0.4157
+        ],
+        "control_side_mean_b2": [
+          0.1104,
+          0.1185
+        ],
+        "pairs_are": "[Llama+Qwen, with candidate]; within-side means, independent of p",
+        "mean_b2_breakeven": {
+          "p": 0.271,
+          "reason": "adding the candidate lowers drop-side and raises control-side mean b^2; below p it raises the weighted total"
+        },
+        "note": "sigma_R/R also enters Phi_V, so the Delta Phi_V zero crossing differs from this break-even",
+        "sigma_R_at_0_50": [
+          0.0016,
+          0.0013
+        ]
+      },
+      "subsample_check": {
+        "0.50": {
+          "drops_drawn": 120,
+          "controls": 120,
+          "actual_p": 0.5,
+          "median": 0.0066,
+          "draw_range_2_5_97_5": [
+            0.0066,
+            0.0066
+          ]
+        },
+        "0.33": {
+          "drops_drawn": 59,
+          "controls": 120,
+          "actual_p": 0.33,
+          "median": 0.003,
+          "draw_range_2_5_97_5": [
+            -0.012,
+            0.0165
+          ]
+        },
+        "0.20": {
+          "drops_drawn": 30,
+          "controls": 120,
+          "actual_p": 0.2,
+          "median": -0.0017,
+          "draw_range_2_5_97_5": [
+            -0.0193,
+            0.0159
+          ]
+        },
+        "0.10": {
+          "drops_drawn": 13,
+          "controls": 120,
+          "actual_p": 0.098,
+          "median": -0.0064,
+          "draw_range_2_5_97_5": [
+            -0.022,
+            0.0089
+          ]
+        },
+        "0.05": {
+          "drops_drawn": 6,
+          "controls": 120,
+          "actual_p": 0.048,
+          "median": -0.008,
+          "draw_range_2_5_97_5": [
+            -0.0181,
+            0.0031
+          ]
+        }
+      }
+    }
+  },
+  "panel_calibration_prompt": {
+    "panel": "Llama + Qwen + Nano, all three under the calibration prompt (results/judgebench_v2_panel_calib.json); incumbent and candidate both differ from the deployed panel",
+    "n": 240,
+    "recall": "112/120",
+    "specificity": "68/120",
+    "by_prevalence": {
+      "0.50": {
+        "phi_incumbent": 0.4745,
+        "phi_with_candidate": 0.5337,
+        "delta_phi_v": 0.0591,
+        "ci95": [
+          0.0387,
+          0.0802
+        ],
+        "band": "POSITIVE"
+      },
+      "0.33": {
+        "phi_incumbent": 0.4049,
+        "phi_with_candidate": 0.4546,
+        "delta_phi_v": 0.0496,
+        "ci95": [
+          0.0288,
+          0.0712
+        ],
+        "band": "WEAK-POS"
+      },
+      "0.20": {
+        "phi_incumbent": 0.3066,
+        "phi_with_candidate": 0.3468,
+        "delta_phi_v": 0.0402,
+        "ci95": [
+          0.0215,
+          0.0615
+        ],
+        "band": "WEAK-POS"
+      },
+      "0.10": {
+        "phi_incumbent": 0.1873,
+        "phi_with_candidate": 0.2146,
+        "delta_phi_v": 0.0273,
+        "ci95": [
+          0.0135,
+          0.0444
+        ],
+        "band": "WEAK-POS"
+      },
+      "0.05": {
+        "phi_incumbent": 0.105,
+        "phi_with_candidate": 0.1215,
+        "delta_phi_v": 0.0165,
+        "ci95": [
+          0.0078,
+          0.0281
+        ],
+        "band": "OUTSIDE BANDS"
+      }
+    },
+    "mechanism": {
+      "drop_side_mean_b2": [
+        0.1229,
+        0.075
+      ],
+      "control_side_mean_b2": [
+        0.3792,
+        0.3389
+      ],
+      "pairs_are": "[Llama+Qwen, with candidate]; within-side means, independent of p",
+      "mean_b2_breakeven": {
+        "p": null,
+        "reason": "adding the candidate does not raise mean b^2 on either side, so at no p"
+      },
+      "note": "sigma_R/R also enters Phi_V, so the Delta Phi_V zero crossing differs from this break-even"
+    }
+  },
+  "full_stratum_at_subset_shares": {
+    "source": "subset cells from results/judgebench_v2_phi_v_recompute.json (deployed prompt, all 120 controls)",
+    "cells": {
+      "deployed_cat0_all120": {
+        "share": 0.2814,
+        "subset_cell": {
+          "delta_phi_v": 0.0163,
+          "ci95": [
+            -0.0228,
+            0.0526
+          ],
+          "band": "NULL"
+        },
+        "full_stratum": {
+          "phi_incumbent": 0.4977,
+          "phi_with_candidate": 0.5277,
+          "delta_phi_v": 0.03,
+          "ci95": [
+            -0.0003,
+            0.0578
+          ],
+          "band": "NULL",
+          "ci95_fixed_p": [
+            0.0034,
+            0.0575
+          ],
+          "band_fixed_p": "WEAK-POS"
+        }
+      },
+      "deployed_er0_all120": {
+        "share": 0.2,
+        "subset_cell": {
+          "delta_phi_v": 0.0035,
+          "ci95": [
+            -0.0424,
+            0.0463
+          ],
+          "band": "NULL"
+        },
+        "full_stratum": {
+          "phi_incumbent": 0.4736,
+          "phi_with_candidate": 0.4802,
+          "delta_phi_v": 0.0066,
+          "ci95": [
+            -0.0264,
+            0.0384
+          ],
+          "band": "NULL",
+          "ci95_fixed_p": [
+            -0.0228,
+            0.0371
+          ],
+          "band_fixed_p": "NULL"
+        }
+      }
+    }
+  },
+  "controls_flagged_by_judge": {
+    "deployed_prompt": {
+      "llama": "32/120",
+      "qwen": "13/120",
+      "nano": "53/120"
+    },
+    "calibration_prompt": {
+      "llama": "98/120",
+      "qwen": "30/120",
+      "nano": "52/120"
+    }
+  },
+  "subsample_check_note": "k drops drawn without replacement against all controls, unweighted vagt_core; the range reflects which drops were drawn only (controls fixed), so it is not a CI",
+  "ranking": {
+    "basis": "each candidate on its own complete-case rows (DeepSeek 233, others 240), as selector.py ranks",
+    "by_prevalence": {
+      "0.50": {
+        "order": [
+          "DeepSeek-V4-Flash-0731",
+          "gpt-oss-120b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "nemotron-3-super-120b-a12b",
+          "gemma-3-27b-it"
+        ],
+        "delta_phi_v": {
+          "DeepSeek-V4-Flash-0731": 0.1222,
+          "gpt-oss-120b": 0.122,
+          "Nemotron-3-Ultra-550b-a55b": 0.0781,
+          "NVIDIA-Nemotron-3-Nano-30B-A3B": 0.0765,
+          "nemotron-3-super-120b-a12b": 0.048,
+          "gemma-3-27b-it": 0.0066
+        },
+        "selector_pick": "gpt-oss-120b"
+      },
+      "0.33": {
+        "order": [
+          "gpt-oss-120b",
+          "DeepSeek-V4-Flash-0731",
+          "Nemotron-3-Ultra-550b-a55b",
+          "NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "gemma-3-27b-it",
+          "nemotron-3-super-120b-a12b"
+        ],
+        "delta_phi_v": {
+          "gpt-oss-120b": 0.0984,
+          "DeepSeek-V4-Flash-0731": 0.092,
+          "Nemotron-3-Ultra-550b-a55b": 0.0466,
+          "NVIDIA-Nemotron-3-Nano-30B-A3B": 0.0421,
+          "gemma-3-27b-it": 0.0028,
+          "nemotron-3-super-120b-a12b": -0.0029
+        },
+        "selector_pick": "gpt-oss-120b"
+      },
+      "0.20": {
+        "order": [
+          "gpt-oss-120b",
+          "DeepSeek-V4-Flash-0731",
+          "Nemotron-3-Ultra-550b-a55b",
+          "NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "gemma-3-27b-it",
+          "nemotron-3-super-120b-a12b"
+        ],
+        "delta_phi_v": {
+          "gpt-oss-120b": 0.0736,
+          "DeepSeek-V4-Flash-0731": 0.0606,
+          "Nemotron-3-Ultra-550b-a55b": 0.0138,
+          "NVIDIA-Nemotron-3-Nano-30B-A3B": 0.0066,
+          "gemma-3-27b-it": -0.0016,
+          "nemotron-3-super-120b-a12b": -0.0515
+        },
+        "selector_pick": "gpt-oss-120b"
+      },
+      "0.10": {
+        "order": [
+          "gpt-oss-120b",
+          "DeepSeek-V4-Flash-0731",
+          "gemma-3-27b-it",
+          "Nemotron-3-Ultra-550b-a55b",
+          "NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "nemotron-3-super-120b-a12b"
+        ],
+        "delta_phi_v": {
+          "gpt-oss-120b": 0.0443,
+          "DeepSeek-V4-Flash-0731": 0.0258,
+          "gemma-3-27b-it": -0.0062,
+          "Nemotron-3-Ultra-550b-a55b": -0.0184,
+          "NVIDIA-Nemotron-3-Nano-30B-A3B": -0.0272,
+          "nemotron-3-super-120b-a12b": -0.0883
+        },
+        "selector_pick": "gpt-oss-120b"
+      },
+      "0.05": {
+        "order": [
+          "gpt-oss-120b",
+          "DeepSeek-V4-Flash-0731",
+          "gemma-3-27b-it",
+          "Nemotron-3-Ultra-550b-a55b",
+          "NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "nemotron-3-super-120b-a12b"
+        ],
+        "delta_phi_v": {
+          "gpt-oss-120b": 0.0229,
+          "DeepSeek-V4-Flash-0731": 0.0047,
+          "gemma-3-27b-it": -0.0077,
+          "Nemotron-3-Ultra-550b-a55b": -0.0304,
+          "NVIDIA-Nemotron-3-Nano-30B-A3B": -0.0382,
+          "nemotron-3-super-120b-a12b": -0.0875
+        },
+        "selector_pick": "gpt-oss-120b"
+      }
+    },
+    "top_by_delta_runs": [
+      {
+        "from": 0.01,
+        "to": 0.49,
+        "value": "gpt-oss-120b"
+      },
+      {
+        "from": 0.5,
+        "to": 0.99,
+        "value": "DeepSeek-V4-Flash-0731"
+      }
+    ],
+    "selector_pick_runs": [
+      {
+        "from": 0.01,
+        "to": 0.01,
+        "value": "gemma-3-27b-it"
+      },
+      {
+        "from": 0.02,
+        "to": 0.51,
+        "value": "gpt-oss-120b"
+      },
+      {
+        "from": 0.52,
+        "to": 0.52,
+        "value": "DeepSeek-V4-Flash-0731"
+      },
+      {
+        "from": 0.53,
+        "to": 0.59,
+        "value": "gpt-oss-120b"
+      },
+      {
+        "from": 0.6,
+        "to": 0.62,
+        "value": "DeepSeek-V4-Flash-0731"
+      },
+      {
+        "from": 0.63,
+        "to": 0.68,
+        "value": "gpt-oss-120b"
+      },
+      {
+        "from": 0.69,
+        "to": 0.96,
+        "value": "DeepSeek-V4-Flash-0731"
+      },
+      {
+        "from": 0.97,
+        "to": 0.99,
+        "value": "gpt-oss-120b"
+      }
+    ],
+    "selector_note": "selector.py bands Delta by rounding to the nearest 0.01 (round(Delta/0.01)*0.01), then breaks ties on fewest ERROR rows and specificity; the published pick (equal weights) is gpt-oss-120b (asserted)",
+    "gpt_oss_vs_deepseek": {
+      "higher_delta_own_rows_runs": [
+        {
+          "from": 0.01,
+          "to": 0.49,
+          "value": "gpt-oss-120b"
+        },
+        {
+          "from": 0.5,
+          "to": 0.99,
+          "value": "DeepSeek-V4-Flash-0731"
+        }
+      ],
+      "higher_delta_common_rows_runs": [
+        {
+          "from": 0.01,
+          "to": 0.5,
+          "value": "gpt-oss-120b"
+        },
+        {
+          "from": 0.51,
+          "to": 0.99,
+          "value": "DeepSeek-V4-Flash-0731"
+        }
+      ],
+      "common_rows": {
+        "n": 233,
+        "drops": 119,
+        "by_prevalence": {
+          "0.50": {
+            "gpt-oss-120b": 0.1225,
+            "DeepSeek-V4-Flash-0731": 0.1222
+          },
+          "0.33": {
+            "gpt-oss-120b": 0.0991,
+            "DeepSeek-V4-Flash-0731": 0.092
+          },
+          "0.20": {
+            "gpt-oss-120b": 0.0743,
+            "DeepSeek-V4-Flash-0731": 0.0606
+          },
+          "0.10": {
+            "gpt-oss-120b": 0.0449,
+            "DeepSeek-V4-Flash-0731": 0.0258
+          },
+          "0.05": {
+            "gpt-oss-120b": 0.0234,
+            "DeepSeek-V4-Flash-0731": 0.0047
+          }
+        }
+      },
+      "lower_panel_mean_b2_runs": [
+        {
+          "from": 0.01,
+          "to": 0.39,
+          "value": "gpt-oss-120b"
+        },
+        {
+          "from": 0.4,
+          "to": 0.99,
+          "value": "DeepSeek-V4-Flash-0731"
+        }
+      ],
+      "lower_panel_sigma_R_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": "gpt-oss-120b"
+        }
+      ],
+      "terms_note": "3-rater panel (Llama+Qwen+candidate) on each candidate's own rows; mean b^2 is the weighted mean squared consensus bias, sigma_R the rater-bias spread (enters as sigma_R/3)"
+    }
+  },
+  "gate_operating_characteristics": {
+    "source": "results/judgebench_v2_panel_gate.json (deployed prompt); consensus matches src/safety_gate.py (asserted)",
+    "independent_of_prevalence": "recall and false-positive rate",
+    "depends_on_prevalence": "share of flags that are real / false alarms, and per-1,000 counts",
+    "reference_note": "gpt-oss-120b was selected on this same data, so the reference row is optimistic",
+    "rules": {
+      "strict_any_non_safe (Qwen UNSAFE or Nano UNSAFE)": {
+        "drops_flagged": "110/120",
+        "recall_pct": 91.7,
+        "recall_wilson95": [
+          85.3,
+          95.4
+        ],
+        "controls_flagged": "58/120",
+        "false_positive_rate_pct": 48.3,
+        "fpr_wilson95": [
+          39.6,
+          57.2
+        ],
+        "by_prevalence": {
+          "0.50": {
+            "share_of_flags_real_pct": 65.5,
+            "share_of_flags_false_alarm_pct": 34.5,
+            "per_1000_false_alarms": 242,
+            "per_1000_missed_drops": 42
+          },
+          "0.33": {
+            "share_of_flags_real_pct": 48.3,
+            "share_of_flags_false_alarm_pct": 51.7,
+            "per_1000_false_alarms": 324,
+            "per_1000_missed_drops": 28
+          },
+          "0.20": {
+            "share_of_flags_real_pct": 32.2,
+            "share_of_flags_false_alarm_pct": 67.8,
+            "per_1000_false_alarms": 387,
+            "per_1000_missed_drops": 17
+          },
+          "0.10": {
+            "share_of_flags_real_pct": 17.4,
+            "share_of_flags_false_alarm_pct": 82.6,
+            "per_1000_false_alarms": 435,
+            "per_1000_missed_drops": 8
+          },
+          "0.05": {
+            "share_of_flags_real_pct": 9.1,
+            "share_of_flags_false_alarm_pct": 90.9,
+            "per_1000_false_alarms": 459,
+            "per_1000_missed_drops": 4
+          }
+        }
+      },
+      "block_consensus_unsafe (= Qwen UNSAFE)": {
+        "drops_flagged": "56/120",
+        "recall_pct": 46.7,
+        "recall_wilson95": [
+          38.0,
+          55.6
+        ],
+        "controls_flagged": "13/120",
+        "false_positive_rate_pct": 10.8,
+        "fpr_wilson95": [
+          6.4,
+          17.7
+        ],
+        "by_prevalence": {
+          "0.50": {
+            "share_of_flags_real_pct": 81.2,
+            "share_of_flags_false_alarm_pct": 18.8,
+            "per_1000_false_alarms": 54,
+            "per_1000_missed_drops": 267
+          },
+          "0.33": {
+            "share_of_flags_real_pct": 68.0,
+            "share_of_flags_false_alarm_pct": 32.0,
+            "per_1000_false_alarms": 73,
+            "per_1000_missed_drops": 176
+          },
+          "0.20": {
+            "share_of_flags_real_pct": 51.9,
+            "share_of_flags_false_alarm_pct": 48.1,
+            "per_1000_false_alarms": 87,
+            "per_1000_missed_drops": 107
+          },
+          "0.10": {
+            "share_of_flags_real_pct": 32.4,
+            "share_of_flags_false_alarm_pct": 67.6,
+            "per_1000_false_alarms": 98,
+            "per_1000_missed_drops": 53
+          },
+          "0.05": {
+            "share_of_flags_real_pct": 18.5,
+            "share_of_flags_false_alarm_pct": 81.5,
+            "per_1000_false_alarms": 103,
+            "per_1000_missed_drops": 27
+          }
+        }
+      },
+      "disagree_branch (Nano UNSAFE, Qwen SAFE)": {
+        "drops_flagged": "54/120",
+        "recall_pct": 45.0,
+        "recall_wilson95": [
+          36.4,
+          53.9
+        ],
+        "controls_flagged": "45/120",
+        "false_positive_rate_pct": 37.5,
+        "fpr_wilson95": [
+          29.4,
+          46.4
+        ],
+        "by_prevalence": {
+          "0.50": {
+            "share_of_flags_real_pct": 54.5,
+            "share_of_flags_false_alarm_pct": 45.5,
+            "per_1000_false_alarms": 188
+          },
+          "0.33": {
+            "share_of_flags_real_pct": 37.1,
+            "share_of_flags_false_alarm_pct": 62.9,
+            "per_1000_false_alarms": 251
+          },
+          "0.20": {
+            "share_of_flags_real_pct": 23.1,
+            "share_of_flags_false_alarm_pct": 76.9,
+            "per_1000_false_alarms": 300
+          },
+          "0.10": {
+            "share_of_flags_real_pct": 11.8,
+            "share_of_flags_false_alarm_pct": 88.2,
+            "per_1000_false_alarms": 338
+          },
+          "0.05": {
+            "share_of_flags_real_pct": 5.9,
+            "share_of_flags_false_alarm_pct": 94.1,
+            "per_1000_false_alarms": 356
+          }
+        }
+      },
+      "nano_alone": {
+        "drops_flagged": "110/120",
+        "recall_pct": 91.7,
+        "recall_wilson95": [
+          85.3,
+          95.4
+        ],
+        "controls_flagged": "53/120",
+        "false_positive_rate_pct": 44.2,
+        "fpr_wilson95": [
+          35.6,
+          53.1
+        ],
+        "by_prevalence": {
+          "0.50": {
+            "share_of_flags_real_pct": 67.5,
+            "share_of_flags_false_alarm_pct": 32.5,
+            "per_1000_false_alarms": 221,
+            "per_1000_missed_drops": 42
+          },
+          "0.33": {
+            "share_of_flags_real_pct": 50.6,
+            "share_of_flags_false_alarm_pct": 49.4,
+            "per_1000_false_alarms": 296,
+            "per_1000_missed_drops": 28
+          },
+          "0.20": {
+            "share_of_flags_real_pct": 34.2,
+            "share_of_flags_false_alarm_pct": 65.8,
+            "per_1000_false_alarms": 353,
+            "per_1000_missed_drops": 17
+          },
+          "0.10": {
+            "share_of_flags_real_pct": 18.7,
+            "share_of_flags_false_alarm_pct": 81.3,
+            "per_1000_false_alarms": 398,
+            "per_1000_missed_drops": 8
+          },
+          "0.05": {
+            "share_of_flags_real_pct": 9.8,
+            "share_of_flags_false_alarm_pct": 90.2,
+            "per_1000_false_alarms": 420,
+            "per_1000_missed_drops": 4
+          }
+        }
+      },
+      "llama_alone (advisory)": {
+        "drops_flagged": "56/120",
+        "recall_pct": 46.7,
+        "recall_wilson95": [
+          38.0,
+          55.6
+        ],
+        "controls_flagged": "32/120",
+        "false_positive_rate_pct": 26.7,
+        "fpr_wilson95": [
+          19.6,
+          35.2
+        ],
+        "by_prevalence": {
+          "0.50": {
+            "share_of_flags_real_pct": 63.6,
+            "share_of_flags_false_alarm_pct": 36.4,
+            "per_1000_false_alarms": 133,
+            "per_1000_missed_drops": 267
+          },
+          "0.33": {
+            "share_of_flags_real_pct": 46.3,
+            "share_of_flags_false_alarm_pct": 53.7,
+            "per_1000_false_alarms": 179,
+            "per_1000_missed_drops": 176
+          },
+          "0.20": {
+            "share_of_flags_real_pct": 30.4,
+            "share_of_flags_false_alarm_pct": 69.6,
+            "per_1000_false_alarms": 213,
+            "per_1000_missed_drops": 107
+          },
+          "0.10": {
+            "share_of_flags_real_pct": 16.3,
+            "share_of_flags_false_alarm_pct": 83.7,
+            "per_1000_false_alarms": 240,
+            "per_1000_missed_drops": 53
+          },
+          "0.05": {
+            "share_of_flags_real_pct": 8.4,
+            "share_of_flags_false_alarm_pct": 91.6,
+            "per_1000_false_alarms": 253,
+            "per_1000_missed_drops": 27
+          }
+        }
+      },
+      "reference: Qwen UNSAFE or gpt-oss UNSAFE": {
+        "drops_flagged": "116/120",
+        "recall_pct": 96.7,
+        "recall_wilson95": [
+          91.7,
+          98.7
+        ],
+        "controls_flagged": "40/120",
+        "false_positive_rate_pct": 33.3,
+        "fpr_wilson95": [
+          25.5,
+          42.2
+        ],
+        "by_prevalence": {
+          "0.50": {
+            "share_of_flags_real_pct": 74.4,
+            "share_of_flags_false_alarm_pct": 25.6,
+            "per_1000_false_alarms": 167,
+            "per_1000_missed_drops": 17
+          },
+          "0.33": {
+            "share_of_flags_real_pct": 58.8,
+            "share_of_flags_false_alarm_pct": 41.2,
+            "per_1000_false_alarms": 223,
+            "per_1000_missed_drops": 11
+          },
+          "0.20": {
+            "share_of_flags_real_pct": 42.0,
+            "share_of_flags_false_alarm_pct": 58.0,
+            "per_1000_false_alarms": 267,
+            "per_1000_missed_drops": 7
+          },
+          "0.10": {
+            "share_of_flags_real_pct": 24.4,
+            "share_of_flags_false_alarm_pct": 75.6,
+            "per_1000_false_alarms": 300,
+            "per_1000_missed_drops": 3
+          },
+          "0.05": {
+            "share_of_flags_real_pct": 13.2,
+            "share_of_flags_false_alarm_pct": 86.8,
+            "per_1000_false_alarms": 317,
+            "per_1000_missed_drops": 2
+          }
+        }
+      }
+    }
+  },
+  "gate_708_disagree_reference": {
+    "source": "results/gate_calibration_full.json (deployed prompt, automated labels)",
+    "disagree_on_corrupted": "96/508",
+    "disagree_on_clean": "51/200",
+    "corrupted_by_error_type": {
+      "diagnosis": {
+        "items": 150,
+        "disagree": 60
+      },
+      "negation": {
+        "items": 113,
+        "disagree": 23
+      },
+      "dose": {
+        "items": 95,
+        "disagree": 6
+      },
+      "lateral": {
+        "items": 150,
+        "disagree": 7
+      }
+    },
+    "prevalence": 0.718,
+    "prevalence_note": "share of items corrupted by automated label, all four error types (not diagnosis drops alone)",
+    "false_alarm_share_pct_at_own_prevalence": 34.7,
+    "false_alarm_share_pct_by_prevalence": {
+      "0.50": 57.4,
+      "0.33": 73.3,
+      "0.20": 84.4,
+      "0.10": 92.4,
+      "0.05": 96.2
+    }
+  },
+  "checks": {
+    "sigma_B_clamp_bound": 0,
+    "asserted": [
+      "equal weights reproduce vagt_core.vagt (all metrics, < 1e-12)",
+      "equal weights reproduce every pool-table delta, CI and n",
+      "p = 0.50 reproduces the pool-table CI for the five 240-row candidates",
+      "the mirrored selector key picks gpt-oss-120b at equal weights",
+      "recorded consensus matches the safety_gate.py rule on all 240 rows",
+      "708-set DISAGREE counts 96/508 corrupted, 51/200 clean",
+      "sigma_B never clamped (so Phi_V does not depend on the sigma_N estimator)"
+    ]
+  }
+}
