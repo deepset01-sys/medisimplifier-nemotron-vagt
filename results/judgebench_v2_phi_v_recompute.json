@@ -4,17 +4,25 @@
   "incumbent": "Llama + Qwen (2-rater)",
   "candidate": "Nemotron (3-rater)",
   "delta_definition": "delta_phi_v = Phi_V(3-rater) - Phi_V(2-rater) = Nemotron's added value",
-  "controls": "all 120 tau=0 clean controls in every cell (option a)",
+  "controls": "full cells: the 120 paired controls. Subset cells: *_paired = only the subset's own paired controls (prevalence 0.50, like-for-like with the full cells); *_all120 = all 120 controls (prevalence 0.28 for cat0, 0.20 for er0).",
+  "subsets": {
+    "cat0": "category_retained==0 (47): even the broad category is gone; covariate subset (protocol §6 Decision 1)",
+    "er0": "expert_recoverable==0 (30): the protocol's §8 strict tier (name was the only clue)"
+  },
   "bands": {
     "POSITIVE": "delta >= +0.05 AND ci_lower > 0",
+    "WEAK-POS": "+0.02 <= delta < +0.05 AND ci_lower > 0",
+    "NULL": "CI includes 0 AND |delta| < 0.05",
     "NEGATIVE": "delta <= -0.02 AND ci_upper < 0",
-    "NULL": "CI includes 0 (otherwise)"
+    "OUTSIDE BANDS": "none of the above (not defined by the protocol)"
   },
+  "bands_scope": "protocol §8 pre-registers these bands for the primary metric (the full cells)",
   "cells": {
     "deployed_full": {
       "n": 240,
       "pos_tau1": 120,
       "neg_tau0": 120,
+      "prevalence": 0.5,
       "dropped_incomplete": 0,
       "phi_2rater_llama_qwen": 0.4764,
       "phi_3rater_plus_nemotron": 0.5529,
@@ -25,10 +33,26 @@
       ],
       "band": "POSITIVE"
     },
-    "deployed_strict": {
+    "deployed_cat0_paired": {
+      "n": 94,
+      "pos_tau1": 47,
+      "neg_tau0": 47,
+      "prevalence": 0.5,
+      "dropped_incomplete": 0,
+      "phi_2rater_llama_qwen": 0.5023,
+      "phi_3rater_plus_nemotron": 0.5679,
+      "delta_phi_v": 0.0656,
+      "ci95": [
+        0.0233,
+        0.1069
+      ],
+      "band": "POSITIVE"
+    },
+    "deployed_cat0_all120": {
       "n": 167,
       "pos_tau1": 47,
       "neg_tau0": 120,
+      "prevalence": 0.28,
       "dropped_incomplete": 0,
       "phi_2rater_llama_qwen": 0.5221,
       "phi_3rater_plus_nemotron": 0.5383,
@@ -39,10 +63,41 @@
       ],
       "band": "NULL"
     },
+    "deployed_er0_paired": {
+      "n": 60,
+      "pos_tau1": 30,
+      "neg_tau0": 30,
+      "prevalence": 0.5,
+      "dropped_incomplete": 0,
+      "phi_2rater_llama_qwen": 0.5042,
+      "phi_3rater_plus_nemotron": 0.6053,
+      "delta_phi_v": 0.1011,
+      "ci95": [
+        0.053,
+        0.1423
+      ],
+      "band": "POSITIVE"
+    },
+    "deployed_er0_all120": {
+      "n": 150,
+      "pos_tau1": 30,
+      "neg_tau0": 120,
+      "prevalence": 0.2,
+      "dropped_incomplete": 0,
+      "phi_2rater_llama_qwen": 0.503,
+      "phi_3rater_plus_nemotron": 0.5065,
+      "delta_phi_v": 0.0035,
+      "ci95": [
+        -0.0424,
+        0.0463
+      ],
+      "band": "NULL"
+    },
     "calibration_full": {
       "n": 240,
       "pos_tau1": 120,
       "neg_tau0": 120,
+      "prevalence": 0.5,
       "dropped_incomplete": 0,
       "phi_2rater_llama_qwen": 0.4745,
       "phi_3rater_plus_nemotron": 0.5337,
@@ -53,10 +108,26 @@
       ],
       "band": "POSITIVE"
     },
-    "calibration_strict": {
+    "calibration_cat0_paired": {
+      "n": 94,
+      "pos_tau1": 47,
+      "neg_tau0": 47,
+      "prevalence": 0.5,
+      "dropped_incomplete": 0,
+      "phi_2rater_llama_qwen": 0.4978,
+      "phi_3rater_plus_nemotron": 0.5501,
+      "delta_phi_v": 0.0523,
+      "ci95": [
+        0.0214,
+        0.0867
+      ],
+      "band": "POSITIVE"
+    },
+    "calibration_cat0_all120": {
       "n": 167,
       "pos_tau1": 47,
       "neg_tau0": 120,
+      "prevalence": 0.28,
       "dropped_incomplete": 0,
       "phi_2rater_llama_qwen": 0.3719,
       "phi_3rater_plus_nemotron": 0.4186,
@@ -65,7 +136,37 @@
         0.0275,
         0.0702
       ],
+      "band": "WEAK-POS"
+    },
+    "calibration_er0_paired": {
+      "n": 60,
+      "pos_tau1": 30,
+      "neg_tau0": 30,
+      "prevalence": 0.5,
+      "dropped_incomplete": 0,
+      "phi_2rater_llama_qwen": 0.528,
+      "phi_3rater_plus_nemotron": 0.5516,
+      "delta_phi_v": 0.0236,
+      "ci95": [
+        -0.0145,
+        0.0651
+      ],
       "band": "NULL"
+    },
+    "calibration_er0_all120": {
+      "n": 150,
+      "pos_tau1": 30,
+      "neg_tau0": 120,
+      "prevalence": 0.2,
+      "dropped_incomplete": 0,
+      "phi_2rater_llama_qwen": 0.3104,
+      "phi_3rater_plus_nemotron": 0.3475,
+      "delta_phi_v": 0.0371,
+      "ci95": [
+        0.0171,
+        0.0597
+      ],
+      "band": "WEAK-POS"
     }
   }
 }

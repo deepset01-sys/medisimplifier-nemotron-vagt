@@ -23,7 +23,7 @@ different-kind rater is required - the decision consensus accuracy alone cannot 
 NOTE ON PROMPTS: sigma_B / Phi_V here are computed on gate_calibration_full.json (the
 DEPLOYED gate prompt) so they are apples-to-apples with the consensus accuracy on the
 same data. They therefore differ from the README's CALIBRATION-prompt headline
-(diagnosis sigma_B 0.347 -> 0.229, delta-Phi_V +0.071); that difference is expected
+(diagnosis sigma_B 0.337 -> 0.217, delta-Phi_V +0.071); that difference is expected
 (see Fix 3 / split_half_validation.json).
 
 Source: results/gate_calibration_full.json.  Output: results/consensus_accuracy.json.
@@ -46,8 +46,8 @@ sys.path.insert(0, os.path.join(REPO, "src", "audit_panel"))
 import vagt_core as vc            # noqa: E402
 
 RATER_KEYS = ["llama_verdict", "qwen_verdict", "nemotron_verdict"]   # incumbent first, candidate last
-# Published CALIBRATION-prompt reference (README A6 / vagt_bootstrap_cis.json), for context only.
-PUBLISHED_CALIB = {"diagnosis": {"sigma_B_2to3": [0.347, 0.229], "delta_phi_v": 0.071}}
+# Published CALIBRATION-prompt reference (vagt_nemotron_results.txt), for context only.
+PUBLISHED_CALIB = {"diagnosis": {"sigma_B_2to3": [0.337, 0.217], "delta_phi_v": 0.071}}
 
 
 def _load():
@@ -132,13 +132,14 @@ def main():
     print("    directionally correct for the decision each time:")
     print("  - diagnosis (incumbents blind): majority-vote bal-acc DROPS (60.5%->58.3%) when Nemotron")
     print("    is added - the two blind incumbents outvote the one judge that sees - but Phi_V RISES")
-    print("    (+0.044) and shared bias sigma_B falls (0.289->0.232). The naive metric points backwards.")
+    print("    (+0.044) and shared bias sigma_B falls (0.257->0.216). The naive metric points backwards.")
     print("  - dose/lateral (incumbents fine): bal-acc RISES but Phi_V FALLS - Phi_V flags Nemotron's")
     print("    collateral over-flagging, which the accuracy metric misses.")
     print("  - CONFOUND (honest): the bal-acc change conflates adding a rater with the vote threshold")
     print("    shifting (2-rater >=1 of 2 vs 3-rater >=2 of 3); majority-voting dilutes a minority-held")
     print("    signal (also why the DEPLOYED rule is not a majority vote). sigma_B is threshold-free")
-    print("    and is the clean signal: Nemotron reduces shared bias ONLY on diagnosis, raises it elsewhere.")
+    print("    and is the clean signal: Nemotron lowers shared bias on diagnosis; on the other three strata")
+    print("    the point estimates rise (no CIs are computed here, so treat those as indicative only).")
     print("  - Takeaway: consensus accuracy measures whether a fixed vote rule got lucky; Phi_V measures")
     print("    whether the consensus is systematically closer to truth - the quantity the decision needs.")
     print(f"\nWrote {out}")

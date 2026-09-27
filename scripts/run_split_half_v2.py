@@ -3,7 +3,9 @@ run_split_half_v2.py — patient-level split-half validation of the pool ΔΦ_V.
 
 Split the 120 patients (each = a τ=1 drop + its paired τ=0 control) 60/60 (SEED=42),
 recompute ΔΦ_V per half per candidate (vagt_core, bootstrap CI n_boot=1000), classify by
-the pre-registered bands. Both halves POSITIVE => holds out-of-sample. No API.
+the protocol's §8 bands (pre-registered for the primary metric; applied here to a secondary
+analysis). Both halves POSITIVE => the effect replicates across two patient-disjoint halves
+(nothing is fitted on either half, so this is a replication check). No API.
 
 Base (Llama+Qwen) + Nemotron-Nano from panel_gate.json; other 5 candidates from pool files.
 """
@@ -28,11 +30,16 @@ CANDIDATES = [
 
 
 def band(d, lo, hi):
+    """Protocol §8 bands (docs/judgebench_v2_protocol.md:139-146), pre-registered for the primary metric."""
     if d >= 0.05 and lo > 0:
         return "POSITIVE"
+    if d >= 0.02 and lo > 0:
+        return "WEAK-POS"
     if d <= -0.02 and hi < 0:
         return "NEGATIVE"
-    return "NULL/ATTENUATED"
+    if lo <= 0 <= hi and abs(d) < 0.05:
+        return "NULL"
+    return "OUTSIDE BANDS"
 
 
 def both_verdict(a, b):
@@ -84,7 +91,7 @@ def main():
     out = {"seed": V.SEED, "n_boot": V.N_BOOT, "split_unit": "patient (pair)",
            "halfA_patients": len(A), "halfB_patients": len(B),
            "note": "each half n≈120 (vs 240 full) → CIs ~sqrt(2) wider; mid-tier near +0.05 may read "
-                   "ATTENUATED from reduced n, not a genuine out-of-sample failure.",
+                   "NULL or WEAK-POS from reduced n rather than a genuine failure to replicate.",
            "candidates": {}}
     print(f"patient-level split-half  (SEED={V.SEED}, n_boot={V.N_BOOT}, halves {len(A)}/{len(B)} patients)\n")
     hdr = (f"{'candidate':32} | {'A ΔΦ_V':>8} {'A 95% CI':>18} {'A band':>16} | "

@@ -77,7 +77,11 @@ def vagt(X, tau, n_r):
     alpha = X.mean(axis=0) - grand           # per-rater bias (leniency/strictness)
     sigma_R = float(np.mean(alpha ** 2))
     eps = X - (c[:, None] + alpha[None, :])
-    sigma_N = float(np.mean(eps ** 2))
+    # σ²_N: residual variance on (N−1)(R−1) degrees of freedom, unbiased under the additive
+    # model (mean ε² understates it by (N−1)(R−1)/(NR)). Its /R share cancels against the
+    # σ²_N/R in the Φ_V denominator below, so Φ_V does not depend on this estimator.
+    dof = (X.shape[0] - 1) * (R - 1)
+    sigma_N = float(np.sum(eps ** 2)) / dof if dof > 0 else 0.0
     # σ²_B = mean(b²) − σ²_N/R  (R-rater consensus sampling-variance correction; §3)
     sigma_B = max(0.0, sigma_B_naive - sigma_N / R)
     p = float(tau.mean())

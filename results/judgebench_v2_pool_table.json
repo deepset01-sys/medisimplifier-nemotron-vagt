@@ -82,7 +82,7 @@
         0.0225,
         0.072
       ],
-      "band": "NULL/ATTENUATED"
+      "band": "WEAK-POS"
     },
     {
       "model": "google/gemma-3-27b-it",
@@ -98,7 +98,7 @@
         -0.0108,
         0.0261
       ],
-      "band": "NULL/ATTENUATED"
+      "band": "NULL"
     }
   ]
 }

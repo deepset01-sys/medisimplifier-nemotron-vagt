@@ -5,8 +5,8 @@
   "published_calibration_reference": {
     "diagnosis": {
       "sigma_B_2to3": [
-        0.347,
-        0.229
+        0.337,
+        0.217
       ],
       "delta_phi_v": 0.071
     }
@@ -30,9 +30,9 @@
         "delta_bal_acc": 0.0345
       },
       "decomposition_gate_prompt": {
-        "sigma_B_2": 0.0534,
-        "sigma_B_3": 0.0611,
-        "delta_sigma_B": 0.0077,
+        "sigma_B_2": 0.0338,
+        "sigma_B_3": 0.0504,
+        "delta_sigma_B": 0.0166,
         "phi_v_2": 0.7497,
         "phi_v_3": 0.7218,
         "delta_phi_v": -0.0279
@@ -56,9 +56,9 @@
         "delta_bal_acc": 0.0096
       },
       "decomposition_gate_prompt": {
-        "sigma_B_2": 0.1143,
-        "sigma_B_3": 0.1138,
-        "delta_sigma_B": -0.0005,
+        "sigma_B_2": 0.0862,
+        "sigma_B_3": 0.1008,
+        "delta_sigma_B": 0.0145,
         "phi_v_2": 0.6186,
         "phi_v_3": 0.6187,
         "delta_phi_v": 0.0001
@@ -82,9 +82,9 @@
         "delta_bal_acc": 0.0417
       },
       "decomposition_gate_prompt": {
-        "sigma_B_2": 0.036,
-        "sigma_B_3": 0.0434,
-        "delta_sigma_B": 0.0073,
+        "sigma_B_2": 0.012,
+        "sigma_B_3": 0.0324,
+        "delta_sigma_B": 0.0204,
         "phi_v_2": 0.8023,
         "phi_v_3": 0.785,
         "delta_phi_v": -0.0173
@@ -108,9 +108,9 @@
         "delta_bal_acc": -0.0217
       },
       "decomposition_gate_prompt": {
-        "sigma_B_2": 0.2893,
-        "sigma_B_3": 0.2317,
-        "delta_sigma_B": -0.0576,
+        "sigma_B_2": 0.257,
+        "sigma_B_3": 0.2153,
+        "delta_sigma_B": -0.0416,
         "phi_v_2": 0.4324,
         "phi_v_3": 0.4762,
         "delta_phi_v": 0.0438

@@ -92,11 +92,16 @@ def run_candidate(model, items, api_key, workers, out_dir, prefix=""):
 
 
 def band(d, lo, hi):
+    """Protocol §8 bands (docs/judgebench_v2_protocol.md:139-146), pre-registered for the primary metric."""
     if d >= 0.05 and lo > 0:
         return "POSITIVE"
+    if d >= 0.02 and lo > 0:
+        return "WEAK-POS"
     if d <= -0.02 and hi < 0:
         return "NEGATIVE"
-    return "NULL/ATTENUATED"
+    if lo <= 0 <= hi and abs(d) < 0.05:
+        return "NULL"
+    return "OUTSIDE BANDS"
 
 
 def build_table(items, panel_path, out_dir):

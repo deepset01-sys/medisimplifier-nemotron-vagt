@@ -175,7 +175,8 @@
     }
   },
   "caveats": [
-    "Single stratified 50/50 split (seed=42), NOT k-fold - a directional out-of-sample check, not a precise re-estimate.",
+    "Single stratified 50/50 split by record (seed=42), NOT k-fold. Nothing is fitted on the development half and the rule was designed on all 708 items, so this is a two-half stability check, not an out-of-sample test.",
+    "The diagnosis stratum uses the automated labels: ~85% of its positives still contained the diagnosis (results/tau_hand_labels_150.json), so the diagnosis delta-Phi_V here does not measure detection of genuine drops.",
     "Test-half recall carries Wilson +/-~6-11%; dose (~47) and negation (~56) corrupted counts make their delta-Phi_V CIs wide - report, do not over-read.",
     "This is the DEPLOYED gate prompt: per-stratum recall here will differ from the calibration-prompt headline (68%/14%/7%); Llama's gate-prompt recall is higher, so the incumbent blind spot may look less dramatic - that is the honest deployed number."
   ]

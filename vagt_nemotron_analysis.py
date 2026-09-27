@@ -25,7 +25,7 @@ Decomposition (UNDIVIDED shared bias; matches vagt_section.md §3 / the demo):
   consensus   c_i  = mean_r X_{ir}
   shared bias b_i  = c_i − τ_i ;  σ²_B = mean_i b_i²  −  σ²_N / R   (bias-corrected)
   rater bias  α_r  = X̄_{·r} − X̄ ; σ²_R = mean_r α_r²
-  noise       ε_ir = X_{ir} − c_i − α_r ; σ²_N = mean ε²
+  noise       ε_ir = X_{ir} − c_i − α_r ; σ²_N = Σ ε² / ((N−1)(R−1))   (unbiased)
   σ²_τ = π(1−π) ;  Φ_V = σ²_τ / (σ²_τ + σ²_B + (σ²_R + σ²_N)/n_r)
 
 SAFE=0 / UNSAFE=1. With a third, diverging rater σ²_R is now genuinely non-zero
@@ -124,7 +124,11 @@ def vagt(X, tau, n_r):
     alpha = X.mean(axis=0) - grand           # per-rater bias (leniency/strictness)
     sigma_R = float(np.mean(alpha ** 2))
     eps = X - (c[:, None] + alpha[None, :])
-    sigma_N = float(np.mean(eps ** 2))
+    # σ²_N: residual variance on (N−1)(R−1) degrees of freedom, unbiased under the additive
+    # model (mean ε² understates it by (N−1)(R−1)/(NR)). Its /R share cancels against the
+    # σ²_N/R in the Φ_V denominator below, so Φ_V does not depend on this estimator.
+    dof = (X.shape[0] - 1) * (R - 1)
+    sigma_N = float(np.sum(eps ** 2)) / dof if dof > 0 else 0.0
     # σ²_B = mean(b²) − σ²_N/R  (R-rater consensus sampling-variance correction; §3)
     sigma_B = max(0.0, sigma_B_naive - sigma_N / R)
     p = float(tau.mean())
@@ -266,11 +270,14 @@ def main():
 
         d_phi = s3["phi_v"] - s2["phi_v"]
         d_sB = s3["sigma_B"] - s2["sigma_B"]
-        print(f"  Δ adding Nemotron:  ΔΦ_V={d_phi:+.3f}   Δσ²_B={d_sB:+.3f}   "
-              f"({'blind spot reduced' if d_sB < 0 else 'shared bias up'}; "
-              f"{'dependability up' if d_phi > 0 else 'dependability down'})")
         # Paired-bootstrap CI on Δ = 3-rater − 2-rater (same items; 2-rater = Llama+Qwen)
         dpoint, dcis = paired_delta_cis(X3, tau3, rng_delta)
+
+        def direction(ci, down, up):   # a change is claimed only when the paired 95% CI excludes 0
+            return down if ci[1] < 0 else (up if ci[0] > 0 else "no detectable change")
+        print(f"  Δ adding Nemotron:  ΔΦ_V={d_phi:+.3f}   Δσ²_B={d_sB:+.3f}   "
+              f"(shared bias: {direction(dcis['sigma_B'], 'reduced', 'increased')}; "
+              f"dependability: {direction(dcis['phi_v'], 'down', 'up')})")
         print(f"  Δ paired 95% CI:    "
               f"ΔΦ_V={dpoint['phi_v']:+.3f} [{dcis['phi_v'][0]:+.3f}, {dcis['phi_v'][1]:+.3f}]   "
               f"Δσ²_B={dpoint['sigma_B']:+.3f} [{dcis['sigma_B'][0]:+.3f}, {dcis['sigma_B'][1]:+.3f}]   "
@@ -303,7 +310,7 @@ def main():
     print("\n  Interpretation: Nemotron's high sensitivity pulls the consensus toward")
     print("  ground truth on features where Llama+Qwen share a blind spot (shrinking σ²_B),")
     print("  but its divergence raises rater variance σ²_R. Φ_V nets these effects; a")
-    print("  positive ΔΦ_V means the veridicality gain outweighs the added rater noise.")
+    print("  positive ΔΦ_V means the veridicality gain outweighs the added rater spread (σ²_R).")
 
     # ── Emit paired-delta 95% CIs as a committable artifact ──────────────────
     out_path = HERE / "vagt_bootstrap_cis.json"

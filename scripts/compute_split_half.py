@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Fix 3 - split-half out-of-sample validation of the deployed gate.
+"""Fix 3 - split-half stability check of the deployed gate (not an out-of-sample test).
 
 Splits the 708 gate_calibration_full.json items (already scored under the DEPLOYED
 one-word gate prompt) into a stratified 50/50 dev/test (seed=42), then:
-  - recomputes the B4 5-strategy table on BOTH halves (select on dev, report on test),
+  - recomputes the B4 5-strategy table on BOTH halves (nothing is selected or fitted on dev),
   - reports per-stratum recall (Nemotron/Llama/Qwen) on the test half - the gate-prompt
     analogue of the calibration-prompt "68%/14%/7%",
   - reports paired delta-Phi_V(Nemotron | Llama+Qwen) per stratum on the test half.
 
-This converts the deployed rule's operating characteristics and the diagnosis finding
-from in-sample to out-of-sample, and - because this file is the gate prompt - also
+This is a two-half stability check, not an out-of-sample test: nothing is fitted on the
+development half, the deployed rule was designed on these same 708 items, and its recall
+advantage over nemotron_only, qwen_only and majority holds by construction (it flags whenever
+Nemotron or Qwen does). The split is by record, so one source note can appear in both halves.
+The diagnosis stratum uses the automated labels (~85% of its positives still contained the
+diagnosis; results/tau_hand_labels_150.json). Because this file is the gate prompt, it also
 addresses the "calibration prompt != gate prompt" critique. Same math as vagt_core
 (SEED=42, no new estimators).
 
@@ -149,7 +153,8 @@ def delta_phi_v(records):
 
 
 CAVEATS = [
-    "Single stratified 50/50 split (seed=42), NOT k-fold - a directional out-of-sample check, not a precise re-estimate.",
+    "Single stratified 50/50 split by record (seed=42), NOT k-fold. Nothing is fitted on the development half and the rule was designed on all 708 items, so this is a two-half stability check, not an out-of-sample test.",
+    "The diagnosis stratum uses the automated labels: ~85% of its positives still contained the diagnosis (results/tau_hand_labels_150.json), so the diagnosis delta-Phi_V here does not measure detection of genuine drops.",
     "Test-half recall carries Wilson +/-~6-11%; dose (~47) and negation (~56) corrupted counts make their delta-Phi_V CIs wide - report, do not over-read.",
     "This is the DEPLOYED gate prompt: per-stratum recall here will differ from the calibration-prompt headline (68%/14%/7%); Llama's gate-prompt recall is higher, so the incumbent blind spot may look less dramatic - that is the honest deployed number.",
 ]
@@ -200,7 +205,7 @@ def main():
             return f"{x:.1%}" if x is not None else "-"
         print(f"{feat:<12}{r['n_corrupted']:>5}{pct(r['nemotron']):>12}{pct(r['llama']):>10}{pct(r['qwen']):>10}")
 
-    print("\ndelta-Phi_V(Nemotron | Llama+Qwen) - TEST half (out-of-sample, gate prompt):")
+    print("\ndelta-Phi_V(Nemotron | Llama+Qwen) - TEST half (gate prompt; automated labels):")
     print(f"{'stratum':<12}{'n':>5}{'dPhi_V':>10}{'95% CI':>22}{'width':>9}  sig")
     for feat in vc.STRATA:
         d = result["delta_phi_v_test"][feat]

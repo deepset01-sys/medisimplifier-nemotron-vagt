@@ -118,7 +118,7 @@
         0.0225,
         0.072
       ],
-      "band": "NULL/ATTENUATED",
+      "band": "WEAK-POS",
       "candidate_recall_tau1": "112/120",
       "candidate_spec_tau0": "35/120",
       "n": 240,
@@ -139,7 +139,7 @@
         -0.0108,
         0.0261
       ],
-      "band": "NULL/ATTENUATED",
+      "band": "NULL",
       "candidate_recall_tau1": "57/120",
       "candidate_spec_tau0": "91/120",
       "n": 240,
@@ -189,6 +189,7 @@
       "note": "the artifact is reversed on clean hand-verified labels"
     }
   },
+  "bands_note_2026_09_27": "pool_table bands relabelled to the protocol's four bands (docs/judgebench_v2_protocol.md §8): Nemotron-Super NULL/ATTENUATED -> WEAK-POS (CI excludes 0), gemma NULL/ATTENUATED -> NULL. No values changed.",
   "provenance": {
     "source_files": [
       "results/judgebench_v2_tau1_final.json",
