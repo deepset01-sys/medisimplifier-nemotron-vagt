@@ -7,8 +7,8 @@ safety system (Nano as an ensemble safety-judge, Nano as a scoped single-gate,
 Super as a training-data teacher, and both under a production verdict-extraction
 path), and measured each with one criterion-anchored validity framework (VAGT).
 Every number below is reproducible from committed scripts and a locked verdict set;
-we pre-registered the one experiment that could have gone either way and report it
-whether it helped us or not.
+we pre-registered the experiments that could have gone either way and report them
+whether they helped us or not.
 
 These are engineer-to-engineer notes: two are immediately actionable SDK/inference
 items, two are capability/task-fit characterizations, one is a genuinely favorable
@@ -23,7 +23,7 @@ result that surprised us. We lead with the surprise.
 | 1 | Nano — third judge in a validity panel | **Real, detection-specific lift** (+0.0765 Φ_V) | A 30B Nano matches a 550B Nemotron; two other families added more (partly by construction — see Finding 1) — choose judges against verified labels, not agreement |
 | 2 | Super — reasoning budget | `content=None` at 1024 tokens; needs ~16k | Budget the *reasoning* tokens, not just the answer — a silent `content=None` if under-budgeted |
 | 3 | Both — verdict extraction | Regex-scraped from 8k-token reasoning | Expose/use logprobs for classification verdicts — unlocks thresholds and cuts latency |
-| 4 | Nano — scoped faithfulness gate | Pre-registered **null** | Name-match verification penalizes correct paraphrase; wrong tool for a simplification task |
+| 4 | Nano — scoped faithfulness gate | Pre-registered: **no recall cost, no demonstrated gain** | Narrowing the prompt doesn't fix name-match false positives on paraphrased text; the lever is semantic grounding |
 | 5 | Super — teacher for fine-tuning | Below Claude Opus 4.5 on generation | Strong as a *judge*, weaker as a *generator* for lay-language rewriting |
 
 ---
@@ -121,31 +121,30 @@ logprobs or use constrained decoding** rather than scraping reasoning:
 
 ---
 
-## Finding 4 — Name-match faithfulness verification is the wrong tool for a paraphrase task (pre-registered null)
+## Finding 4 — Name-match faithfulness verification is the wrong tool for a paraphrase task (pre-registered: no recall cost, no demonstrated gain)
 
-**Role.** Nano as a **single scoped gate** — a tightly-scoped "did the summary drop a
-diagnosis?" verifier, pre-registered against explicit success thresholds.
+**Role.** Nano as a **single scoped gate**. We compared a prompt that asks only "did the summary drop a diagnosis?" (A1) with the deployed gate prompt (A0), with Llama and Qwen held fixed.
 
-**Outcome.** A clean **null**. The scoped rubric failed all three pre-registered
-thresholds: ΔΦ (Youden) **−0.083 [−0.240, +0.069]** vs a +0.10 target; false-positive
-rate did **not** fall (ΔF +0.015). n=350 diagnosis stratum, 347 complete-case, parse
-failures 0.86%. The harness reproduces the original pipeline's automated-pass 3-rater
-Φ_V on the same items (0.472 ≈ 0.476), so the null is real, not a plumbing artifact.
+**Outcome.** We ran both prompts on the 120 hand-verified diagnosis drops and their 120 paired controls, four calls per item per prompt (1,920 calls). The design, thresholds and analysis were committed before the first call.
 
-**Mechanism.** 100% of the clean-item false positives were *in-scope*, and the cause
-is **paraphrase-mismatch**. Smoking gun (item idx=12): source *"Acute T-cell
-lymphoblastic leukemia"* → faithful summary *"a fast-growing blood cancer"* → Nano
-flags the technical name as a **dropped diagnosis**. The verifier is doing string/
-name matching, but the task is deliberate lay-language *paraphrase*. Tightening the
-prompt cannot fix this, because the flags are correct *as name-matching* and wrong
-*as faithfulness*.
+| Pre-registered test | A1 − A0 [95% CI] | Result |
+|--|--|--|
+| Guardrail: recall must not fall | ΔR **+0.019** [−0.031, +0.069] | pass |
+| Primary: Youden J up by 0.10 or more | ΔJ **+0.046** [−0.060, +0.154] | fail |
+| Driver: false positives down by 0.15 or more | ΔF **−0.027** [−0.129, +0.077] | fail |
 
-**Implication for Nemotron users.** For faithfulness checking over paraphrased or
-simplified text, **a name-match verifier will systematically penalize correct
-simplification**. The lever is **semantic grounding** (entailment / embedding-level
-presence), not rubric wording or model scale. Any small verifier — Nemotron or
-otherwise — will hit this floor on a paraphrase task; know it before you deploy one
-as a gate.
+Scoping the prompt costs no recall: a loss of more than about 3 points is ruled out. But it doesn't deliver the pre-registered improvement, and the +0.046 is not a small win, for two reasons:
+
+- **It is within measurement noise.** Nano's verdicts vary between calls even at temperature 0: the deployed prompt's four calls disagree on 37% of items. Comparing one pair of a prompt's calls with its other pair, the same prompt against itself, gives differences of up to +0.042 in either arm. That is almost the observed +0.046. The pre-registered noise check passed, since no self-comparison reached a threshold, but the effect can't be told apart from that noise.
+- **It depends on token budgets above the deployed 8,000.** The scoped prompt's reasoning runs away more often. 33 of its 960 calls didn't finish within 8,000 tokens, against 6 for the deployed prompt, and 3 never finished even at 32,000. Counting only verdicts reached within 8,000 tokens, with unfinished calls scored against the scoped prompt, the edge disappears (ΔJ −0.006 [−0.115, +0.102]).
+
+**Decision.** The deployed gate prompt stays unchanged. The guardrail passes, neither improvement threshold does, and the one edge that shows up needs budgets production doesn't give it.
+
+**Mechanism.** False positives barely move. Both prompts flag 37–40% of the paired controls, which are the same summaries as the drops but with the diagnosis still present. The flags are paraphrase mismatches. In about half of the scoped prompt's 177 false flags (at least 87), the diagnosis it calls missing is the pair's own diagnosis, which the control states in lay words. The v1 example (item idx=12): source *"Acute T-cell lymphoblastic leukemia"* → faithful summary *"a fast-growing blood cancer"* → flagged as a **dropped diagnosis**. The verifier matches names, while the task is deliberate lay-language *paraphrase*. Narrowing the prompt to diagnoses did not change that.
+
+**Earlier run.** A first run of this comparison (n=350) reported a "clean null" with a recall loss (ΔJ −0.083, ΔR −0.068). It was scored on automatically labelled drops, 128 of 150 of which still contained the diagnosis. On its 8–21 genuine drops it could not tell the prompts apart, and its recall "loss" came from items where no diagnosis had been dropped. It stays in the repo as disclosed history (`results/vagt_loop_summary.json`).
+
+**Implication for Nemotron users.** For faithfulness checking over paraphrased or simplified text, **a name-match verifier will systematically penalize correct simplification**, and scoping its prompt doesn't change that. The lever is **semantic grounding** (entailment or embedding-level presence), not rubric wording or model scale. Also, a scoped JSON rubric makes Nano's reasoning overrun more often. Measure it at your production token budget, because an edge found at a larger budget may not survive it.
 
 ---
 
@@ -173,8 +172,8 @@ audience-specific rewriting. "Good judge" does not imply "good author."
 
 - **One measurement framework (VAGT):** criterion-anchored G-theory with a *known*
   ground truth τ, so every claim is validity against reference, not agreement.
-- **Pre-registration:** Finding 4's thresholds were fixed before we looked at the
-  eval split; we report the null it produced.
+- **Pre-registration:** Finding 4's design, thresholds and analysis were fixed before any call, and we report the result whatever it was. The earlier v1 run was committed together with its results, so its pre-registration can't be checked.
+- **Git-enforced pre-registration (v2 scoped-gate re-run):** the design, thresholds and analysis were committed (`d69f506`) before any call. The runner refuses the full run unless the pre-registration note and the runner are committed and unmodified, and it records their git blob ids and HEAD in the results. Anyone can check `git rev-parse d69f506:docs/vagt_loop_v2_preregistration.md` against `run_meta.prereg_blob`.
 - **Same-harness baselines:** we re-ran comparisons in one harness rather than diffing
   stored numbers, and the harness reproduces the original pipeline's automated-pass Φ_V (0.472 ≈ 0.476).
 - **Hand-verified benchmark:** Finding 1 is measured on 120 hand-verified drops + 120 paired
@@ -190,8 +189,8 @@ audience-specific rewriting. "Good judge" does not imply "good author."
 - Detection vs flag-rate (permutation null): `scripts/run_null_control_v2.py`, `results/judgebench_v2_null_control.json`
 - Out-of-sample validation: `scripts/run_split_half_v2.py`, `results/judgebench_v2_split_half.json`
 - Agreement: `results/judgebench_v2_agreement_recompute.json`
-- Pre-registered scoped-gate null: `scripts/run_vagt_loop_experiment.py`,
-  `results/vagt_loop_{A0,A1,summary}.json`
+- Scoped gate, v2 (pre-registered, git-enforced): `docs/vagt_loop_v2_preregistration.md`, `scripts/run_vagt_loop_v2.py`, `results/vagt_loop_v2_{summary,calls,pilot}.json`, `results/vagt_loop_v2_deviations.md`. `run_meta` in the summary holds HEAD `d69f506` and the blob ids of the note and the runner.
+- Scoped gate, v1 (automated labels; disclosed history): `scripts/run_vagt_loop_experiment.py`, `results/vagt_loop_{A0,A1,summary}.json`
 - Core metric: `src/audit_panel/vagt_core.py`
 
 *MediSimplifier v2 — deepset01-sys/medisimplifier-nemotron-vagt*

@@ -326,7 +326,14 @@ python scripts/run_split_half_v2.py                      # → both halves POSIT
 python scripts/run_null_control_v2.py                    # → null-rater control
 python scripts/check_deepseek_budget_v2.py --selftest    # offline, committed files only: DeepSeek's committed row + the 128-fill bound on its 7 ERROR items
 python scripts/check_deepseek_budget_v2.py --phases A    # live (NEBIUS_API_KEY + the same local raw-note inputs as run_pool): those 7 items at max_tokens 4000 vs 8000
+
+# 6. Scoped-gate experiment on v2 (pre-registered, git-enforced); the offline commands need the same local raw-note inputs as run_pool
+python scripts/run_vagt_loop_v2.py --selftest               # offline: reproduces the committed Nano ΔΦ_V +0.0765 [+0.0516, +0.0992]
+python scripts/run_vagt_loop_v2.py --analyze-only           # rebuild results/vagt_loop_v2_summary.json from the calls file
+git rev-parse d69f506:docs/vagt_loop_v2_preregistration.md  # must equal run_meta.prereg_blob in that summary
 ```
+
+> **Git-enforced pre-registration (v2 scoped-gate re-run):** the design, thresholds and analysis were committed (`d69f506`) before any call. The runner refuses the full run unless the pre-registration note and the runner are committed and unmodified, and it records their git blob ids and HEAD in the results. Anyone can check `git rev-parse d69f506:docs/vagt_loop_v2_preregistration.md` against `run_meta.prereg_blob`.
 
 > **Reasoning-model reminder:** all Nemotron generation uses `--max-tokens 16000` (Super) / `8000+` (Nano). Too small a budget returns empty output — the scripts flag and retry, never save a truncated result. Runs checkpoint every 50 records; `nemotron_training_data.py` resumes from the output file.
 
@@ -825,7 +832,8 @@ scripts/
   compute_null_baseline.py       Null-rater baseline (constant-UNSAFE + random-47%); validates collateral tie-break (automated pass)
   compute_split_half.py          Split-half out-of-sample validation under the deployed gate prompt (automated pass)
   compute_consensus_accuracy.py  Consensus-accuracy baseline vs Φ_V decomposition (majority-vote bal-acc; automated pass)
-  run_vagt_loop_experiment.py    VAGT prescribes-then-verifies loop: A0 gate-prompt vs A1 scoped-D1 Nemotron on the diagnosis stratum (n=350; pre-registered thresholds; paired bootstrap; Llama/Qwen held fixed)
+  run_vagt_loop_experiment.py    VAGT prescribes-then-verifies loop: A0 gate-prompt vs A1 scoped-D1 Nemotron on the diagnosis stratum (n=350; pre-registered thresholds; paired bootstrap; Llama/Qwen held fixed) — automated labels; superseded by run_vagt_loop_v2.py
+  run_vagt_loop_v2.py            Scoped-gate experiment on the v2 stratum (240 items × 2 arms × 4 calls, token ladder, placebo noise check); refuses the full run unless the pre-registration and this runner are committed and unmodified, and records their blob ids + HEAD
   build_audit_pool_v2.py         Build audit_pool_v2/ from the committed v2 results; self-verifies vs judgebench_v2_pool_table.json
   build_judgebench_v2.py         JudgeBench v2 diagnosis-drop generator (candidate primary-diagnosis drops + auto-gates; every accepted item human-reviewed)
   verify_tau.py                  LLM-assisted triage harness for the 150-item hand audit of the automated diagnosis labels (human audits every call)
@@ -842,6 +850,7 @@ docs/
   NEMOTRON_INSIGHTS.md           five mechanism-backed findings from working with Nemotron Nano + Super (diversity judge, budget, logprobs, paraphrase-null, teacher gap)
   REPRODUCIBILITY.md             container image digests + adapter storage flow + rebuild steps
   judgebench_v2_protocol.md      FROZEN pre-registration for the diagnosis-stratum rebuild (committed before any judge ran)
+  vagt_loop_v2_preregistration.md  Git-enforced pre-registration of the v2 scoped-gate experiment (committed d69f506 before any call; its blob id is recorded in the results)
 app/
   demo.jsx                       React single-page demo — Act 1 (gate catches drop) + Act 2 (audit_panel leaderboard)
   index.html                     Vite entry point
@@ -884,9 +893,13 @@ results/pool_candidate_cis.json        Per-candidate ΔΦ_V + 95% CI (all 6 cand
 results/null_baseline_cis.json         Null-rater control, automated pass (nulls net-negative; Nemotron net-positive +0.037)
 results/split_half_validation.json     Automated-pass split-half (decision rule; diagnosis result superseded — see A8)
 results/consensus_accuracy.json        Consensus-accuracy vs Φ_V, automated pass (majority-vote bal-acc drops on diagnosis 60.5%→58.3%)
-results/vagt_loop_summary.json         VAGT loop result — pre-registered NULL: scoped rubric ΔΦ_V(Youden) −0.083 [−0.240,+0.069], all 3 thresholds fail; FP is paraphrase-mismatch, not scope (harness reproduces the automated-pass 3-rater Φ_V 0.472≈0.476)
+results/vagt_loop_summary.json         v1 VAGT loop, automated labels (disclosed history): ΔJ (Youden) −0.083 [−0.240,+0.069], all 3 thresholds fail; inconclusive on its 8–21 hand-labelled genuine drops — superseded by vagt_loop_v2_*
 results/vagt_loop_A0.json              Per-item A0 arm (deployed gate prompt) verdicts — same-harness baseline
 results/vagt_loop_A1.json              Per-item A1 arm (scoped D1 rubric) verdicts + source_items_count/defects — paraphrase-FP evidence (e.g. idx 12: "leukemia"→"fast-growing blood cancer" flagged as dropped)
+results/vagt_loop_v2_summary.json      Scoped gate on v2 (pre-registered, git-enforced; run_meta = HEAD d69f506 + blob ids): guardrail PASS ΔR +0.019 [−0.031,+0.069]; primary FAIL ΔJ +0.046 [−0.060,+0.154]; driver FAIL ΔF −0.027 [−0.129,+0.077]
+results/vagt_loop_v2_calls.json        All 1,920 calls with every attempt (budget step, finish_reason, tokens, time) and A1's cited defects
+results/vagt_loop_v2_pilot.json        Cost pilot: 20 calls on non-analysed controls, projected $1.03
+results/vagt_loop_v2_deviations.md     Deviations log: 4 gaps, none changes a verdict; blob ids of the imported code and inputs
 results/physician_review.csv           Blinded 50-case physician spreadsheet (seed=42; 6 contested + 44 stratified)
 results/physician_review_KEY.csv       De-blinding key (Case# → orig_index → stratum → source)
 results/audit_panel_live_receipt.json  Live /v1/audit_panel receipt, earlier automated pool (superseded: Nano, +0.0706, CI [0.0552, 0.0866])
@@ -955,7 +968,7 @@ Apache 2.0 — see [LICENSE](LICENSE).
 |------|-----------|-------------|
 | Teacher | Nemotron Super references not expert-reviewed | Human-expert validation of teacher quality |
 | Training | No ablation on Nemotron dataset — used v1 winner config directly | Ablation study on Nemotron-taught dataset |
-| Safety | Nemotron Nano over-flags clean text: 35.2% (calibration prompt) / 30.5% (gate prompt) on the 200 automated clean controls; **44.2% (53/120) on the v2 paired controls**. A substantial share reflects paraphrase-mismatch: correctly-simplified diagnoses (e.g. "leukemia" → "fast-growing blood cancer") flagged as dropped. Prompt-scope restriction does not help (pre-registered null n=350, results/vagt_loop_summary.json). | Semantic grounding — verify whether the plain phrase is clinically equivalent to the technical term (medical NLI or physician judgment). On v2 the τ-blind permutation null confirms the lift is detection, not flag-rate (results/judgebench_v2_null_control.json). |
+| Safety | Nemotron Nano over-flags clean text: 35.2% (calibration prompt) / 30.5% (gate prompt) on the 200 automated clean controls; **44.2% (53/120) on the v2 paired controls**. A substantial share reflects paraphrase-mismatch: correctly-simplified diagnoses (e.g. "leukemia" → "fast-growing blood cancer") flagged as dropped. Scoping the prompt to diagnosis drops neither costs recall nor measurably helps (pre-registered v2 re-run, 120 drops × 4 calls: ΔJ +0.046 [−0.060, +0.154], within call-to-call noise; results/vagt_loop_v2_summary.json). | Semantic grounding — verify whether the plain phrase is clinically equivalent to the technical term (medical NLI or physician judgment). On v2 the τ-blind permutation null confirms the lift is detection, not flag-rate (results/judgebench_v2_null_control.json). |
 | Safety | Diagnosis-drop detection measured on hand-verified (author-verified, not clinician-verified) labels: Nemotron 91.7% vs Llama 46.7% / Qwen 46.7% (v2, deployed prompt). The automated 68%/14%/7% is superseded (A8). | Physician-labeled validation: blinded 50-case sheet + merge pipeline committed (def028d, 0d75341; docs/ADJUDICATION_BRIEF.md); **no labels returned yet** (0/50). |
 | VAGT | Bootstrap CIs (seed=42, 1,000 resamples) — no formal power analysis | On v2: per-candidate CIs (results/judgebench_v2_pool_table.json), τ-blind permutation null (results/judgebench_v2_null_control.json), patient-level split-half (results/judgebench_v2_split_half.json). Power analysis still open. |
 | VAGT | Applied to one benchmark: 2-judge incumbent + 6 candidates, any 2+ judge panel via `/v1/audit_panel` (vagt_core generalized, 4f8688a); formal estimand developed post-v1 submission | Formal publication of the VAGT estimand; replication on a second benchmark/domain |
