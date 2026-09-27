@@ -23,7 +23,8 @@ auditor-confirmed. The red highlight shows exactly what was dropped.
 
 **Act 2 — why trust the panel?** *"We don't trust one call. We measured it."* The
 audit_panel ΔΦ_V leaderboard ranks 6 candidate judges on 240 hand-verified items
-(120 real dropped diagnoses + 120 paired controls). gpt-oss-120b recommended: +0.1220,
+(120 real dropped diagnoses + 120 paired controls — a 50% drop rate; ΔΦ_V depends on it,
+README A8 threat 11). gpt-oss-120b recommended: +0.1220,
 CI [0.1000, 0.1416] — statistically tied with DeepSeek-V4-Flash, chosen by a fewest-errors
 tie-break (0 vs 7) that was added after the v2 result was known. DeepSeek's errors were
 token-budget truncations; at a matched budget gpt-oss still wins, on specificity.

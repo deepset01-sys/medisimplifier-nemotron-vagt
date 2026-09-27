@@ -122,7 +122,7 @@ The protocol's pre-registered strict tier is `expert_recoverable = 0` (30 items:
 
 ## Leaderboard
 
-Headline set only (120 drops / 120 paired controls), deployed gate prompt (`JUDGE_PROMPT` in
+Headline set only (120 drops / 120 paired controls, i.e. 50% drops; DeepSeek-V4-Flash: 233 rows, 51%), deployed gate prompt (`JUDGE_PROMPT` in
 `src/safety_gate.py`). Recall on the drops; specificity on the paired controls; ΔΦ_V when the
 judge is added to a Llama-3.3-70B + Qwen3-32B panel (panel Φ_V 0.4764; paired item bootstrap,
 seed 42, 1,000 resamples).
@@ -152,6 +152,11 @@ Sources: [`results/judgebench_v2_pool_table.json`](https://github.com/deepset01-
 - **Construction circularity** for gpt-oss-120b and DeepSeek-family judges (see above).
 - **Synthetic source:** the notes derive from Asclepius synthetic clinical notes — no real patient data.
 - **Diagnosis stratum only:** no dose, lateral or negation items.
+- **Balanced by design:** the headline set is 50% drops. ΔΦ_V, Φ_V and the share of flags that are
+  real depend on that share; recall and specificity do not. Reweighted to 20% drops (post hoc;
+  assumes drops and controls behave as they do here), the same verdicts give Nemotron-3-Nano-30B a
+  ΔΦ_V of +0.0066 [−0.0264, +0.0384] and gpt-oss-120b ⚠️ +0.0736 [+0.0414, +0.1030]
+  ([`results/judgebench_v2_prevalence_sensitivity.json`](https://github.com/deepset01-sys/medisimplifier-nemotron-vagt/blob/main/results/judgebench_v2_prevalence_sensitivity.json)).
 - **LLM-written references:** `clean_ref` is Claude Opus 4.5 output, not clinician-reviewed.
 - **Relationship to v1:** replaces v1's diagnosis stratum; v1's diagnosis labels should not be used.
 

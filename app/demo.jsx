@@ -646,7 +646,7 @@ export default function App() {
           <div className="ms-act2">
             <div className="ms-act2-title">Which judge best fixes the panel's blind spot?</div>
             <div className="ms-act2-sub">
-              ΔΦ_V on the hand-verified diagnosis stratum — 120 real dropped diagnoses + 120 paired controls
+              ΔΦ_V on the hand-verified diagnosis stratum — 120 real dropped diagnoses + 120 paired controls (a 50% drop rate; ΔΦ_V depends on it)
             </div>
 
             <div className="ms-bars">
@@ -852,7 +852,7 @@ export default function App() {
           )}
 
           <p className="ms-exp-scope">
-            8-model pool · JudgeBench v2 diagnosis stratum (240 hand-verified items) · pre-computed verdicts, no live
+            8-model pool · JudgeBench v2 diagnosis stratum (240 hand-verified items, 50% drops; Φ_V and ΔΦ_V depend on that share) · pre-computed verdicts, no live
             model calls · same panel → same answer.
           </p>
         </section>

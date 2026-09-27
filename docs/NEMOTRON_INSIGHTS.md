@@ -20,7 +20,7 @@ result that surprised us. We lead with the surprise.
 
 | # | Role | Outcome | One-line takeaway for Nemotron users |
 |---|------|---------|--------------------------------------|
-| 1 | Nano — third judge in a validity panel | **Real, detection-specific lift** (+0.0765 Φ_V) | A 30B Nano matches a 550B Nemotron; two other families added more (partly by construction — see Finding 1) — choose judges against verified labels, not agreement |
+| 1 | Nano — third judge in a validity panel | **Real, detection-specific lift** (ΔΦ_V +0.0765 at a 50% drop share) | A 30B Nano matches a 550B Nemotron; two other families added more (partly by construction — see Finding 1) — choose judges against verified labels, not agreement |
 | 2 | Super — reasoning budget | `content=None` at 1024 tokens; needs ~16k | Budget the *reasoning* tokens, not just the answer — a silent `content=None` if under-budgeted |
 | 3 | Both — verdict extraction | Regex-scraped from 8k-token reasoning | Expose/use logprobs for classification verdicts — unlocks thresholds and cuts latency |
 | 4 | Nano — scoped faithfulness gate | Pre-registered: **no recall cost, no demonstrated gain** | Narrowing the prompt doesn't fix name-match false positives on paraphrased text; the lever is semantic grounding |
@@ -28,14 +28,14 @@ result that surprised us. We lead with the surprise.
 
 ---
 
-## Finding 1 — Nano earns its seat; scale doesn't help within the family, other families help more
+## Finding 1 — Nano earns its seat on a balanced benchmark; scale doesn't help within the family, other families help more
 
 **Role.** Nemotron Nano (30B-class, A3B MoE) added as a third judge alongside
 Llama-3.3-70B and Qwen3-32B in an ensemble that decides whether a simplified
 clinical summary dropped a diagnosis.
 
 **Outcome.** On a hand-verified benchmark — 120 patient-invisible primary-diagnosis
-drops plus 120 paired faithful controls — adding Nano raised diagnosis-detection
+drops plus 120 paired faithful controls (50% drops) — adding Nano raised diagnosis-detection
 validity **Φ_V 0.4764 → 0.5529 (ΔΦ_V +0.0765, 95% CI [+0.0516, +0.0992])** under the
 deployed gate prompt (0.4745 → 0.5337, +0.0591 [+0.0387, +0.0802] under the
 calibration prompt). It replicates across patients — split by patient, **+0.0735 [0.036,
@@ -60,8 +60,16 @@ lossy version.
 
 **Implication for Nemotron users.** Within the Nemotron family, **scale did not buy
 detection** — Nano matched Ultra-550B — so try the smallest Nemotron first in a
-many-call safety loop. But **measure candidates against a verified criterion before
-choosing**: on our benchmark two other families added ~1.6× as much validity, and our
+many-call safety loop, after checking your drop rate: every candidate adds less at 20%
+drops than at 50%, and under the deployed prompt Nano's gain is no longer detectable at
+20% (ΔΦ_V +0.0066 [−0.0264, +0.0384]; point estimate below zero at 17% and below). The bias
+its false alarms add on clean text (it flags 53 of 120 faithful controls) weighs more as
+drops get rarer and, below about 16%, outweighs what its catches remove (with the rater
+spread it adds, its point estimate turns negative below about 18%). gpt-oss-120b's point
+estimate stays positive at every share tested, though its CI includes zero below about 8%
+drops (post hoc reweighting, `results/judgebench_v2_prevalence_sensitivity.json`).
+But **measure candidates against a verified criterion before choosing**: on our benchmark
+(50% drops) two other families added ~1.6× as much validity, and our
 own panel-selection endpoint (`/v1/audit_panel`) recommends gpt-oss-120b for this
 panel (statistically tied with DeepSeek-V4-Flash; the fewest-errors tie-break that picks
 gpt-oss was added after the result was known. Caveat: the benchmark's τ=1 items were screened by gpt-oss-120b as oracle and
@@ -188,6 +196,7 @@ audience-specific rewriting. "Good judge" does not imply "good author."
 - Ensemble validity + CIs: `scripts/run_phi_v_recompute.py`, `scripts/run_pool_judgebench_v2.py`,
   `results/judgebench_v2_phi_v_recompute.json`, `results/judgebench_v2_pool_table.json`
 - Detection vs flag-rate (permutation null): `scripts/run_null_control_v2.py`, `results/judgebench_v2_null_control.json`
+- Prevalence sensitivity (post hoc reweighting): `scripts/run_prevalence_sensitivity_v2.py`, `results/judgebench_v2_prevalence_sensitivity.json`
 - Split-half replication (patient-disjoint): `scripts/run_split_half_v2.py`, `results/judgebench_v2_split_half.json`
 - Agreement: `results/judgebench_v2_agreement_recompute.json`
 - Scoped gate, v2 (pre-registered, git-enforced): `docs/vagt_loop_v2_preregistration.md`, `scripts/run_vagt_loop_v2.py`, `results/vagt_loop_v2_{summary,calls,pilot}.json`, `results/vagt_loop_v2_deviations.md`. `run_meta` in the summary holds HEAD `d69f506` and the blob ids of the note and the runner.
