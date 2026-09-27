@@ -1,0 +1,315 @@
+{
+ "n_items": 240,
+ "K": 4,
+ "A1_vs_A0__adverse": {
+  "new": {
+   "R": 0.9229,
+   "F": 0.3729,
+   "J": 0.55
+  },
+  "old": {
+   "R": 0.9042,
+   "F": 0.4,
+   "J": 0.5042
+  },
+  "d_R": 0.0188,
+  "ci_R": [
+   -0.0312,
+   0.0688
+  ],
+  "d_F": -0.0271,
+  "ci_F": [
+   -0.1292,
+   0.0771
+  ],
+  "d_J": 0.0458,
+  "ci_J": [
+   -0.0605,
+   0.1542
+  ],
+  "pass": {
+   "primary": false,
+   "guardrail": true,
+   "driver": false
+  }
+ },
+ "A1_vs_A0__favorable": {
+  "new": {
+   "R": 0.925,
+   "F": 0.3688,
+   "J": 0.5563
+  },
+  "old": {
+   "R": 0.9042,
+   "F": 0.4,
+   "J": 0.5042
+  },
+  "d_R": 0.0208,
+  "ci_R": [
+   -0.0292,
+   0.0708
+  ],
+  "d_F": -0.0312,
+  "ci_F": [
+   -0.1333,
+   0.0708
+  ],
+  "d_J": 0.0521,
+  "ci_J": [
+   -0.0563,
+   0.1584
+  ],
+  "pass": {
+   "primary": false,
+   "guardrail": true,
+   "driver": false
+  }
+ },
+ "A1_vs_A0__complete": {
+  "new": {
+   "R": 0.925,
+   "F": 0.3729,
+   "J": 0.5521
+  },
+  "old": {
+   "R": 0.9042,
+   "F": 0.4,
+   "J": 0.5042
+  },
+  "d_R": 0.0208,
+  "ci_R": [
+   -0.0292,
+   0.0708
+  ],
+  "d_F": -0.0271,
+  "ci_F": [
+   -0.1292,
+   0.0771
+  ],
+  "d_J": 0.0479,
+  "ci_J": [
+   -0.0584,
+   0.1563
+  ],
+  "pass": {
+   "primary": false,
+   "guardrail": true,
+   "driver": false
+  }
+ },
+ "nv_sensitive": [],
+ "placebo": {
+  "A0": {
+   "new": {
+    "R": 0.9,
+    "F": 0.4,
+    "J": 0.5
+   },
+   "old": {
+    "R": 0.9083,
+    "F": 0.4,
+    "J": 0.5083
+   },
+   "d_R": -0.0083,
+   "ci_R": [
+    -0.0501,
+    0.0292
+   ],
+   "d_F": 0.0,
+   "ci_F": [
+    -0.0667,
+    0.0667
+   ],
+   "d_J": -0.0083,
+   "ci_J": [
+    -0.0875,
+    0.0668
+   ],
+   "pass": {
+    "primary": false,
+    "guardrail": true,
+    "driver": false
+   }
+  },
+  "A1": {
+   "new": {
+    "R": 0.9375,
+    "F": 0.3792,
+    "J": 0.5583
+   },
+   "old": {
+    "R": 0.9083,
+    "F": 0.3667,
+    "J": 0.5417
+   },
+   "d_R": 0.0292,
+   "ci_R": [
+    -0.0126,
+    0.0708
+   ],
+   "d_F": 0.0125,
+   "ci_F": [
+    -0.0417,
+    0.0667
+   ],
+   "d_J": 0.0167,
+   "ci_J": [
+    -0.0542,
+    0.0875
+   ],
+   "pass": {
+    "primary": false,
+    "guardrail": true,
+    "driver": false
+   }
+  }
+ },
+ "noise_check": {
+  "failed": false,
+  "arms": [],
+  "rule": "fails if either within-arm placebo would pass the primary or driver threshold"
+ },
+ "verdict": {
+  "thresholds": {
+   "primary": false,
+   "guardrail": true,
+   "driver": false
+  },
+  "all_pass": false,
+  "nv_sensitive": []
+ },
+ "reliability": {
+  "A0": {
+   "items": 240,
+   "mean_pairwise_agreement": 0.8,
+   "share_items_with_disagreeing_calls": 0.3667
+  },
+  "A1": {
+   "items": 240,
+   "mean_pairwise_agreement": 0.8535,
+   "share_items_with_disagreeing_calls": 0.2667
+  }
+ },
+ "production_view_8000tok_60s": {
+  "new": {
+   "R": 0.9,
+   "F": 0.4,
+   "J": 0.5
+  },
+  "old": {
+   "R": 0.9042,
+   "F": 0.3979,
+   "J": 0.5063
+  },
+  "d_R": -0.0042,
+  "ci_R": [
+   -0.0542,
+   0.0479
+  ],
+  "d_F": 0.0021,
+  "ci_F": [
+   -0.1042,
+   0.1042
+  ],
+  "d_J": -0.0063,
+  "ci_J": [
+   -0.1146,
+   0.1021
+  ],
+  "pass": {
+   "primary": false,
+   "guardrail": true,
+   "driver": false
+  }
+ },
+ "escalation": {
+  "A0_tau1": {
+   "calls": 480,
+   "step0": 476,
+   "step1": 4,
+   "step2": 0,
+   "NV": 0
+  },
+  "A0_tau0": {
+   "calls": 480,
+   "step0": 478,
+   "step1": 2,
+   "step2": 0,
+   "NV": 0
+  },
+  "A1_tau1": {
+   "calls": 480,
+   "step0": 467,
+   "step1": 9,
+   "step2": 3,
+   "NV": 1
+  },
+  "A1_tau0": {
+   "calls": 480,
+   "step0": 460,
+   "step1": 16,
+   "step2": 2,
+   "NV": 2
+  }
+ },
+ "secondary": {
+  "A0_majority_vs_stored_panel_nano": "191/240",
+  "delta_phi_v_vs_llama_qwen": {
+   "A0": {
+    "delta_phi_v": 0.0832,
+    "ci95": [
+     0.0589,
+     0.1044
+    ]
+   },
+   "A1": {
+    "delta_phi_v": 0.1096,
+    "ci95": [
+     0.0881,
+     0.1284
+    ]
+   }
+  },
+  "R_by_expert_recoverable": {
+   "A0": {
+    "ER0": 0.9583,
+    "ER1": 0.8861
+   },
+   "A1": {
+    "ER0": 0.9583,
+    "ER1": 0.9111
+   }
+  }
+ },
+ "tokens": {
+  "input": 2069354,
+  "output": 3644288,
+  "cost_usd": 0.999,
+  "attempts": 1967
+ },
+ "run_meta": {
+  "head": "d69f506a9bd24f6e8a01e8a40803e14c7069e0d6",
+  "prereg_blob": "03ba68babf871b9f8592fb312310281f18fbab02",
+  "runner_blob": "4916794600eed947174f0ba113d7f994f23f95ab",
+  "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+  "K": 4,
+  "ladder": [
+   [
+    8000,
+    120
+   ],
+   [
+    16000,
+    240
+   ],
+   [
+    32000,
+    480
+   ]
+  ],
+  "seed": 42,
+  "n_boot": 1000,
+  "started_utc": "2026-09-27T00:53:13+00:00",
+  "finished_utc": "2026-09-27T02:05:19+00:00"
+ }
+}
