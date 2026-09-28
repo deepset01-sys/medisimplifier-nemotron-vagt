@@ -61,7 +61,7 @@ replaced by this release.
 | Editor | `deepseek-ai/DeepSeek-V4-Pro` | removed the target diagnosis from `clean_ref` → `edited_summary` |
 | Oracle | `openai/gpt-oss-120b` | chose diagnosis targets; answered the τ=1 acceptance gates (name absent, not lay-recoverable, nothing added); ran a non-gating pre-filter |
 | Embedding | `Qwen/Qwen3-Embedding-8B` | similarity screen for surviving paraphrases |
-| Final arbiter | **the author** | **author-verified, item by item; Claude Opus 4.8 used as a drafting aid** (it proposed an ACCEPT/RETRY verdict for each item; the author confirmed each one) |
+| Final arbiter | **the author** | V4: the author, full-text one-at-a-time review of every item; Claude Opus 4.8 was a drafting aid that surfaced items that had passed every automated stage for the author's review; RETRY-cleared |
 
 Pre-registered protocol (frozen before any judge was run):
 [`docs/judgebench_v2_protocol.md`](https://github.com/deepset01-sys/medisimplifier-nemotron-vagt/blob/main/docs/judgebench_v2_protocol.md).

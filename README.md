@@ -20,7 +20,7 @@ Patients go home with discharge summaries written for clinicians — dense with 
 - **Nemotron as teacher and judge.** The student was fine-tuned on **7,983** references written by **Nemotron Super** (replacing Claude Opus); the safety panel adds **Nemotron Nano** as the diagnosis-drop tripwire — teacher and judge both served per-token on Nebius Token Factory. (The student base is Llama-3 OpenBioLLM; the evaluation yardstick is still the v1 Claude references.)
 - **Measured, not just built.** A 708-item deployed-gate calibration, a **1,001-output** diagnosis-retention self-audit, and an independent **dual-auditor** review (Claude Sonnet 5 + Gemini 2.5 Pro) quantify how the gate actually behaves — confirming genuine diagnosis drops in only **2 of 20** flagged cases (see B5).
 
-**Try it in ~30 seconds.** `POST /v1/simplify` with a discharge summary returns the plain-language rewrite plus a safety verdict; or run the gate on any `(original, simplified)` pair directly, no endpoint needed — full quickstart and a live `curl` in **B2**. **Two tracks follow:** **Track A — Research Design** (estimand, benchmark, protocol, VAGT derivation, per-judge calibration, the inversion, threats to validity) and **Track B — Product Design** (the `POST /v1/simplify` contract, the decision rule with Nemotron as the diagnosis-drop tripwire, measured operating characteristics — ~1-in-3 DISAGREEs is a false alarm (34.7% under the deployed prompt on the 708-item calibration set, where 72% of items are corrupted by automated label; the share rises as real errors get rarer, see B5), ~27 s per request — Nebius deployment, and known issues, including that the Qwen judge was briefly swapped mid-project (Qwen3-32B → Qwen3-30B-A3B) but is restored to Qwen3-32B and recalibrated, see B8). This is a research prototype: unauthenticated, not clinician-validated, and not for real patient data.
+**Try it in ~30 seconds.** `POST /v1/simplify` with a discharge summary returns the plain-language rewrite plus a safety verdict; or run the gate on any `(original, simplified)` pair directly, no endpoint needed — full quickstart and a live `curl` in **B2**. **Two tracks follow:** **Track A — Research Design** (estimand, benchmark, protocol, VAGT derivation, per-judge calibration, the decoupling, threats to validity) and **Track B — Product Design** (the `POST /v1/simplify` contract, the decision rule with Nemotron as the diagnosis-drop tripwire, measured operating characteristics — ~1-in-3 DISAGREEs is a false alarm (34.7% under the deployed prompt on the 708-item calibration set, where 72% of items are corrupted by automated label; the share rises as real errors get rarer, see B5), ~27 s per request — Nebius deployment, and known issues, including that the Qwen judge was briefly swapped mid-project (Qwen3-32B → Qwen3-30B-A3B) but is restored to Qwen3-32B and recalibrated, see B8). This is a research prototype: unauthenticated, not clinician-validated, and not for real patient data.
 
 ## Why VAGT — the panel selection finding
 
@@ -80,7 +80,7 @@ The novel v2 finding: VAGT inversion — adding Nemotron Nano as third judge rai
 
 This README is organized into two tracks — read whichever fits:
 
-- **[Track A — Research Design](#track-a--research-design)** — the estimand, MedSimp-JudgeBench, judge protocol, the VAGT decomposition, per-judge calibration, the inversion, and threats to validity. *(For the statistician.)*
+- **[Track A — Research Design](#track-a--research-design)** — the estimand, MedSimp-JudgeBench, judge protocol, the VAGT decomposition, per-judge calibration, the decoupling, and threats to validity. *(For the statistician.)*
 - **[Track B — Product Design](#track-b--product-design)** — the `POST /v1/simplify` contract, the safety-gate decision rule, measured operating characteristics, the model card, Nebius deployment, and known issues. *(For the developer / hackathon judge.)*
 
 ## Track A — Research Design
@@ -180,7 +180,7 @@ Consensus statistics (Cohen's κ, PABAK, Krippendorff α) measure whether judges
 > **Carried from v1:** on the free-text safety set, CoT *amplified* judge disagreement (κ 0.11 → 0.04) — see the v1 README.
 
 > **Future work:** 95% confidence intervals (Wilson) on recall and false-positive rates are not yet reported — a statistician will want them; deferred to future work. Llama/Qwen ERROR counts and confusion matrices likewise belong in an appendix.
-### A6. Results II — the inversion
+### A6. Results II — the decoupling
 
 **Adding Nemotron as a third rater** (R: 2 → 3; diagnosis row: v2 hand-verified stratum n=240, deployed gate prompt; dose/negation/lateral: automated calibration pass, calibration prompt; the rows differ in prompt, labels and corrupted share — dose 0.30, negation 0.34, lateral 0.43, diagnosis 0.50 — and Φ_V depends on the share, so read the paired ΔΦ_V within a row rather than comparing sizes down a column), per injected error type (1000-item bootstrap, seed=42; ΔΦ_V shows the **paired** Δ with 95% CI — see note):
 

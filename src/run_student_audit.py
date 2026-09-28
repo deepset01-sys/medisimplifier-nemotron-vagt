@@ -11,7 +11,8 @@ Output: results/student_audit.json — {status, n, completed, counts, per_sample
 
 NOTE: the test set has NO injected-error ground truth, so a DISAGREE/UNSAFE here cannot be
 auto-labeled "genuine catch vs false alarm." Flagged items are saved (index) for manual
-review; the calibration false-alarm rate (~1-in-3 DISAGREE on faithful text, B5) is the prior.
+review; the prior is the gate's rate on faithful text under the deployed prompt (DISAGREE 25.5%, DISAGREE+UNSAFE 35.0%
+of the 200 clean controls in results/gate_calibration_full.json).
 
 Robust: resumes from an existing partial (skips completed index), checkpoints every 50,
 fails loudly without NEBIUS_API_KEY. Run:  python src/run_student_audit.py
@@ -136,8 +137,9 @@ def main() -> int:
           f"UNSAFE {len(unsafe)} ({100*len(unsafe)/ng:.1f}%)  ERROR {err}", flush=True)
     print(f"  Flagged (DISAGREE+UNSAFE): {len(disagree)+len(unsafe)} — indices in per_sample "
           f"for manual review; NO auto genuine-vs-FP (no ground truth on real outputs).", flush=True)
-    print(f"  Interpret vs the gate's KNOWN false-alarm rate on faithful text (~1-in-3 DISAGREE, "
-          f"35.2% Nemotron clean FP) — NOT vs zero.", flush=True)
+    print(f"  Interpret vs the gate's rate on faithful text (deployed prompt, 200 clean controls, "
+          f"results/gate_calibration_full.json): DISAGREE 25.5% (51/200), DISAGREE+UNSAFE 35.0% (70/200) — NOT vs zero.",
+          flush=True)
     return 0
 
 
