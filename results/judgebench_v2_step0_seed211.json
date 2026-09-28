@@ -1,0 +1,1890 @@
+{
+  "step": 0,
+  "tau_definition": "patient-invisible primary-diagnosis drop: name+abbrev+lay-paraphrase absent (Q_name NO) AND not lay-recoverable (Q_lay NO, F7/§6 gate) AND no fabrication (Q_added NO); deletion-only. Covariates (never gate): expert_recoverable, category_retained.",
+  "fixes": "F1-F14 (F1 split-compound->primary, F2 mechanism-reject, F3 whole-doc sweep, F4 elicit synonyms, F5 no-insertion, F6 coherence, F7 Q_lay gate, F8 Q_added gate + Q_removed_other->human, F9 synonym-aware V1, F10 target-type filter, F11 clause-level surgical removal, F12 F4-names-only constraint, F13 F5 section-header removal, F14 F6 dangling-pronoun repair+detection)",
+  "editor": "deepseek-ai/DeepSeek-V4-Pro",
+  "oracle": "openai/gpt-oss-120b",
+  "embed": "Qwen/Qwen3-Embedding-8B",
+  "seed": 211,
+  "selection_rejected_by_target_type": [
+    {
+      "idx": 134,
+      "target": "Severe menorrhagia",
+      "reason": "NO – “severe menorrhagia” describes the intensity of heavy menstrual bleeding, which is a symptom/clinical finding rather than a distinct disease entity."
+    },
+    {
+      "idx": 635,
+      "target": "Acute fibrinous",
+      "reason": "NO – “Acute fibrinous” is a descriptive adjective (e.g., acute fibrinous inflammation) rather than a distinct, named disease entity."
+    },
+    {
+      "idx": 601,
+      "target": "The patient had a large retroperitoneal loculated collection",
+      "reason": "NO – it describes a finding (a large retroperitoneal loculated fluid collection) rather than a specific disease entity."
+    },
+    {
+      "idx": 254,
+      "target": "Progressive neuropathy",
+      "reason": "NO – “progressive neuropathy” describes a pattern of worsening nerve damage rather than a distinct, named disease entity. It is a descriptive clinical finding, not a specific diagn"
+    },
+    {
+      "idx": 46,
+      "target": "Confusion",
+      "reason": "NO – “confusion” describes a mental status symptom, not a distinct disease entity."
+    },
+    {
+      "idx": 127,
+      "target": "Inconclusive",
+      "reason": "NO – “Inconclusive” is not a specific disease name; it is a descriptive term indicating that a test or evaluation did not yield a definitive diagnosis."
+    },
+    {
+      "idx": 959,
+      "target": "Small bowel obstruction in the midabdomen encased by a thickened peritoneum",
+      "reason": "NO – it describes a location and an anatomic finding (small‑bowel obstruction with thickened peritoneum) rather than a distinct, named disease entity."
+    },
+    {
+      "idx": 314,
+      "target": "Nasal deformity",
+      "reason": "NO – “nasal deformity” describes an anatomic abnormality or finding rather than a distinct, named disease entity."
+    },
+    {
+      "idx": 132,
+      "target": "Relapsing episodes of progressive swelling in the patellar region in both knees",
+      "reason": "NO – it describes a pattern of swelling (a symptom/clinical presentation), not a specific disease name."
+    },
+    {
+      "idx": 536,
+      "target": "Vaginal Varicosities",
+      "reason": "NO – “vaginal varicosities” describes dilated veins in the vagina"
+    },
+    {
+      "idx": 470,
+      "target": "Dilated common bile duct",
+      "reason": "NO – “dilated common bile duct” describes an anatomic finding (ductal enlargement) rather than a distinct disease entity. It is a descriptive observation, not a specific named diag"
+    },
+    {
+      "idx": 504,
+      "target": "Deep endometriotic lesion at the top of the vagina",
+      "reason": "NO – it describes a specific manifestation (a deep endometriotic lesion in the vaginal apex) rather than naming a distinct disease entity."
+    }
+  ],
+  "note": "Automated gates are SCREENS only. human_verdict is authoritative; confirmed-genuine rate and gate-vs-human agreement computed after V4.",
+  "items": [
+    {
+      "idx": "853",
+      "target": "Brachial plexopathy",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Parsonage-Turner syndrome"
+      ],
+      "clean_ref": "Discharge Summary\n\nPatient Name: [omitted]\nAge: 60\nSex: Female\nDiagnosis: Nerve damage in the shoulder and arm area\nLength of Stay: [omitted]\n\nHOSPITAL COURSE\n\nThis patient was admitted to our facility for severe itching on her right arm. This problem had been going on for six months. She also had weakness in her right arm.\n\nCOMORBIDITIES\n\nThe patient has a known history of multiple myeloma. This is a type of blood cancer.\n\nDIAGNOSTIC TESTS AND PROCEDURES\n\nA CT scan of the neck, an MRI, and a nerve test of the shoulder and arm area were performed. These tests showed a bulging disc in the right side of the neck. This disc was pressing on nerves at the C6-C7 level. The tests also showed swelling of the nerves in the right shoulder and arm area. This condition is called Parsonage-Turner syndrome.\n\nDISCHARGE MEDICATIONS\n\nThe patient was treated with methylprednisolone aceponate cream 0.1%. This is a steroid cream. She also took hydroxyzine 25mg by mouth every 8 hours. This helped only a little with the itching. Gabapentin was added at 900mg per day. After three months, this medicine controlled the itching well.\n\nFOLLOW-UP INSTRUCTIONS\n\nThe patient was sent to see a brain and spine surgeon. She was also sent to see a cancer doctor for more treatment advice.\n\nSUMMARY\n\nThe patient had nerve damage in the shoulder and arm area. This was caused by the spread of her blood cancer. The treatment plan included methylprednisolone aceponate cream 0.1% and hydroxyzine 25mg by mouth every 8 hours. Gabapentin at 900mg per day was also added. The patient was sent to a brain and spine surgeon and a cancer doctor for more care.",
+      "edited_summary": "Discharge Summary\n\nPatient Name: [omitted]\nAge: 60\nSex: Female\nLength of Stay: [omitted]\n\nHOSPITAL COURSE\n\nThis patient was admitted to our facility for severe itching on her right arm. This problem had been going on for six months. She also had weakness in her right arm.\n\nCOMORBIDITIES\n\nThe patient has a known history of multiple myeloma. This is a type of blood cancer.\n\nDIAGNOSTIC TESTS AND PROCEDURES\n\nA CT scan of the neck, an MRI, and a nerve test of the shoulder and arm area were performed. These tests showed a bulging disc in the right side of the neck. This disc was pressing on nerves at the C6-C7 level. The tests also showed swelling of the nerves in the right shoulder and arm area.\n\nDISCHARGE MEDICATIONS\n\nThe patient was treated with methylprednisolone aceponate cream 0.1%. This is a steroid cream. She also took hydroxyzine 25mg by mouth every 8 hours. This helped only a little with the itching. Gabapentin was added at 900mg per day. After three months, this medicine controlled the itching well.\n\nFOLLOW-UP INSTRUCTIONS\n\nThe patient was sent to see a brain and spine surgeon. She was also sent to see a cancer doctor for more treatment advice.\n\nSUMMARY\n\nThe arm problem was caused by the spread of her blood cancer. The treatment plan included methylprednisolone aceponate cream 0.1% and hydroxyzine 25mg by mouth every 8 hours. Gabapentin at 900mg per day was also added. The patient was sent to a brain and spine surgeon and a cancer doctor for more care.",
+      "V1_surface": {
+        "forms_checked": [
+          "brachial plexopathy",
+          "parsonage-turner syndrome",
+          "plexopathy"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.6114,
+        "high_similarity_flag": false,
+        "flagged_sentence": "The tests also showed swelling of the nerves in the right shoulder and arm area.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Diagnosis: Nerve damage in the shoulder and arm area",
+          "This condition is called Parsonage-Turner syndrome.",
+          "patient had nerve damage in the shoulder and",
+          "area. This"
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [
+          "25mg",
+          "900mg"
+        ],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Diagnosis: Nerve damage in the shoulder and arm area",
+          "This condition is called Parsonage-Turner syndrome.",
+          "patient had nerve damage in the shoulder and",
+          "area. This"
+        ],
+        "added_spans": [
+          "problem"
+        ],
+        "n_words_removed": 25,
+        "other_diagnosis_lines_in_source": [
+          "Brachial plexopathy"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary never uses the term “brachial plexopathy,” an abbreviation for it, or a lay‑language phrase that directly denotes that specific diagnosis.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary describes a bulging disc and nerve swelling in the shoulder/arm but never uses everyday language that directly identifies a “brachial plexus” problem, so a layperson would not recognize it as brachial plexopathy.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – clue: imaging demonstrated swelling of the nerves in the right shoulder/arm (brachial plexus) consistent with brachial plexopathy.",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES; cancer (blood cancer)",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": "YES",
+        "q_removed_other_reason": "YES; Parsonage‑Turner syndrome.",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 1,
+        "category_retained": 1,
+        "needs_human_collateral_check": true
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 1,
+      "category_retained": 1,
+      "needs_human_collateral_check": true,
+      "coherence_dangling_flag": true,
+      "auto_gates_all_pass": true,
+      "human_verdict": "ACCEPT",
+      "human_note": "ACCEPT: Fix 14 repair worked (\"The arm problem was caused by...\"); synonym+finding handled; both flags false positives"
+    },
+    {
+      "idx": "40",
+      "target": "Autism Spectrum Disorder (ASD)",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Autism Spectrum Disorder",
+        "ASD",
+        "a condition that affects how a person communicates and interacts with others",
+        "autism",
+        "OCD"
+      ],
+      "clean_ref": "Discharge Summary:\n\nPatient Information:\nName: Louise\nAge: 16\nGender: Female\nDiagnosis: Autism Spectrum Disorder (ASD), a condition that affects how a person communicates and interacts with others\n\nHospital Course:\nLouise is a 16-year-old girl with autism. Testing showed she thinks and learns at the level of a 13-year-old. Louise grew up in a small country village in Italy with both parents until age nine. Her parents then split up. Her father moved her to Canada. There she went to school and got help from mental health doctors. She also received treatment for a related condition called OCD. OCD causes unwanted repeated thoughts and behaviors.\n\nOver 5 years in Canada, Louise worked with many mental health helpers. She attended school with special changes made to help her learn. Later, a court ordered her to go back to Italy to live with her mother. The court did not find that living with her mother would cause serious harm. However, the mental health doctors disagreed. They believed moving Louise back to Italy could hurt her. The change in her surroundings and less access to mental health care for young people would likely make her symptoms worse.\n\nThe mental health doctors also looked into claims that the mother emotionally mistreated Louise. During her time in Italy, Louise was reportedly put down and called hurtful names. The doctors also noted that her OCD could make the move to Italy even harder for her.\n\nThe doctors conclude that Louise has a complicated situation because of her condition and history. She needs ongoing medical care and support. The mental health doctors say it is important for Louise to have access to mental health services for young people. She also needs special changes at school to help her learn. These services were available to her in Canada. They should also be available wherever she lives now. The doctors suggest watching her condition closely. They recommend regular visits with medical professionals to check her progress and change her treatment plan if needed.",
+      "edited_summary": "Discharge Summary:\n\nPatient Information:\nName: Louise\nAge: 16\nGender: Female\n\nHospital Course:\nLouise is a 16-year-old girl. Testing showed she thinks and learns at the level of a 13-year-old. Louise grew up in a small country village in Italy with both parents until age nine. Her parents then split up. Her father moved her to Canada. There she went to school and got help from mental health doctors. She also received treatment for a related condition called OCD. OCD causes unwanted repeated thoughts and behaviors.\n\nOver 5 years in Canada, Louise worked with many mental health helpers. She attended school with special changes made to help her learn. Later, a court ordered her to go back to Italy to live with her mother. The court did not find that living with her mother would cause serious harm. However, the mental health doctors disagreed. They believed moving Louise back to Italy could hurt her. The change in her surroundings and less access to mental health care for young people would likely make her symptoms worse.\n\nThe mental health doctors also looked into claims that the mother emotionally mistreated Louise. During her time in Italy, Louise was reportedly put down and called hurtful names. The doctors also noted that her OCD could make the move to Italy even harder for her.\n\nThe doctors conclude that Louise has a complicated situation because of her history. She needs ongoing medical care and support. The mental health doctors say it is important for Louise to have access to mental health services for young people. She also needs special changes at school to help her learn. These services were available to her in Canada. They should also be available wherever she lives now. The doctors suggest watching her condition closely. They recommend regular visits with medical professionals to check her progress and change her treatment plan if needed.",
+      "V1_surface": {
+        "forms_checked": [
+          "a condition that affects how a person communicates and interacts with others",
+          "asd",
+          "autism",
+          "autism spectrum disorder",
+          "autism spectrum disorder (asd)",
+          "spectrum"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.4897,
+        "high_similarity_flag": false,
+        "flagged_sentence": "She needs ongoing medical care and support.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Diagnosis: Autism Spectrum Disorder (ASD), a condition that affects how a person communicates and interacts with others",
+          "girl with autism.",
+          "condition and"
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Diagnosis: Autism Spectrum Disorder (ASD), a condition that affects how a person communicates and interacts with others",
+          "girl with autism.",
+          "condition and"
+        ],
+        "added_spans": [
+          "girl."
+        ],
+        "n_words_removed": 22,
+        "other_diagnosis_lines_in_source": [
+          "Autism Spectrum Disorder (ASD)"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary never mentions autism, ASD, or any lay‑language equivalent; it only references cognitive level, OCD, and other mental‑health concerns.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary uses only general developmental and mental‑health language and never mentions the characteristic social‑communication deficits or restricted/repetitive behaviors that define autism, so a lay reader could not infer an ASD diagnosis.",
+        "q_expert_infer_answer": "NO",
+        "q_expert_infer_reason": "NO – the only suggestive clue is the documented cognitive/learning level (functioning at a 13‑year‑old level) and the need for special school accommodations, which indicate developmental delay but do not provide the specific social‑communication or restrictive‑repetitive behavior evidence required t",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES; mental health disorder (psychiatric condition).",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": "NO",
+        "q_removed_other_reason": "NO.",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 0,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 0,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "ACCEPT",
+      "human_note": "ACCEPT: strict-tier ASD drop; OCD co-diagnosis correctly retained (F4 mis-listed OCD but editor ignored it)"
+    },
+    {
+      "idx": "89",
+      "target": "Benign endometrial-like tumor",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Benign endometrial-like tumor"
+      ],
+      "clean_ref": "DISCHARGE SUMMARY:\n\nPatient Name: [REDACTED]\nMedical Record Number: [REDACTED]\nDate of Admission: [REDACTED]\nDate of Discharge: [REDACTED]\nAdmitting Diagnosis: Mass near the left ovary\nDischarge Diagnosis: Non-cancerous growth made of tissue similar to the uterus lining\n\nHospital Course:\nThe patient was admitted after having surgery in the past to remove a cyst from the left ovary caused by endometriosis. Endometriosis is when tissue like the uterus lining grows outside the uterus. An ultrasound showed a large mass near the left ovary. A CT scan confirmed a solid growth. The patient had surgery using small cuts and a camera to remove the left ovary and fallopian tube. The tumor was about 4 inches in size. A quick test during surgery showed the growth was not cancer. It was most likely caused by severe endometriosis. Other small areas of abnormal tissue in the belly lining were also removed. The patient had no problems during the hospital stay. The patient went home six days after surgery.\n\nFollow-up:\nThe patient showed no signs of remaining disease at a check-up six months after surgery.\n\nLaboratory and Diagnostic Data:\nA blood test called CA-125 was higher than normal. This test can be elevated with endometriosis or other conditions. Two other blood tests called CA 19-9 and CEA were normal. An ultrasound showed an 4-inch mass near the left ovary that was part solid and part fluid-filled. A CT scan of the belly and pelvis showed a solid growth. Lab testing of the removed tissue confirmed it was made of tissue similar to the uterus lining.\n\nSpecialists Consulted:\nNone\n\nDischarge Medications:\nNone\n\nDischarge Condition:\nStable. The patient had no concerns or problems at the time of discharge.\n\nPrimary Care Follow-up:\nThe patient will see her regular doctor for ongoing care.",
+      "edited_summary": "DISCHARGE SUMMARY:\n\nPatient Name: [REDACTED]\nMedical Record Number: [REDACTED]\nDate of Admission: [REDACTED]\nDate of Discharge: [REDACTED]\nAdmitting Diagnosis: Mass near the left ovary\n\nHospital Course:\nThe patient was admitted after having surgery in the past to remove a cyst from the left ovary caused by endometriosis. Endometriosis is when tissue like the uterus lining grows outside the uterus. An ultrasound showed a large mass near the left ovary. A CT scan confirmed a solid growth. The patient had surgery using small cuts and a camera to remove the left ovary and fallopian tube. The tumor was about 4 inches in size. A quick test during surgery showed the growth was not cancer. It was most likely caused by severe endometriosis. Other small areas of abnormal tissue in the belly lining were also removed. The patient had no problems during the hospital stay. The patient went home six days after surgery.\n\nFollow-up:\nThe patient showed no signs of remaining disease at a check-up six months after surgery.\n\nLaboratory and Diagnostic Data:\nA blood test called CA-125 was higher than normal. This test can be elevated with endometriosis or other conditions. Two other blood tests called CA 19-9 and CEA were normal. An ultrasound showed an 4-inch mass near the left ovary that was part solid and part fluid-filled. A CT scan of the belly and pelvis showed a solid growth. Lab testing of the removed tissue confirmed it was made of tissue similar to the uterus lining.\n\nSpecialists Consulted:\nNone\n\nDischarge Medications:\nNone\n\nDischarge Condition:\nStable. The patient had no concerns or problems at the time of discharge.\n\nPrimary Care Follow-up:\nThe patient will see her regular doctor for ongoing care.",
+      "V1_surface": {
+        "forms_checked": [
+          "benign endometrial-like tumor",
+          "endometrial"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.6355,
+        "high_similarity_flag": false,
+        "flagged_sentence": "Lab testing of the removed tissue confirmed it was made of tissue similar to the uterus lining.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Discharge Diagnosis: Non-cancerous growth made of tissue similar to the uterus lining"
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Discharge Diagnosis: Non-cancerous growth made of tissue similar to the uterus lining"
+        ],
+        "added_spans": [],
+        "n_words_removed": 12,
+        "other_diagnosis_lines_in_source": [
+          "Benign endometrial-like tumor",
+          "Left adnexal mass"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary describes a non‑cancerous growth “most likely caused by severe endometriosis” and tissue “similar to the uterus lining,” but it never uses the term “Benign endometrial‑like tumor” (or an abbreviation or exact lay‑language equivalent).",
+        "q_lay_recoverable_answer": "YES",
+        "q_lay_recoverable_reason": "YES – the summary plainly states the growth was “not cancer” and was “most likely caused by severe endometriosis” and that the tissue looked like the lining of the uterus, which together convey a benign, endometrial‑like tumor.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – the pathology description that the removed mass was composed of tissue “similar to the uterus lining” (i.e., endometrial‑like tissue) allows an expert to infer a benign endometrial‑like tumor.",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES; benign (non‑malignant) gynecologic condition.",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": "NO",
+        "q_removed_other_reason": "NO.",
+        "tau_pass": false,
+        "patient_recoverable": 1,
+        "expert_recoverable": 1,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 1,
+      "expert_recoverable": 1,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": false,
+      "human_verdict": "",
+      "human_note": ""
+    },
+    {
+      "idx": "870",
+      "target": "Exudative AMD",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Exudative AMD",
+        "Wet age-related macular degeneration"
+      ],
+      "clean_ref": "Discharge Summary\n\nPatient Name: Not specified\nMedical Record Number: Not specified\n\nAdmission Date: Not specified\nDischarge Date: Not specified\n\nAdmitting Diagnosis: Wet age-related macular degeneration with a fluid-filled blister under the center of the retina and a related hole in the macula\n\nHospital Course: The 73-year-old Caucasian female was admitted with decreased vision and wavy or distorted vision for 6 months in her left eye. Initial examination showed the sharpest vision with glasses was 20/80 in the left eye and 20/25 in the right eye. A detailed eye exam showed wet age-related macular degeneration with a fluid-filled blister under the center of the retina and a related hole in the macula. A special imaging scan of the retina confirmed a hole going all the way through the macula with attached edges. It also showed a partly detached gel layer on top of the raised blister. Treatment with eye injections to stop abnormal blood vessel growth was started. The patient received three monthly injections of bevacizumab (1.25 mg) into the eye. After 4 weeks, the first injection made the fluid-filled blister go away and brought the edges of the hole closer together. However, vision got worse to 20/160. At the follow-up visit, the second injection was given after four weeks. The imaging scan showed the hole had closed completely and vision improved greatly to 20/50. During later follow-up visits, the fluid-filled blister came back, but the hole in the macula stayed closed. Ongoing eye injections with bevacizumab given as needed made the blister go away and kept vision stable.\n\nDischarge Diagnosis: Wet age-related macular degeneration with a fluid-filled blister under the center of the retina and a related hole in the macula\n\nDischarge Education: The patient was told about the importance of continued eye checkups and taking medication as directed. The possible side effects of the medication were explained. The patient was also told to report any new symptoms right away.\n\nFollow-Up Care: The patient will follow-up with her eye doctor in three months.\n\nSigned,\n\n[Physician Name]",
+      "edited_summary": "Discharge Summary\n\nPatient Name: Not specified\nMedical Record Number: Not specified\n\nAdmission Date: Not specified\nDischarge Date: Not specified\n\nAdmitting Diagnosis: A fluid-filled blister under the center of the retina and a related hole in the macula\n\nHospital Course: The 73-year-old Caucasian female was admitted with decreased vision and wavy or distorted vision for 6 months in her left eye. Initial examination showed the sharpest vision with glasses was 20/80 in the left eye and 20/25 in the right eye. A detailed eye exam showed a fluid-filled blister under the center of the retina and a related hole in the macula. A special imaging scan of the retina confirmed a hole going all the way through the macula with attached edges. It also showed a partly detached gel layer on top of the raised blister. Treatment with eye injections to stop abnormal blood vessel growth was started. The patient received three monthly injections of bevacizumab (1.25 mg) into the eye. After 4 weeks, the first injection made the fluid-filled blister go away and brought the edges of the hole closer together. However, vision got worse to 20/160. At the follow-up visit, the second injection was given after four weeks. The imaging scan showed the hole had closed completely and vision improved greatly to 20/50. During later follow-up visits, the fluid-filled blister came back, but the hole in the macula stayed closed. Ongoing eye injections with bevacizumab given as needed made the blister go away and kept vision stable.\n\nDischarge Diagnosis: A fluid-filled blister under the center of the retina and a related hole in the macula\n\nDischarge Education: The patient was told about the importance of continued eye checkups and taking medication as directed. The possible side effects of the medication were explained. The patient was also told to report any new symptoms right away.\n\nFollow-Up Care: The patient will follow-up with her eye doctor in three months.\n\nSigned,\n\n[Physician Name]",
+      "V1_surface": {
+        "forms_checked": [
+          "exudative",
+          "exudative amd",
+          "wet age-related macular degeneration"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.6296,
+        "high_similarity_flag": false,
+        "flagged_sentence": "A detailed eye exam showed a fluid-filled blister under the center of the retina and a related hole in the macula.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Wet age-related macular degeneration with a",
+          "wet age-related macular degeneration with",
+          "Wet age-related macular degeneration with a"
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [
+          "25mg"
+        ],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Wet age-related macular degeneration with a",
+          "wet age-related macular degeneration with",
+          "Wet age-related macular degeneration with a"
+        ],
+        "added_spans": [
+          "A",
+          "A"
+        ],
+        "n_words_removed": 17,
+        "other_diagnosis_lines_in_source": [
+          "Exudative AMD with Subfoveal PED and an Associated MH",
+          "Exudative AMD with Subfoveal PED and an Associated MH"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary never uses the term “exudative AMD,” its abbreviation, or a lay‑language phrase such as “wet age‑related macular degeneration”; it only describes a fluid‑filled retinal blister and macular hole.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary describes a retinal blister, macular hole, and anti‑VEGF injections, but it never uses the term “exudative age‑related macular degeneration” or any everyday phrasing that would identify that specific diagnosis.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – the use of intravitreal bevacizumab (anti‑VEGF) to treat a sub‑retinal fluid‑filled blister (PED) in a 73‑year‑old suggests exudative (neovascular) age‑related macular degeneration.",
+        "q_category_retained_answer": "NO",
+        "q_category_retained_reason": "NO",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": null,
+        "q_removed_other_reason": "",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 1,
+        "category_retained": 0,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 1,
+      "category_retained": 0,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "ACCEPT",
+      "human_note": "ACCEPT: Wet AMD name removed via F11; findings + anti-VEGF retained; stable vs seed-137"
+    },
+    {
+      "idx": "159",
+      "target": "female pseudohermaphroditism",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "female pseudohermaphroditism",
+        "a condition where a female is born with some male physical features",
+        "a condition causing some male physical features"
+      ],
+      "clean_ref": "Discharge Summary:\n\nPatient Information:\nName: [redacted]\nAge: 18 years\nSex: Female\nMedical Record Number: [redacted]\n\nClinical Course:\nThe patient came to the hospital because of problems with learning in school. During the physical exam, doctors found she had an enlarged private area and extra body hair. Mental health testing showed the patient has a mild learning disability. More tests found a growth in her lower belly area and a tumor on her left ovary. The patient had surgery to remove the ovary. Lab tests on the removed tissue did not show any male reproductive tissue.\n\nDiagnosis:\nThe patient was diagnosed with a condition where a female is born with some male physical features.\n\nManagement:\nThe patient had surgery to remove her ovary as part of her treatment.\n\nFollow-up:\nThe patient should see her regular doctor for checkups to keep track of her condition.\n\nPrognosis:\nHow well the patient does over time depends on how much her body developed male features. It also depends on whether any male reproductive tissue is present. More tests may be needed to understand what to expect in the future.\n\nSummary:\nAn 18-year-old girl with a mild learning disability was found to have a condition causing some male physical features. This was confirmed after finding a growth in her lower belly and a tumor on her left ovary. Surgery was done to remove the ovary. Lab tests showed no male reproductive tissue was present. The patient should see her doctor regularly for checkups. What to expect in the future is not clear, and more tests may be needed.",
+      "edited_summary": "Discharge Summary:\n\nPatient Information:\nName: [redacted]\nAge: 18 years\nSex: Female\nMedical Record Number: [redacted]\n\nClinical Course:\nThe patient came to the hospital because of problems with learning in school. During the physical exam, doctors found she had an enlarged private area and extra body hair. Mental health testing showed the patient has a mild learning disability. More tests found a growth in her lower belly area and a tumor on her left ovary. The patient had surgery to remove the ovary. Lab tests on the removed tissue did not show any male reproductive tissue.\n\nManagement:\nThe patient had surgery to remove her ovary as part of her treatment.\n\nFollow-up:\nThe patient should see her regular doctor for checkups to keep track of her condition.\n\nPrognosis:\nHow well the patient does over time depends on how much her body developed male features. It also depends on whether any male reproductive tissue is present. More tests may be needed to understand what to expect in the future.\n\nSummary:\nAn 18-year-old girl with a mild learning disability was found to have a growth in her lower belly and a tumor on her left ovary. Surgery was done to remove the ovary. Lab tests showed no male reproductive tissue was present. The patient should see her doctor regularly for checkups. What to expect in the future is not clear, and more tests may be needed.",
+      "V1_surface": {
+        "forms_checked": [
+          "a condition causing some male physical features",
+          "a condition where a female is born with some male physical features",
+          "female pseudohermaphroditism",
+          "pseudohermaphroditism"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.6681,
+        "high_similarity_flag": false,
+        "flagged_sentence": "Lab tests showed no male reproductive tissue was present.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Diagnosis: The patient was diagnosed with a condition where a female is born with some male physical features.",
+          "condition causing some male physical features. This was confirmed after finding a"
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Diagnosis: The patient was diagnosed with a condition where a female is born with some male physical features.",
+          "condition causing some male physical features. This was confirmed after finding a"
+        ],
+        "added_spans": [],
+        "n_words_removed": 30,
+        "other_diagnosis_lines_in_source": [
+          "The patient was diagnosed with female pseudohermaphroditism"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary never uses the term “female pseudohermaphroditism,” an abbreviation for it, or a lay‑language phrase that directly identifies that specific diagnosis.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary uses everyday descriptions of physical findings and surgery but never mentions or clearly implies the condition “female pseudohermaphroditism,” so a lay reader would not identify that specific diagnosis.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – clitoromegaly with hirsutism (virilization) in a phenotypic female together with an ovarian tumor.",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES – neoplasm (ovarian tumor)",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": "NO",
+        "q_removed_other_reason": "NO.",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 1,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 1,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "ACCEPT",
+      "human_note": "ACCEPT: cleaner than seed-99 — Fix 11 preserved prognostic clause + follow-up; no collateral false-alarm"
+    },
+    {
+      "idx": "296",
+      "target": "Trichosporon beigelii infection",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Trichosporon beigelii infection"
+      ],
+      "clean_ref": "Discharge Summary:\n\nPatient Name: N/A\nMedical Record Number: N/A\nDate of Admission: N/A\nDate of Discharge: N/A\nAdmitting Physician: N/A\nAttending Physician: N/A\n\nHospital Course:\n\nThe patient is a 50-year-old male farmer who was sent to our hospital for emergency care. The patient came in with stomach pain that came and went. Two days before, he had surgery at another hospital to fix a hole in his small intestine and treat an infection that had spread in his belly.\n\nWhen the patient first went to the other hospital, his kidneys were not working well. He had low potassium levels in his blood. He also had bad belly pain and was making very little urine for 5 days. After surgery, the patient had swelling in his face and trouble breathing. He also had too much acid in his blood, low blood pressure, confusion, and fever. The patient was put on a breathing machine and given medicines to fight infection. These medicines included aztreonam and metronidazole given through a vein. Even with all this care, the patient got worse.\n\nBlood tests showed the patient had a low red blood cell count with some oddly shaped cells. Other test results showed the following. The patient had too many white blood cells and not enough cells that help blood clot. Tests that show swelling in the body were high. Kidney function tests showed the kidneys were not working well. Salt and potassium levels in the blood were too high. Liver tests were also high. An imaging test of the belly showed mild kidney disease and a small fluid buildup near the spleen. It also showed swollen tubes in the liver. A urine test showed a small number of cells that fight infection. A test of fluid from the belly showed some cells that fight infection along with yeast and fungus. A blood test for germs came back clean after 24 hours.\n\nA test of belly fluid found a fungus called Trichosporon beigelii. Based on these tests, the infection was treated using standard medical care. Even with treatment, the patient kept getting worse. He was then sent here for emergency care.\n\nGiven how sick the patient is, he will keep getting care to support his body. More treatment will be given as needed.\n\nDischarge Diagnosis:\n\nThe patient was found to have an infection caused by a fungus called Trichosporon beigelii. This was treated during his hospital stay.\n\nFollow-up Care:\n\nThe patient will keep getting follow-up care to make sure he gets the treatment he needs. Instructions for follow-up care will be given at future visits.",
+      "edited_summary": "Discharge Summary:\n\nPatient Name: N/A\nMedical Record Number: N/A\nDate of Admission: N/A\nDate of Discharge: N/A\nAdmitting Physician: N/A\nAttending Physician: N/A\n\nHospital Course:\n\nThe patient is a 50-year-old male farmer who was sent to our hospital for emergency care. The patient came in with stomach pain that came and went. Two days before, he had surgery at another hospital to fix a hole in his small intestine and treat an infection that had spread in his belly.\n\nWhen the patient first went to the other hospital, his kidneys were not working well. He had low potassium levels in his blood. He also had bad belly pain and was making very little urine for 5 days. After surgery, the patient had swelling in his face and trouble breathing. He also had too much acid in his blood, low blood pressure, confusion, and fever. The patient was put on a breathing machine and given medicines to fight infection. These medicines included aztreonam and metronidazole given through a vein. Even with all this care, the patient got worse.\n\nBlood tests showed the patient had a low red blood cell count with some oddly shaped cells. Other test results showed the following. The patient had too many white blood cells and not enough cells that help blood clot. Tests that show swelling in the body were high. Kidney function tests showed the kidneys were not working well. Salt and potassium levels in the blood were too high. Liver tests were also high. An imaging test of the belly showed mild kidney disease and a small fluid buildup near the spleen. It also showed swollen tubes in the liver. A urine test showed a small number of cells that fight infection. A test of fluid from the belly showed some cells that fight infection along with yeast and fungus. A blood test for germs came back clean after 24 hours.\n\nA test of belly fluid found a fungus. Based on these tests, the infection was treated using standard medical care. Even with treatment, the patient kept getting worse. He was then sent here for emergency care.\n\nGiven how sick the patient is, he will keep getting care to support his body. More treatment will be given as needed.\n\nFollow-up Care:\n\nThe patient will keep getting follow-up care to make sure he gets the treatment he needs. Instructions for follow-up care will be given at future visits.",
+      "V1_surface": {
+        "forms_checked": [
+          "trichosporon",
+          "trichosporon beigelii infection"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.6507,
+        "high_similarity_flag": false,
+        "flagged_sentence": "A test of belly fluid found a fungus.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "fungus called Trichosporon beigelii.",
+          "Discharge Diagnosis: The patient was found to have an infection caused by a fungus called Trichosporon beigelii. This was treated during his hospital stay."
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "fungus called Trichosporon beigelii.",
+          "Discharge Diagnosis: The patient was found to have an infection caused by a fungus called Trichosporon beigelii. This was treated during his hospital stay."
+        ],
+        "added_spans": [
+          "fungus."
+        ],
+        "n_words_removed": 28,
+        "other_diagnosis_lines_in_source": [
+          "The patient was diagnosed with Trichosporon beigelii infection, which was treated during his hospital stay"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary never mentions “Trichosporon beigelii” (or an abbreviation or a lay‑term description of that specific fungal infection).",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary only says “a fungus” was found in the abdominal fluid and never names Trichosporon beigelii, so a layperson could not identify that specific infection.",
+        "q_expert_infer_answer": "NO",
+        "q_expert_infer_reason": "NO – the only clue pointing toward a Trichosporon infection is the report of “fungus/yeast” isolated from the peritoneal (abdominal) fluid, but the data do not specify the organism enough to infer Trichosporon beigelii.",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES; infection",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": null,
+        "q_removed_other_reason": "",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 0,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 0,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "ACCEPT",
+      "human_note": "ACCEPT: strict-tier; species name removed, generic fungus retained (F11); stable vs seed-99"
+    },
+    {
+      "idx": "270",
+      "target": "Congenital Left Diaphragmatic Hernia",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "hole in the muscle below the lungs",
+        "birth defect causing a hole in the muscle below the lungs"
+      ],
+      "clean_ref": "Discharge Summary:\n\nPatient Name: [Insert Name]\n\nMedical Record Number: [Insert Number]\n\nAdmission Date: [Insert Date]\n\nDischarge Date: [Insert Date]\n\nDiagnosis:\n\nBirth defect causing a hole in the left side of the muscle that separates the chest from the belly. This hole allowed the stomach, spleen, part of the large intestine, and part of the small intestine to move up into the chest. The stomach and spleen became twisted and blocked.\n\nHospital Course:\n\nThe patient came to the hospital with less hunger than usual, trouble swallowing, pain in the upper belly, and trouble breathing. A chest X-ray and CT scan showed a stretched stomach and enlarged spleen. These organs had pushed into the chest and shifted the heart and nearby parts to the right side. This pointed to a type of birth defect called a hole in the muscle below the lungs.\n\nThe patient had surgery. Doctors first tried to operate using small cuts and a camera. They had to switch to a larger cut to complete the repair. During surgery, doctors found a large hole in the muscle below the lungs on the left side. The spleen and stomach had moved into the chest and become twisted. Doctors moved these organs back to where they belong. They used a special patch to close the hole in the muscle.\n\nThe patient healed well with no problems. The patient left the hospital 10 days after surgery. The patient was told to see their regular doctor for follow-up care. The patient was told to keep taking medicine as directed.\n\nHospital Course Summary:\n\nThe patient had signs of a birth defect causing a hole in the muscle below the lungs. Tests confirmed this problem. Doctors first tried surgery with small cuts and a camera. They had to switch to a larger cut. Doctors moved the organs back into place and used a special patch to close the hole. The patient healed well and left the hospital. The patient was told to keep taking medicine as directed and see their regular doctor.",
+      "edited_summary": "Discharge Summary:\n\nPatient Name: [Insert Name]\n\nMedical Record Number: [Insert Number]\n\nAdmission Date: [Insert Date]\n\nDischarge Date: [Insert Date]\n\nHospital Course:\n\nThe patient came to the hospital with less hunger than usual, trouble swallowing, pain in the upper belly, and trouble breathing. A chest X-ray and CT scan showed a stretched stomach and enlarged spleen. These organs had pushed into the chest and shifted the heart and nearby parts to the right side.\n\nThe patient had surgery. Doctors first tried to operate using small cuts and a camera. They had to switch to a larger cut to complete the repair. During surgery, doctors found that the spleen and stomach had moved into the chest and become twisted. Doctors moved these organs back to where they belong. They used a special patch to close the hole in the muscle.\n\nThe patient healed well with no problems. The patient left the hospital 10 days after surgery. The patient was told to see their regular doctor for follow-up care. The patient was told to keep taking medicine as directed.\n\nHospital Course Summary:\n\nTests confirmed the problem. Doctors first tried surgery with small cuts and a camera. They had to switch to a larger cut. Doctors moved the organs back into place and used a special patch to close the hole. The patient healed well and left the hospital. The patient was told to keep taking medicine as directed and see their regular doctor.",
+      "V1_surface": {
+        "forms_checked": [
+          "birth defect causing a hole in the muscle below the lungs",
+          "congenital left diaphragmatic hernia",
+          "diaphragmatic",
+          "hole in the muscle below the lungs"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.5386,
+        "high_similarity_flag": false,
+        "flagged_sentence": "During surgery, doctors found that the spleen and stomach had moved into the chest and become twisted.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Diagnosis: Birth defect causing a hole in the left side of the muscle that separates the chest from the belly. This hole allowed the stomach, spleen, part of the large intestine, and part of the small intestine to move up into the chest. The stomach and spleen became twisted and blocked.",
+          "This pointed to a type of birth defect called a hole in the muscle below the lungs.",
+          "a large hole in",
+          "muscle below the lungs on the left side. The",
+          "The patient had signs of a birth defect causing a hole in the muscle below the lungs.",
+          "this"
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Diagnosis: Birth defect causing a hole in the left side of the muscle that separates the chest from the belly. This hole allowed the stomach, spleen, part of the large intestine, and part of the small intestine to move up into the chest. The stomach and spleen became twisted and blocked.",
+          "This pointed to a type of birth defect called a hole in the muscle below the lungs.",
+          "a large hole in",
+          "muscle below the lungs on the left side. The",
+          "The patient had signs of a birth defect causing a hole in the muscle below the lungs.",
+          "this"
+        ],
+        "added_spans": [
+          "that",
+          "the"
+        ],
+        "n_words_removed": 99,
+        "other_diagnosis_lines_in_source": [
+          "- Congenital Left Diaphragmatic Hernia with Volvulus and Obstruction of Herniated Part of Stomach"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary describes a diaphragmatic hernia (stomach and spleen displaced into the chest, a hole in the muscle) but never names “congenital left diaphragmatic hernia” or an abbreviation for it.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary describes displaced stomach and spleen and a hole in the muscle, but it never names a congenital left diaphragmatic hernia, so a layperson couldn’t deduce that specific diagnosis.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – the CT (and chest X‑ray) showing the stomach and spleen herniated into the left thorax with mediastinal shift is the key clue.",
+        "q_category_retained_answer": "NO",
+        "q_category_retained_reason": "NO",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": null,
+        "q_removed_other_reason": "",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 1,
+        "category_retained": 0,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 1,
+      "category_retained": 0,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "REJECT",
+      "human_note": "REJECT: mechanistic diagnosis (diaphragmatic hernia) patient-recoverable — retained \"hole in the muscle\" + \"organs pushed into the chest\"; Q_lay under-fired; heavy over-deletion (99 words); V1 exact-phrase miss"
+    },
+    {
+      "idx": "813",
+      "target": "Tubular adenoma",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Tubular adenoma"
+      ],
+      "clean_ref": "Discharge Summary:\n\nPatient Name: [REDACTED]\n\nMedical Record Number: [REDACTED]\n\nDate of Admission: [REDACTED]\n\nDate of Discharge: [REDACTED]\n\nAdmission Diagnosis:\n\nThe patient had leftover tumor tissue in the bile duct. This happened after a prior procedure to remove a growth at the opening where the bile duct meets the small intestine. The growth had cells that were close to becoming cancer.\n\nHospital Course:\n\nThe patient had robot-assisted surgery to remove part of the pancreas and small intestine. This was needed because an earlier, less invasive procedure did not remove all of the bile duct tumor. The surgery went well with no problems. The patient stayed stable during the hospital stay. The patient started eating regular food by mouth on day 3 after surgery. After surgery, there was some leaking from the pancreas. This was treated without another surgery. The patient left the hospital without any problems.\n\nDischarge Diagnosis:\n\nThe patient has a non-cancerous growth with some cells that look very abnormal. This growth is in the first part of the small intestine.\n\nDischarge Plan:\n\nThe patient should eat well and live a healthy lifestyle. A follow-up visit after surgery will be set up with the patient as needed. The patient has been given pain medicine. The patient should see the surgeon again as needed. Before leaving, the patient will get information about how to care for the surgical wound and how to take care of themselves at home.\n\nProvider:\n\n[REDACTED]\n\nSignature: [REDACTED]\n\nDate of Completion: [REDACTED]",
+      "edited_summary": "Discharge Summary:\n\nPatient Name: [REDACTED]\n\nMedical Record Number: [REDACTED]\n\nDate of Admission: [REDACTED]\n\nDate of Discharge: [REDACTED]\n\nAdmission Diagnosis:\n\nThe patient had leftover tumor tissue in the bile duct. This happened after a prior procedure to remove a growth at the opening where the bile duct meets the small intestine. The growth had cells that were close to becoming cancer.\n\nHospital Course:\n\nThe patient had robot-assisted surgery to remove part of the pancreas and small intestine. This was needed because an earlier, less invasive procedure did not remove all of the bile duct tumor. The surgery went well with no problems. The patient stayed stable during the hospital stay. The patient started eating regular food by mouth on day 3 after surgery. After surgery, there was some leaking from the pancreas. This was treated without another surgery. The patient left the hospital without any problems.\n\nDischarge Plan:\n\nThe patient should eat well and live a healthy lifestyle. A follow-up visit after surgery will be set up with the patient as needed. The patient has been given pain medicine. The patient should see the surgeon again as needed. Before leaving, the patient will get information about how to care for the surgical wound and how to take care of themselves at home.\n\nProvider:\n\n[REDACTED]\n\nSignature: [REDACTED]\n\nDate of Completion: [REDACTED]",
+      "V1_surface": {
+        "forms_checked": [
+          "tubular",
+          "tubular adenoma"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.4773,
+        "high_similarity_flag": false,
+        "flagged_sentence": "This happened after a prior procedure to remove a growth at the opening where the bile duct meets the small intestine.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Diagnosis: The patient has a non-cancerous growth with some cells that look very abnormal. This growth is in the first part of the small intestine. Discharge"
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Diagnosis: The patient has a non-cancerous growth with some cells that look very abnormal. This growth is in the first part of the small intestine. Discharge"
+        ],
+        "added_spans": [],
+        "n_words_removed": 26,
+        "other_diagnosis_lines_in_source": [
+          "Tubular adenoma with focal high grade epithelial dysplasia involving the duodenum",
+          "Residual bile duct tumor after endoscopic ampullectomy for ampullary adenoma with high grade dysplasia"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary mentions residual tumor tissue and dysplastic cells in the bile duct, but it never names “tubular adenoma,” an abbreviation, or a lay‑language equivalent.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary describes residual tumor in the bile duct after a prior procedure, not a tubular adenoma, and uses no everyday language that would identify that specific condition.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – the clue is the description of residual “tumor tissue” in the bile duct after removal of an ampullary lesion that showed dysplastic (pre‑cancerous) cells, which is characteristic of a tubular adenoma.",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES – neoplasm (cancer).",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": "NO",
+        "q_removed_other_reason": "NO",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 1,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 1,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "RETRY",
+      "human_note": "RETRY: name never appeared; only Discharge Diagnosis removed, Admission Diagnosis retains full lesion description (leftover dysplastic bile-duct tumor) — incomplete/under-removal (borderline vs Fix-12-win reading)"
+    },
+    {
+      "idx": "203",
+      "target": "Abscess of urachal remnants",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [],
+      "clean_ref": "Discharge Summary:\n\nPatient: [Name], [Age], [Gender]\n\nAdmission date: [Date]\nDischarge date: [Date]\n\nAdmission diagnosis: Belly pain\nDischarge diagnosis: Infected pocket of pus in tissue left over from before birth near the belly button\n\nHospital course:\n\nThe patient came to the emergency room with bad belly pain along with fever and feeling sick to the stomach. The patient did not have problems with peeing. The physical exam showed pain and tightness when touching the belly button area. Blood tests showed a high number of white blood cells, which means the body was fighting an infection. Pictures of the belly confirmed an infected pocket of pus in tissue left over from before birth near the belly button.\n\nThe patient had treatment with medicine and surgery. There were no problems after the surgery. Tests on the removed tissue showed it was not cancer. The pus contained a common germ called E. coli. This infection was treated with an antibiotic called ciprofloxacin.\n\nThe patient had no symptoms during the rest of the hospital stay. At a check-up two years later, the patient felt fine and the belly area looked normal.\n\nInstructions at discharge: The patient was told how to take medicines and care for the wound. The patient was also told when to come back for check-up visits. The patient was told to call the doctor if there were any worrying symptoms or problems.\n\nFollow-up plan: The patient was told to come back for regular check-up visits. These visits are to make sure healing is going well and the infection does not come back.\n\nSigned, [Your name], MD",
+      "edited_summary": "Discharge Summary:\n\nPatient: [Name], [Age], [Gender]\n\nAdmission date: [Date]\nDischarge date: [Date]\n\nAdmission diagnosis: Belly pain\n\nHospital course:\n\nThe patient came to the emergency room with bad belly pain along with fever and feeling sick to the stomach. The patient did not have problems with peeing. The physical exam showed pain and tightness when touching the belly button area. Blood tests showed a high number of white blood cells, which means the body was fighting an infection. Pictures of the belly confirmed an infected pocket of pus in tissue left over from before birth near the belly button.\n\nThe patient had treatment with medicine and surgery. There were no problems after the surgery. Tests on the removed tissue showed it was not cancer. The pus contained a common germ called E. coli. This infection was treated with an antibiotic called ciprofloxacin.\n\nThe patient had no symptoms during the rest of the hospital stay. At a check-up two years later, the patient felt fine and the belly area looked normal.\n\nInstructions at discharge: The patient was told how to take medicines and care for the wound. The patient was also told when to come back for check-up visits. The patient was told to call the doctor if there were any worrying symptoms or problems.\n\nFollow-up plan: The patient was told to come back for regular check-up visits. These visits are to make sure healing is going well and the infection does not come back.\n\nSigned, [Your name], MD",
+      "V1_surface": {
+        "forms_checked": [
+          "abscess of urachal remnants",
+          "remnants"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.6893,
+        "high_similarity_flag": false,
+        "flagged_sentence": "Pictures of the belly confirmed an infected pocket of pus in tissue left over from before birth near the belly button.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Discharge diagnosis: Infected pocket of pus in tissue left over from before birth near the belly button"
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Discharge diagnosis: Infected pocket of pus in tissue left over from before birth near the belly button"
+        ],
+        "added_spans": [],
+        "n_words_removed": 17,
+        "other_diagnosis_lines_in_source": [
+          "Abscess of urachal remnants",
+          "Abdominal pain"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary describes “an infected pocket of pus in tissue left over from before birth near the belly button,” but it never uses the term “abscess of urachal remnants,” its abbreviation, or a lay‑friendly phrase that directly names that condition.",
+        "q_lay_recoverable_answer": "YES",
+        "q_lay_recoverable_reason": "YES – the summary plainly says the infection was in “tissue left over from before birth near the belly button,” which describes a urachal remnant abscess in everyday language.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – the imaging description of an “infected pocket of pus in tissue left over from before birth near the belly button” (i.e., a periumbilical urachal‑remnant abscess).",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES; infection",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": "NO",
+        "q_removed_other_reason": "NO.",
+        "tau_pass": false,
+        "patient_recoverable": 1,
+        "expert_recoverable": 1,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 1,
+      "expert_recoverable": 1,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": false,
+      "human_verdict": "",
+      "human_note": ""
+    },
+    {
+      "idx": "928",
+      "target": "Membranous nephropathy",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Membranous nephropathy",
+        "a kidney disease that causes protein to leak into the urine"
+      ],
+      "clean_ref": "Discharge Summary:\n\nPatient Information:\n\nName: [Redacted]\nAge: 60 Years\nGender: Male\nAdmission Date: [Redacted]\nDischarge Date: [Redacted]\nDischarge Diagnosis: Membranous nephropathy (a kidney disease that causes protein to leak into the urine)\n\nHospital Course Summary:\n\nThe patient, a 60-year-old male, came to the hospital after feeling tired for two months. The patient also had mild swelling in the legs. The patient was having joint pain in both knees and hands. Tests showed that protein was leaking into the urine, which was a new problem. The patient was also waking up at night to urinate and going to the bathroom more often than usual.\n\nA physical exam showed mild swelling in the legs. The heart, lungs, and belly were all normal. The patient had surgery to remove the gallbladder four months before this hospital stay. Blood tests showed the body had slightly higher than normal signs of swelling inside. A urine test showed high levels of protein but no signs of infection or sugar. The kidneys were working normally. The amount of protein lost in urine over one day was very high.\n\nMore tests were done to find out why protein was leaking from the kidneys. The patient was tested for diseases that attack the body's own tissues. These included tests for lupus and other immune system problems. All these test results came back normal or negative. Tests for hepatitis A, B, C, and HIV were also negative.\n\nThe patient had a scan of the chest and belly, which was normal. A small piece of kidney tissue was removed and looked at under a microscope. This test showed that the kidney's filters were damaged, causing protein to leak into the urine. A type of protein made by the immune system was found stuck to the kidney's tiny blood vessels.\n\nDoctors found no signs of infection or other related health problems. The patient was diagnosed with membranous nephropathy.\n\nThe patient left the hospital in good condition. The diagnosis was membranous nephropathy. The patient did not need any medicines during the hospital stay.\n\nFollow-Up Instructions:\n\nThe patient should contact a doctor if mild leg swelling or any other symptoms come back.",
+      "edited_summary": "Discharge Summary:\n\nPatient Information:\n\nName: [Redacted]\nAge: 60 Years\nGender: Male\nAdmission Date: [Redacted]\nDischarge Date: [Redacted]\n\nHospital Course Summary:\n\nThe patient, a 60-year-old male, came to the hospital after feeling tired for two months. The patient also had mild swelling in the legs. The patient was having joint pain in both knees and hands. Tests showed that protein was leaking into the urine, which was a new problem. The patient was also waking up at night to urinate and going to the bathroom more often than usual.\n\nA physical exam showed mild swelling in the legs. The heart, lungs, and belly were all normal. The patient had surgery to remove the gallbladder four months before this hospital stay. Blood tests showed the body had slightly higher than normal signs of swelling inside. A urine test showed high levels of protein but no signs of infection or sugar. The kidneys were working normally. The amount of protein lost in urine over one day was very high.\n\nMore tests were done to find out why protein was leaking from the kidneys. The patient was tested for diseases that attack the body's own tissues. These included tests for lupus and other immune system problems. All these test results came back normal or negative. Tests for hepatitis A, B, C, and HIV were also negative.\n\nThe patient had a scan of the chest and belly, which was normal. A small piece of kidney tissue was removed and looked at under a microscope. This test showed that the kidney's filters were damaged, causing protein to leak into the urine. A type of protein made by the immune system was found stuck to the kidney's tiny blood vessels.\n\nDoctors found no signs of infection or other related health problems.\n\nThe patient left the hospital in good condition. The patient did not need any medicines during the hospital stay.\n\nFollow-Up Instructions:\n\nThe patient should contact a doctor if mild leg swelling or any other symptoms come back.",
+      "V1_surface": {
+        "forms_checked": [
+          "a kidney disease that causes protein to leak into the urine",
+          "membranous nephropathy",
+          "nephropathy"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.5983,
+        "high_similarity_flag": false,
+        "flagged_sentence": "A type of protein made by the immune system was found stuck to the kidney's tiny blood vessels.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Discharge Diagnosis: Membranous nephropathy (a kidney disease that causes protein to leak into the urine)",
+          "was diagnosed with membranous nephropathy. The patient",
+          "The diagnosis was membranous nephropathy."
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Discharge Diagnosis: Membranous nephropathy (a kidney disease that causes protein to leak into the urine)",
+          "was diagnosed with membranous nephropathy. The patient",
+          "The diagnosis was membranous nephropathy."
+        ],
+        "added_spans": [],
+        "n_words_removed": 27,
+        "other_diagnosis_lines_in_source": [
+          "Membranous nephropathy"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary describes the pathological findings consistent with membranous nephropathy but never names the condition, uses no abbreviation, and does not provide a lay‑language label that directly identifies it.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary describes protein‑leaking kidneys and a biopsy showing immune deposits, but it never names “membranous nephropathy,” and a layperson would not infer that specific diagnosis from the everyday wording alone.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – the kidney biopsy description of immune‑complex (immunoglobulin) deposition on the glomerular capillary walls (subepithelial “spike” deposits) is the hallmark clue pointing to membranous nephropathy.",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES – renal (kidney) disease.",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": "NO",
+        "q_removed_other_reason": "NO.",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 1,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 1,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "ACCEPT",
+      "human_note": "ACCEPT: category_retained covariate; expert-only biopsy fingerprint; stable vs seed-99"
+    },
+    {
+      "idx": "158",
+      "target": "Papillary Fibroelastoma (PF)",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Papillary Fibroelastoma",
+        "PF",
+        "non-cancerous heart tumor"
+      ],
+      "clean_ref": "Discharge Summary:\n\nPatient: [Name]\nSex: Female\nAge: 61 years old\nDate of admission: [Date]\nDate of discharge: [Date]\nDiagnosis: Papillary Fibroelastoma, a rare non-cancerous heart tumor\n\nHospital Course:\n\nThe patient came to the hospital with repeated sharp chest pain that got worse with breathing and serious trouble breathing. A CT scan of the lungs did not show any blood clots. Heart tests found a small growth attached to a flap in the right side of the heart. The growth measured about half an inch in size. The heart valve was also leaking slightly. Doctors thought the growth was most likely a papillary fibroelastoma or a myxoma, which are two types of non-cancerous heart tumors. Surgery was recommended because the tumor could break off and block blood flow. The size of the tumor, larger than one centimeter, also made surgery necessary.\n\nSurgery:\n\nDoctors removed the growth by carefully shaving it off the heart valve. The heart valve was also repaired using a special ring to help it close properly.\n\nPostoperative Procedures:\n\nThe patient was watched closely after surgery and received proper care. The patient took blood-thinning medicine for 8 weeks after surgery. As of now, the patient has no symptoms during rest or physical activity.\n\nFollow-Up:\n\nThe patient should live a healthy lifestyle. The patient should also keep all future appointments with the doctor.\n\nAddendum:\n\nThe patient had no problems during the hospital stay. The patient was in stable condition at the time of discharge.",
+      "edited_summary": "Discharge Summary:\n\nPatient: [Name]\nSex: Female\nAge: 61 years old\nDate of admission: [Date]\nDate of discharge: [Date]\n\nHospital Course:\n\nThe patient came to the hospital with repeated sharp chest pain that got worse with breathing and serious trouble breathing. A CT scan of the lungs did not show any blood clots. Heart tests found a small growth attached to a flap in the right side of the heart. The growth measured about half an inch in size. The heart valve was also leaking slightly. Doctors thought the growth was most likely a myxoma. Surgery was recommended because the tumor could break off and block blood flow. The size of the tumor, larger than one centimeter, also made surgery necessary.\n\nSurgery:\n\nDoctors removed the growth by carefully shaving it off the heart valve. The heart valve was also repaired using a special ring to help it close properly.\n\nPostoperative Procedures:\n\nThe patient was watched closely after surgery and received proper care. The patient took blood-thinning medicine for 8 weeks after surgery. As of now, the patient has no symptoms during rest or physical activity.\n\nFollow-Up:\n\nThe patient should live a healthy lifestyle. The patient should also keep all future appointments with the doctor.\n\nAddendum:\n\nThe patient had no problems during the hospital stay. The patient was in stable condition at the time of discharge.",
+      "V1_surface": {
+        "forms_checked": [
+          "fibroelastoma",
+          "non-cancerous heart tumor",
+          "papillary fibroelastoma",
+          "papillary fibroelastoma (pf)",
+          "pf"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.6574,
+        "high_similarity_flag": false,
+        "flagged_sentence": "Doctors thought the growth was most likely a myxoma.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Diagnosis: Papillary Fibroelastoma, a rare non-cancerous heart tumor",
+          "papillary fibroelastoma or a myxoma, which are two types of non-cancerous heart tumors."
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Diagnosis: Papillary Fibroelastoma, a rare non-cancerous heart tumor",
+          "papillary fibroelastoma or a myxoma, which are two types of non-cancerous heart tumors."
+        ],
+        "added_spans": [
+          "myxoma."
+        ],
+        "n_words_removed": 21,
+        "other_diagnosis_lines_in_source": [
+          "Papillary Fibroelastoma (PF)"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary only refers to a “small growth… most likely a myxoma” and does not mention papillary fibroelastoma by name, abbreviation, or a lay‑language equivalent.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the plain‑language summary describes a small heart growth thought to be a myxoma and does not mention or describe a papillary fibroelastoma, so a layperson could not infer that specific diagnosis.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – **Clue:** The description of a small (≈1 cm), mobile tumor attached to a right‑sided cardiac valve (“growth attached to a flap”) causing mild valve regurgitation and prompting surgical excision is characteristic of a papillary fibroelastoma.",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES – tumor (neoplasm)",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": "NO",
+        "q_removed_other_reason": "NO.",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 1,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 1,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "RETRY",
+      "human_note": "RETRY: differential sentence — Fix 11 kept a co-diagnosis NAME (myxoma, promoted to \"most likely\") and dropped the \"non-cancerous/benign\" characterization; F11 differential-handling gap"
+    },
+    {
+      "idx": "820",
+      "target": "COVID-19",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "COVID-19"
+      ],
+      "clean_ref": "Discharge Summary:\n\nPatient Name: [Redacted]\nAge: 59\nAdmission date: [Redacted]\nDischarge Date: [Redacted]\nFinal Diagnosis: COVID-19\n\nMedical History:\nThe patient had no major health problems before this illness.\n\nHospital Course:\nThe patient came to the hospital with a cough that produced mucus, a runny nose, fever, and trouble breathing. A chest X-ray was done. The results showed infection in both lungs near the bottom. The patient was found to have COVID-19 and asthma. The patient received two antibiotics through an IV. These were ceftazidime 1 gram and levofloxacin 500 milligrams. The patient also received medicine to treat asthma symptoms.\n\nClinical Course:\nThe patient got much better during the hospital stay. The patient no longer had a fever. Breathing became much easier. The cough and runny nose also got better.\n\nFollow-up:\nThe patient was told to stay home and away from others. The patient should keep watching for any symptoms. The patient's regular doctor will provide ongoing care.\n\nSigned,\n[Redacted]",
+      "edited_summary": "Discharge Summary:\n\nPatient Name: [Redacted]\nAge: 59\nAdmission date: [Redacted]\nDischarge Date: [Redacted]\n\nMedical History:\nThe patient had no major health problems before this illness.\n\nHospital Course:\nThe patient came to the hospital with a cough that produced mucus, a runny nose, fever, and trouble breathing. A chest X-ray was done. The results showed infection in both lungs near the bottom. The patient was found to have asthma. The patient received two antibiotics through an IV. These were ceftazidime 1 gram and levofloxacin 500 milligrams. The patient also received medicine to treat asthma symptoms.\n\nClinical Course:\nThe patient got much better during the hospital stay. The patient no longer had a fever. Breathing became much easier. The cough and runny nose also got better.\n\nFollow-up:\nThe patient was told to stay home and away from others. The patient should keep watching for any symptoms. The patient's regular doctor will provide ongoing care.\n\nSigned,\n[Redacted]",
+      "V1_surface": {
+        "forms_checked": [
+          "covid",
+          "covid-19"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.5554,
+        "high_similarity_flag": false,
+        "flagged_sentence": "The patient was found to have asthma.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Final Diagnosis: COVID-19",
+          "COVID-19 and"
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Final Diagnosis: COVID-19",
+          "COVID-19 and"
+        ],
+        "added_spans": [],
+        "n_words_removed": 5,
+        "other_diagnosis_lines_in_source": [
+          "COVID-19"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary never mentions COVID‑19, SARS‑CoV‑2, “coronavirus,” or any lay‑language term that directly identifies that condition.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary only describes a generic respiratory infection with cough, fever, and pneumonia findings, without any specific reference to COVID‑19 or its distinctive features.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – the combination of fever, cough with sputum, dyspnea and bilateral lower‑lobe infiltrates on chest X‑ray (typical of a viral pneumonia such as COVID‑19) serves as the clue.",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES – infection.",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": "NO",
+        "q_removed_other_reason": "NO",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 1,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 1,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "ACCEPT",
+      "human_note": "ACCEPT: COVID removed via F5+F11; asthma co-diagnosis kept; stable"
+    },
+    {
+      "idx": "126",
+      "target": "Undifferentiated Embryonal Sarcoma of the Liver (UESL)",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Undifferentiated Embryonal Sarcoma of the Liver",
+        "UESL",
+        "rare type of liver cancer",
+        "rare liver cancer"
+      ],
+      "clean_ref": "Hospital Course:\n\nThe patient is a 21-year-old male. He came to our hospital with pain and swelling in the upper right part of his belly. During the exam, the doctor found tenderness in that area and could feel that his liver was enlarged. Tests showed high levels of a substance called CA 19-9, which can be a sign of cancer. An MRI scan showed two growths in the right side of his liver. A small tissue sample was taken from the growth. It showed a rare type of liver cancer called undifferentiated embryonal sarcoma of the liver. The tumor could not be removed with surgery. The patient started treatment with cancer-fighting drugs. During his fifth round of treatment, the patient had a liver transplant. He responded well to this treatment. The patient came back for check-up visits for 18 months. No new growths were found after the surgery.\n\nDischarge Diagnosis:\n\nUndifferentiated Embryonal Sarcoma of the Liver, a rare type of liver cancer.\n\nHospital Course Summary:\n\nThe patient came to our hospital with pain and swelling in the upper right part of his belly. Most test results were normal, except for high CA 19-9 levels. MRI scans showed two growths in the right side of his liver. A tissue sample showed a rare liver cancer. The tumor could not be removed with surgery. The patient started treatment with cancer-fighting drugs. During his fifth round of treatment, he had a liver transplant. He responded well. The patient came back for check-ups for 18 months. A CT scan showed no growths.\n\nImpressions:\n\nThe patient had a rare liver cancer that could not be removed with surgery. He responded well to the cancer-fighting drugs and had a liver transplant. He had no problems after surgery. He came back for regular check-ups.\n\nPlan:\n\nThe patient should keep coming back for check-up visits. He should have regular CT scans to check if the cancer has come back.",
+      "edited_summary": "Hospital Course:\n\nThe patient is a 21-year-old male. He came to our hospital with pain and swelling in the upper right part of his belly. During the exam, the doctor found tenderness in that area and could feel that his liver was enlarged. Tests showed high levels of a substance called CA 19-9, which can be a sign of cancer. An MRI scan showed two growths in the right side of his liver. A small tissue sample was taken from the growth. The tumor could not be removed with surgery. The patient started treatment with cancer-fighting drugs. During his fifth round of treatment, the patient had a liver transplant. He responded well to this treatment. The patient came back for check-up visits for 18 months. No new growths were found after the surgery.\n\nHospital Course Summary:\n\nThe patient came to our hospital with pain and swelling in the upper right part of his belly. Most test results were normal, except for high CA 19-9 levels. MRI scans showed two growths in the right side of his liver. A tissue sample showed a rare liver cancer. The tumor could not be removed with surgery. The patient started treatment with cancer-fighting drugs. During his fifth round of treatment, he had a liver transplant. He responded well. The patient came back for check-ups for 18 months. A CT scan showed no growths.\n\nImpressions:\n\nThe patient had a rare liver cancer that could not be removed with surgery. He responded well to the cancer-fighting drugs and had a liver transplant. He had no problems after surgery. He came back for regular check-ups.\n\nPlan:\n\nThe patient should keep coming back for check-up visits. He should have regular CT scans to check if the cancer has come back.",
+      "V1_surface": {
+        "forms_checked": [
+          "rare liver cancer",
+          "rare type of liver cancer",
+          "uesl",
+          "undifferentiated",
+          "undifferentiated embryonal sarcoma of the liver",
+          "undifferentiated embryonal sarcoma of the liver (uesl)"
+        ],
+        "name_hits": [
+          "rare liver cancer"
+        ],
+        "max_sentence_similarity": 0.669,
+        "high_similarity_flag": false,
+        "flagged_sentence": "A tissue sample showed a rare liver cancer.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": false
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "It showed a rare type of liver cancer called undifferentiated embryonal sarcoma of the liver.",
+          "Discharge Diagnosis: Undifferentiated Embryonal Sarcoma of the Liver, a rare type of liver cancer."
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "It showed a rare type of liver cancer called undifferentiated embryonal sarcoma of the liver.",
+          "Discharge Diagnosis: Undifferentiated Embryonal Sarcoma of the Liver, a rare type of liver cancer."
+        ],
+        "added_spans": [],
+        "n_words_removed": 29,
+        "other_diagnosis_lines_in_source": [
+          "Undifferentiated Embryonal Sarcoma of the Liver (UESL)"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the text only refers to “a rare liver cancer” and does not name “Undifferentiated Embryonal Sarcoma of the Liver,” its abbreviation (UESL), or a lay‑language phrase that uniquely identifies that specific diagnosis.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary only refers to a “rare liver cancer” without naming Undifferentiated Embryonal Sarcoma of the Liver, so a layperson could not identify that specific disease.",
+        "q_expert_infer_answer": "NO",
+        "q_expert_infer_reason": "NO – the summary does not provide a pathologic or imaging detail that is characteristic enough to identify Undifferentiated Embryonal Sarcoma of the Liver. The only clue is the patient’s age (21 y) with an unresectable, rare hepatic tumor and elevated CA 19‑9, which is insufficient for a definitive ",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES; cancer.",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": "NO",
+        "q_removed_other_reason": "NO.",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 0,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 0,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": false,
+      "human_verdict": "",
+      "human_note": ""
+    },
+    {
+      "idx": "138",
+      "target": "Follicular Lymphoma",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Follicular Lymphoma",
+        "slow-growing cancer of the white blood cells"
+      ],
+      "clean_ref": "Discharge Summary:\n\nPatient Name: [Name]\nMedical Record Number: [MRN]\n\nAdmission Date: [Admission Date]\nDischarge Date: [Discharge Date]\n\nDiagnosis: Follicular Lymphoma (a slow-growing cancer of the white blood cells)\n\nHospital Course:\n\nA 72-year-old man came in with a painless lump in his belly that did not bother him. Doctors found a large mass in the middle part of his belly using special scans. A small piece of the mass was removed and tested. The tests showed the patient had Follicular Lymphoma. The patient was treated with two cancer medicines called bendamustine and rituximab. The patient came back for check-ups after leaving the hospital. So far, the cancer has not come back.\n\nMedical History:\n\nThe patient did not have any major health problems before this.\n\nDiscussion:\n\nTumors that start in the middle part of the belly are not common. Follicular Lymphoma is the most common type of these tumors. Scans can show different patterns for this kind of cancer. Some signs on scans may point to cancer, but they are not always reliable. This type of cancer often grows slowly, but finding it early is still very important. When doctors find a solid lump in the middle of the belly, they should first think about this type of cancer.\n\nRecommendations:\n\nThe patient should keep seeing the cancer doctor for regular check-ups. The patient should tell the doctor right away about any new symptoms or problems.\n\nPrimary Care Physician:\n[Name]\n[Contact Information]",
+      "edited_summary": "Discharge Summary:\n\nPatient Name: [Name]\nMedical Record Number: [MRN]\n\nAdmission Date: [Admission Date]\nDischarge Date: [Discharge Date]\n\nHospital Course:\n\nA 72-year-old man came in with a painless lump in his belly that did not bother him. Doctors found a large mass in the middle part of his belly using special scans. A small piece of the mass was removed and tested. The patient was treated with two cancer medicines called bendamustine and rituximab. The patient came back for check-ups after leaving the hospital. So far, the cancer has not come back.\n\nMedical History:\n\nThe patient did not have any major health problems before this.\n\nDiscussion:\n\nTumors that start in the middle part of the belly are not common. Scans can show different patterns for this kind of cancer. Some signs on scans may point to cancer, but they are not always reliable. This type of cancer often grows slowly, but finding it early is still very important. When doctors find a solid lump in the middle of the belly, they should first think about this type of cancer.\n\nRecommendations:\n\nThe patient should keep seeing the cancer doctor for regular check-ups. The patient should tell the doctor right away about any new symptoms or problems.\n\nPrimary Care Physician:\n[Name]\n[Contact Information]",
+      "V1_surface": {
+        "forms_checked": [
+          "follicular",
+          "follicular lymphoma",
+          "slow-growing cancer of the white blood cells"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.553,
+        "high_similarity_flag": false,
+        "flagged_sentence": "The patient was treated with two cancer medicines called bendamustine and rituximab.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Diagnosis: Follicular Lymphoma (a slow-growing cancer of the white blood cells)",
+          "The tests showed the patient had Follicular Lymphoma.",
+          "Follicular Lymphoma is the most common type of these tumors."
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Diagnosis: Follicular Lymphoma (a slow-growing cancer of the white blood cells)",
+          "The tests showed the patient had Follicular Lymphoma.",
+          "Follicular Lymphoma is the most common type of these tumors."
+        ],
+        "added_spans": [],
+        "n_words_removed": 29,
+        "other_diagnosis_lines_in_source": [
+          "Follicular Lymphoma"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary never names “Follicular Lymphoma” (nor an abbreviation or a lay‑language equivalent); it only describes a central abdominal mass treated with bendamustine and rituximab.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary never names “follicular lymphoma” or describe its specific features, so a layperson could not infer that exact diagnosis from the plain‑language description.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – the use of bendamustine + rituximab for an indolent, mid‑abdominal mass strongly points to follicular lymphoma.",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES – cancer.",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": null,
+        "q_removed_other_reason": "",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 1,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 1,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "ACCEPT",
+      "human_note": "ACCEPT: category_retained (cancer) covariate; expert-only (bendamustine+rituximab); stable"
+    },
+    {
+      "idx": "811",
+      "target": "AOSD",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Adult-onset Still's disease",
+        "AOSD",
+        "macrophage activation syndrome",
+        "high blood pressure in the lungs"
+      ],
+      "clean_ref": "Discharge Summary\n\nPatient Name: [REDACTED]\nAge: 25\nGender: Female\nAdmission Date: [REDACTED]\nDischarge Date: [REDACTED]\nAdmitting Diagnosis: Adult-onset Still's disease and high blood pressure in the lungs\nFinal Diagnosis: Adult-onset Still's disease with a serious complication called macrophage activation syndrome and high blood pressure in the lungs\n\nHospital Course:\nThe patient came to the hospital for joint pain, fever, and rash that kept coming back. Blood tests showed high levels of inflammation and liver enzymes. The patient also had an enlarged spleen. These findings led doctors to diagnose Adult-onset Still's disease. The care team started treatment, but the patient got worse. Doctors then found a serious complication called macrophage activation syndrome. The patient received a strong steroid medicine called methylprednisolone. The patient got much better within a week. During the hospital stay, a chest scan and heart ultrasound showed high blood pressure in the lungs. This is a rare problem linked to Adult-onset Still's disease.\n\nImaging Findings:\nA special scan of the blood vessels showed some problems with the heart and lungs. Blood vessels from the right lung were draining into the wrong part of the heart. The main blood vessel to the lungs was much larger than normal. There was also a small hole between the upper chambers of the heart.\n\nCourse of Treatment:\nThe patient received supportive care and the steroid medicine methylprednisolone for macrophage activation syndrome. No treatment was started for the high blood pressure in the lungs during this hospital stay.\n\nClinical Course and Follow-up:\nThe patient got much better with the steroid treatment and was sent home. The care team talked with the patient about plans to treat the high blood pressure in the lungs.\n\nSummary:\nThis patient came to the hospital with Adult-onset Still's disease. Doctors also found a serious complication called macrophage activation syndrome. High blood pressure in the lungs was found by chance during testing. The patient received the right treatment and got much better. The care team talked with the patient about plans to treat the high blood pressure in the lungs.",
+      "edited_summary": "Discharge Summary\n\nPatient Name: [REDACTED]\nAge: 25\nGender: Female\nAdmission Date: [REDACTED]\nDischarge Date: [REDACTED]\n\nHospital Course:\nThe patient came to the hospital for joint pain, fever, and rash that kept coming back. Blood tests showed high levels of inflammation and liver enzymes. The patient also had an enlarged spleen. The care team started treatment, but the patient got worse. The patient received a strong steroid medicine called methylprednisolone. The patient got much better within a week. During the hospital stay, a chest scan and heart ultrasound showed high blood pressure in the lungs.\n\nImaging Findings:\nA special scan of the blood vessels showed some problems with the heart and lungs. Blood vessels from the right lung were draining into the wrong part of the heart. The main blood vessel to the lungs was much larger than normal. There was also a small hole between the upper chambers of the heart.\n\nCourse of Treatment:\nThe patient received supportive care and the steroid medicine methylprednisolone. No treatment was started for the high blood pressure in the lungs during this hospital stay.\n\nClinical Course and Follow-up:\nThe patient got much better with the steroid treatment and was sent home. The care team talked with the patient about plans to treat the high blood pressure in the lungs.\n\nSummary:\nHigh blood pressure in the lungs was found by chance during testing. The patient received the right treatment and got much better. The care team talked with the patient about plans to treat the high blood pressure in the lungs.",
+      "V1_surface": {
+        "forms_checked": [
+          "adult-onset still's disease",
+          "aosd",
+          "high blood pressure in the lungs",
+          "macrophage activation syndrome"
+        ],
+        "name_hits": [
+          "high blood pressure in the lungs"
+        ],
+        "max_sentence_similarity": 0.5307,
+        "high_similarity_flag": false,
+        "flagged_sentence": "The patient also had an enlarged spleen.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": false
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Admitting Diagnosis: Adult-onset Still's disease and high blood pressure in the lungs Final Diagnosis: Adult-onset Still's disease with a serious complication called macrophage activation syndrome and high blood pressure in the lungs",
+          "These findings led doctors to diagnose Adult-onset Still's disease.",
+          "Doctors then found a serious complication called macrophage activation syndrome.",
+          "This is a rare problem linked to Adult-onset Still's disease.",
+          "methylprednisolone for macrophage activation syndrome.",
+          "This patient came to the hospital with Adult-onset Still's disease. Doctors also found a serious complication called macrophage activation syndrome."
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Admitting Diagnosis: Adult-onset Still's disease and high blood pressure in the lungs Final Diagnosis: Adult-onset Still's disease with a serious complication called macrophage activation syndrome and high blood pressure in the lungs",
+          "These findings led doctors to diagnose Adult-onset Still's disease.",
+          "Doctors then found a serious complication called macrophage activation syndrome.",
+          "This is a rare problem linked to Adult-onset Still's disease.",
+          "methylprednisolone for macrophage activation syndrome.",
+          "This patient came to the hospital with Adult-onset Still's disease. Doctors also found a serious complication called macrophage activation syndrome."
+        ],
+        "added_spans": [
+          "methylprednisolone."
+        ],
+        "n_words_removed": 86,
+        "other_diagnosis_lines_in_source": [
+          "AOSD with MAS and co-existing PAH",
+          "Adult-onset Still's disease (AOSD) and pulmonary arterial hypertension (PAH)"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary never mentions “Adult‑onset Still’s disease,” the abbreviation “AOSD,” or any lay‑language phrase that directly identifies that specific diagnosis.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary uses only generic descriptions (joint pain, fever, rash, inflammation, steroid response) and does not name or uniquely point to Adult‑Onset Still’s disease, so a layperson could not identify that specific diagnosis.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – the classic Still’s triad (recurrent fever, evanescent rash and arthralgia/arthritis) together with markedly elevated inflammatory markers (and liver enzymes) and a dramatic response to high‑dose steroids points to adult‑onset Still’s disease.",
+        "q_category_retained_answer": "NO",
+        "q_category_retained_reason": "NO",
+        "q_added_answer": null,
+        "q_added_reason": "",
+        "q_removed_other_answer": null,
+        "q_removed_other_reason": "",
+        "tau_pass": false,
+        "patient_recoverable": 0,
+        "expert_recoverable": 1,
+        "category_retained": 0,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 1,
+      "category_retained": 0,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": false,
+      "human_verdict": "",
+      "human_note": ""
+    },
+    {
+      "idx": "784",
+      "target": "Glioblastoma",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Glioblastoma",
+        "serious type of brain cancer",
+        "serious brain cancer"
+      ],
+      "clean_ref": "Hospital Course:\n\nAn 82-year-old woman came to the hospital because of weakness in her right arm muscles. A brain scan showed a growth in the left side of her brain. Doctors removed the growth through surgery that opened part of her skull. During surgery, doctors used two different tests to check how her nerves and muscles were working. The test results were not what doctors expected. One test showed no big changes while the other showed a major loss in nerve signals. Doctors repeated one of the tests several times but got the same unexpected results. After surgery, the patient had weakness in her right arm and right leg. Lab tests showed the growth was a very serious type of brain cancer called glioblastoma. The patient had a seizure after surgery. Because of this, doctors could not do a follow-up nerve test. The patient left the hospital 13 days after surgery. Her nerve and muscle problems were the same as right after surgery.\n\nDischarge Diagnosis:\n\nGlioblastoma, which is a serious type of brain cancer\n\nHospital Course Summary:\n\nAn 82-year-old woman with right arm weakness came to the hospital. Doctors found a tumor in the left side of her brain. The tumor was a serious brain cancer called glioblastoma. Doctors did surgery to open her skull and remove the tumor. During surgery, doctors used special tests to watch her nerve and muscle activity. The test results were not what doctors expected. After surgery, the patient had weakness in both her right arm and right leg. Lab tests confirmed the brain cancer diagnosis. The patient had a seizure after surgery. Because of the seizure, doctors could not do a follow-up nerve test. The patient left the hospital 13 days after surgery. Her weakness had not changed since right after surgery.",
+      "edited_summary": "Hospital Course:\n\nAn 82-year-old woman came to the hospital because of weakness in her right arm muscles. A brain scan showed a growth in the left side of her brain. Doctors removed the growth through surgery that opened part of her skull. During surgery, doctors used two different tests to check how her nerves and muscles were working. The test results were not what doctors expected. One test showed no big changes while the other showed a major loss in nerve signals. Doctors repeated one of the tests several times but got the same unexpected results. After surgery, the patient had weakness in her right arm and right leg. The patient had a seizure after surgery. Because of this, doctors could not do a follow-up nerve test. The patient left the hospital 13 days after surgery. Her nerve and muscle problems were the same as right after surgery.\n\nHospital Course Summary:\n\nAn 82-year-old woman with right arm weakness came to the hospital. Doctors found a tumor in the left side of her brain. Doctors did surgery to open her skull and remove the tumor. During surgery, doctors used special tests to watch her nerve and muscle activity. The test results were not what doctors expected. After surgery, the patient had weakness in both her right arm and right leg. The patient had a seizure after surgery. Because of the seizure, doctors could not do a follow-up nerve test. The patient left the hospital 13 days after surgery. Her weakness had not changed since right after surgery.",
+      "V1_surface": {
+        "forms_checked": [
+          "glioblastoma",
+          "serious brain cancer",
+          "serious type of brain cancer"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.6818,
+        "high_similarity_flag": false,
+        "flagged_sentence": "Doctors found a tumor in the left side of her brain.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Lab tests showed the growth was a very serious type of brain cancer called glioblastoma.",
+          "Discharge Diagnosis: Glioblastoma, which is a serious type of brain cancer",
+          "The tumor was a serious brain cancer called glioblastoma.",
+          "Lab tests confirmed the brain cancer diagnosis."
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Lab tests showed the growth was a very serious type of brain cancer called glioblastoma.",
+          "Discharge Diagnosis: Glioblastoma, which is a serious type of brain cancer",
+          "The tumor was a serious brain cancer called glioblastoma.",
+          "Lab tests confirmed the brain cancer diagnosis."
+        ],
+        "added_spans": [],
+        "n_words_removed": 42,
+        "other_diagnosis_lines_in_source": [
+          "- Glioblastoma"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary only refers to a “growth” or “tumor” in the left brain, without naming glioblastoma, using its abbreviation, or providing a lay‑language phrase that uniquely identifies that specific diagnosis.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary only mentions a brain “growth” or tumor without naming glioblastoma, so a layperson could not infer that specific diagnosis.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – the clue is the presence of a left‑sided intracranial mass in an 82‑year‑old presenting with new focal weakness and postoperative seizure, which is characteristic of a glioblastoma.",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES; cancer (brain tumor)",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO.",
+        "q_removed_other_answer": "NO",
+        "q_removed_other_reason": "NO.",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 1,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 1,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "ACCEPT",
+      "human_note": "ACCEPT: Fix 13 fixed the seed-137 empty-header; glioblastoma+brain-cancer removed; expert-recoverable"
+    },
+    {
+      "idx": "468",
+      "target": "Scar endometriosis",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Scar endometriosis"
+      ],
+      "clean_ref": "Discharge Summary\n\nPatient Name: [REDACTED]\n\nMedical Record Number: [REDACTED]\n\nAdmission Date: [REDACTED]\n\nDischarge Date: [REDACTED]\n\nDiagnosis: Scar endometriosis (tissue that normally lines the womb growing in a scar)\n\nHospital Course:\n\nThe patient came in with a lump on her lower belly at the site of her C-section scar. The lump appeared four years after her surgery and slowly got bigger over time. Doctors thought it was a growth on the belly wall and saw that it looked dark in color. A test was done where a thin needle was used to take a small sample from the lump. The sample was placed on glass slides, prepared with liquid, and colored with a special dye. The test results suggested the lump was scar endometriosis. A second test on the sample confirmed this finding. It showed cells from the womb lining along with thick tissue and large areas of bleeding. After the lump was fully removed, lab tests on the tissue also confirmed endometriosis. The patient was healthy otherwise and left the hospital in stable condition.\n\nFollow-Up Recommendations:\n\nThe patient should see her regular doctor for more checkups and care for her scar endometriosis. She may need scans and other tests to watch the condition and find the best treatment. The patient should also get medical help if she notices any new symptoms or changes in how she feels.\n\nSigned,\n[REDACTED]\nDate: [REDACTED]",
+      "edited_summary": "Discharge Summary\n\nPatient Name: [REDACTED]\n\nMedical Record Number: [REDACTED]\n\nAdmission Date: [REDACTED]\n\nDischarge Date: [REDACTED]\n\nHospital Course:\n\nThe patient came in with a lump on her lower belly at the site of her C-section scar. The lump appeared four years after her surgery and slowly got bigger over time. Doctors thought it was a growth on the belly wall and saw that it looked dark in color. A test was done where a thin needle was used to take a small sample from the lump. The sample was placed on glass slides, prepared with liquid, and colored with a special dye. The test results suggested the lump was scar endometriosis. A second test on the sample confirmed this finding. It showed cells from the womb lining along with thick tissue and large areas of bleeding. After the lump was fully removed, lab tests on the tissue also confirmed endometriosis. The patient was healthy otherwise and left the hospital in stable condition.\n\nFollow-Up Recommendations:\n\nThe patient should see her regular doctor for more checkups and care. She may need scans and other tests to watch the condition and find the best treatment. The patient should also get medical help if she notices any new symptoms or changes in how she feels.\n\nSigned,\n[REDACTED]\nDate: [REDACTED]",
+      "V1_surface": {
+        "forms_checked": [
+          "endometriosis",
+          "scar endometriosis"
+        ],
+        "name_hits": [
+          "endometriosis",
+          "scar endometriosis"
+        ],
+        "max_sentence_similarity": 0.742,
+        "high_similarity_flag": true,
+        "flagged_sentence": "The test results suggested the lump was scar endometriosis.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": false
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Diagnosis: Scar endometriosis (tissue that normally lines the womb growing in a scar)",
+          "care for her scar endometriosis."
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Diagnosis: Scar endometriosis (tissue that normally lines the womb growing in a scar)",
+          "care for her scar endometriosis."
+        ],
+        "added_spans": [
+          "care."
+        ],
+        "n_words_removed": 18,
+        "other_diagnosis_lines_in_source": [
+          "Scar endometriosis"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "YES",
+        "q_name_present_reason": "YES – the summary explicitly uses the term “scar endometriosis” (and later “endometriosis”) to name the diagnosis.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary relies on medical terms like “scar endometriosis” and references to “womb‑lining cells,” which a layperson would not recognize as describing that specific condition.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – Clue: a palpable mass at the C‑section scar with cytology/histology demonstrating endometrial glands, stroma and hemorrhage consistent with scar endometriosis.",
+        "q_category_retained_answer": "NO",
+        "q_category_retained_reason": "NO",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": null,
+        "q_removed_other_reason": "",
+        "tau_pass": false,
+        "patient_recoverable": 0,
+        "expert_recoverable": 1,
+        "category_retained": 0,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 1,
+      "category_retained": 0,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": false,
+      "human_verdict": "",
+      "human_note": ""
+    },
+    {
+      "idx": "247",
+      "target": "Recurrent Ameloblastoma",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Recurrent Ameloblastoma",
+        "Returning jaw tumor",
+        "ameloblastoma"
+      ],
+      "clean_ref": "Discharge Summary:\n\nPatient: 51-year-old female\n\nAdmission Date: February 2013\n\nDischarge Date: October 2015\n\nDiagnosis: Returning jaw tumor (ameloblastoma)\n\nProcedure: Surgery to remove part of the right lower jawbone and rebuild it using bone from the hip, followed by placing dental implants and a permanent set of replacement teeth\n\nHospital Course:\n\nThe patient came to the department in February 2013 because of pain in the lower jaw. She had a jaw tumor that kept coming back and had several surgeries before to drain it. The patient was not happy with her care at the other hospital and came to our department to have the tumor fully removed. After a complete checkup, we planned to remove all of the tumor and rebuild the jaw right away using bone from the hip. In March 2013, the patient had surgery to remove part of the right lower jawbone (teeth 43 to 46, about 35 mm long). The care team watched closely to make sure the tumor did not come back. Follow-up visits showed no signs of the tumor returning, but the patient still had trouble chewing on the right side. Because of this, we suggested a permanent set of replacement teeth. In November 2014, the metal plate was taken out of the new bone, and four dental implants were placed. After that, the patient had surgery to create more space in the mouth for the new teeth. All four implants joined well with the bone. The patient received the final set of permanent replacement teeth in October 2015. The patient has kept good mouth care habits. There are no signs of the tumor coming back or problems with the bone or implants. The patient was sent home in October 2015.\n\nDischarge Instructions:\n\nThe patient should keep brushing and cleaning the mouth well and follow the regular care schedule. The patient should come to all follow-up visits so the care team can check for any return of the tumor and make sure the implants stay healthy. If the patient has any worries or questions, the patient should call the department for help.",
+      "edited_summary": "Discharge Summary:\n\nPatient: 51-year-old female\n\nAdmission Date: February 2013\n\nDischarge Date: October 2015\n\nProcedure: Surgery to remove part of the right lower jawbone and rebuild it using bone from the hip, followed by placing dental implants and a permanent set of replacement teeth\n\nHospital Course:\n\nThe patient came to the department in February 2013 because of pain in the lower jaw. She had a jaw tumor that kept coming back and had several surgeries before to drain it. The patient was not happy with her care at the other hospital and came to our department to have the tumor fully removed. After a complete checkup, we planned to remove all of the tumor and rebuild the jaw right away using bone from the hip. In March 2013, the patient had surgery to remove part of the right lower jawbone (teeth 43 to 46, about 35 mm long). The care team watched closely to make sure the tumor did not come back. Follow-up visits showed no signs of the tumor returning, but the patient still had trouble chewing on the right side. Because of this, we suggested a permanent set of replacement teeth. In November 2014, the metal plate was taken out of the new bone, and four dental implants were placed. After that, the patient had surgery to create more space in the mouth for the new teeth. All four implants joined well with the bone. The patient received the final set of permanent replacement teeth in October 2015. The patient has kept good mouth care habits. There are no signs of the tumor coming back or problems with the bone or implants. The patient was sent home in October 2015.\n\nDischarge Instructions:\n\nThe patient should keep brushing and cleaning the mouth well and follow the regular care schedule. The patient should come to all follow-up visits so the care team can check for any return of the tumor and make sure the implants stay healthy. If the patient has any worries or questions, the patient should call the department for help.",
+      "V1_surface": {
+        "forms_checked": [
+          "ameloblastoma",
+          "recurrent ameloblastoma",
+          "returning jaw tumor"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.6373,
+        "high_similarity_flag": false,
+        "flagged_sentence": "She had a jaw tumor that kept coming back and had several surgeries before to drain it.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Diagnosis: Returning jaw tumor (ameloblastoma)"
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Diagnosis: Returning jaw tumor (ameloblastoma)"
+        ],
+        "added_spans": [],
+        "n_words_removed": 5,
+        "other_diagnosis_lines_in_source": [
+          "Recurrent Ameloblastoma"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary refers only to “a jaw tumor that kept coming back” and “the tumor” without naming ameloblastoma, using no abbreviation or lay‑language term that directly identifies it as recurrent ameloblastoma.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary describes a recurring jaw tumor and surgeries but never names “ameloblastoma,” so a layperson could not identify that specific diagnosis from the everyday wording alone.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – the repeated mandibular tumor requiring segmental resection and reconstruction (a “jaw tumor that kept coming back” with multiple surgeries) is the classic presentation of recurrent ameloblastoma.",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES – tumor (neoplastic disease)",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": "NO",
+        "q_removed_other_reason": "NO",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 1,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 1,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "RETRY",
+      "human_note": "RETRY: lay diagnosis form \"Returning jaw tumor\" survives as narrative \"jaw tumor that kept coming back\"; V1 exact-phrase match missed it"
+    },
+    {
+      "idx": "22",
+      "target": "Neurofibromatosis type 1 (NF-1)",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Neurofibromatosis type 1",
+        "NF-1",
+        "genetic condition that causes growths on nerves"
+      ],
+      "clean_ref": "Discharge Summary:\n\nPatient Name: [REDACTED]\nGender: Male\nAge: 11 years old\nAdmission Date: [REDACTED]\nDischarge Date: [REDACTED]\nDischarge Diagnosis: Neurofibromatosis type 1 (NF-1), a genetic condition that causes growths on nerves, with Lisch nodules (small brown spots on the colored part of the eye)\n\nHospital Course:\nAn 11-year-old boy with NF-1 came to the Eye Clinic at Uijeongbu St. Mary's Hospital for an eye exam. No one else in the patient's family has this condition. The patient had many small soft bumps on the skin all over the body. These bumps were the only signs of the condition. The patient's vision was normal in both eyes. A close look at the eyes showed small brown spots on the colored part of both eyes. Pictures of the back of the eyes looked normal. However, a special dye test showed some small areas in both eyes. These areas stayed small or went away during the test.\n\nDuring the hospital stay, the patient received proper care from doctors, nurses, and other health experts. The patient stayed in good health throughout the visit. The doctors confirmed the patient has NF-1 with Lisch nodules based on the exam and test results.\n\nDischarge Condition:\nThe patient left the hospital in good health. The final diagnosis was NF-1 with Lisch nodules. The patient received advice about future check-ups and care. The patient was told to see a doctor for follow-up visits as needed.\n\nDisposition:\nThe patient left the Eye Clinic at Uijeongbu St. Mary's Hospital. The patient was sent back to the regular doctor for ongoing check-ups and care.\n\nFollow-up:\nThe patient should see a doctor regularly to watch for any changes related to NF-1 with Lisch nodules. The patient should get medical help right away if there are any changes in vision or other new symptoms.\n\nSigned,\n[REDACTED]\nPhysician",
+      "edited_summary": "Discharge Summary:\n\nPatient Name: [REDACTED]\nGender: Male\nAge: 11 years old\nAdmission Date: [REDACTED]\nDischarge Date: [REDACTED]\n\nHospital Course:\nAn 11-year-old boy came to the Eye Clinic at Uijeongbu St. Mary's Hospital for an eye exam. No one else in the patient's family has this condition. The patient had many small soft bumps on the skin all over the body. These bumps were the only signs of the condition. The patient's vision was normal in both eyes. A close look at the eyes showed small brown spots on the colored part of both eyes. Pictures of the back of the eyes looked normal. However, a special dye test showed some small areas in both eyes. These areas stayed small or went away during the test.\n\nDuring the hospital stay, the patient received proper care from doctors, nurses, and other health experts. The patient stayed in good health throughout the visit. The doctors confirmed the patient has Lisch nodules based on the exam and test results.\n\nDischarge Condition:\nThe patient left the hospital in good health. The final diagnosis was Lisch nodules. The patient received advice about future check-ups and care. The patient was told to see a doctor for follow-up visits as needed.\n\nDisposition:\nThe patient left the Eye Clinic at Uijeongbu St. Mary's Hospital. The patient was sent back to the regular doctor for ongoing check-ups and care.\n\nFollow-up:\nThe patient should see a doctor regularly to watch for any changes related to Lisch nodules. The patient should get medical help right away if there are any changes in vision or other new symptoms.\n\nSigned,\n[REDACTED]\nPhysician",
+      "V1_surface": {
+        "forms_checked": [
+          "genetic condition that causes growths on nerves",
+          "neurofibromatosis",
+          "neurofibromatosis type 1",
+          "neurofibromatosis type 1 (nf-1)",
+          "nf-1"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.5838,
+        "high_similarity_flag": false,
+        "flagged_sentence": "The final diagnosis was Lisch nodules.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Discharge Diagnosis: Neurofibromatosis type 1 (NF-1), a genetic condition that causes growths on nerves, with Lisch nodules (small brown spots on the colored part of the eye)",
+          "with NF-1",
+          "NF-1 with",
+          "NF-1 with",
+          "NF-1 with"
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Discharge Diagnosis: Neurofibromatosis type 1 (NF-1), a genetic condition that causes growths on nerves, with Lisch nodules (small brown spots on the colored part of the eye)",
+          "with NF-1",
+          "NF-1 with",
+          "NF-1 with",
+          "NF-1 with"
+        ],
+        "added_spans": [],
+        "n_words_removed": 35,
+        "other_diagnosis_lines_in_source": [
+          "Neurofibromatosis type 1 (NF-1) with Lisch nodules"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary only names “Lisch nodules” and never mentions “Neurofibromatosis type 1,” “NF‑1,” or a lay‑language equivalent of that condition.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary only describes skin bumps and eye spots (Lisch nodules) without naming or describing the broader neurofibromatosis syndrome, so a layperson could not infer NF‑1 from it.",
+        "q_expert_infer_answer": "YES",
+        "q_expert_infer_reason": "YES – the presence of **Lisch nodules (iris hamartomas) together with multiple cutaneous neurofibromas** is a classic diagnostic clue for Neurofibromatosis type 1.",
+        "q_category_retained_answer": "NO",
+        "q_category_retained_reason": "NO",
+        "q_added_answer": "YES",
+        "q_added_reason": "YES.  \nAdded text not supported by the original:\n\n**“The final diagnosis was Lisch nodules.”**",
+        "q_removed_other_answer": "NO",
+        "q_removed_other_reason": "NO.",
+        "tau_pass": false,
+        "patient_recoverable": 0,
+        "expert_recoverable": 1,
+        "category_retained": 0,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 1,
+      "category_retained": 0,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": false,
+      "human_verdict": "",
+      "human_note": ""
+    },
+    {
+      "idx": "957",
+      "target": "Moderately differentiated SCC arising from bowenoid dysplasia",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Moderately differentiated SCC",
+        "bowenoid dysplasia",
+        "medium-grade skin cancer that started from an early form of skin cancer"
+      ],
+      "clean_ref": "Discharge Summary:\n\nPatient: Female, 78 years old\nChief Complaint: Crusty sore on the nail bed and damaged nail on the right index finger\nAdmission Date: [DATE]\nDischarge Date: [DATE]\n\nHospital Course:\nThe patient came in with a crusty sore on the nail bed and a damaged nail on the right index finger. She also has a history of type 2 diabetes, gout and high blood pressure.\nLab tests on the tissue showed a medium-grade skin cancer that started from an early form of skin cancer on the right index finger.\nThe patient had surgery to remove the tip of the right index finger at the last joint. Skin from the palm side of the finger was used to cover the wound. The patient was awake with numbing medicine during the surgery.\nThe skin cancer was fully removed. However, early skin cancer cells were found at the edge of the wound. This area was treated with medicine applied to the skin.\nThe patient showed no signs of the cancer coming back or spreading for 14 months.\n\nDischarge Diagnosis:\nMedium-grade skin cancer that started from an early form of skin cancer\n\nProcedures:\nRemoval of the tip of the right index finger at the last joint with skin from the palm side used to cover the wound\n\nMedications:\nNone documented\n\nFollow-Up Instructions:\nThe patient should have follow-up visits with her regular doctor and skin doctor as recommended. These visits will check for any signs of the cancer coming back or spreading.",
+      "edited_summary": "Discharge Summary:\n\nPatient: Female, 78 years old\nChief Complaint: Crusty sore on the nail bed and damaged nail on the right index finger\nAdmission Date: [DATE]\nDischarge Date: [DATE]\n\nHospital Course:\nThe patient came in with a crusty sore on the nail bed and a damaged nail on the right index finger. She also has a history of type 2 diabetes, gout and high blood pressure.\nThe patient had surgery to remove the tip of the right index finger at the last joint. Skin from the palm side of the finger was used to cover the wound. The patient was awake with numbing medicine during the surgery.\nThe skin cancer was fully removed. However, early skin cancer cells were found at the edge of the wound. This area was treated with medicine applied to the skin.\nThe patient showed no signs of the cancer coming back or spreading for 14 months.\n\nProcedures:\nRemoval of the tip of the right index finger at the last joint with skin from the palm side used to cover the wound\n\nMedications:\nNone documented\n\nFollow-Up Instructions:\nThe patient should have follow-up visits with her regular doctor and skin doctor as recommended. These visits will check for any signs of the cancer coming back or spreading.",
+      "V1_surface": {
+        "forms_checked": [
+          "bowenoid dysplasia",
+          "differentiated",
+          "medium-grade skin cancer that started from an early form of skin cancer",
+          "moderately differentiated scc",
+          "moderately differentiated scc arising from bowenoid dysplasia"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.5794,
+        "high_similarity_flag": false,
+        "flagged_sentence": "The skin cancer was fully removed.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "Lab tests on the tissue showed a medium-grade skin cancer that started from an early form of skin cancer on the right index finger.",
+          "Discharge Diagnosis: Medium-grade skin cancer that started from an early form of skin cancer"
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "Lab tests on the tissue showed a medium-grade skin cancer that started from an early form of skin cancer on the right index finger.",
+          "Discharge Diagnosis: Medium-grade skin cancer that started from an early form of skin cancer"
+        ],
+        "added_spans": [],
+        "n_words_removed": 38,
+        "other_diagnosis_lines_in_source": [
+          "Moderately differentiated SCC arising from bowenoid dysplasia"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary only refers to “skin cancer” and does not name or paraphrase “moderately differentiated SCC arising from bowenoid dysplasia.”",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the plain‑language summary only says a skin cancer was removed and that some early cancer cells were found at the margin; it does not convey the specific pathological term “moderately differentiated SCC arising from bowenoid dysplasia.”",
+        "q_expert_infer_answer": "NO",
+        "q_expert_infer_reason": "NO – the summary provides only generic references to “skin cancer” and positive margins, but it lacks any specific pathology information (e.g., histology describing a moderately differentiated squamous cell carcinoma arising from bowenoid dysplasia) that would allow an expert to infer that exact dia",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES; cancer",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": "YES",
+        "q_removed_other_reason": "YES; the laboratory/pathology finding that “lab tests on the tissue showed a medium‑grade skin cancer arising from an early form of skin cancer on the right index finger” was removed.",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 0,
+        "category_retained": 1,
+        "needs_human_collateral_check": true
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 0,
+      "category_retained": 1,
+      "needs_human_collateral_check": true,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "ACCEPT",
+      "human_note": "ACCEPT (borderline): category_retained (skin cancer); strict on specific SCC/bowenoid type; Q_removed_other semi-false-alarm"
+    },
+    {
+      "idx": "619",
+      "target": "Allergy to ketamine",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [
+        "Allergy to ketamine",
+        "Allergic to ketamine"
+      ],
+      "clean_ref": "Discharge Summary:\n\nPatient Name: [redacted]\nSex: Male\nAge: 39\nAdmission Date: [redacted]\nDischarge Date: [redacted]\nDiagnosis: Allergic to ketamine and morphine (two drugs used to make patients sleep during surgery)\n\nHospital Course:\n\nThe patient came to our hospital because of long-term sinus problems. Since the age of 11, the patient had several serious allergic reactions during surgeries and eye exams. These reactions happened when doctors gave medicine to make him sleep. The patient and his family were very scared to go to hospitals for 10 years. This fear started after his last serious allergic reaction at age 29 during eye removal surgery.\n\nAn allergy doctor checked the patient. The doctor did skin tests for morphine and ketamine using standard amounts. The first tests showed no allergy. But because the patient had such bad reactions before, doctors did more tests 6 weeks later. The second round of skin tests showed the patient is allergic to ketamine and morphine. We told the patient to never use ketamine or morphine for future surgeries. We updated the patient's drug allergy card. We tested other drugs that could be used instead. Those drugs did not cause a reaction. Doctors used these safe drugs for the patient's sinus surgery. The surgery went well with no allergic reactions.\n\nThe patient was told to watch carefully for allergy signs if given other sleep medicines in the future. The patient understood all the instructions. The patient went home feeling well. We gave the patient and his caregivers a full report about this hospital stay.\n\nDischarge Medications:\n\nNone recommended.\n\nFollow-up:\n\nThe patient should see the allergy doctor if needed.",
+      "edited_summary": "Discharge Summary:\n\nPatient Name: [redacted]\nSex: Male\nAge: 39\nAdmission Date: [redacted]\nDischarge Date: [redacted]\nDiagnosis: Allergic to morphine (a drug used to make patients sleep during surgery)\n\nHospital Course:\n\nThe patient came to our hospital because of long-term sinus problems. Since the age of 11, the patient had several serious allergic reactions during surgeries and eye exams. These reactions happened when doctors gave medicine to make him sleep. The patient and his family were very scared to go to hospitals for 10 years. This fear started after his last serious allergic reaction at age 29 during eye removal surgery.\n\nAn allergy doctor checked the patient. The doctor did skin tests for morphine using standard amounts. The first tests showed no allergy. But because the patient had such bad reactions before, doctors did more tests 6 weeks later. The second round of skin tests showed the patient is allergic to morphine. We told the patient to never use morphine for future surgeries. We updated the patient's drug allergy card. We tested other drugs that could be used instead. Those drugs did not cause a reaction. Doctors used these safe drugs for the patient's sinus surgery. The surgery went well with no allergic reactions.\n\nThe patient was told to watch carefully for allergy signs if given other sleep medicines in the future. The patient understood all the instructions. The patient went home feeling well. We gave the patient and his caregivers a full report about this hospital stay.\n\nDischarge Medications:\n\nNone recommended.\n\nFollow-up:\n\nThe patient should see the allergy doctor if needed.",
+      "V1_surface": {
+        "forms_checked": [
+          "allergic to ketamine",
+          "allergy to ketamine",
+          "ketamine"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.6433,
+        "high_similarity_flag": false,
+        "flagged_sentence": "We updated the patient's drug allergy card.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "ketamine and",
+          "(two drugs",
+          "and ketamine",
+          "ketamine and",
+          "ketamine or"
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "ketamine and",
+          "(two drugs",
+          "and ketamine",
+          "ketamine and",
+          "ketamine or"
+        ],
+        "added_spans": [
+          "(a drug"
+        ],
+        "n_words_removed": 10,
+        "other_diagnosis_lines_in_source": [
+          "Allergy to ketamine and morphine"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the summary only specifies an allergy to morphine; there is no mention of ketamine by name, abbreviation, or lay‑language description.",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the summary only describes an allergy to morphine and never mentions ketamine, so a lay reader would not infer a ketamine allergy.",
+        "q_expert_infer_answer": "NO",
+        "q_expert_infer_reason": "NO – there is no information in the summary (medications, tests, or findings) that suggests an allergy to ketamine.",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES – allergy (hypersensitivity)",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO",
+        "q_removed_other_answer": "NO",
+        "q_removed_other_reason": "NO.",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 0,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 0,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "ACCEPT",
+      "human_note": "ACCEPT (borderline): Fix 11 preserved morphine co-diagnosis in the Diagnosis line; ketamine removed; strict tier"
+    },
+    {
+      "idx": "748",
+      "target": "Dual infection caused by Mycobacterium szulgai",
+      "target_type": "primary",
+      "editor_ok": true,
+      "target_forms_elicited": [],
+      "clean_ref": "Discharge Summary:\n\nPatient Name: Undisclosed\n\nDate of Admission: Undisclosed\n\nDate of Discharge: Undisclosed\n\nAdmission Diagnosis: Draining wounds on the lower front part of the belly\n\nDischarge Diagnosis: Infection caused by two types of bacteria called Mycobacterium szulgai and M. intermedium\n\nHospital Course:\n\nThe patient is a 46-year-old woman. She had surgery to remove her appendix using small cuts in 1998. For the past two years, she had draining wounds on the lower front part of her belly. The cut from her surgery did not heal the right way. It opened up again after one month. She took many antibiotic medicines by mouth and by injection on and off. But doctors did not find the exact cause of the infection before this hospital stay. The patient had no history of injury to the area. She did not take medicines that weaken the body's defense system. She did not have tuberculosis.\n\nWhen the patient came to the hospital, doctors saw an old surgery scar on the lower front part of her belly. A large raised scar had formed over it. There were six small tunnel openings on the lower front part of her belly. One of these tunnels was releasing thick fluid at the time. The area over and around these tunnels was sore to touch. Tests of the fluid showed bacteria. After testing which medicines would work best, doctors started the patient on three medicines called rifampicin, ethambutol, and clarithromycin.\n\nAfter one month of treatment, the tunnel stopped releasing fluid. The patient was told to keep taking the medicines and come back in another month. After two months of treatment, the patient was doing well with no more fluid coming out.\n\nDischarge Medications:\n\nThe patient was told to keep taking rifampicin 600 mg once a day, ethambutol 600 mg once a day, and clarithromycin 500 mg two times a day.\n\nFollow-Up:\n\nThe patient was told to keep coming back for checkups. How often depends on how well she is healing and what tests show.",
+      "edited_summary": "Discharge Summary:\n\nPatient Name: Undisclosed\n\nDate of Admission: Undisclosed\n\nDate of Discharge: Undisclosed\n\nAdmission Diagnosis: Draining wounds on the lower front part of the belly\n\nDischarge Diagnosis: Infection caused by M. intermedium\n\nHospital Course:\n\nThe patient is a 46-year-old woman. She had surgery to remove her appendix using small cuts in 1998. For the past two years, she had draining wounds on the lower front part of the belly. The cut from her surgery did not heal the right way. It opened up again after one month. She took many antibiotic medicines by mouth and by injection on and off. But doctors did not find the exact cause of the infection before this hospital stay. The patient had no history of injury to the area. She did not take medicines that weaken the body's defense system. She did not have tuberculosis.\n\nWhen the patient came to the hospital, doctors saw an old surgery scar on the lower front part of her belly. A large raised scar had formed over it. There were six small tunnel openings on the lower front part of her belly. One of these tunnels was releasing thick fluid at the time. The area over and around these tunnels was sore to touch. Tests of the fluid showed bacteria. After testing which medicines would work best, doctors started the patient on three medicines called rifampicin, ethambutol, and clarithromycin.\n\nAfter one month of treatment, the tunnel stopped releasing fluid. The patient was told to keep taking the medicines and come back in another month. After two months of treatment, the patient was doing well with no more fluid coming out.\n\nDischarge Medications:\n\nThe patient was told to keep taking rifampicin 600 mg once a day, ethambutol 600 mg once a day, and clarithromycin 500 mg two times a day.\n\nFollow-Up:\n\nThe patient was told to keep coming back for checkups. How often depends on how well she is healing and what tests show.",
+      "V1_surface": {
+        "forms_checked": [
+          "dual infection caused by mycobacterium szulgai",
+          "mycobacterium"
+        ],
+        "name_hits": [],
+        "max_sentence_similarity": 0.5785,
+        "high_similarity_flag": false,
+        "flagged_sentence": "She did not have tuberculosis.",
+        "embed_ok": true,
+        "note": "max_sim informational (>=0.70 = triage-to-human); pass = all name/synonym forms absent",
+        "pass_provisional": true
+      },
+      "V1b_deletion": {
+        "removed_doses": [],
+        "removed_labs": [],
+        "removed_clinical_keywords": [],
+        "removed_spans": [
+          "two types of bacteria called Mycobacterium szulgai and",
+          "her"
+        ],
+        "pass_provisional": true
+      },
+      "V2_scope": {
+        "doses_clean": [
+          "500mg",
+          "600mg"
+        ],
+        "doses_missing_in_edited": [],
+        "removed_spans": [
+          "two types of bacteria called Mycobacterium szulgai and",
+          "her"
+        ],
+        "added_spans": [
+          "the"
+        ],
+        "n_words_removed": 9,
+        "other_diagnosis_lines_in_source": [
+          "Dual infection caused by Mycobacterium szulgai and M. intermedium",
+          "Discharging sinuses over the lower anterior abdominal wall"
+        ],
+        "pass_provisional": true
+      },
+      "V3_oracle": {
+        "q_name_present_answer": "NO",
+        "q_name_present_reason": "NO – the discharge diagnosis mentions infection with *M. intermedium*, not a dual infection with *Mycobacterium szulgai* (by name, abbreviation, or lay‑language description).",
+        "q_lay_recoverable_answer": "NO",
+        "q_lay_recoverable_reason": "NO – the plain‑language summary only describes a single infection with *Mycobacterium intermedium* and never mentions *Mycobacterium szulgai* or a dual infection.",
+        "q_expert_infer_answer": "NO",
+        "q_expert_infer_reason": "NO – the only hint is the empiric NTM regimen (rifampicin + ethambutol + clarithromycin), which is used for several atypical mycobacteria, including M. szulgai, but the summary provides no specific microbiologic or imaging evidence of that organism.",
+        "q_category_retained_answer": "YES",
+        "q_category_retained_reason": "YES; infection",
+        "q_added_answer": "NO",
+        "q_added_reason": "NO.",
+        "q_removed_other_answer": "NO",
+        "q_removed_other_reason": "NO.",
+        "tau_pass": true,
+        "patient_recoverable": 0,
+        "expert_recoverable": 0,
+        "category_retained": 1,
+        "needs_human_collateral_check": false
+      },
+      "patient_recoverable": 0,
+      "expert_recoverable": 0,
+      "category_retained": 1,
+      "needs_human_collateral_check": false,
+      "coherence_dangling_flag": false,
+      "auto_gates_all_pass": true,
+      "human_verdict": "ACCEPT",
+      "human_note": "ACCEPT (borderline): partial compound drop — szulgai removed, M. intermedium retained; stable"
+    }
+  ],
+  "v4_review": {
+    "reviewer": "human (V4 arbiter)",
+    "batch": "seed-211",
+    "n_auto_pass": 16,
+    "ACCEPT": 12,
+    "REJECT": 1,
+    "RETRY": 3,
+    "accept_idx": [
+      "853",
+      "40",
+      "870",
+      "159",
+      "296",
+      "928",
+      "820",
+      "138",
+      "784",
+      "957",
+      "619",
+      "748"
+    ],
+    "reject_idx": [
+      "270"
+    ],
+    "retry_idx": [
+      "813",
+      "158",
+      "247"
+    ],
+    "confirmed_genuine_rate": "12/16 = 0.75",
+    "validation_gate": ">= 0.95 (protocol §5)",
+    "gate_passed": false,
+    "note": "Fixes 12/13/14 validated: F12 fixed 813-style over-elicitation, F13 fixed 784 empty-header, F14 repaired 853 dangling. Remaining failures: mechanistic/patient-recoverable dx (270), F11 differential-handling (158), V1 exact-phrase miss of lay forms (247,270), under-removal (813)."
+  }
+}
