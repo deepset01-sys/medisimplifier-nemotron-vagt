@@ -86,6 +86,11 @@ The generator is "validated" only if the human-audited set shows **≥ 95%** of
 τ=1-accepted items are genuine (V4 confirms V1–V3). The confirmed-genuine rate is
 reported. If < 95%, the editor prompt / gates are revised and re-validated — revisions are
 logged; we do not quietly lower the bar.
+[§5 clarification 2026-09-28, written after the results: "the human-audited set" is one
+batch, not an aggregate across batches. Batches are built and V4-audited in turn, with
+generator fixes between them, until ONE batch shows ≥ 95% confirmed genuine; that batch
+validates the generator, and later batches do not each need their own 95%. This states the
+rule as it was applied; the bar is unchanged.]
 
 ## 6. Ground-truth definition
 - **τ = 1 (PATIENT-INVISIBLE PRIMARY-DIAGNOSIS DROP):** a human confirmed the target
