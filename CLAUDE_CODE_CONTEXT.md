@@ -79,14 +79,20 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
   under option B, #6 skipped). They land with the Q1 pass, after the "Project v1" naming and landing-date fixes, each with
   its exact diff for sign-off.
 - Pushed 2026-09-28: 4808ff2..6cdb49f.
+- results/strata_spot_audit.json: committed (2016051). Its "auditor" field names the author, with Claude Opus 4.8 as a
+  drafting aid, plus a dated auditor_note_2026_09_28. The framing is in the commit message and the Q1 deviations bullet
+  only: the spot audit is complete per protocol §7; §7's numbers (lateral 50/50 genuine; dose ~22% contaminated;
+  negation ~36% borderline) stand as the historical record; the file is a later per-item re-run of dose and negation
+  (dose 12/50 contaminated, negation 8/50 borderline) — additional detail, not a correction to §7.
+- V4 confirmed-genuine rate (§12 tau_v2_human_audit): 120/203 = 59.1% — the four batches that feed the final stratum
+  (seed-42 SCALE 28/52, seed-99 expanded 33/51, seed-137 expanded 18/33, seed-211 expanded 41/67), re-audited per-item
+  human_verdict. Not the eight-batch total, and not the SCALE batch's first-pass 50/52. Source: the eight
+  results/judgebench_v2_step0_*.json batch files, committed unmodified; the four pilots (seed42_original, seed99,
+  seed137, seed211) are diagnostic-only and contributed 0 items to the stratum. results/judgebench_v2_step0.json is a
+  byte-identical copy of the seed-42 pilot and stays uncommitted.
 
 ### Pending owner answers (do NOT act on these)
-- results/strata_spot_audit.json (owner, 2026-09-28: commit it, described as complete per protocol). NOT committed yet:
-  the file covers dose (50) and negation (50) only — protocol §1 names 50 each of dose / negation / lateral — and its
-  "auditor" field reads "Claude Opus 4.8 (hand review, one-at-a-time)". Asked the owner how to describe both.
-- V4 confirmed-genuine rate (§12 tau_v2_human_audit; owner, 2026-09-28: derive it from tau1_final.json).
-  results/judgebench_v2_tau1_final.json holds only the 120 accepted items (human_verdict ACCEPT on all 120), so the
-  number of candidates reviewed — the rate's denominator — is not in that file. Asked the owner.
+- (none)
 
 ## CURRENT STATUS (HEAD = 4808ff2 on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); Q1 pass drafted, not written — see SETTLED FACTS above first)
 
