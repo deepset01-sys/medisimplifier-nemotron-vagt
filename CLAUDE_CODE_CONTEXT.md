@@ -110,7 +110,10 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
   unmeasured). The audit panel still presents gpt-oss-120b as the v2 recommendation, with that caveat.
 
 ### Pending owner answers (do NOT act on these)
-- (none)
+- Student-audit idx 47 (not code-audit #47 below): both auditors set medication_dropped: true (they differ only on
+  category), so README:631's "confirmed a genuine diagnosis/medication drop in only 2 of 20" is wrong for medication;
+  2/20 holds for diagnosis drops. Wording at :631, :71, :447, :895 left as is for now — owner to confirm whether to
+  narrow these four lines to "diagnosis" or leave as is (owner, 2026-09-28).
 
 ## CURRENT STATUS (as of 32727cf, on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); settled facts + standing rules, human_arbiter fix, sign-off batch, strata_spot_audit + the eight step-0 batch files, protocol §5 dated clarification (2b74155..32727cf); Q1 pass drafted, not written — see SETTLED FACTS above first)
 
