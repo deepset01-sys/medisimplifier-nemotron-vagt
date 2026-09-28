@@ -1,0 +1,926 @@
+{
+ "purpose": "Per-item hand spot-audit of dose & negation strata genuineness for MedSimp-JudgeBench v2 (re-run with per-item results saved).",
+ "source": "medisimplifier-nebius/results/nebius_evidence/calibration_verdicts.json (input/clean_ref/perturbed text)",
+ "sampling": "seed=42, random.Random(42).sample; dose sampled first (50 of 95 corrupted), then negation (50 of 113 corrupted)",
+ "method": "perturbation = diff(clean_ref, perturbed). DOSE: GENUINE if a real medication dose is altered; CONTAMINATED if the changed number is a lab value / organ-blood / specimen volume / date or a no-op decimal change; BORDERLINE if a medication amount expressed as a volume. NEGATION: GENUINE if a negation flip reverses a real clinical statement into coherent-but-wrong text; CONTAMINATED if garbled surface or meta/boilerplate; BORDERLINE if flip lands on a definitional/explanatory gloss.",
+ "auditor": "the author, hand review, one item at a time; Claude Opus 4.8 was a drafting aid",
+ "auditor_note_2026_09_28": "Corrected: this field previously named Claude Opus 4.8 as the auditor. The review was the author's; Opus was a drafting aid.",
+ "summary": {
+  "dose": {
+   "n": 50,
+   "GENUINE": 36,
+   "CONTAMINATED": 12,
+   "BORDERLINE": 2,
+   "genuine_rate": 0.72
+  },
+  "negation": {
+   "n": 50,
+   "GENUINE": 38,
+   "CONTAMINATED": 4,
+   "BORDERLINE": 8,
+   "genuine_rate": 0.76
+  }
+ },
+ "items": [
+  {
+   "idx": 848,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "lab value (anti-Xa units/mL) and 1.1=1.10 no-op change",
+   "change_clean": "1.1",
+   "change_perturbed": "1.10"
+  },
+  {
+   "idx": 598,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "Irbesartan 150->1500 mg, 10x overdose",
+   "change_clean": "150",
+   "change_perturbed": "1500"
+  },
+  {
+   "idx": 743,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "sildenafil 25->250 mg, 10x overdose",
+   "change_clean": "25",
+   "change_perturbed": "250"
+  },
+  {
+   "idx": 727,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "steroid pills 50->500 mg, 10x overdose",
+   "change_clean": "50",
+   "change_perturbed": "500"
+  },
+  {
+   "idx": 9,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "mirtazapine 30->300 mg, 10x overdose",
+   "change_clean": "30",
+   "change_perturbed": "300"
+  },
+  {
+   "idx": 669,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "furosemide 20->200 mg, 10x overdose",
+   "change_clean": "20mg",
+   "change_perturbed": "200mg"
+  },
+  {
+   "idx": 688,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "vitamin C 250->2500 mg, 10x dose change (benign agent)",
+   "change_clean": "250",
+   "change_perturbed": "2500"
+  },
+  {
+   "idx": 113,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "lanreotide 30->300 mg, 10x overdose",
+   "change_clean": "30",
+   "change_perturbed": "300"
+  },
+  {
+   "idx": 646,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "steroid 5->50 mg, 10x overdose",
+   "change_clean": "5mg",
+   "change_perturbed": "50mg"
+  },
+  {
+   "idx": 607,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "dapsone 100->1000 mg, 10x overdose",
+   "change_clean": "100",
+   "change_perturbed": "1000"
+  },
+  {
+   "idx": 664,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "sodium valproate 1000->10000 mg, 10x overdose",
+   "change_clean": "1000",
+   "change_perturbed": "10000"
+  },
+  {
+   "idx": 274,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "prednisone 2.5->2.50 mg, no-op decimal change",
+   "change_clean": "(2.5",
+   "change_perturbed": "(2.50"
+  },
+  {
+   "idx": 697,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "hemoglobin 20.4->20.40 g/dL lab value + no-op",
+   "change_clean": "20.4",
+   "change_perturbed": "20.40"
+  },
+  {
+   "idx": 729,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "long-term dose 10->100 mg/day, 10x",
+   "change_clean": "10",
+   "change_perturbed": "100"
+  },
+  {
+   "idx": 472,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "lomerizine 10->100 mg/day, 10x",
+   "change_clean": "10",
+   "change_perturbed": "100"
+  },
+  {
+   "idx": 854,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "dose raised 50->500 mg, 10x",
+   "change_clean": "50",
+   "change_perturbed": "500"
+  },
+  {
+   "idx": 483,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "4000 ml drained fluid volume, not a med dose",
+   "change_clean": "400",
+   "change_perturbed": "4000"
+  },
+  {
+   "idx": 907,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "docetaxel 80->800 mg/m2, 10x chemo overdose",
+   "change_clean": "80mg/m2",
+   "change_perturbed": "800mg/m2"
+  },
+  {
+   "idx": 993,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "dabigatran 150->1500 mg, 10x overdose",
+   "change_clean": "150mg",
+   "change_perturbed": "1500mg"
+  },
+  {
+   "idx": 912,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "aspirin 5->50 mg/kg, 10x overdose",
+   "change_clean": "5mg",
+   "change_perturbed": "50mg"
+  },
+  {
+   "idx": 976,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "hep C viral load 7062->70620 units/mL lab value",
+   "change_clean": "7062",
+   "change_perturbed": "70620"
+  },
+  {
+   "idx": 540,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "liver organ volume 3,125->3,1250 ml (garbled)",
+   "change_clean": "3,125",
+   "change_perturbed": "3,1250"
+  },
+  {
+   "idx": 233,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "flucloxacillin 500->5000 mg, 10x overdose",
+   "change_clean": "500mg",
+   "change_perturbed": "5000mg"
+  },
+  {
+   "idx": 953,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "acitretin 10->100 mg/day, 10x",
+   "change_clean": "10",
+   "change_perturbed": "100"
+  },
+  {
+   "idx": 874,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "blood level 5->50 g/dl lab value",
+   "change_clean": "5g/dl.",
+   "change_perturbed": "50g/dl."
+  },
+  {
+   "idx": 858,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "7000 mL drained fluid volume",
+   "change_clean": "700",
+   "change_perturbed": "7000"
+  },
+  {
+   "idx": 529,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "propranolol 60->600 mg/day, 10x",
+   "change_clean": "60",
+   "change_perturbed": "600"
+  },
+  {
+   "idx": 554,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "diltiazem IV 5->50 mg/hour, 10x",
+   "change_clean": "5mg",
+   "change_perturbed": "50mg"
+  },
+  {
+   "idx": 853,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "gabapentin 900->9000 mg/day, 10x",
+   "change_clean": "900mg",
+   "change_perturbed": "9000mg"
+  },
+  {
+   "idx": 555,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "clavulanic acid 125->1250 mg, 10x",
+   "change_clean": "125",
+   "change_perturbed": "1250"
+  },
+  {
+   "idx": 921,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "50 ml specimen fluid volume, not a dose",
+   "change_clean": "5",
+   "change_perturbed": "50"
+  },
+  {
+   "idx": 465,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "phenytoin 300->3000 mg/day, 10x",
+   "change_clean": "300",
+   "change_perturbed": "3000"
+  },
+  {
+   "idx": 886,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "prednisone 60->600 mg/day, 10x",
+   "change_clean": "60",
+   "change_perturbed": "600"
+  },
+  {
+   "idx": 369,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "cyclosporine 1->10 mg/kg/day, 10x",
+   "change_clean": "1",
+   "change_perturbed": "10"
+  },
+  {
+   "idx": 115,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "hep C viral load 660,000->660,0 units/mL (garbled)",
+   "change_clean": "660,000",
+   "change_perturbed": "660,0"
+  },
+  {
+   "idx": 14,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "insulin 2->20 units, 10x",
+   "change_clean": "2",
+   "change_perturbed": "20"
+  },
+  {
+   "idx": 62,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "prednisone 40->400 mg, 10x",
+   "change_clean": "40",
+   "change_perturbed": "400"
+  },
+  {
+   "idx": 120,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "aspirin 325->3250 mg, 10x overdose",
+   "change_clean": "325",
+   "change_perturbed": "3250"
+  },
+  {
+   "idx": 464,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "kidney waste 313.8->313.80 units/L lab value + no-op",
+   "change_clean": "313.8",
+   "change_perturbed": "313.80"
+  },
+  {
+   "idx": 105,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "hydrocortisone 30->300 mg twice daily, 10x",
+   "change_clean": "30",
+   "change_perturbed": "300"
+  },
+  {
+   "idx": 926,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "omalizumab 300->3000 mg, 10x",
+   "change_clean": "300",
+   "change_perturbed": "3000"
+  },
+  {
+   "idx": 206,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "tPa 10->100 mg IV, 10x overdose",
+   "change_clean": "10",
+   "change_perturbed": "100"
+  },
+  {
+   "idx": 883,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "BORDERLINE",
+   "reason": "200 mL nerve-block anesthetic volume (med amount, not a mg dose)",
+   "change_clean": "20",
+   "change_perturbed": "200"
+  },
+  {
+   "idx": 890,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "isotretinoin 20->200 mg, 10x",
+   "change_clean": "20mg",
+   "change_perturbed": "200mg"
+  },
+  {
+   "idx": 197,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "full dose 600->6000 mg three times a day, 10x",
+   "change_clean": "600",
+   "change_perturbed": "6000"
+  },
+  {
+   "idx": 486,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "IgE 126->1260 units lab value",
+   "change_clean": "126",
+   "change_perturbed": "1260"
+  },
+  {
+   "idx": 888,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "omalizumab 300->3000 mg, 10x",
+   "change_clean": "300",
+   "change_perturbed": "3000"
+  },
+  {
+   "idx": 673,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "BORDERLINE",
+   "reason": "epidural blood patch 3->30 ml blood volume (procedure amount)",
+   "change_clean": "3ml",
+   "change_perturbed": "30ml"
+  },
+  {
+   "idx": 150,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "adalimumab 10->100 mg, 10x",
+   "change_clean": "10",
+   "change_perturbed": "100"
+  },
+  {
+   "idx": 419,
+   "stratum": "dose",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "olanzapine 10->100 mg, 10x",
+   "change_clean": "10",
+   "change_perturbed": "100"
+  },
+  {
+   "idx": 377,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "flipped not -> 'make sure tumor does return' reverses surveillance goal",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 967,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed no -> 'had pain or swelling' reverses finding",
+   "change_clean": "no",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 781,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "garbled surface 'do do hard exercise'",
+   "change_clean": "Do not",
+   "change_perturbed": "do"
+  },
+  {
+   "idx": 854,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "never->always had mental health problems, reverses history",
+   "change_clean": "never",
+   "change_perturbed": "always"
+  },
+  {
+   "idx": 374,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "meta-boilerplate about the summary + garbled 'does contain any'",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 261,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed no -> 'had pain or problems' reverses outcome",
+   "change_clean": "no",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 680,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "never->always got infections, reverses",
+   "change_clean": "never",
+   "change_perturbed": "always"
+  },
+  {
+   "idx": 361,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "BORDERLINE",
+   "reason": "definitional gloss flip (body can[not] release stored sugar)",
+   "change_clean": "cannot",
+   "change_perturbed": "can"
+  },
+  {
+   "idx": 493,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'should eat hard/crunchy foods' reverses diet safety",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 240,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'heart does relax well' reverses cardiac finding",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 497,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> cancer 'does respond to hormones' flips receptor status",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 559,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'should put weight on injured foot' reverses safety",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 213,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> denture 'does work properly' reverses chief complaint",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 177,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'should do hard exercise' reverses restriction",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 600,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "never->always had braces, reverses history",
+   "change_clean": "never",
+   "change_perturbed": "always"
+  },
+  {
+   "idx": 968,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed no -> 'had pain or problems' reverses outcome",
+   "change_clean": "no",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 130,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed no -> 'there was pain' reverses symptom",
+   "change_clean": "no",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 68,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "BORDERLINE",
+   "reason": "definitional gloss flip (lungs can[not] get oxygen)",
+   "change_clean": "cannot",
+   "change_perturbed": "can"
+  },
+  {
+   "idx": 491,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> reverses allodynia ('light touch that should hurt')",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 839,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "flipped 'Do not' -> 'do lift heavy things' reverses postpartum restriction",
+   "change_clean": "Do not",
+   "change_perturbed": "do"
+  },
+  {
+   "idx": 613,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'does have enough acid lipase' flips enzyme deficiency",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 831,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'does need to stay in hospital' reverses disposition",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 894,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'body does move during episodes' reverses seizure description",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 611,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'should use tobacco' reverses safety advice",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 602,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "never->always hospitalized for asthma, reverses history",
+   "change_clean": "never",
+   "change_perturbed": "always"
+  },
+  {
+   "idx": 566,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'does need follow-up' reverses (minor 'any' garble)",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 634,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "BORDERLINE",
+   "reason": "explanatory gloss flip (waste builds up when kidneys DO work properly)",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 545,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'does want surgery' reverses patient consent",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 195,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "BORDERLINE",
+   "reason": "definitional gloss flip on named dx (MPS IIIA - body can[not] break down sugars)",
+   "change_clean": "cannot",
+   "change_perturbed": "can"
+  },
+  {
+   "idx": 915,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'fevers do happen as often' reverses improvement",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 770,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "never->always treated (underactive thyroid), reverses",
+   "change_clean": "never",
+   "change_perturbed": "always"
+  },
+  {
+   "idx": 332,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'ring of tissue that should be there' reverses pathology",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 190,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "garbled 'little to pain' (removed no from 'little to no pain')",
+   "change_clean": "no",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 528,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "CONTAMINATED",
+   "reason": "garbled surface 'do do hard exercise'",
+   "change_clean": "Do not",
+   "change_perturbed": "do"
+  },
+  {
+   "idx": 17,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "never->always smoked, reverses smoking history",
+   "change_clean": "never",
+   "change_perturbed": "always"
+  },
+  {
+   "idx": 461,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "flipped 'Do not' -> 'do eat hot/spicy foods' reverses diet instruction",
+   "change_clean": "Do not",
+   "change_perturbed": "do"
+  },
+  {
+   "idx": 172,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed no -> 'had fever' reverses finding",
+   "change_clean": "no",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 459,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'should do hard physical activities' reverses restriction",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 760,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "BORDERLINE",
+   "reason": "definitional gloss flip (heart muscle does[n't] form properly)",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 755,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "BORDERLINE",
+   "reason": "definitional gloss flip (intestines do[n't] move food from birth)",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 979,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "never->always received antifungal prophylaxis, reverses",
+   "change_clean": "never",
+   "change_perturbed": "always"
+  },
+  {
+   "idx": 585,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "BORDERLINE",
+   "reason": "definitional gloss flip (CAIS - body does[n't] respond to male hormones)",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 754,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed no -> 'had fever' reverses finding",
+   "change_clean": "no",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 750,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'should eat solid foods first week' reverses post-op diet",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 263,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "BORDERLINE",
+   "reason": "definitional gloss flip on named dx (Achalasia parenthetical)",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 830,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed no -> 'had pain or symptoms' reverses finding",
+   "change_clean": "no",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 128,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> reverses allodynia ('light touch that should hurt')",
+   "change_clean": "not",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 437,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed no -> 'there was fever' reverses finding",
+   "change_clean": "no",
+   "change_perturbed": ""
+  },
+  {
+   "idx": 563,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "cannot->can wear soft contact lenses, reverses recommendation",
+   "change_clean": "cannot",
+   "change_perturbed": "can"
+  },
+  {
+   "idx": 203,
+   "stratum": "negation",
+   "condition": "corrupted",
+   "verdict": "GENUINE",
+   "reason": "removed not -> 'infection does come back' reverses monitoring intent",
+   "change_clean": "not",
+   "change_perturbed": ""
+  }
+ ]
+}
