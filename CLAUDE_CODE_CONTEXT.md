@@ -100,11 +100,17 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
   one batch recorded as clearing it (50/52 = 96.2%, first pass). Re-audited it is 28/52 = 53.8%, so on the re-audited
   verdicts no batch has been shown to clear ≥95%. 120/203 is context, not the gate. docs/judgebench_v2_protocol.md §5
   carries a dated clarification stating the single-batch rule; the deviations bullet lands with the Q1 pass.
+- #26 + #27, student-audit bounds (owner, 2026-09-28): README B5 gives both bounds — diagnosis drops 10–30% of flagged
+  cases (2/20 confirmed by both auditors, 6/20 flagged by either); any diagnosis-or-medication drop flagged by either
+  auditor up to 40% (8/20) — with a note that idx 529 was counted as agreement (both auditors chose general
+  simplification; Gemini also flagged a dropped medication). Wording only; data unchanged. The audit's premise for 40%
+  ("every contested case has a drop flag") is false for idx 393; 35% held only if 529 was left out.
+- Gate decision (owner, 2026-09-28): keep Nemotron Nano in the deployed gate; item closed. README B4 says why in one
+  sentence (gpt-oss's v2 lead is partly by construction — A8 threat 10; its latency and cost inside the gate are
+  unmeasured). The audit panel still presents gpt-oss-120b as the v2 recommendation, with that caveat.
 
 ### Pending owner answers (do NOT act on these)
-- #26 (code-audit inventory below): conflicting evidence on the genuine-drop upper bound (audit 40% vs 35%); settle
-  with the owner before touching.
-- Gate decision (Nano vs gpt-oss; "Gate decision — OPEN" block below): owner action required; no answer recorded.
+- (none)
 
 ## CURRENT STATUS (as of 32727cf, on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); settled facts + standing rules, human_arbiter fix, sign-off batch, strata_spot_audit + the eight step-0 batch files, protocol §5 dated clarification (2b74155..32727cf); Q1 pass drafted, not written — see SETTLED FACTS above first)
 
@@ -235,7 +241,7 @@ Finding 4: ✅ DONE on v2 — pre-registered re-run (d69f506 prereg, e8ced82 res
   guardrail pass ΔR +0.019 [−0.031, +0.069]; primary fail ΔJ +0.046 [−0.060, +0.154]; driver fail ΔF −0.027 [−0.129, +0.077]
   within call-to-call noise (same-prompt splits reach +0.042); the edge disappears at the deployed 8K budget (ΔJ −0.006)
 
-## Gate decision — OPEN (as of 63e1a28)
+## Gate decision — DECIDED 2026-09-28: keep Nano (owner; block below kept as the record)
 
 Figures: gate rule = Qwen3-32B + third judge (DISAGREE counted as a flag), v2 stratum, deployed prompt.
 Recomputed offline in this session from committed verdict files (judgebench_v2_panel_gate.json +
@@ -270,7 +276,7 @@ Decision pending before video/headline. Options:
   B) Swap gate judge to gpt-oss-120b — better v2 performance on both recall and FP
   C) Keep Nano + surface recommendation prominently in docs only
 
-Owner action required to close this item.
+Decided (owner, 2026-09-28): keep Nano; item closed. See the Decided list at the top.
 
 ### Completed 2026-09-28 — CPU image audit-cpu-v2.1, new CPU endpoint, demo URL (4808ff2)
 - Image chambul/medisimplifier:audit-cpu-v2.1 = sha256:5e09e9df2d153cfe312e0af7b2bbdbde5696dfe21308effe0011a75400ac8270
@@ -321,12 +327,10 @@ Owner action required to close this item.
    run_null_control_v2.py; dating correction notes to the landing day; verifying the 40 endpoint-doc edits).
 
 ### Code-audit inventory (audit at 1ee5081, section "Could produce wrong results", 47 items; status 2026-09-28)
-- Fixed: #10, #13, #15, #16 (dabd527, de03e44); #12 (d69f506 → e8ced82 → d48878e).
+- Fixed: #10, #13, #15, #16 (dabd527, de03e44); #12 (d69f506 → e8ced82 → d48878e); #26, #27 (README B5 wording, 2026-09-28).
 - Partly fixed: #8, #30, #32 (400ef54).
 - In the Q1 draft: #9, #11, #17, #20; partly #6, #7.
-- Not started (33): #1–#5, #14, #18, #19, #21–#25, #27–#29, #31, #33–#47.
-- #26 has conflicting evidence (the audit says the genuine-drop upper bound is 40%; an E-pass verifier found one contested
-   case with no drop flagged, which keeps 35%). Settle with the owner before touching.
+- Not started (31): #1–#5, #14, #18, #19, #21–#25, #28, #29, #31, #33–#47.
 - Claude's priority read for after Q1 (asked by the owner; not acted on): #31, #23 (+#24), #2, #21, #40. #22 is downgraded
    (the V4 backstop was the owner's review).
 - The audit report itself is in the session scratchpad (code_audit_report.md), not in the repo.
@@ -524,8 +528,7 @@ OWNER STILL OPEN: stop the dedicated Qwen3-32B + Llama-3.3-70B
 endpoints if still running (per-GPU-hr; no record they were stopped); decide whether to delete the old CPU
 service instance (tunnel already 404s); optional endpoint-v5 rebuild if Tier 2 should serve v2; cosmetic:
 phone-width second-line wrap on the top two bars; HF cards: JudgeBench label caveat + Nemotron dataset
-license; gate decision (Nano vs gpt-oss — see "Gate decision" block; disclose the
-construction circularity — README A8 threat 10 — before the video/headline).
+license.
 
 ## WORKING METHODOLOGY
 1. Always slow and methodical
