@@ -122,7 +122,9 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
 - Q1 contradiction #16, parked (owner, 2026-09-28): Llama's stored column repeats its control verdict on 115 corrupted
   rows (78 of them dose, negation or lateral), and the A5 Llama recall rows, threat 12's figures and the FINDINGS tables
   inherit that (code-audit #6 is the same issue). Does not block the Q1 diff. Flag it as open before anything citing A5
-  Llama recall, threat 12 or the FINDINGS tables ships anywhere external.
+  Llama recall, threat 12 or the FINDINGS tables ships anywhere external. Disclosed inline (owner, 2026-09-29): README
+  threat 9 states it once, and the A5 caption, threat 12 and the FINDINGS banner point to it; not quantified (the split
+  across dose, lateral and negation and the direction are not in a committed file; quantifying is a separate ask).
 
 ## CURRENT STATUS (as of f46dc89, on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); settled facts + standing rules, human_arbiter fix, sign-off batch, strata_spot_audit + the eight step-0 batch files, protocol §5 dated clarification (2b74155..32727cf); later: CCC sync + key-reminder removal (45de2e9), #26/#27 bounds + gate decision (027cfd4), idx 47 (5df1219, c559740), Q1 pass (f46dc89), HF card upload (532578bf) — see SETTLED FACTS above first)
 

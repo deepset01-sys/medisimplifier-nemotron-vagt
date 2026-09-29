@@ -3,6 +3,7 @@
 > ⚠️ **Automated-pass write-up (2026-08-27).** Diagnosis results superseded by the hand-verified v2 benchmark — see README A6/A8.
 > σ²_B and σ²_N below were recomputed on 2026-09-27 with an unbiased noise estimator (README A4); Φ_V values are unchanged.
 > Each feature below sits at its own corrupted share (dose 0.30, negation 0.34, lateral 0.43, diagnosis 0.41), and Φ_V depends on the share, so comparisons across features mix shares (README A8 threat 12).
+> Llama's stored column repeats its clean-control verdict on the 115 corrupted rows that share an item index with a control (README A8 threat 9), so Llama's recall and the Llama-dependent figures below are affected by an amount not measured here.
 
 ## 1. Nemotron Nano as a safety judge — full calibration (n=708)
 
