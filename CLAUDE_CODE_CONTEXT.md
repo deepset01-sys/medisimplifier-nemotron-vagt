@@ -86,7 +86,7 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
 - #6 (judgebench_v2_prevalence_sensitivity.json new computed-values block): skipped.
 - Results-file notes: the pattern (dated explanatory notes, values unchanged) is approved; five notes remain (#7 dropped
   under option B, #6 skipped). All five landed in f46dc89, dated 2026-09-29, with the "Project v1" naming.
-- Pushed 2026-09-28: 4808ff2..6cdb49f, then 6cdb49f..32727cf, then 32727cf..5df1219.
+- Pushed 2026-09-28: 4808ff2..6cdb49f, then 6cdb49f..32727cf, then 32727cf..5df1219; 2026-09-29: 5df1219..28a41b6.
 - results/strata_spot_audit.json: committed (2016051). Its "auditor" field names the author, with Claude Opus 4.8 as a
   drafting aid, plus a dated auditor_note_2026_09_28. The framing is in the commit message and the Q1 deviations bullet
   only: the spot audit is complete per protocol §7; §7's numbers (lateral 50/50 genuine; dose ~22% contaminated;
@@ -126,7 +126,7 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
   threat 9 states it once, and the A5 caption, threat 12 and the FINDINGS banner point to it; not quantified (the split
   across dose, lateral and negation and the direction are not in a committed file; quantifying is a separate ask).
 
-## CURRENT STATUS (as of f46dc89, on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); settled facts + standing rules, human_arbiter fix, sign-off batch, strata_spot_audit + the eight step-0 batch files, protocol §5 dated clarification (2b74155..32727cf); later: CCC sync + key-reminder removal (45de2e9), #26/#27 bounds + gate decision (027cfd4), idx 47 (5df1219, c559740), Q1 pass (f46dc89), HF card upload (532578bf) — see SETTLED FACTS above first)
+## CURRENT STATUS (as of 28a41b6, on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); settled facts + standing rules, human_arbiter fix, sign-off batch, strata_spot_audit + the eight step-0 batch files, protocol §5 dated clarification (2b74155..32727cf); later: CCC sync + key-reminder removal (45de2e9), #26/#27 bounds + gate decision (027cfd4), idx 47 (5df1219, c559740), Q1 pass (f46dc89), HF card upload (532578bf), CCC Q1-landed update (78157a3), #16 inline caveat (28a41b6) — see SETTLED FACTS above first)
 
 ## Track-A STATUS: COMPLETE
 All 9 residuals closed. Commits: db79b9c, 7a386d3, 32dc694, 2b462ff, 1579085, 2f70ad3, 0fa51fb, dc6d1c0.
@@ -308,6 +308,8 @@ Decided (owner, 2026-09-28): keep Nano; item closed. See the Decided list at the
    stopped is by design, not an outage. The nebius CLI has no image update: a new image needs a new endpoint and URL.
 - Demo: 4808ff2 points app/demo.jsx (and the vite dev proxy) at the new URL; Pages run 36335017124 success; live bundle
    index-BD8XFq0N.js verified (new URL present, old absent, E-pass text live). While stopped, the page shows the committed chart.
+   Redeployed 2026-09-29 with the push of 28a41b6 (Q1's demo text): Pages run 36548436713 success; live bundle now
+   index-B2gUugaQ.js, verified (new error text present, endpoint URL unchanged).
 - Old endpoint medisimplifier-cpu-v2 (aiendpoint-e00xp7sjd5ffpj8ek7, audit-cpu-v2) untouched and stopped.
 - Build VM this session: ubuntu@89.169.125.84 (same instance computeinstance-e00krk6v948cndendb; checkout fast-forwarded to 400ef54).
 - Docs updated for the endpoint change in the Q1 pass (f46dc89): README "always-on"/audit-cpu-v2 mentions,
