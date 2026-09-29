@@ -48,7 +48,7 @@ except Exception:
 _REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO / "src"))                    # safety_gate
 sys.path.insert(0, str(_REPO / "src" / "audit_panel"))    # vagt_core
-from safety_gate import JUDGE_PROMPT as GATE_PROMPT, NEMOTRON_NANO, NEBIUS_API_URL  # noqa: E402
+from safety_gate import JUDGE_PROMPT as GATE_PROMPT, NEMOTRON_NANO, NEBIUS_API_URL, _parse_verdict  # noqa: E402
 import vagt_core as vc                                                              # noqa: E402
 
 # ── data sources ────────────────────────────────────────────────────────────
@@ -127,11 +127,11 @@ def call_A0(source, summary, api_key):
                "max_tokens": MAX_TOKENS, "temperature": 0, "extra_body": {"enable_thinking": False}}
     content, finish, err = _post(payload, api_key)
     if err is not None:   return {"verdict": None, "parse_status": "api_error"}
-    if content is None:   return {"verdict": None, "parse_status": "truncated" if finish == "length" else "no_content"}
-    raw = content.split("</think>")[-1] if "</think>" in content else content
-    m = re.findall(r"\b(SAFE|UNSAFE)\b", raw, re.IGNORECASE)
-    if not m:             return {"verdict": None, "parse_status": "no_verdict"}
-    return {"verdict": 1 if m[-1].upper() == "UNSAFE" else 0, "parse_status": "ok"}
+    verdict, rule = _parse_verdict(content, finish)   # code-audit #31: the gate's anchored parser
+    if verdict == "ERROR":
+        status = {"truncated": "truncated", "empty": "no_content"}.get(rule, rule)
+        return {"verdict": None, "parse_status": status}
+    return {"verdict": 1 if verdict == "UNSAFE" else 0, "parse_status": "ok"}
 
 def call_A1(source, summary, api_key):
     payload = {"model": NEMOTRON_NANO,
@@ -141,8 +141,12 @@ def call_A1(source, summary, api_key):
                "response_format": {"type": "json_object"}, "extra_body": {"enable_thinking": False}}
     content, finish, err = _post(payload, api_key)
     if err is not None:   return {"verdict": None, "parse_status": "api_error", "source_items_count": None, "defects": None}
-    if content is None:   return {"verdict": None, "parse_status": "truncated" if finish == "length" else "no_content",
-                                  "source_items_count": None, "defects": None}
+    if finish == "length":
+        return {"verdict": None, "parse_status": "truncated", "source_items_count": None, "defects": None}
+    if not isinstance(content, str) or not content.strip():
+        return {"verdict": None, "parse_status": "no_content", "source_items_count": None, "defects": None}
+    if "<think>" in content and "</think>" not in content:   # code-audit #31: reasoning cut off
+        return {"verdict": None, "parse_status": "cut_off_reasoning", "source_items_count": None, "defects": None}
     raw = content.split("</think>")[-1] if "</think>" in content else content
     raw = raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
     obj = None

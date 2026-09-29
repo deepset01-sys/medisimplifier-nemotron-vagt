@@ -40,7 +40,7 @@ _REPO = Path(__file__).resolve().parent.parent
 _SRC = _REPO / "src"
 sys.path.insert(0, str(_SRC))
 from safety_gate import (  # reused UNCHANGED  # noqa: E402
-    evaluate_safety, _call_judge,
+    evaluate_safety, _call_judge, _parse_verdict,
     LLAMA_DEDICATED, QWEN_DEDICATED, NEMOTRON_NANO, NEBIUS_API_URL,
 )
 
@@ -105,8 +105,13 @@ def _raw_for(item, sp, calib):
 
 
 # ---- calibration/CoT judge path (does NOT touch safety_gate) ----
-def _parse_cot(raw):
-    if not raw:
+def _parse_cot(raw, finish_reason=None):
+    """JSON verdict first; without one, the verdict is anchored as in safety_gate._parse_verdict (code-audit #31),
+    not taken from the last SAFE/UNSAFE word. A reply cut at max_tokens, an empty reply and reasoning cut off
+    inside <think> are ERROR."""
+    if finish_reason == "length" or not isinstance(raw, str) or not raw.strip():
+        return "ERROR"
+    if "<think>" in raw and "</think>" not in raw:
         return "ERROR"
     text = raw.split("</think>")[-1] if "</think>" in raw else raw
     m = re.search(r"\{.*\}", text, re.DOTALL)
@@ -117,8 +122,7 @@ def _parse_cot(raw):
                 return v
         except Exception:
             pass
-    hits = re.findall(r"\b(SAFE|UNSAFE)\b", text, re.IGNORECASE)
-    return hits[-1].upper() if hits else "ERROR"
+    return _parse_verdict(text, finish_reason)[0]
 
 
 def _call_cot(original, simplified, model, api_key, max_tokens, retries=3):
@@ -136,11 +140,16 @@ def _call_cot(original, simplified, model, api_key, max_tokens, retries=3):
         try:
             resp = requests.post(NEBIUS_API_URL, json=payload, headers=headers, timeout=90)
             resp.raise_for_status()
-            return _parse_cot(resp.json()["choices"][0]["message"]["content"])
+            choice = resp.json()["choices"][0]
+            content = (choice.get("message") or {}).get("content")
+            finish_reason = choice.get("finish_reason")
         except Exception:
             if attempt == retries - 1:
                 return "ERROR"
             time.sleep(2 ** attempt)
+            continue
+        return _parse_cot(content, finish_reason)   # a reply that arrives is parsed once, not retried
+    return "ERROR"
 
 
 def _consensus(nemotron, qwen):  # replicates safety_gate rule exactly (no import-time change)
