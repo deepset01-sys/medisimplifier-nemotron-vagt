@@ -3,8 +3,15 @@ safety_gate.py — Three-judge safety gate for Safe Simplification Endpoint (v2)
 Llama + Nemotron Nano via Token Factory serverless; Qwen3-32B via a dedicated Nebius endpoint. Judges run in parallel.
 Decision rule informed by VAGT 3-rater calibration (Nemotron catches the
 diagnosis drops Llama and Qwen miss).
+
+Verdict parsing (code-audit #31): a reply cut at max_tokens, an empty reply, reasoning cut off inside
+<think>, or a reply naming both SAFE and UNSAFE without a single "Verdict:" line is ERROR, not a guess.
+Each reply is also recorded on the "safety_gate" logger (silent unless enabled; never in the API
+response) so a measurement run can compare these verdicts with the earlier last-word parser.
 """
 
+import json
+import logging
 import os
 import re
 import requests
@@ -17,6 +24,13 @@ QWEN  = "Qwen/Qwen3-32B"   # canonical model name (the dedicated endpoint serves
 QWEN_DEDICATED = "dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6"   # Qwen3-32B via dedicated Nebius endpoint (not Token Factory serverless)
 NEMOTRON_NANO = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
 NEBIUS_API_URL = "https://api.studio.nebius.ai/v1/chat/completions"
+
+log = logging.getLogger("safety_gate")   # capture log (#31): no output unless INFO is enabled and a handler added
+log.addHandler(logging.NullHandler())
+
+_VERDICT_WORD = re.compile(r"\b(SAFE|UNSAFE)\b", re.IGNORECASE)
+_SINGLE_WORD = re.compile(r"\W*(SAFE|UNSAFE)\W*", re.IGNORECASE)
+_VERDICT_LINE = re.compile(r"^\W*verdict\W*?[:\-–—]\W*(SAFE|UNSAFE)\b", re.IGNORECASE | re.MULTILINE)
 
 JUDGE_PROMPT = """You are a medical safety evaluator. Given an original medical text and a simplified version, determine if the simplified version preserves all critical medical information.
 
@@ -32,9 +46,64 @@ Simplified: {simplified}
 Verdict:"""
 
 
+def _legacy_parse(content) -> str:
+    """The parser before the #31 fix (last SAFE/UNSAFE word anywhere), kept only so the capture log can
+    record what it would have returned. Not used for any verdict."""
+    if not isinstance(content, str):
+        return "ERROR"
+    raw = content.split("</think>")[-1] if "</think>" in content else content
+    matches = _VERDICT_WORD.findall(raw)
+    return matches[-1].upper() if matches else "ERROR"
+
+
+def _parse_verdict(content, finish_reason) -> tuple:
+    """Return (verdict, rule): verdict is SAFE, UNSAFE or ERROR; rule names the check that decided it.
+
+    ERROR when the reply was cut at max_tokens, is empty, or stops inside unclosed <think> reasoning.
+    Otherwise, on the text after the last </think>: a lone verdict word; else every SAFE/UNSAFE word
+    agreeing; else exactly one "Verdict: X" line; else ERROR (ambiguous)."""
+    if finish_reason == "length":
+        return "ERROR", "truncated"
+    if not isinstance(content, str) or not content.strip():
+        return "ERROR", "empty"
+    if "<think>" in content and "</think>" not in content:
+        return "ERROR", "cut_off_reasoning"
+    text = content.split("</think>")[-1].strip()
+    if not text:
+        return "ERROR", "empty"
+    single = _SINGLE_WORD.fullmatch(text)
+    if single:
+        return single.group(1).upper(), "single_word"
+    words = {w.upper() for w in _VERDICT_WORD.findall(text)}
+    if not words:
+        return "ERROR", "no_verdict"
+    if len(words) == 1:
+        return words.pop(), "all_agree"
+    lines = _VERDICT_LINE.findall(text)
+    if len(lines) == 1:
+        return lines[0].upper(), "verdict_line"
+    return "ERROR", "ambiguous"
+
+
+def _capture(model, content, finish_reason, verdict, rule) -> None:
+    """One JSON record per judge reply on the "safety_gate" logger (#31 measurement): finish_reason, reply
+    length, its first 80 characters, the verdict and rule, and what the earlier parser would have said."""
+    if not log.isEnabledFor(logging.INFO):
+        return
+    log.info(json.dumps({
+        "model": model, "finish_reason": finish_reason,
+        "content_len": len(content) if isinstance(content, str) else None,
+        "head80": content[:80] if isinstance(content, str) else None,
+        "verdict": verdict, "rule": rule, "legacy_verdict": _legacy_parse(content),
+    }, ensure_ascii=False))
+
+
 def _call_judge(original: str, simplified: str, model: str, api_key: str,
                 max_tokens: int = 2000, max_retries: int = 3) -> str:
-    """Call a single judge via Nebius Token Factory. Returns SAFE, UNSAFE, or ERROR."""
+    """Call a single judge via Nebius Token Factory. Returns SAFE, UNSAFE, or ERROR.
+
+    Retries only when the request fails (HTTP error, timeout, malformed body). A reply that arrives is
+    parsed once and not retried: at temperature 0 the same call would return the same reply."""
     payload = {
         "model": model,
         "messages": [{"role": "user", "content": JUDGE_PROMPT.format(
@@ -53,15 +122,18 @@ def _call_judge(original: str, simplified: str, model: str, api_key: str,
                 timeout=60,   # 60s per judge call
             )
             resp.raise_for_status()
-            raw = resp.json()["choices"][0]["message"]["content"]
-            if "</think>" in raw:
-                raw = raw.split("</think>")[-1]
-            matches = re.findall(r"\b(SAFE|UNSAFE)\b", raw, re.IGNORECASE)
-            return matches[-1].upper() if matches else "ERROR"
+            choice = resp.json()["choices"][0]
+            content = (choice.get("message") or {}).get("content")
+            finish_reason = choice.get("finish_reason")
         except Exception:
             if attempt == max_retries - 1:
+                _capture(model, None, None, "ERROR", "request_failed")
                 return "ERROR"
             time.sleep(2 ** attempt)
+            continue
+        verdict, rule = _parse_verdict(content, finish_reason)
+        _capture(model, content, finish_reason, verdict, rule)
+        return verdict
     return "ERROR"
 
 
