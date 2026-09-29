@@ -76,7 +76,7 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
   scripts/run_panel_judgebench_v2.py instead of Project v1's repo (owner, 2026-09-28).
 - Smaller defaults approved and applied: "inversion" → "decoupling" in README :23, :83 and the A6 heading (no external
   link points at the old anchor; the Q1 draft's :198 follows); src/run_student_audit.py's prior strings. FINDINGS.md
-  "inversion" (:71, :81) stays as is (automated pass, where Fleiss κ did go negative).
+  "inversion" (:75, :85) stays as is (automated pass, where Fleiss κ did go negative).
 - Protocol deviations: approved as a section of docs/judgebench_v2_protocol_erratum.md; landed in f46dc89, with its §8 line
   references moved +5 for the §5 bracket (owner-approved).
 - HF card :64: synced to the human_arbiter wording verbatim (other Opus mentions reviewed: :150–151 consistent; :60/:160
@@ -117,6 +117,11 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
 - Q1 pass (owner, 2026-09-28): landed as one commit, f46dc89. Q1 contradiction #8 (README :19, strict-tier lift not
   detectable, band NULL) approved; Q1 contradiction #9 not applied (settled fact 2); Q1 contradiction #16 disclosed
   inline (28a41b6) and quantified for recall (f0c6d9c); its Φ_V, σ²_B and κ effect is still open (Pending).
+- Code-audit #31, gate verdict parser (owner, 2026-09-29): Option A (anchored verdict parsing; finish_reason "length",
+  empty content and cut-off <think> reasoning are ERROR) with C's reply capture, committed in 6ac1678; not deployed.
+  Stored evidence covers Nemotron only: its 960 deployed-prompt calls in results/vagt_loop_v2_calls.json were one-word
+  replies (954) or cut off with empty content (6), so its verdicts parse the same either way. Llama's and Qwen's
+  replies were never stored, so their past verdicts can't be checked until the measurement run.
 
 ### Pending owner answers (do NOT act on these)
 - Q1 contradiction #16, parked (owner, 2026-09-28): Llama's stored column repeats its control verdict on 115 corrupted
@@ -130,7 +135,7 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
   Nemotron or the deployed-prompt re-run; threat 9, the A5 caption and the FINDINGS banner cite these. The effect on
   the Φ_V, σ²_B and κ figures built on Llama's column is still not measured.
 
-## CURRENT STATUS (as of fcb19fc, on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); settled facts + standing rules, human_arbiter fix, sign-off batch, strata_spot_audit + the eight step-0 batch files, protocol §5 dated clarification (2b74155..32727cf); later: CCC sync + key-reminder removal (45de2e9), #26/#27 bounds + gate decision (027cfd4), idx 47 (5df1219, c559740), Q1 pass (f46dc89), HF card upload (532578bf), CCC Q1-landed update (78157a3), #16 inline caveat (28a41b6), push record + demo redeploy (508be5a), #16 recall quantified (f0c6d9c), #16 figures cited (fcb19fc), HF card second upload (babf0c73) — see SETTLED FACTS above first)
+## CURRENT STATUS (as of 6ac1678, on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); settled facts + standing rules, human_arbiter fix, sign-off batch, strata_spot_audit + the eight step-0 batch files, protocol §5 dated clarification (2b74155..32727cf); later: CCC sync + key-reminder removal (45de2e9), #26/#27 bounds + gate decision (027cfd4), idx 47 (5df1219, c559740), Q1 pass (f46dc89), HF card upload (532578bf), CCC Q1-landed update (78157a3), #16 inline caveat (28a41b6), push record + demo redeploy (508be5a), #16 recall quantified (f0c6d9c), #16 figures cited (fcb19fc), HF card second upload (babf0c73), CCC record updates (8174879, 6e2c665, 6bc5a78), #31 gate-parser fix in the repo, not deployed (6ac1678) — see SETTLED FACTS above first)
 
 ## Track-A STATUS: COMPLETE
 All 9 residuals closed. Commits: db79b9c, 7a386d3, 32dc694, 2b462ff, 1579085, 2f70ad3, 0fa51fb, dc6d1c0.
@@ -349,9 +354,17 @@ Decided (owner, 2026-09-28): keep Nano; item closed. See the Decided list at the
 - Open after Q1: Q1 contradiction #16 (Pending). The HF card's second upload, for the expert_recoverable definition, is
    done (babf0c73, 2026-09-29).
 
-### Code-audit inventory (audit at 1ee5081, section "Could produce wrong results", 47 items; status 2026-09-28)
-- Fixed: #10, #13, #15, #16 (dabd527, de03e44); #12 (d69f506 → e8ced82 → d48878e); #26, #27 (README B5 wording, 2026-09-28).
-- Partly fixed: #8, #30, #32 (400ef54).
+### Code-audit inventory (audit at 1ee5081, section "Could produce wrong results", 47 items; status 2026-09-29)
+- Fixed: #10, #15, #16 (dabd527, de03e44); #12 (d69f506 → e8ced82 → d48878e); #26 (README B5 wording, 027cfd4); #30
+   (README wording, 400ef54 and f46dc89; run_student_audit.py's printed prior, 14c6a38).
+- Resolved in documentation, code unchanged: #13 — the split-half is described as a stability check, not an
+   out-of-sample test (docstring and caveats, dabd527; README, de03e44); scripts/compute_split_half.py still splits by
+   record, and v2 adds a patient-disjoint split-half.
+- Disclosed, code still open: #27 — README B5 notes idx 529 (027cfd4); src/llm_review_audit.py still scores
+   agreement on category alone, and 529 is still outside the physician sheet's contested set.
+- Partly fixed: #8, #32 (400ef54); #14 (f46dc89: README's reasoning-budget note is corrected, and the erratum's §2 and
+   threat 9 say the v2 calibration arm is not the 708-item setup; B4's "Under the calibration prompt … 114 vs 115"
+   still doesn't).
 - Q1 pass (f46dc89), by code-audit number (not the Q1 contradiction numbers): fixed #17 (with the strict-tier name,
    dabd527/de03e44); disclosed, not changed (option B) #20; partly #6 (disclosed in README :19, the summary note and the
    erratum; the figures that inherit it, Q1 contradiction #16, are disclosed inline and quantified for recall, f0c6d9c),
@@ -359,8 +372,17 @@ Decided (owner, 2026-09-28): keep Nano; item closed. See the Decided list at the
    under the A5 table, README :173, still reads
    the 68 / 14 / 7 → 92 / 47 / 47 change as relabelling alone), #11 (conclusion corrected and a committed generator
    added; the summary still calls the 129 relabelled items "perturbed-but-faithful" — only the erratum describes them).
-- Not started (31): #1–#5, #14, #18, #19, #21–#25, #28, #29, #31, #33–#47.
-- Claude's priority read for after Q1 (asked by the owner; not acted on): #31, #23 (+#24), #2, #21, #40. #22 is downgraded
+- Fixed in the repo, not deployed: #31 (6ac1678). src/safety_gate.py reads finish_reason ("length" is ERROR, not
+   retried), treats empty content and cut-off <think> reasoning as ERROR, and anchors the verdict (a lone word; else all
+   verdict words agree; else exactly one "Verdict: X" line; else ERROR). Each reply is captured on the "safety_gate"
+   logger (off by default, never in the API response); 24 offline tests. The live /v1/simplify keeps the old parser
+   until the endpoint-v5 image is rebuilt. Open follow-ups: (1) the research-script parsers — _parse_cot's last-word
+   fallback in scripts/run_panel_judgebench_v2.py and the parser in scripts/run_vagt_loop_experiment.py; (2) the paid
+   measurement run (C) on Llama and Qwen, comparing the captured legacy and new verdicts; (3) rebuild the endpoint-v5
+   image and create a new endpoint (the nebius CLI has no update, so its URL changes), then update what names it.
+- Not started (29): #1–#5, #18, #19, #21–#25, #28, #29, #33–#47.
+- Claude's priority read for after Q1 (asked by the owner): #31 (fixed in the repo, 6ac1678), then #23 (+#24), #2, #21,
+   #40 (not acted on). #22 is downgraded
    (the V4 backstop was the owner's review).
 - The audit report itself is in the session scratchpad (code_audit_report.md), not in the repo.
 
