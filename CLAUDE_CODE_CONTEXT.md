@@ -81,8 +81,8 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
   references moved +5 for the §5 bracket (owner-approved).
 - HF card :64: synced to the human_arbiter wording verbatim (other Opus mentions reviewed: :150–151 consistent; :60/:160
   are about clean_ref authorship). Uploaded 2026-09-29 (HF commit 532578bf: the card as of 5df1219 — :64, :121, :125
-  and the 5-line prevalence note after :154). A second upload is still needed for the expert_recoverable definition that
-  the Q1 pass (f46dc89) adds to the repo card.
+  and the 5-line prevalence note after :154). Second upload 2026-09-29 (HF commit babf0c73): the expert_recoverable
+  definition from the Q1 pass (f46dc89). The live card now equals the repo card.
 - #6 (judgebench_v2_prevalence_sensitivity.json new computed-values block): skipped.
 - Results-file notes: the pattern (dated explanatory notes, values unchanged) is approved; five notes remain (#7 dropped
   under option B, #6 skipped). All five landed in f46dc89, dated 2026-09-29, with the "Project v1" naming.
@@ -130,7 +130,7 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
   Nemotron or the deployed-prompt re-run; threat 9, the A5 caption and the FINDINGS banner cite these. The effect on
   the Φ_V, σ²_B and κ figures built on Llama's column is still not measured.
 
-## CURRENT STATUS (as of 28a41b6, on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); settled facts + standing rules, human_arbiter fix, sign-off batch, strata_spot_audit + the eight step-0 batch files, protocol §5 dated clarification (2b74155..32727cf); later: CCC sync + key-reminder removal (45de2e9), #26/#27 bounds + gate decision (027cfd4), idx 47 (5df1219, c559740), Q1 pass (f46dc89), HF card upload (532578bf), CCC Q1-landed update (78157a3), #16 inline caveat (28a41b6) — see SETTLED FACTS above first)
+## CURRENT STATUS (as of fcb19fc, on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); settled facts + standing rules, human_arbiter fix, sign-off batch, strata_spot_audit + the eight step-0 batch files, protocol §5 dated clarification (2b74155..32727cf); later: CCC sync + key-reminder removal (45de2e9), #26/#27 bounds + gate decision (027cfd4), idx 47 (5df1219, c559740), Q1 pass (f46dc89), HF card upload (532578bf), CCC Q1-landed update (78157a3), #16 inline caveat (28a41b6), push record + demo redeploy (508be5a), #16 recall quantified (f0c6d9c), #16 figures cited (fcb19fc), HF card second upload (babf0c73) — see SETTLED FACTS above first)
 
 ## Track-A STATUS: COMPLETE
 All 9 residuals closed. Commits: db79b9c, 7a386d3, 32dc694, 2b462ff, 1579085, 2f70ad3, 0fa51fb, dc6d1c0.
@@ -318,9 +318,9 @@ Decided (owner, 2026-09-28): keep Nano; item closed. See the Decided list at the
 - Build VM this session: ubuntu@89.169.125.84 (same instance computeinstance-e00krk6v948cndendb; checkout fast-forwarded to 400ef54).
 - Docs updated for the endpoint change in the Q1 pass (f46dc89): README "always-on"/audit-cpu-v2 mentions,
    docs/REPRODUCIBILITY.md (full v2.1 digest), app/README.md, app/demo.jsx's error text.
-- Owner actions open: the HF card's second upload (the expert_recoverable definition from f46dc89; the first upload,
-   HF commit 532578bf on 2026-09-29, synced :64, :121, :125 and the 5-line prevalence note after :154);
-   consider deleting stopped endpoints no longer needed.
+- Owner actions open: consider deleting stopped endpoints no longer needed. (HF card: both uploads done 2026-09-29 —
+   532578bf synced :64, :121, :125 and the 5-line prevalence note after :154; babf0c73 added the expert_recoverable
+   definition from f46dc89.)
 
 ### Q1 pass — LANDED 2026-09-29 (f46dc89)
 - Scope: C1 (the −0.144 reversal), the Q2 premise test, automated-pass history caveats (C4/C5/C7, A5 caption, threat 7
@@ -346,7 +346,8 @@ Decided (owner, 2026-09-28): keep Nano; item closed. See the Decided list at the
      vs 0.002 on re-run.
    · Automated-pass null control: the selector would recommend the constant-UNSAFE rater at common shares ≥55% (rounding)
      or ≥59% (within-top), so the control does not validate the collateral key.
-- Open after Q1: Q1 contradiction #16 (Pending); the HF card's second upload, for the expert_recoverable definition.
+- Open after Q1: Q1 contradiction #16 (Pending). The HF card's second upload, for the expert_recoverable definition, is
+   done (babf0c73, 2026-09-29).
 
 ### Code-audit inventory (audit at 1ee5081, section "Could produce wrong results", 47 items; status 2026-09-28)
 - Fixed: #10, #13, #15, #16 (dabd527, de03e44); #12 (d69f506 → e8ced82 → d48878e); #26, #27 (README B5 wording, 2026-09-28).
