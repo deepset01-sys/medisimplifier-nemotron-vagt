@@ -115,16 +115,20 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
   unmeasured). The audit panel still presents gpt-oss-120b as the v2 recommendation, with that caveat.
 - Student-audit idx 47 (owner, 2026-09-28): README :71, :447, :633 and :897 narrowed to "diagnosis" (c559740).
 - Q1 pass (owner, 2026-09-28): landed as one commit, f46dc89. Q1 contradiction #8 (README :19, strict-tier lift not
-  detectable, band NULL) approved; Q1 contradiction #9 not applied (settled fact 2); Q1 contradiction #16 parked
-  (Pending).
+  detectable, band NULL) approved; Q1 contradiction #9 not applied (settled fact 2); Q1 contradiction #16 disclosed
+  inline (28a41b6) and quantified for recall (f0c6d9c); its Φ_V, σ²_B and κ effect is still open (Pending).
 
 ### Pending owner answers (do NOT act on these)
 - Q1 contradiction #16, parked (owner, 2026-09-28): Llama's stored column repeats its control verdict on 115 corrupted
   rows (78 of them dose, negation or lateral), and the A5 Llama recall rows, threat 12's figures and the FINDINGS tables
   inherit that (code-audit #6 is the same issue). Does not block the Q1 diff. Flag it as open before anything citing A5
   Llama recall, threat 12 or the FINDINGS tables ships anywhere external. Disclosed inline (owner, 2026-09-29): README
-  threat 9 states it once, and the A5 caption, threat 12 and the FINDINGS banner point to it; not quantified (the split
-  across dose, lateral and negation and the direction are not in a committed file; quantifying is a separate ask).
+  threat 9 states it once, and the A5 caption, threat 12 and the FINDINGS banner point to it. Quantified for recall
+  (owner, 2026-09-29; f0c6d9c, idx_repeat_by_error_type): the 115 rows are 20 dose / 34 lateral / 24 negation /
+  37 diagnosis, the copied verdict is SAFE on 112, and Llama's recall on rows the repeat cannot touch is 79.5% / 53.0% /
+  37.3% (dose / lateral / negation) against 44.2% / 42.7% / 30.1% on all rows, with no comparable rise for Qwen,
+  Nemotron or the deployed-prompt re-run; threat 9, the A5 caption and the FINDINGS banner cite these. The effect on
+  the Φ_V, σ²_B and κ figures built on Llama's column is still not measured.
 
 ## CURRENT STATUS (as of 28a41b6, on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); settled facts + standing rules, human_arbiter fix, sign-off batch, strata_spot_audit + the eight step-0 batch files, protocol §5 dated clarification (2b74155..32727cf); later: CCC sync + key-reminder removal (45de2e9), #26/#27 bounds + gate decision (027cfd4), idx 47 (5df1219, c559740), Q1 pass (f46dc89), HF card upload (532578bf), CCC Q1-landed update (78157a3), #16 inline caveat (28a41b6) — see SETTLED FACTS above first)
 
@@ -349,8 +353,9 @@ Decided (owner, 2026-09-28): keep Nano; item closed. See the Decided list at the
 - Partly fixed: #8, #30, #32 (400ef54).
 - Q1 pass (f46dc89), by code-audit number (not the Q1 contradiction numbers): fixed #17 (with the strict-tier name,
    dabd527/de03e44); disclosed, not changed (option B) #20; partly #6 (disclosed in README :19, the summary note and the
-   erratum; the figures that inherit it are parked as Q1 contradiction #16), #7 (the docs; nemotron_judge_test.py's own
-   docstring still says "apples-to-apples"), #9 (the A5 caption; the note under the A5 table, README :173, still reads
+   erratum; the figures that inherit it, Q1 contradiction #16, are disclosed inline and quantified for recall, f0c6d9c),
+   #7 (the docs; nemotron_judge_test.py's own docstring still says "apples-to-apples"), #9 (the A5 caption; the note
+   under the A5 table, README :173, still reads
    the 68 / 14 / 7 → 92 / 47 / 47 change as relabelling alone), #11 (conclusion corrected and a committed generator
    added; the summary still calls the 129 relabelled items "perturbed-but-faithful" — only the erratum describes them).
 - Not started (31): #1–#5, #14, #18, #19, #21–#25, #28, #29, #31, #33–#47.
