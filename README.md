@@ -68,7 +68,7 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 | Measurement framework | Cohen's κ | ✅ VAGT — detects shared blind spots invisible to κ |
 | Safe Endpoint | vLLM + dual-judge guardrail | ✅ vLLM + calibration-informed gate (2-judge rule + advisory Llama; flag / block / strict modes) |
 | Gate operating characteristics | ❌ not measured | ✅ 708-item re-run through deployed gate prompt (0 ERRORs) — DISAGREE 20.8%, Qwen FP 9.5% (see B5) |
-| Diagnosis-retention audit | ❌ not measured | ✅ 1,001 student outputs through gate + dual-auditor review (Claude Sonnet 5 + Gemini 2.5 Pro); 2/20 confirmed drops (see B5) |
+| Diagnosis-retention audit | ❌ not measured | ✅ 1,001 student outputs through gate + dual-auditor review (Claude Sonnet 5 + Gemini 2.5 Pro); 2/20 confirmed diagnosis drops (see B5) |
 | Safety enforcement modes | flag/block only | ✅ + strict mode: DISAGREE blocks (Nemotron diagnosis-drop tripwire enforces) |
 | VAGT panel-selection service | ❌ not built | ✅ /v1/audit_panel — callable Nebius service: given any incumbent panel + candidate pool, recommends the judge to add (ΔΦ_V on blindest stratum + bootstrap CI); 6-candidate pool validated on MedSimp-JudgeBench (see Why VAGT) |
 | Judge pool experiment | ❌ not measured | ✅ 5×708 verdicts (gemma 27B / gpt-oss 120B / Nemotron Super 120B / DeepSeek Flash / Nemotron Ultra 550B) — scale flat within Nemotron family (30B ≈ 550B); Nano recommended on merit (automated calibration pass; on clean pool gpt-oss 120B and DeepSeek Flash tie at the top, ΔΦ_V +0.1220 / +0.1238) |
@@ -444,7 +444,7 @@ choosing which LLM judges to trust for a safety check (product 2).
         v
     External APIs: dual-auditor diagnosis-retention review (30-case sample, seed=42)
         llm_review_audit.py  ->  results/student_audit_review.json
-        (Claude Sonnet 5 + Gemini 2.5 Pro; 2/20 confirmed drops — see B5)
+        (Claude Sonnet 5 + Gemini 2.5 Pro; 2/20 confirmed diagnosis drops — see B5)
 
 ### B2. Quickstart
 
@@ -630,7 +630,7 @@ The deployed rule **maximizes recall (82.1%)** (by construction: it flags whenev
 
 A dropped diagnosis a two-judge panel would have shipped; the third judge catches it. Captured verdict: [`results/disagree_case_gate.json`](results/disagree_case_gate.json).
 
-> **Scope.** *Real:* the gate, the three Token Factory judge calls, and the verdicts. *Synthetic:* the input — the failing simplification is a **benchmark perturbation, not MediSimplifier's own output**. Our model's **confirmed self-drops are few** — a dual-auditor sample of flagged outputs confirmed a genuine diagnosis/medication drop in only **2 of 20 flagged cases** (10%; 6 contested pending physician review, see B5) — so this failure is hard to elicit from `/v1/simplify`; we source it from MedSimp-JudgeBench and run it through the real gate. The DISAGREE branch is therefore a **defense-in-depth** path against a downstream or third-party simplifier feeding the gate — not a routinely-triggered path on our own model's output. The gate returns only a verdict (not Nemotron's rationale), so we attribute the flag to the item's single injected diagnosis drop (depression) — the only diagnosis-level change in the perturbation. idx 21 (the primary candidate) returned all-SAFE through the live gate despite UNSAFE in calibration — confirming that calibration verdicts do not transfer verbatim across prompts; we report the first item that actually split.
+> **Scope.** *Real:* the gate, the three Token Factory judge calls, and the verdicts. *Synthetic:* the input — the failing simplification is a **benchmark perturbation, not MediSimplifier's own output**. Our model's **confirmed self-drops are few** — a dual-auditor sample of flagged outputs confirmed a genuine diagnosis drop in only **2 of 20 flagged cases** (10%; 6 contested pending physician review, see B5) — so this failure is hard to elicit from `/v1/simplify`; we source it from MedSimp-JudgeBench and run it through the real gate. The DISAGREE branch is therefore a **defense-in-depth** path against a downstream or third-party simplifier feeding the gate — not a routinely-triggered path on our own model's output. The gate returns only a verdict (not Nemotron's rationale), so we attribute the flag to the item's single injected diagnosis drop (depression) — the only diagnosis-level change in the perturbation. idx 21 (the primary candidate) returned all-SAFE through the live gate despite UNSAFE in calibration — confirming that calibration verdicts do not transfer verbatim across prompts; we report the first item that actually split.
 
 ### B5. Operating characteristics
 
@@ -894,7 +894,7 @@ results/models_verified.json           both Nemotron model strings verified via 
 results/disagree_case_gate.json        gate-level DISAGREE capture — JudgeBench idx 146, Nemotron UNSAFE / Llama+Qwen SAFE
 results/gate_calibration_full.json     708-item deployed-gate calibration (0 ERRORs; DISAGREE 20.8%, Qwen FP 9.5%)
 results/student_audit.json             1,001 student outputs through the gate (SAFE 47.4% / flagged 52.0%, plus 0.6% ERROR)
-results/student_audit_review.json      30-case dual-auditor review (Claude + Gemini; 2/20 confirmed drops; human_judgment on 6 contested)
+results/student_audit_review.json      30-case dual-auditor review (Claude + Gemini; 2/20 confirmed diagnosis drops; human_judgment on 6 contested)
 results/reference_fk_grade.json        FK-Grade: Claude refs 7.2 / Nemotron refs 10.08 (Δ+2.88, textstat 0.7.13, n=9,976)
 results/pool_candidate_cis.json        Per-candidate ΔΦ_V + 95% CI (all 6 candidates × 4 strata; automated pass)
 results/null_baseline_cis.json         Null-rater control, automated pass (nulls net-negative; Nemotron net-positive +0.037)
