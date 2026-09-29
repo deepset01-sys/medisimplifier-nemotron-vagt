@@ -54,6 +54,331 @@
           "nemotron_equal_to_that_control": 47
         }
       },
+      "idx_repeat_by_error_type": {
+        "dose": {
+          "rows": {
+            "all": 95,
+            "idx_on_one_row_only": 39,
+            "idx_on_more_than_one_row": 56,
+            "idx_shared_with_a_clean_control": 20
+          },
+          "llama_equal_to_that_control": 20,
+          "llama_verdict_on_rows_sharing_idx_with_a_clean_control": {
+            "SAFE": 20
+          },
+          "recall": {
+            "llama": {
+              "all": {
+                "n": 95,
+                "unsafe": 42,
+                "recall": 0.4421
+              },
+              "idx_on_one_row_only": {
+                "n": 39,
+                "unsafe": 31,
+                "recall": 0.7949
+              },
+              "idx_on_more_than_one_row": {
+                "n": 56,
+                "unsafe": 11,
+                "recall": 0.1964
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 20,
+                "unsafe": 0,
+                "recall": 0.0
+              }
+            },
+            "qwen": {
+              "all": {
+                "n": 88,
+                "unsafe": 76,
+                "recall": 0.8636
+              },
+              "idx_on_one_row_only": {
+                "n": 39,
+                "unsafe": 35,
+                "recall": 0.8974
+              },
+              "idx_on_more_than_one_row": {
+                "n": 49,
+                "unsafe": 41,
+                "recall": 0.8367
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 19,
+                "unsafe": 17,
+                "recall": 0.8947
+              }
+            },
+            "nemotron": {
+              "all": {
+                "n": 92,
+                "unsafe": 85,
+                "recall": 0.9239
+              },
+              "idx_on_one_row_only": {
+                "n": 38,
+                "unsafe": 36,
+                "recall": 0.9474
+              },
+              "idx_on_more_than_one_row": {
+                "n": 54,
+                "unsafe": 49,
+                "recall": 0.9074
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 20,
+                "unsafe": 19,
+                "recall": 0.95
+              }
+            }
+          }
+        },
+        "lateral": {
+          "rows": {
+            "all": 150,
+            "idx_on_one_row_only": 83,
+            "idx_on_more_than_one_row": 67,
+            "idx_shared_with_a_clean_control": 34
+          },
+          "llama_equal_to_that_control": 34,
+          "llama_verdict_on_rows_sharing_idx_with_a_clean_control": {
+            "SAFE": 33,
+            "UNSAFE": 1
+          },
+          "recall": {
+            "llama": {
+              "all": {
+                "n": 150,
+                "unsafe": 64,
+                "recall": 0.4267
+              },
+              "idx_on_one_row_only": {
+                "n": 83,
+                "unsafe": 44,
+                "recall": 0.5301
+              },
+              "idx_on_more_than_one_row": {
+                "n": 67,
+                "unsafe": 20,
+                "recall": 0.2985
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 34,
+                "unsafe": 1,
+                "recall": 0.0294
+              }
+            },
+            "qwen": {
+              "all": {
+                "n": 146,
+                "unsafe": 124,
+                "recall": 0.8493
+              },
+              "idx_on_one_row_only": {
+                "n": 82,
+                "unsafe": 66,
+                "recall": 0.8049
+              },
+              "idx_on_more_than_one_row": {
+                "n": 64,
+                "unsafe": 58,
+                "recall": 0.9062
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 34,
+                "unsafe": 31,
+                "recall": 0.9118
+              }
+            },
+            "nemotron": {
+              "all": {
+                "n": 149,
+                "unsafe": 145,
+                "recall": 0.9732
+              },
+              "idx_on_one_row_only": {
+                "n": 83,
+                "unsafe": 81,
+                "recall": 0.9759
+              },
+              "idx_on_more_than_one_row": {
+                "n": 66,
+                "unsafe": 64,
+                "recall": 0.9697
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 34,
+                "unsafe": 32,
+                "recall": 0.9412
+              }
+            }
+          }
+        },
+        "negation": {
+          "rows": {
+            "all": 113,
+            "idx_on_one_row_only": 59,
+            "idx_on_more_than_one_row": 54,
+            "idx_shared_with_a_clean_control": 24
+          },
+          "llama_equal_to_that_control": 24,
+          "llama_verdict_on_rows_sharing_idx_with_a_clean_control": {
+            "SAFE": 23,
+            "UNSAFE": 1
+          },
+          "recall": {
+            "llama": {
+              "all": {
+                "n": 113,
+                "unsafe": 34,
+                "recall": 0.3009
+              },
+              "idx_on_one_row_only": {
+                "n": 59,
+                "unsafe": 22,
+                "recall": 0.3729
+              },
+              "idx_on_more_than_one_row": {
+                "n": 54,
+                "unsafe": 12,
+                "recall": 0.2222
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 24,
+                "unsafe": 1,
+                "recall": 0.0417
+              }
+            },
+            "qwen": {
+              "all": {
+                "n": 102,
+                "unsafe": 56,
+                "recall": 0.549
+              },
+              "idx_on_one_row_only": {
+                "n": 52,
+                "unsafe": 25,
+                "recall": 0.4808
+              },
+              "idx_on_more_than_one_row": {
+                "n": 50,
+                "unsafe": 31,
+                "recall": 0.62
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 23,
+                "unsafe": 12,
+                "recall": 0.5217
+              }
+            },
+            "nemotron": {
+              "all": {
+                "n": 111,
+                "unsafe": 91,
+                "recall": 0.8198
+              },
+              "idx_on_one_row_only": {
+                "n": 59,
+                "unsafe": 47,
+                "recall": 0.7966
+              },
+              "idx_on_more_than_one_row": {
+                "n": 52,
+                "unsafe": 44,
+                "recall": 0.8462
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 24,
+                "unsafe": 19,
+                "recall": 0.7917
+              }
+            }
+          }
+        },
+        "diagnosis": {
+          "rows": {
+            "all": 150,
+            "idx_on_one_row_only": 71,
+            "idx_on_more_than_one_row": 79,
+            "idx_shared_with_a_clean_control": 37
+          },
+          "llama_equal_to_that_control": 37,
+          "llama_verdict_on_rows_sharing_idx_with_a_clean_control": {
+            "SAFE": 36,
+            "UNSAFE": 1
+          },
+          "recall": {
+            "llama": {
+              "all": {
+                "n": 150,
+                "unsafe": 21,
+                "recall": 0.14
+              },
+              "idx_on_one_row_only": {
+                "n": 71,
+                "unsafe": 7,
+                "recall": 0.0986
+              },
+              "idx_on_more_than_one_row": {
+                "n": 79,
+                "unsafe": 14,
+                "recall": 0.1772
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 37,
+                "unsafe": 1,
+                "recall": 0.027
+              }
+            },
+            "qwen": {
+              "all": {
+                "n": 140,
+                "unsafe": 10,
+                "recall": 0.0714
+              },
+              "idx_on_one_row_only": {
+                "n": 67,
+                "unsafe": 4,
+                "recall": 0.0597
+              },
+              "idx_on_more_than_one_row": {
+                "n": 73,
+                "unsafe": 6,
+                "recall": 0.0822
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 36,
+                "unsafe": 3,
+                "recall": 0.0833
+              }
+            },
+            "nemotron": {
+              "all": {
+                "n": 148,
+                "unsafe": 100,
+                "recall": 0.6757
+              },
+              "idx_on_one_row_only": {
+                "n": 70,
+                "unsafe": 45,
+                "recall": 0.6429
+              },
+              "idx_on_more_than_one_row": {
+                "n": 78,
+                "unsafe": 55,
+                "recall": 0.7051
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 37,
+                "unsafe": 25,
+                "recall": 0.6757
+              }
+            }
+          }
+        }
+      },
       "cells": {
         "automated labels": {
           "n": 333,
@@ -874,6 +1199,332 @@
           "nemotron_equal_to_that_control": 47
         }
       },
+      "idx_repeat_by_error_type": {
+        "dose": {
+          "rows": {
+            "all": 95,
+            "idx_on_one_row_only": 39,
+            "idx_on_more_than_one_row": 56,
+            "idx_shared_with_a_clean_control": 20
+          },
+          "llama_equal_to_that_control": 4,
+          "llama_verdict_on_rows_sharing_idx_with_a_clean_control": {
+            "SAFE": 3,
+            "UNSAFE": 17
+          },
+          "recall": {
+            "llama": {
+              "all": {
+                "n": 95,
+                "unsafe": 80,
+                "recall": 0.8421
+              },
+              "idx_on_one_row_only": {
+                "n": 39,
+                "unsafe": 34,
+                "recall": 0.8718
+              },
+              "idx_on_more_than_one_row": {
+                "n": 56,
+                "unsafe": 46,
+                "recall": 0.8214
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 20,
+                "unsafe": 17,
+                "recall": 0.85
+              }
+            },
+            "qwen": {
+              "all": {
+                "n": 95,
+                "unsafe": 82,
+                "recall": 0.8632
+              },
+              "idx_on_one_row_only": {
+                "n": 39,
+                "unsafe": 35,
+                "recall": 0.8974
+              },
+              "idx_on_more_than_one_row": {
+                "n": 56,
+                "unsafe": 47,
+                "recall": 0.8393
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 20,
+                "unsafe": 19,
+                "recall": 0.95
+              }
+            },
+            "nemotron": {
+              "all": {
+                "n": 95,
+                "unsafe": 88,
+                "recall": 0.9263
+              },
+              "idx_on_one_row_only": {
+                "n": 39,
+                "unsafe": 38,
+                "recall": 0.9744
+              },
+              "idx_on_more_than_one_row": {
+                "n": 56,
+                "unsafe": 50,
+                "recall": 0.8929
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 20,
+                "unsafe": 19,
+                "recall": 0.95
+              }
+            }
+          }
+        },
+        "lateral": {
+          "rows": {
+            "all": 150,
+            "idx_on_one_row_only": 83,
+            "idx_on_more_than_one_row": 67,
+            "idx_shared_with_a_clean_control": 34
+          },
+          "llama_equal_to_that_control": 10,
+          "llama_verdict_on_rows_sharing_idx_with_a_clean_control": {
+            "SAFE": 6,
+            "UNSAFE": 28
+          },
+          "recall": {
+            "llama": {
+              "all": {
+                "n": 150,
+                "unsafe": 122,
+                "recall": 0.8133
+              },
+              "idx_on_one_row_only": {
+                "n": 83,
+                "unsafe": 66,
+                "recall": 0.7952
+              },
+              "idx_on_more_than_one_row": {
+                "n": 67,
+                "unsafe": 56,
+                "recall": 0.8358
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 34,
+                "unsafe": 28,
+                "recall": 0.8235
+              }
+            },
+            "qwen": {
+              "all": {
+                "n": 150,
+                "unsafe": 140,
+                "recall": 0.9333
+              },
+              "idx_on_one_row_only": {
+                "n": 83,
+                "unsafe": 76,
+                "recall": 0.9157
+              },
+              "idx_on_more_than_one_row": {
+                "n": 67,
+                "unsafe": 64,
+                "recall": 0.9552
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 34,
+                "unsafe": 32,
+                "recall": 0.9412
+              }
+            },
+            "nemotron": {
+              "all": {
+                "n": 150,
+                "unsafe": 144,
+                "recall": 0.96
+              },
+              "idx_on_one_row_only": {
+                "n": 83,
+                "unsafe": 79,
+                "recall": 0.9518
+              },
+              "idx_on_more_than_one_row": {
+                "n": 67,
+                "unsafe": 65,
+                "recall": 0.9701
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 34,
+                "unsafe": 33,
+                "recall": 0.9706
+              }
+            }
+          }
+        },
+        "negation": {
+          "rows": {
+            "all": 113,
+            "idx_on_one_row_only": 59,
+            "idx_on_more_than_one_row": 54,
+            "idx_shared_with_a_clean_control": 24
+          },
+          "llama_equal_to_that_control": 11,
+          "llama_verdict_on_rows_sharing_idx_with_a_clean_control": {
+            "SAFE": 8,
+            "UNSAFE": 16
+          },
+          "recall": {
+            "llama": {
+              "all": {
+                "n": 113,
+                "unsafe": 74,
+                "recall": 0.6549
+              },
+              "idx_on_one_row_only": {
+                "n": 59,
+                "unsafe": 39,
+                "recall": 0.661
+              },
+              "idx_on_more_than_one_row": {
+                "n": 54,
+                "unsafe": 35,
+                "recall": 0.6481
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 24,
+                "unsafe": 16,
+                "recall": 0.6667
+              }
+            },
+            "qwen": {
+              "all": {
+                "n": 113,
+                "unsafe": 66,
+                "recall": 0.5841
+              },
+              "idx_on_one_row_only": {
+                "n": 59,
+                "unsafe": 31,
+                "recall": 0.5254
+              },
+              "idx_on_more_than_one_row": {
+                "n": 54,
+                "unsafe": 35,
+                "recall": 0.6481
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 24,
+                "unsafe": 14,
+                "recall": 0.5833
+              }
+            },
+            "nemotron": {
+              "all": {
+                "n": 113,
+                "unsafe": 87,
+                "recall": 0.7699
+              },
+              "idx_on_one_row_only": {
+                "n": 59,
+                "unsafe": 48,
+                "recall": 0.8136
+              },
+              "idx_on_more_than_one_row": {
+                "n": 54,
+                "unsafe": 39,
+                "recall": 0.7222
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 24,
+                "unsafe": 16,
+                "recall": 0.6667
+              }
+            }
+          }
+        },
+        "diagnosis": {
+          "rows": {
+            "all": 150,
+            "idx_on_one_row_only": 71,
+            "idx_on_more_than_one_row": 79,
+            "idx_shared_with_a_clean_control": 37
+          },
+          "llama_equal_to_that_control": 31,
+          "llama_verdict_on_rows_sharing_idx_with_a_clean_control": {
+            "SAFE": 32,
+            "UNSAFE": 5
+          },
+          "recall": {
+            "llama": {
+              "all": {
+                "n": 150,
+                "unsafe": 35,
+                "recall": 0.2333
+              },
+              "idx_on_one_row_only": {
+                "n": 71,
+                "unsafe": 20,
+                "recall": 0.2817
+              },
+              "idx_on_more_than_one_row": {
+                "n": 79,
+                "unsafe": 15,
+                "recall": 0.1899
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 37,
+                "unsafe": 5,
+                "recall": 0.1351
+              }
+            },
+            "qwen": {
+              "all": {
+                "n": 150,
+                "unsafe": 33,
+                "recall": 0.22
+              },
+              "idx_on_one_row_only": {
+                "n": 71,
+                "unsafe": 17,
+                "recall": 0.2394
+              },
+              "idx_on_more_than_one_row": {
+                "n": 79,
+                "unsafe": 16,
+                "recall": 0.2025
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 37,
+                "unsafe": 7,
+                "recall": 0.1892
+              }
+            },
+            "nemotron": {
+              "all": {
+                "n": 150,
+                "unsafe": 85,
+                "recall": 0.5667
+              },
+              "idx_on_one_row_only": {
+                "n": 71,
+                "unsafe": 45,
+                "recall": 0.6338
+              },
+              "idx_on_more_than_one_row": {
+                "n": 79,
+                "unsafe": 40,
+                "recall": 0.5063
+              },
+              "idx_shared_with_a_clean_control": {
+                "n": 37,
+                "unsafe": 16,
+                "recall": 0.4324
+              }
+            }
+          }
+        }
+      },
       "cells": {
         "automated labels": {
           "n": 350,
@@ -1681,6 +2332,7 @@
       }
     }
   },
+  "idx_repeat_by_error_type_note": "idx_repeat_by_error_type splits the corrupted rows of each error type by how their idx occurs in the file: rows whose idx is on only one row, which no other row's verdict can be repeated onto; rows whose idx is on more than one row, where Llama's stored column gives one verdict to every row of the idx (idx_repeat_check); and, among those, rows that share their idx with a clean control, where the repeated verdict is the control's. recall is the UNSAFE share with ERROR verdicts left out, as in README A5. The subsets differ in items as well, so Qwen, Nemotron and the deployed-prompt re-run (matched_deployed_prompt, where Llama was run afresh) are given on the same subsets for comparison.",
   "idx_repeat_note": "idx_repeat_check counts, among idx that appear on more than one row (a clean control and one or more corrupted versions, or several corrupted versions), those where a judge gave the same verdict on every row; and, for corrupted rows whose idx is also a clean control's, those where a judge's verdict equals its verdict on that control",
   "checks": {
     "sigma_B_clamp_bound": 0,
@@ -1690,7 +2342,8 @@
       "tau_recompute_summary.json split_f_diagnostic (all three judges)",
       "consensus_accuracy.json gate-prompt diagnosis phi_v_2, phi_v_3, delta_phi_v",
       "reweighting the published reference cell to its own share (138/333) reproduces its delta and CI",
-      "sigma_B never clamped in the reweighted runs"
+      "sigma_B never clamped in the reweighted runs",
+      "README A5 dose/lateral/negation recall (Nemotron, Llama, Qwen) from the published pairing's idx_repeat_by_error_type all-row recall"
     ]
   }
 }

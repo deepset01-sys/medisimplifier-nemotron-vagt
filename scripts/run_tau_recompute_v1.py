@@ -55,6 +55,9 @@ CONSENSUS = RES / "consensus_accuracy.json"
 OUT = RES / "tau_recompute_v1_matched.json"
 
 KEYS = ["llama_verdict", "qwen_verdict", "nemotron_verdict"]
+ERROR_TYPES = ["dose", "lateral", "negation", "diagnosis"]
+# README A5 recall (Nemotron, Llama, Qwen; %, ERROR verdicts left out) on the automated dose/lateral/negation rows
+A5_RECALL = {"dose": (92, 44, 86), "lateral": (97, 43, 85), "negation": (82, 30, 55)}
 N_INCUMBENT = 2
 N_PERM = 1000
 P_REF = 138 / 333          # share of the published reference cell (asserted below)
@@ -222,6 +225,36 @@ def idx_repeat_check(per_sample):
     return out
 
 
+def _recall(rows, k):
+    v = [r[k] for r in rows if r[k] != "ERROR"]
+    u = sum(x == "UNSAFE" for x in v)
+    return {"n": len(v), "unsafe": u, "recall": r4(u / len(v)) if v else None}
+
+
+def idx_repeat_by_error_type(per_sample):
+    """Per error type: how many corrupted rows the idx-keyed repeat can touch, and each judge's recall (UNSAFE share,
+    ERROR verdicts left out, as in README A5) on all corrupted rows, on rows whose idx appears on only one row of the
+    file (no other row's verdict can be repeated onto them), on rows whose idx appears on more than one row, and on
+    the rows that share their idx with a clean control (there a repeated verdict is the control's)."""
+    n_rows = Counter(r["idx"] for r in per_sample)
+    clean = {r["idx"]: r for r in per_sample if r["condition"] == "clean"}
+    out = {}
+    for et in ERROR_TYPES:
+        rows = [r for r in per_sample if r["condition"] == "corrupted" and r["error_type"] == et]
+        subsets = {"all": rows,
+                   "idx_on_one_row_only": [r for r in rows if n_rows[r["idx"]] == 1],
+                   "idx_on_more_than_one_row": [r for r in rows if n_rows[r["idx"]] > 1],
+                   "idx_shared_with_a_clean_control": [r for r in rows if r["idx"] in clean]}
+        shared = subsets["idx_shared_with_a_clean_control"]
+        out[et] = {
+            "rows": {s: len(v) for s, v in subsets.items()},
+            "llama_equal_to_that_control": sum(r["llama_verdict"] == clean[r["idx"]]["llama_verdict"] for r in shared),
+            "llama_verdict_on_rows_sharing_idx_with_a_clean_control": dict(sorted(Counter(r["llama_verdict"] for r in shared).items())),
+            "recall": {k.replace("_verdict", ""): {s: _recall(v, k) for s, v in subsets.items()} for k in KEYS},
+        }
+    return out
+
+
 def overview(cells, at_shares):
     """The ranges and counts the text quotes, read off the cells (hand-label cells only unless named)."""
     hand = {k: c for k, c in cells.items() if k != "automated labels"}
@@ -368,7 +401,8 @@ def main():
                                 "ci95_fixed_p": [r4(rw["lo_fixed_p"]), r4(rw["hi_fixed_p"])],
                                 "tau_band": tau_band(rw["d"])}
         out["pairings"][name] = {"source": pr["source"], "prompts": pr["prompts"],
-                                 "idx_repeat_check": idx_repeat_check(pr["per_sample"]), "cells": cells,
+                                 "idx_repeat_check": idx_repeat_check(pr["per_sample"]),
+                                 "idx_repeat_by_error_type": idx_repeat_by_error_type(pr["per_sample"]), "cells": cells,
                                  "automated_cell_at_hand_label_shares": at_shares,
                                  "overview": overview(cells, at_shares)}
 
@@ -376,6 +410,20 @@ def main():
     pref = out["pairings"]["published_mixed_prompt"]["cells"]["automated labels"]["reweighted"]["0.414"]
     assert (pref["delta_phi_v"], pref["ci95"]) == (ref["delta_phi_v"], ref["ci95"]), pref
 
+    # the published pairing's all-row recall reproduces README A5's dose/lateral/negation rows
+    ib = out["pairings"]["published_mixed_prompt"]["idx_repeat_by_error_type"]
+    for et, want in A5_RECALL.items():
+        got = tuple(round(100 * ib[et]["recall"][j]["all"]["unsafe"] / ib[et]["recall"][j]["all"]["n"])
+                    for j in ("nemotron", "llama", "qwen"))
+        assert got == want, (et, got, want)
+    out["idx_repeat_by_error_type_note"] = (
+        "idx_repeat_by_error_type splits the corrupted rows of each error type by how their idx occurs in the file: "
+        "rows whose idx is on only one row, which no other row's verdict can be repeated onto; rows whose idx is on more "
+        "than one row, where Llama's stored column gives one verdict to every row of the idx (idx_repeat_check); and, "
+        "among those, rows that share their idx with a clean control, where the repeated verdict is the control's. "
+        "recall is the UNSAFE share with ERROR verdicts left out, as in README A5. The subsets differ in items as well, "
+        "so Qwen, Nemotron and the deployed-prompt re-run (matched_deployed_prompt, where Llama was run afresh) are "
+        "given on the same subsets for comparison.")
     out["idx_repeat_note"] = ("idx_repeat_check counts, among idx that appear on more than one row (a clean control and "
                               "one or more corrupted versions, or several corrupted versions), those where a judge gave the "
                               "same verdict on every row; and, for corrupted rows whose idx is also a clean control's, "
@@ -390,7 +438,9 @@ def main():
                                   "consensus_accuracy.json gate-prompt diagnosis phi_v_2, phi_v_3, delta_phi_v",
                                   "reweighting the published reference cell to its own share (138/333) reproduces its "
                                   "delta and CI",
-                                  "sigma_B never clamped in the reweighted runs"]}
+                                  "sigma_B never clamped in the reweighted runs",
+                                  "README A5 dose/lateral/negation recall (Nemotron, Llama, Qwen) from the published "
+                                  "pairing's idx_repeat_by_error_type all-row recall"]}
     json.dump(out, io.open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
     # ── print ──
@@ -414,6 +464,11 @@ def main():
     for name, pr in out["pairings"].items():
         print(f"{name} overview:", json.dumps(pr["overview"], ensure_ascii=False))
         print(f"{name} idx_repeat_check:", json.dumps(pr["idx_repeat_check"]))
+        for et, d in pr["idx_repeat_by_error_type"].items():
+            rc = d["recall"]
+            print(f"  {et:9} rows {d['rows']}  " + "  ".join(
+                f"{j} all {rc[j]['all']['unsafe']}/{rc[j]['all']['n']} one-row {rc[j]['idx_on_one_row_only']['unsafe']}/"
+                f"{rc[j]['idx_on_one_row_only']['n']}" for j in ("llama", "qwen", "nemotron")))
     print(f"\nSaved -> {OUT}")
 
 
