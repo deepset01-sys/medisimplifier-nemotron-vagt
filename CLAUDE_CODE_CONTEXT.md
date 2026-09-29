@@ -86,7 +86,7 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
 - #6 (judgebench_v2_prevalence_sensitivity.json new computed-values block): skipped.
 - Results-file notes: the pattern (dated explanatory notes, values unchanged) is approved; five notes remain (#7 dropped
   under option B, #6 skipped). All five landed in f46dc89, dated 2026-09-29, with the "Project v1" naming.
-- Pushed 2026-09-28: 4808ff2..6cdb49f, then 6cdb49f..32727cf, then 32727cf..5df1219; 2026-09-29: 5df1219..28a41b6.
+- Pushed 2026-09-28: 4808ff2..6cdb49f, then 6cdb49f..32727cf, then 32727cf..5df1219; 2026-09-29: 5df1219..28a41b6; 2026-09-29: 508be5a..8174879.
 - results/strata_spot_audit.json: committed (2016051). Its "auditor" field names the author, with Claude Opus 4.8 as a
   drafting aid, plus a dated auditor_note_2026_09_28. The framing is in the commit message and the Q1 deviations bullet
   only: the spot audit is complete per protocol §7; §7's numbers (lateral 50/50 genuine; dose ~22% contaminated;
