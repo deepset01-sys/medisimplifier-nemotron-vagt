@@ -685,13 +685,17 @@ export default function App() {
                 </li>
                 <li>
                   <strong>Our own audit.</strong> We read all 150 “dropped diagnosis” items by hand: 128 (85%) still
-                  contained the diagnosis, and only 9 were genuine drops. Re-scored on the same items with corrected
-                  labels, Nano’s ΔΦ_V reversed to −0.144 [−0.195, −0.098].
+                  contained the diagnosis, and only 9 were genuine drops, too few to show
+                  whether Nano helps. At step 1’s 41% drop share, with all three judges on the deployed prompt, the
+                  corrected labels give Nano a ΔΦ_V of +0.0323 [−0.0384, +0.0848], not detectable; the automated labels give
+                  +0.0426. An earlier version of this page said Nano’s ΔΦ_V “reversed to −0.144”: that figure was at 2.7%
+                  drops, not 41%, and like step 1’s it mixed two judge prompts.
                 </li>
                 <li>
                   <strong>Rebuild.</strong> A new benchmark of 120 hand-verified real drops + 120 paired controls: Nano
-                  +0.0765, gpt-oss +0.1220 (recommended). These use the deployed gate prompt; under the calibration
-                  prompt used in steps 1–2, Nano scores +0.0591.
+                  +0.0765, gpt-oss +0.1220 (recommended). These use the deployed gate prompt; with all three judges
+                  under the calibration prompt, Nano scores +0.0591. All three figures are at 50% drops, step 1’s at 41%,
+                  and ΔΦ_V depends on that share.
                 </li>
               </ol>
               <a href={REPO_URL + "#why-vagt--the-panel-selection-finding"} target="_blank" rel="noopener noreferrer">
@@ -846,7 +850,7 @@ export default function App() {
 
           {explore.status === "error" && (
             <div className="ms-live-error">
-              <span>⚠️ Couldn't reach audit_panel — check the selection (need ≥ 2) and try again.</span>
+              <span>⚠️ Couldn't reach audit_panel — the CPU service may be stopped between judging windows; otherwise check the selection (need ≥ 2) and try again.</span>
               <button className="ms-retry" onClick={runExplorer}>Try again</button>
             </div>
           )}

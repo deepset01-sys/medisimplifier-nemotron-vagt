@@ -2,14 +2,17 @@
 
 > ⚠️ **Automated-pass write-up (2026-08-27).** Diagnosis results superseded by the hand-verified v2 benchmark — see README A6/A8.
 > σ²_B and σ²_N below were recomputed on 2026-09-27 with an unbiased noise estimator (README A4); Φ_V values are unchanged.
+> Each feature below sits at its own corrupted share (dose 0.30, negation 0.34, lateral 0.43, diagnosis 0.41), and Φ_V depends on the share, so comparisons across features mix shares (README A8 threat 12).
 
 ## 1. Nemotron Nano as a safety judge — full calibration (n=708)
 
 Nemotron-3 Nano (`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`) run as a faithfulness
-judge on MedSimp-JudgeBench (no-CoT / v2 condition), using the **same** judge
-prompt as the original project (`src/safety_eval_v2.py`). It judged the same
-`(input, perturbed)` pairs as the stored Llama + Qwen verdicts, so all three
-raters are directly comparable. 699/708 valid (9 transient ERRORs, 1.3%).
+judge on MedSimp-JudgeBench (no-CoT / v2 condition), using the judge
+prompt of the original project's `src/safety_eval_v2.py`. It judged the same
+`(input, perturbed)` pairs as the stored Llama + Qwen verdicts. Those verdicts
+come from Project v1's calibration run, which used a one-word prompt (Project v1
+repo at `dd6681b`, `perturbation_calibration.py`:193–227), so the three raters
+judged the same pairs under different prompts ([`docs/judgebench_v2_protocol_erratum.md`](docs/judgebench_v2_protocol_erratum.md)). 699/708 valid (9 transient ERRORs, 1.3%).
 
 Source data: [`nemotron_calibration_full.json`](nemotron_calibration_full.json).
 Reproduce: `python nemotron_judge_test.py --n 708 --workers 12 --output nemotron_calibration_full.json`.
@@ -75,7 +78,7 @@ On `diagnosis`, Llama + Qwen share a massive blind spot — σ²_B = 0.337, Φ_V
 (UNSAFE rates 7% / 3%). Adding Nemotron (47% UNSAFE on diagnosis):
 
 - **cuts shared bias by a third** — σ²_B 0.337 → 0.217 (largest reduction of any feature),
-- **raises dependability most** — Φ_V 0.404 → 0.476 (+0.072),
+- **raises dependability most** — Φ_V 0.404 → 0.476 (+0.072; the largest of the four point estimates here, and also with every feature reweighted to one common share up to 53%; README A8 threat 12),
 - **yet Fleiss κ and Krippendorff α go *negative*** — 0.076 → **−0.088**.
 
 That is a **consensus-vs-veridicality inversion**: by every rater-agreement
@@ -93,11 +96,12 @@ the consensus toward the truth.
 
 ## 3. Honest caveats
 
-- **Nemotron is not a free win everywhere.** On `dose`, ΔΦ_V = **−0.010**
-  (slight *loss*): Llama+Qwen weren't badly blind there (σ²_B only 0.035), so
-  Nemotron gives no detectable cut in shared bias while widening the spread between raters. The panel benefits
-  most exactly where the two incumbents share a blind spot (diagnosis, negation,
-  lateral) and least where they don't (dose).
+- **Nemotron gains least on dose.** On `dose`, ΔΦ_V = **−0.010**
+  (slight *loss* at dose's 30% corrupted share; the paired Δ is −0.013 [−0.055, +0.021], not detectable):
+  Llama+Qwen weren't badly blind there (σ²_B only 0.035), so Nemotron gives no detectable cut in shared bias
+  while widening the spread between raters. The sign depends on the share: with every feature reweighted to
+  50%, dose's ΔΦ_V is +0.043 [+0.007, +0.073]. The ranking depends on it less: of dose, negation and lateral,
+  dose has the smallest point estimate at every common share up to 72%, with CIs overlapping (README A8 threat 12).
 - **Adding a diverging rater raises σ²_R and σ²_N across the board.** σ²_R goes
   from ~0 (the two-rater case, where Llama+Qwen fail together) to 0.024–0.040;
   σ²_N rises too (about 1.1× on lateral to 2.5× on diagnosis) but does not enter Φ_V;

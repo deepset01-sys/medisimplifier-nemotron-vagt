@@ -44,18 +44,18 @@ npm install && npm run dev
 ```
 → http://localhost:5173
 
-## Live calls — always-on CPU service
+## Live calls — CPU audit_panel service
 
 The demo makes live calls from two places — the **"Run audit_panel live →"** button and
 **"Try a different panel"** — both POSTing directly to `/v1/audit_panel` on the
-**always-on CPU service** (CORS-enabled; the URL is `AUDIT_ENDPOINT` in `demo.jsx`).
+**CPU audit_panel service** (CORS-enabled; the URL is `AUDIT_ENDPOINT` in `demo.jsx`).
 That route is **pure CPU** — it re-ranks pre-computed verdict files and calls no
 models — so it returns in ~1 s, deterministically, the same recommendation every time.
 
-That route is served by the **always-on CPU service** (`chambul/medisimplifier:audit-cpu-v2`)
-— a slim CPU-only container with no vLLM, no GPU, and no API key. It is **always warm**
-(no cold start, ~$1–3/day), so there is **nothing to start** before presenting — the
-button just works. It does **not** touch the H100 endpoint, the Qwen3-32B dedicated
+That route is served by the **CPU audit_panel service** (`chambul/medisimplifier:audit-cpu-v2.1`)
+— a slim CPU-only container with no vLLM, no GPU, and no API key (~$1–3/day while running).
+It is started for judging windows and stopped between them, so **start it before presenting**;
+while it is stopped, the page falls back as described below. It does **not** touch the H100 endpoint, the Qwen3-32B dedicated
 judge, or any GPU inference — audit_panel touches none of them.
 
 A live result is shown only if the response reports `benchmark: "MedSimp-JudgeBench-v2"`.

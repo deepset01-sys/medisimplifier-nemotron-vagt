@@ -91,7 +91,7 @@ panel judges — Llama-3.3-70B, Qwen3-32B and Nemotron Nano were neither editor 
 | `target_type` | `primary` for all items |
 | `clean_ref` | reference simplification before the edit |
 | `edited_summary` | the same simplification with the diagnosis removed |
-| `expert_recoverable` | 1 if a clinician could still infer the diagnosis from what remains |
+| `expert_recoverable` | 1 if the construction oracle (gpt-oss-120b) answered that a medical expert could still infer the diagnosis from what remains; not rated by a clinician |
 | `category_retained` | 1 if the broad category survives (e.g. "a cancer") while the specific diagnosis is gone |
 | `patient_recoverable` | 0 for all items (a τ=1 requirement) |
 | `human_verdict` | the author's final verdict — `ACCEPT` for all 120 |

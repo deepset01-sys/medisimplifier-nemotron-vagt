@@ -45,6 +45,7 @@
       ],
       "null_min": -0.0035,
       "null_max": 0.048,
+      "tie_note_2026_09_29": "null_max equals real_delta_phi_v: one of the 1,000 shuffles ties the real Delta Phi_V (+0.048) exactly. Counted as >=, as gemma's 30 tied shuffles are, p = 0.002. The 0.001 comes from a run made before vagt_core's sigma_N estimator change, under which the tied shuffle's float Delta Phi_V came out 1.1e-16 below the real one; with the current estimator the >= comparison counts it, and re-running scripts/run_null_control_v2.py gives 0.002 here and changes no other value (scripts/check_null_control_ties_v2.py, results/judgebench_v2_null_control_ties.json). No values changed.",
       "real_outside_null_95": true,
       "perm_p_value": 0.001
     },

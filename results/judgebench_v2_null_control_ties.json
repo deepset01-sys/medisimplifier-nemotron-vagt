@@ -1,0 +1,151 @@
+{
+  "purpose": "Ties between each candidate's real ΔΦ_V and its τ-blind permutation null (results/judgebench_v2_null_control.json), counted exactly",
+  "source": "results/judgebench_v2_null_control.json (regenerated in memory, not rewritten)",
+  "seed": 42,
+  "n_perm": 1000,
+  "tie_statistic": "S = sum_i x_i (llama_i + qwen_i - 3 tau_i); with the flag count fixed and sigma_B unclamped, Delta Phi_V falls as S rises, so equal S = equal Delta Phi_V",
+  "p_conventions": {
+    "p_ties_counted": "(#{null > real} + #{null = real} + 1) / (N_PERM + 1) — the >= rule of run_null_control_v2.py, with ties decided on S",
+    "p_ties_excluded": "(#{null > real} + 1) / (N_PERM + 1)",
+    "p_float_ge_current_estimator": "run_null_control_v2.py's float comparison nulls >= real, with vagt_core's current sigma_N = sum eps^2 / ((N-1)(R-1)): what re-running it at this commit writes",
+    "p_float_ge_mean_eps2_estimator": "the same comparison with the earlier sigma_N = mean eps^2, which judgebench_v2_null_control.json was generated with"
+  },
+  "candidates": {
+    "NVIDIA-Nemotron-3-Nano-30B-A3B": {
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "n": 240,
+      "real_delta_phi_v": 0.0765,
+      "null_max": 0.0537,
+      "real_minus_null_max": 0.0228,
+      "n_null_above_real": 0,
+      "n_null_tied_with_real": 0,
+      "real_above_every_null": true,
+      "p_ties_counted": 0.001,
+      "p_ties_excluded": 0.001,
+      "committed_perm_p_value": 0.001,
+      "committed_perm_p_value_reproduced_by": [
+        "mean_eps2_estimator",
+        "current_estimator"
+      ],
+      "committed_matches": "both",
+      "p_float_ge_current_estimator": 0.001,
+      "p_float_ge_mean_eps2_estimator": 0.001
+    },
+    "Nemotron-3-Ultra-550b-a55b": {
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "n": 240,
+      "real_delta_phi_v": 0.0781,
+      "null_max": 0.052,
+      "real_minus_null_max": 0.026,
+      "n_null_above_real": 0,
+      "n_null_tied_with_real": 0,
+      "real_above_every_null": true,
+      "p_ties_counted": 0.001,
+      "p_ties_excluded": 0.001,
+      "committed_perm_p_value": 0.001,
+      "committed_perm_p_value_reproduced_by": [
+        "mean_eps2_estimator",
+        "current_estimator"
+      ],
+      "committed_matches": "both",
+      "p_float_ge_current_estimator": 0.001,
+      "p_float_ge_mean_eps2_estimator": 0.001
+    },
+    "nemotron-3-super-120b-a12b": {
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "n": 240,
+      "real_delta_phi_v": 0.048,
+      "null_max": 0.048,
+      "real_minus_null_max": 0.0,
+      "n_null_above_real": 0,
+      "n_null_tied_with_real": 1,
+      "real_above_every_null": false,
+      "p_ties_counted": 0.002,
+      "p_ties_excluded": 0.001,
+      "committed_perm_p_value": 0.001,
+      "committed_perm_p_value_reproduced_by": [
+        "mean_eps2_estimator"
+      ],
+      "committed_matches": "p_ties_excluded",
+      "p_float_ge_current_estimator": 0.002,
+      "p_float_ge_mean_eps2_estimator": 0.001,
+      "tied_shuffles_float_minus_real": {
+        "current_estimator": [
+          0.0
+        ],
+        "mean_eps2_estimator": [
+          -1.1102230246251565e-16
+        ]
+      }
+    },
+    "gpt-oss-120b": {
+      "model": "openai/gpt-oss-120b",
+      "n": 240,
+      "real_delta_phi_v": 0.122,
+      "null_max": 0.0497,
+      "real_minus_null_max": 0.0723,
+      "n_null_above_real": 0,
+      "n_null_tied_with_real": 0,
+      "real_above_every_null": true,
+      "p_ties_counted": 0.001,
+      "p_ties_excluded": 0.001,
+      "committed_perm_p_value": 0.001,
+      "committed_perm_p_value_reproduced_by": [
+        "mean_eps2_estimator",
+        "current_estimator"
+      ],
+      "committed_matches": "both",
+      "p_float_ge_current_estimator": 0.001,
+      "p_float_ge_mean_eps2_estimator": 0.001
+    },
+    "DeepSeek-V4-Flash-0731": {
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "n": 233,
+      "real_delta_phi_v": 0.1238,
+      "null_max": 0.0511,
+      "real_minus_null_max": 0.0728,
+      "n_null_above_real": 0,
+      "n_null_tied_with_real": 0,
+      "real_above_every_null": true,
+      "p_ties_counted": 0.001,
+      "p_ties_excluded": 0.001,
+      "committed_perm_p_value": 0.001,
+      "committed_perm_p_value_reproduced_by": [
+        "mean_eps2_estimator",
+        "current_estimator"
+      ],
+      "committed_matches": "both",
+      "p_float_ge_current_estimator": 0.001,
+      "p_float_ge_mean_eps2_estimator": 0.001
+    },
+    "gemma-3-27b-it": {
+      "model": "google/gemma-3-27b-it",
+      "n": 240,
+      "real_delta_phi_v": 0.0066,
+      "null_max": 0.0379,
+      "real_minus_null_max": -0.0313,
+      "n_null_above_real": 418,
+      "n_null_tied_with_real": 30,
+      "real_above_every_null": false,
+      "p_ties_counted": 0.4486,
+      "p_ties_excluded": 0.4186,
+      "committed_perm_p_value": 0.4486,
+      "committed_perm_p_value_reproduced_by": [
+        "mean_eps2_estimator",
+        "current_estimator"
+      ],
+      "committed_matches": "p_ties_counted",
+      "p_float_ge_current_estimator": 0.4486,
+      "p_float_ge_mean_eps2_estimator": 0.4486
+    }
+  },
+  "checks": {
+    "asserted": [
+      "the regenerated nulls reproduce real_delta_phi_v, null_mean, null_95_range, null_min, null_max and n of every committed candidate",
+      "sigma_B > 0 for the real column and every shuffle, and S orders Delta Phi_V on every shuffle",
+      "tie and above counts on S equal the counts with a 1e-09 tolerance on Delta Phi_V",
+      "the two sigma_N estimators give Delta Phi_V within 1e-12 of each other on every shuffle",
+      "the float comparison nulls >= real reproduces every committed perm_p_value with sigma_N = mean eps^2, and equals p_ties_counted for every candidate with the current sigma_N"
+    ]
+  }
+}

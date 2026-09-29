@@ -67,25 +67,26 @@ docker push cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint
 
 Note: `docker/requirements_train.txt` pins `cryptography==48.0.1` via a Dockerfile post-install step — resolves the pyOpenSSL/cryptography drift that broke train-v28.
 
-## CPU audit_panel service (always-on)
+## CPU audit_panel service
 
 A slim, CPU-only image that serves **only** `/v1/audit_panel` + `/health` — no vLLM,
 no torch, no CUDA, no gate, no simplifier. Request-time work is pure CPU over the
 committed `audit_pool/` verdict files, so it needs **no API key** and no GPU. This is
-the always-on demo floor (the deterministic VAGT panel selector), decoupled from the
-H100 endpoint (~$1–3/day instead of ~$4/hr).
+the demo's live backend (the deterministic VAGT panel selector), decoupled from the
+H100 endpoint (~$1–3/day while running, instead of ~$4/hr). Since 4808ff2 it runs as the Nebius
+endpoint `medisimplifier-cpu-v2-1`, started for judging windows and stopped between them.
 
-- **Image:** `chambul/medisimplifier:audit-cpu-v2` (current — serves the v2 hand-verified pool, `audit_pool_v2/`)
-- **Digest:** `sha256:44cec5211cd0904d568e4f6715dcd865d5daed406c247bd32203a957d30d0d67`
-- **Earlier image:** `chambul/medisimplifier:audit-cpu` @ `sha256:3df2a39ead023bc2ca79feddccd43d6988366f0197966b43ed36aa8e457cb06d` (earlier automated pool; superseded, kept for reproducibility)
+- **Image:** `chambul/medisimplifier:audit-cpu-v2.1` (current since 4808ff2 — built at 400ef54, after vagt_core's σ²_N estimator fix; serves the v2 hand-verified pool, `audit_pool_v2/`)
+- **Digest:** `sha256:5e09e9df2d153cfe312e0af7b2bbdbde5696dfe21308effe0011a75400ac8270`
+- **Earlier images:** `chambul/medisimplifier:audit-cpu-v2` @ `sha256:44cec5211cd0904d568e4f6715dcd865d5daed406c247bd32203a957d30d0d67` (v2 pool, σ²_N estimator before the fix; `results/audit_panel_live_receipt_v2.json` was captured from it) and `chambul/medisimplifier:audit-cpu` @ `sha256:3df2a39ead023bc2ca79feddccd43d6988366f0197966b43ed36aa8e457cb06d` (earlier automated pool); both superseded, kept for reproducibility
 - **Pool selection:** `AUDIT_POOL_DIR` (the v2 image sets `audit_pool_v2`; run with `-e AUDIT_POOL_DIR=` to serve the earlier `audit_pool/`)
 - **Serves:** `POST /v1/audit_panel` + `GET /health` ONLY
 - **Built from:** `docker/Dockerfile.cpu` (app `src/cpu_endpoint.py`, launcher `scripts/start_cpu_endpoint.sh`)
 
 Pull and run:
 ```bash
-docker pull chambul/medisimplifier@sha256:44cec5211cd0904d568e4f6715dcd865d5daed406c247bd32203a957d30d0d67
-docker run -p 8000:8000 chambul/medisimplifier@sha256:44cec5211cd0904d568e4f6715dcd865d5daed406c247bd32203a957d30d0d67
+docker pull chambul/medisimplifier@sha256:5e09e9df2d153cfe312e0af7b2bbdbde5696dfe21308effe0011a75400ac8270
+docker run -p 8000:8000 chambul/medisimplifier@sha256:5e09e9df2d153cfe312e0af7b2bbdbde5696dfe21308effe0011a75400ac8270
 ```
 
 Verify:
@@ -97,8 +98,8 @@ curl localhost:8000/health
 Rebuild:
 ```bash
 cd ~/medisimplifier-nemotron-vagt && git pull
-docker build -t chambul/medisimplifier:audit-cpu-v2 -f docker/Dockerfile.cpu .
-docker push chambul/medisimplifier:audit-cpu-v2
+docker build -t chambul/medisimplifier:audit-cpu-v2.1 -f docker/Dockerfile.cpu .
+docker push chambul/medisimplifier:audit-cpu-v2.1
 # Deploy: Nebius Console → point the CPU service at the new digest (the deploy is not scripted in this repo)
 ```
 

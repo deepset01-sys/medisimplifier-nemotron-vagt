@@ -1,0 +1,346 @@
+{
+  "purpose": "The 708-item DISAGREE false-alarm share (README B5: 34.7% deployed gate prompt, 33.0% calibration verdicts) recounted with the 150 hand labels for the automated diagnosis items: a DISAGREE on a diagnosis item that is not a genuine drop by hand label counts as a false alarm.",
+  "disagree_rule": "src/safety_gate.py consensus: UNSAFE when Qwen says UNSAFE, DISAGREE when Nemotron says UNSAFE and Qwen SAFE; Llama does not enter it",
+  "seed": 42,
+  "hand_labels": {
+    "source": "results/tau_hand_labels_150.json",
+    "PRESENT": 128,
+    "BORDERLINE": 13,
+    "ABSENT": 9,
+    "strict": "only ABSENT is a genuine drop",
+    "generous": "ABSENT and BORDERLINE are genuine drops",
+    "note": "every hand-labelled item had a sentence removed; PRESENT means the diagnosis itself is still in the text"
+  },
+  "scope_note": "only the 150 diagnosis items were hand-audited; the negation, lateral and dose items keep their automated label (corrupted = genuine error)",
+  "prevalence_note": "prevalence = share of the 708 items with a genuine error by the labels used; false_alarm_share_pct_by_prevalence reweights the two per-class DISAGREE rates (items without / with a genuine error) with the formula of scripts/run_prevalence_sensitivity_v2.py; the automated-label grid is results/judgebench_v2_prevalence_sensitivity.json gate_708_disagree_reference",
+  "wilson_note": "95% Wilson intervals in percent, z = 1.96, as in scripts/run_prevalence_sensitivity_v2.py",
+  "prompts": {
+    "deployed_gate_prompt": {
+      "source": "results/gate_calibration_full.json",
+      "readme_b5_column": "Gate prompt (deployed)",
+      "n_items": 708,
+      "disagree_total": 147,
+      "disagree_on_clean": "51/200",
+      "disagree_on_corrupted": "96/508",
+      "disagree_on_corrupted_by_error_type": {
+        "diagnosis": "60/150",
+        "negation": "23/113",
+        "lateral": "7/150",
+        "dose": "6/95"
+      },
+      "diagnosis_disagree_by_hand_label": {
+        "PRESENT": 52,
+        "BORDERLINE": 6,
+        "ABSENT": 2
+      },
+      "diagnosis_items_by_hand_label": {
+        "PRESENT": 128,
+        "BORDERLINE": 13,
+        "ABSENT": 9
+      },
+      "gate_consensus_on_corrupted_by_error_type": {
+        "diagnosis": {
+          "UNSAFE": 33,
+          "DISAGREE": 60,
+          "SAFE": 57,
+          "ERROR": 0
+        },
+        "negation": {
+          "UNSAFE": 66,
+          "DISAGREE": 23,
+          "SAFE": 24,
+          "ERROR": 0
+        },
+        "lateral": {
+          "UNSAFE": 140,
+          "DISAGREE": 7,
+          "SAFE": 3,
+          "ERROR": 0
+        },
+        "dose": {
+          "UNSAFE": 82,
+          "DISAGREE": 6,
+          "SAFE": 7,
+          "ERROR": 0
+        }
+      },
+      "gate_consensus_on_negation_lateral_dose": {
+        "items": 358,
+        "UNSAFE": 288,
+        "DISAGREE": 36,
+        "SAFE": 34,
+        "ERROR": 0
+      },
+      "gate_consensus_on_diagnosis_by_hand_label": {
+        "PRESENT": {
+          "UNSAFE": 26,
+          "DISAGREE": 52,
+          "SAFE": 50,
+          "ERROR": 0
+        },
+        "BORDERLINE": {
+          "UNSAFE": 2,
+          "DISAGREE": 6,
+          "SAFE": 5,
+          "ERROR": 0
+        },
+        "ABSENT": {
+          "UNSAFE": 5,
+          "DISAGREE": 2,
+          "SAFE": 2,
+          "ERROR": 0
+        }
+      },
+      "automated_labels": {
+        "false_alarms": 51,
+        "false_alarm_share_pct": 34.7,
+        "false_alarm_share_wilson95": [
+          27.5,
+          42.7
+        ],
+        "items_with_error": "508/708",
+        "prevalence": 0.718
+      },
+      "hand_labels_strict": {
+        "genuine_diagnosis_drop_labels": [
+          "ABSENT"
+        ],
+        "diagnosis_labels_counted_as_no_error": [
+          "BORDERLINE",
+          "PRESENT"
+        ],
+        "false_alarms": 109,
+        "false_alarms_on_clean": 51,
+        "false_alarms_on_diagnosis_items": 58,
+        "genuine_catches": 38,
+        "genuine_catches_diagnosis": 2,
+        "genuine_catches_other_types_automated_label": 36,
+        "false_alarm_share_pct": 74.1,
+        "false_alarm_share_wilson95": [
+          66.5,
+          80.5
+        ],
+        "items_with_error": "367/708",
+        "prevalence": 0.518,
+        "disagree_rate_no_error_items": "109/341",
+        "disagree_rate_no_error_items_pct": 32.0,
+        "disagree_rate_error_items": "38/367",
+        "disagree_rate_error_items_pct": 10.4,
+        "false_alarm_share_pct_by_prevalence": {
+          "0.50": 75.5,
+          "0.33": 86.2,
+          "0.20": 92.5,
+          "0.10": 96.5,
+          "0.05": 98.3
+        }
+      },
+      "hand_labels_generous": {
+        "genuine_diagnosis_drop_labels": [
+          "ABSENT",
+          "BORDERLINE"
+        ],
+        "diagnosis_labels_counted_as_no_error": [
+          "PRESENT"
+        ],
+        "false_alarms": 103,
+        "false_alarms_on_clean": 51,
+        "false_alarms_on_diagnosis_items": 52,
+        "genuine_catches": 44,
+        "genuine_catches_diagnosis": 8,
+        "genuine_catches_other_types_automated_label": 36,
+        "false_alarm_share_pct": 70.1,
+        "false_alarm_share_wilson95": [
+          62.2,
+          76.9
+        ],
+        "items_with_error": "380/708",
+        "prevalence": 0.537,
+        "disagree_rate_no_error_items": "103/328",
+        "disagree_rate_no_error_items_pct": 31.4,
+        "disagree_rate_error_items": "44/380",
+        "disagree_rate_error_items_pct": 11.6,
+        "false_alarm_share_pct_by_prevalence": {
+          "0.50": 73.1,
+          "0.33": 84.6,
+          "0.20": 91.6,
+          "0.10": 96.1,
+          "0.05": 98.1
+        }
+      }
+    },
+    "calibration_verdicts": {
+      "source": "nemotron_calibration_full.json",
+      "readme_b5_column": "Calibration prompt",
+      "n_items": 708,
+      "disagree_total": 203,
+      "disagree_on_clean": "67/200",
+      "disagree_on_corrupted": "136/508",
+      "disagree_on_corrupted_by_error_type": {
+        "diagnosis": "81/150",
+        "negation": "30/113",
+        "lateral": "19/150",
+        "dose": "6/95"
+      },
+      "diagnosis_disagree_by_hand_label": {
+        "PRESENT": 68,
+        "BORDERLINE": 8,
+        "ABSENT": 5
+      },
+      "diagnosis_items_by_hand_label": {
+        "PRESENT": 128,
+        "BORDERLINE": 13,
+        "ABSENT": 9
+      },
+      "gate_consensus_on_corrupted_by_error_type": {
+        "diagnosis": {
+          "UNSAFE": 10,
+          "DISAGREE": 81,
+          "SAFE": 47,
+          "ERROR": 12
+        },
+        "negation": {
+          "UNSAFE": 56,
+          "DISAGREE": 30,
+          "SAFE": 16,
+          "ERROR": 11
+        },
+        "lateral": {
+          "UNSAFE": 124,
+          "DISAGREE": 19,
+          "SAFE": 3,
+          "ERROR": 4
+        },
+        "dose": {
+          "UNSAFE": 76,
+          "DISAGREE": 6,
+          "SAFE": 6,
+          "ERROR": 7
+        }
+      },
+      "gate_consensus_on_negation_lateral_dose": {
+        "items": 358,
+        "UNSAFE": 256,
+        "DISAGREE": 55,
+        "SAFE": 25,
+        "ERROR": 22
+      },
+      "gate_consensus_on_diagnosis_by_hand_label": {
+        "PRESENT": {
+          "UNSAFE": 7,
+          "DISAGREE": 68,
+          "SAFE": 43,
+          "ERROR": 10
+        },
+        "BORDERLINE": {
+          "UNSAFE": 1,
+          "DISAGREE": 8,
+          "SAFE": 2,
+          "ERROR": 2
+        },
+        "ABSENT": {
+          "UNSAFE": 2,
+          "DISAGREE": 5,
+          "SAFE": 2,
+          "ERROR": 0
+        }
+      },
+      "automated_labels": {
+        "false_alarms": 67,
+        "false_alarm_share_pct": 33.0,
+        "false_alarm_share_wilson95": [
+          26.9,
+          39.7
+        ],
+        "items_with_error": "508/708",
+        "prevalence": 0.718
+      },
+      "hand_labels_strict": {
+        "genuine_diagnosis_drop_labels": [
+          "ABSENT"
+        ],
+        "diagnosis_labels_counted_as_no_error": [
+          "BORDERLINE",
+          "PRESENT"
+        ],
+        "false_alarms": 143,
+        "false_alarms_on_clean": 67,
+        "false_alarms_on_diagnosis_items": 76,
+        "genuine_catches": 60,
+        "genuine_catches_diagnosis": 5,
+        "genuine_catches_other_types_automated_label": 55,
+        "false_alarm_share_pct": 70.4,
+        "false_alarm_share_wilson95": [
+          63.8,
+          76.3
+        ],
+        "items_with_error": "367/708",
+        "prevalence": 0.518,
+        "disagree_rate_no_error_items": "143/341",
+        "disagree_rate_no_error_items_pct": 41.9,
+        "disagree_rate_error_items": "60/367",
+        "disagree_rate_error_items_pct": 16.3,
+        "false_alarm_share_pct_by_prevalence": {
+          "0.50": 71.9,
+          "0.33": 83.9,
+          "0.20": 91.1,
+          "0.10": 95.8,
+          "0.05": 98.0
+        }
+      },
+      "hand_labels_generous": {
+        "genuine_diagnosis_drop_labels": [
+          "ABSENT",
+          "BORDERLINE"
+        ],
+        "diagnosis_labels_counted_as_no_error": [
+          "PRESENT"
+        ],
+        "false_alarms": 135,
+        "false_alarms_on_clean": 67,
+        "false_alarms_on_diagnosis_items": 68,
+        "genuine_catches": 68,
+        "genuine_catches_diagnosis": 13,
+        "genuine_catches_other_types_automated_label": 55,
+        "false_alarm_share_pct": 66.5,
+        "false_alarm_share_wilson95": [
+          59.8,
+          72.6
+        ],
+        "items_with_error": "380/708",
+        "prevalence": 0.537,
+        "disagree_rate_no_error_items": "135/328",
+        "disagree_rate_no_error_items_pct": 41.2,
+        "disagree_rate_error_items": "68/380",
+        "disagree_rate_error_items_pct": 17.9,
+        "false_alarm_share_pct_by_prevalence": {
+          "0.50": 69.7,
+          "0.33": 82.4,
+          "0.20": 90.2,
+          "0.10": 95.4,
+          "0.05": 97.8
+        }
+      }
+    }
+  },
+  "v2_reference": {
+    "source": "results/judgebench_v2_panel_gate.json (deployed prompt, hand-verified labels, 50% drops)",
+    "disagree_total": 99,
+    "false_alarm_share_pct": 45.5,
+    "disagree_rate_no_error_items": "45/120",
+    "disagree_rate_no_error_items_pct": 37.5,
+    "disagree_rate_error_items": "54/120",
+    "disagree_rate_error_items_pct": 45.0,
+    "matches": "results/judgebench_v2_prevalence_sensitivity.json gate_operating_characteristics.rules['disagree_branch (Nano UNSAFE, Qwen SAFE)'] (asserted)"
+  },
+  "checks": {
+    "asserted": [
+      "hand labels: 150 unique idx, 128 PRESENT / 13 BORDERLINE / 9 ABSENT (tau_recompute_summary.json)",
+      "the 150 automated diagnosis items in each verdict file are exactly the hand-labelled idx",
+      "gate_rule DISAGREE = Nemotron UNSAFE and Qwen SAFE on every row of both 708-item files",
+      "deployed files: recorded consensus equals gate_rule on 708/708 and 240/240 rows",
+      "deployed: 147 DISAGREE, 51 on 200 clean, 34.7%; calibration: 203 DISAGREE, 67 on 200 clean, 33.0%, 136 on corrupted items, 81 of them diagnosis (README B5)",
+      "deployed per-type counts, 96/508, prevalence 0.718, 34.7% and the by-prevalence grid match judgebench_v2_prevalence_sensitivity.json gate_708_disagree_reference",
+      "v2: DISAGREE on 54/120 drops and 45/120 controls, their Wilson intervals and the 45.5% share match judgebench_v2_prevalence_sensitivity.json gate_operating_characteristics (README B3: 45 of 99)"
+    ]
+  }
+}

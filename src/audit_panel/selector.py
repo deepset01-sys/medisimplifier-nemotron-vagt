@@ -3,8 +3,10 @@ selector.py — /v1/audit_panel ranking policy over vagt_core (no new statistics
 
 Given an incumbent judge panel and a candidate pool, recommend the single new
 rater that best raises ground-truth-anchored dependability (Φ_V) on the panel's
-BLINDEST stratum. Candidates whose blind-spot ΔΦ_V agree within TIE_BAND are
-treated as a statistical tie (their CIs overlap heavily); among the tied top the
+BLINDEST stratum. Blind-spot ΔΦ_V is rounded to the nearest TIE_BAND (0.01 bins,
+round(ΔΦ_V/0.01)·0.01), and candidates in the top candidate's bin are treated as a
+statistical tie (their CIs overlap heavily; bin edges are fixed, so candidates less than
+0.01 apart can fall in adjacent bins and not tie); among the tied top the
 one with the LEAST collateral (highest min ΔΦ_V on the other strata) is preferred,
 then RELIABILITY (fewest ERROR verdicts, then highest specificity on the clean
 controls), then mean ΔΦ_V, then model id. (Earlier this ranked by worst-stratum ΔΦ_V — a
@@ -29,8 +31,10 @@ import numpy as np
 
 import vagt_core as vc
 
-# Blind-spot ΔΦ_V within this band ⇒ candidates are a statistical tie (CI half-widths
-# on this benchmark are ~0.015, so 0.01 is conservative). Ties break on least collateral.
+# Blind-spot ΔΦ_V is rounded to bins of this width, and candidates in the top candidate's bin
+# are a statistical tie (the recommended candidate's CI half-width is ~0.016 on the v1 pool and
+# ~0.021 on v2, so 0.01 is conservative). Bin edges are fixed, so candidates less than 0.01
+# apart can land in adjacent bins and not tie. Ties break on least collateral, then reliability.
 TIE_BAND = 0.01
 
 
@@ -136,8 +140,9 @@ def audit_panel(pool, incumbent_panel, candidate_pool, bootstrap_iters=vc.N_BOOT
             "error_rows": errors,
             "specificity_clean": spec,
         })
-    # Primary: blind-spot (blindest-stratum) ΔΦ_V, banded to TIE_BAND so statistical ties
-    # don't turn a +0.0001 gap into a different recommendation. Tie-break: least collateral
+    # Primary: blind-spot (blindest-stratum) ΔΦ_V, rounded to TIE_BAND bins so most statistical
+    # ties don't turn a +0.0001 gap into a different recommendation (a gap that straddles a bin
+    # edge still does). Tie-break: least collateral
     # (highest min ΔΦ_V over the OTHER strata; constant when the pool has one stratum), then
     # reliability (fewest ERROR verdicts, then highest clean-control specificity), then mean
     # ΔΦ_V, then model id (determinism).

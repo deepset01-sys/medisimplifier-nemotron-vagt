@@ -48,12 +48,16 @@ more, though on the same rows their CIs only just clear Nano's or overlap it (gp
 vs Nano's upper +0.0992 on all 240 rows; DeepSeek +0.1024 vs +0.1056 on its 233 completed rows). Of six candidates, five pass the permutation null (gemma-3-27b
 does not, p = 0.449).
 
-**Mechanism.** The two incumbents share a blind spot: both pass **41 of the 120**
-genuine drops as SAFE. Nano flags **33 of those 41** — its signal lands exactly where
-the incumbents are jointly wrong (gpt-oss flags 38). Adding Nano also lowers
-inter-rater agreement slightly (Fleiss κ 0.2144 → 0.1788; Krippendorff α 0.216 →
-0.1799) while raising validity, but on this benchmark the agreement drop is **not
-significant** (Δκ −0.0356 [−0.1314, +0.0557]) — agreement simply carries no signal
+**Mechanism.** Under the deployed gate prompt the two incumbents each catch 56 of the 120
+genuine drops, and both pass the same **41 of the 120** as SAFE (34 would be expected if
+their misses were independent; under the calibration prompt they share 3 of 120). Their
+recall (46.7% each, Wilson 95% CI 38.0–55.6%) is outside the v2 protocol's pre-registered
+*incumbent blind spot confirmed* band (both below 30%; `docs/judgebench_v2_protocol.md`
+§8). Nano flags **33 of those 41** — its signal lands exactly where
+the incumbents are jointly wrong (gpt-oss flags 38). Adding Nano leaves
+inter-rater agreement with no detectable change (Fleiss κ 0.2144 → 0.1788,
+Δκ −0.0356 [−0.1310, +0.0565]; Krippendorff α 0.216 → 0.1799) while raising
+validity — agreement simply carries no signal
 about which judge helps. The cost is over-flagging: in 47 of 120 patients Nano flags
 both the version missing the diagnosis and the faithful one; in 63 it flags only the
 lossy version.
@@ -77,8 +81,9 @@ edited by DeepSeek-V4-Pro, so those two families' lead is partly by construction
 Nano's measurement is free of this — the panel judges were kept out of benchmark
 construction, see README A8). Agreement statistics would not have shown any of this.
 
-*An earlier version of this finding reported +0.071 on an automated benchmark whose
-diagnosis labels were later found ~85% wrong; see the project README (A6, A8).*
+*An earlier version of this finding reported +0.071 (at a 41% share of corrupted items, not the 50%
+above) on an automated benchmark whose diagnosis labels were later found ~85% wrong; see the project
+README (A6, A8).*
 
 ---
 

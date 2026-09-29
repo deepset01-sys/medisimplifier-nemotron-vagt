@@ -126,6 +126,7 @@
       "detection_corrected_delta_phi_v": 0.0247,
       "null_perm_p": 0.001,
       "null_mean": 0.0233,
+      "null_perm_p_note_2026_09_29": "null_perm_p 0.001: one of the 1,000 shuffles ties the real Delta Phi_V (+0.048) exactly. Counted as >=, as gemma's 30 tied shuffles are, p = 0.002. The 0.001 comes from a run made before vagt_core's sigma_N estimator change, under which the tied shuffle's float Delta Phi_V came out 1.1e-16 below the real one; with the current estimator the >= comparison counts it, and re-running scripts/run_null_control_v2.py gives 0.002 for Super in results/judgebench_v2_null_control.json and changes no other value there (scripts/check_null_control_ties_v2.py, results/judgebench_v2_null_control_ties.json). Still below 0.05, so null_detection_specific is unchanged. No values changed.",
       "null_detection_specific": true,
       "split_half_A": 0.0362,
       "split_half_B": 0.0582,
@@ -186,7 +187,8 @@
       "v1_verdict": "REFUTED (label contamination)",
       "v2_clean_labels_delta_phi_v": 0.122,
       "v2_verdict": "POSITIVE (real detection)",
-      "note": "the artifact is reversed on clean hand-verified labels"
+      "note": "the artifact is reversed on clean hand-verified labels",
+      "correction_2026_09_29": "v1_clean_tau_recompute and v1_verdict do not show that the artifact is reversed. -0.144 is the B/strict cell of results/tau_recompute_summary.json: 9 drops in 333 items (2.7%), against 138 in 333 (41%) for v1_contaminated_diagnosis_delta_phi_v, and the sign change comes from that difference in drop share, not from the labels: reweighted to 41% the cell is +0.0718 [+0.0046, +0.1154], and the automated-label cell reweighted to 2.7% is -0.1931 [-0.2541, -0.1343]. Both figures pair Llama and Qwen verdicts stored from the Project v1 run with Nemotron's under a different prompt. With all three judges under the deployed prompt and 41% drops, the automated labels give +0.0426 [+0.0264, +0.0593] and the four hand-label cells +0.0323 to +0.0502, three of the four CIs including 0 (A/generous's, [+0.0041, +0.0944], lies above 0); at the cells' own 2.6-9.9% drop shares both give negative point estimates (results/tau_recompute_v1_matched.json, docs/judgebench_v2_protocol_erratum.md). What stands: 128 of 150 automated diagnosis positives still contained the diagnosis, so 0.0706 was measured against wrong labels, and 9 genuine drops cannot show the sign. v2_clean_labels_delta_phi_v (0.122) is gpt-oss-120b's, not Nano's; Nano's v2 figure is 0.0765 (pool_table). Values above unchanged."
     }
   },
   "bands_note_2026_09_27": "pool_table bands relabelled to the protocol's four bands (docs/judgebench_v2_protocol.md §8): Nemotron-Super NULL/ATTENUATED -> WEAK-POS (CI excludes 0), gemma NULL/ATTENUATED -> NULL. No values changed.",

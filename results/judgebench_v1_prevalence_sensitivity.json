@@ -1,0 +1,3333 @@
+{
+  "purpose": "How the automated-pass (Project v1's benchmark, automated labels) cross-stratum figures depend on each stratum's corrupted share. Each stratum is its corrupted items plus the same 200 clean controls (195 in the calibration file's complete case), so the strata sit at different shares; the same verdicts are reweighted to common shares.",
+  "status": "post hoc sensitivity analysis; not part of any pre-registration",
+  "method": {
+    "reweighting": "scripts/run_prevalence_sensitivity_v2.py vagt_w / weights (imported): each corrupted row weighted p/n1, each clean row (1-p)/n0; every mean over rows weighted, means over raters not. 'common share p' puts every stratum at the same p",
+    "ci": "paired item bootstrap, vagt_core index stream, SEED=42, n_boot=1000, each resampled row keeping its weight. Calibration and gate files: one rng shared across strata in canonical order per share (vagt_nemotron_analysis.py convention); null control: a fresh rng per stratum (compute_null_baseline.py convention). ci95 is rounded to 4 dp, ci95_6dp to 6 dp; ci_excludes_0 uses the unrounded bounds",
+    "labels": "the automated diagnosis labels are ~85% wrong (README A8 threat 1): diagnosis figures here are disclosed history and reweighting does not correct them; dose/negation/lateral keep automated labels",
+    "assumption": "corrupted and clean items behave at other shares as they do here",
+    "grid": "0.01 to 0.99 in steps of 0.01, every stratum at the same share; point estimates only (no CIs), so a grid ordering is an ordering of point estimates",
+    "sigma_B_sign": "delta_sigma_B < 0 is a cut in shared bias, > 0 a rise; smallest_delta_sigma_B_runs is the argmin whatever its sign, strata_with_sigma_B_cut_runs lists the strata with a cut"
+  },
+  "common_shares": [
+    0.5,
+    0.3
+  ],
+  "calibration_file": {
+    "source": "nemotron_calibration_full.json (the file behind vagt_bootstrap_cis.json, vagt_nemotron_results.txt, README A6 dose/negation/lateral rows and FINDINGS.md §2); Llama+Qwen -> +Nano, complete case. Llama and Qwen verdicts are stored from Project v1; Nano's were run with nemotron_judge_test.py's calibration prompt",
+    "own_share": {
+      "dose": {
+        "n": 280,
+        "corrupted": 85,
+        "clean": 195,
+        "share": 0.3036,
+        "phi_incumbent": 0.7458,
+        "phi_with_nano": 0.7331,
+        "delta_phi_v": -0.0127,
+        "ci95": [
+          -0.0552,
+          0.0208
+        ],
+        "ci95_6dp": [
+          -0.055229,
+          0.020831
+        ],
+        "ci_excludes_0": false,
+        "delta_sigma_B": 0.0005,
+        "delta_sigma_B_ci95": [
+          -0.0116,
+          0.0107
+        ],
+        "delta_sigma_B_ci_excludes_0": false
+      },
+      "negation": {
+        "n": 295,
+        "corrupted": 100,
+        "clean": 195,
+        "share": 0.339,
+        "phi_incumbent": 0.5758,
+        "phi_with_nano": 0.6183,
+        "delta_phi_v": 0.0425,
+        "ci95": [
+          0.0105,
+          0.0695
+        ],
+        "ci95_6dp": [
+          0.010517,
+          0.069504
+        ],
+        "ci_excludes_0": true,
+        "delta_sigma_B": -0.0357,
+        "delta_sigma_B_ci95": [
+          -0.0588,
+          -0.0155
+        ],
+        "delta_sigma_B_ci_excludes_0": true
+      },
+      "lateral": {
+        "n": 341,
+        "corrupted": 146,
+        "clean": 195,
+        "share": 0.4282,
+        "phi_incumbent": 0.6969,
+        "phi_with_nano": 0.7446,
+        "delta_phi_v": 0.0478,
+        "ci95": [
+          0.0191,
+          0.0744
+        ],
+        "ci95_6dp": [
+          0.019084,
+          0.074394
+        ],
+        "ci_excludes_0": true,
+        "delta_sigma_B": -0.0142,
+        "delta_sigma_B_ci95": [
+          -0.0284,
+          -0.0024
+        ],
+        "delta_sigma_B_ci_excludes_0": true
+      },
+      "diagnosis": {
+        "n": 333,
+        "corrupted": 138,
+        "clean": 195,
+        "share": 0.4144,
+        "phi_incumbent": 0.4059,
+        "phi_with_nano": 0.4764,
+        "delta_phi_v": 0.0706,
+        "ci95": [
+          0.0552,
+          0.0866
+        ],
+        "ci95_6dp": [
+          0.055183,
+          0.086636
+        ],
+        "ci_excludes_0": true,
+        "delta_sigma_B": -0.1163,
+        "delta_sigma_B_ci95": [
+          -0.1437,
+          -0.0901
+        ],
+        "delta_sigma_B_ci_excludes_0": true
+      }
+    },
+    "common_share": {
+      "0.50": {
+        "dose": {
+          "phi_incumbent": 0.6806,
+          "phi_with_nano": 0.7238,
+          "delta_phi_v": 0.0432,
+          "ci95": [
+            0.0074,
+            0.0729
+          ],
+          "ci95_6dp": [
+            0.007405,
+            0.072872
+          ],
+          "ci_excludes_0": true,
+          "delta_sigma_B": -0.0108,
+          "delta_sigma_B_ci95": [
+            -0.0294,
+            0.0052
+          ],
+          "delta_sigma_B_ci_excludes_0": false
+        },
+        "negation": {
+          "phi_incumbent": 0.5084,
+          "phi_with_nano": 0.5805,
+          "delta_phi_v": 0.0721,
+          "ci95": [
+            0.0448,
+            0.096
+          ],
+          "ci95_6dp": [
+            0.044827,
+            0.09601
+          ],
+          "ci_excludes_0": true,
+          "delta_sigma_B": -0.0601,
+          "delta_sigma_B_ci95": [
+            -0.0916,
+            -0.0308
+          ],
+          "delta_sigma_B_ci_excludes_0": true
+        },
+        "lateral": {
+          "phi_incumbent": 0.6678,
+          "phi_with_nano": 0.7351,
+          "delta_phi_v": 0.0674,
+          "ci95": [
+            0.0411,
+            0.0924
+          ],
+          "ci95_6dp": [
+            0.041078,
+            0.092438
+          ],
+          "ci_excludes_0": true,
+          "delta_sigma_B": -0.0201,
+          "delta_sigma_B_ci95": [
+            -0.0359,
+            -0.0066
+          ],
+          "delta_sigma_B_ci_excludes_0": true
+        },
+        "diagnosis": {
+          "phi_incumbent": 0.369,
+          "phi_with_nano": 0.4451,
+          "delta_phi_v": 0.0762,
+          "ci95": [
+            0.0615,
+            0.0914
+          ],
+          "ci95_6dp": [
+            0.061502,
+            0.091375
+          ],
+          "ci_excludes_0": true,
+          "delta_sigma_B": -0.143,
+          "delta_sigma_B_ci95": [
+            -0.1741,
+            -0.1119
+          ],
+          "delta_sigma_B_ci_excludes_0": true
+        }
+      },
+      "0.30": {
+        "dose": {
+          "phi_incumbent": 0.7466,
+          "phi_with_nano": 0.7326,
+          "delta_phi_v": -0.014,
+          "ci95": [
+            -0.057,
+            0.0195
+          ],
+          "ci95_6dp": [
+            -0.056962,
+            0.019519
+          ],
+          "ci_excludes_0": false,
+          "delta_sigma_B": 0.0007,
+          "delta_sigma_B_ci95": [
+            -0.0113,
+            0.0108
+          ],
+          "delta_sigma_B_ci_excludes_0": false
+        },
+        "negation": {
+          "phi_incumbent": 0.5889,
+          "phi_with_nano": 0.6211,
+          "delta_phi_v": 0.0322,
+          "ci95": [
+            -0.0002,
+            0.0601
+          ],
+          "ci95_6dp": [
+            -0.000192,
+            0.060066
+          ],
+          "ci_excludes_0": false,
+          "delta_sigma_B": -0.0299,
+          "delta_sigma_B_ci95": [
+            -0.0508,
+            -0.0117
+          ],
+          "delta_sigma_B_ci_excludes_0": true
+        },
+        "lateral": {
+          "phi_incumbent": 0.7362,
+          "phi_with_nano": 0.7411,
+          "delta_phi_v": 0.005,
+          "ci95": [
+            -0.0291,
+            0.0366
+          ],
+          "ci95_6dp": [
+            -0.029055,
+            0.036607
+          ],
+          "ci_excludes_0": false,
+          "delta_sigma_B": -0.0046,
+          "delta_sigma_B_ci95": [
+            -0.0161,
+            0.0048
+          ],
+          "delta_sigma_B_ci_excludes_0": false
+        },
+        "diagnosis": {
+          "phi_incumbent": 0.4482,
+          "phi_with_nano": 0.504,
+          "delta_phi_v": 0.0558,
+          "ci95": [
+            0.0378,
+            0.0748
+          ],
+          "ci95_6dp": [
+            0.037754,
+            0.074788
+          ],
+          "ci_excludes_0": true,
+          "delta_sigma_B": -0.0805,
+          "delta_sigma_B_ci95": [
+            -0.1028,
+            -0.0603
+          ],
+          "delta_sigma_B_ci_excludes_0": true
+        }
+      }
+    },
+    "ci_overlap": {
+      "own_share": {
+        "dose|negation": true,
+        "dose|lateral": true,
+        "dose|diagnosis": false,
+        "negation|lateral": true,
+        "negation|diagnosis": true,
+        "lateral|diagnosis": true
+      },
+      "common_0.50": {
+        "dose|negation": true,
+        "dose|lateral": true,
+        "dose|diagnosis": true,
+        "negation|lateral": true,
+        "negation|diagnosis": true,
+        "lateral|diagnosis": true
+      },
+      "common_0.30": {
+        "dose|negation": true,
+        "dose|lateral": true,
+        "dose|diagnosis": false,
+        "negation|lateral": true,
+        "negation|diagnosis": true,
+        "lateral|diagnosis": false
+      }
+    },
+    "grid": {
+      "delta_sign_runs": {
+        "dose": [
+          {
+            "from": 0.01,
+            "to": 0.33,
+            "value": "negative"
+          },
+          {
+            "from": 0.34,
+            "to": 0.99,
+            "value": "positive"
+          }
+        ],
+        "negation": [
+          {
+            "from": 0.01,
+            "to": 0.21,
+            "value": "negative"
+          },
+          {
+            "from": 0.22,
+            "to": 0.99,
+            "value": "positive"
+          }
+        ],
+        "lateral": [
+          {
+            "from": 0.01,
+            "to": 0.28,
+            "value": "negative"
+          },
+          {
+            "from": 0.29,
+            "to": 0.99,
+            "value": "positive"
+          }
+        ],
+        "diagnosis": [
+          {
+            "from": 0.01,
+            "to": 0.13,
+            "value": "negative"
+          },
+          {
+            "from": 0.14,
+            "to": 0.99,
+            "value": "positive"
+          }
+        ]
+      },
+      "largest_delta_runs": [
+        {
+          "from": 0.01,
+          "to": 0.53,
+          "value": "diagnosis"
+        },
+        {
+          "from": 0.54,
+          "to": 0.99,
+          "value": "lateral"
+        }
+      ],
+      "smallest_delta_runs": [
+        {
+          "from": 0.01,
+          "to": 0.65,
+          "value": "dose"
+        },
+        {
+          "from": 0.66,
+          "to": 0.99,
+          "value": "diagnosis"
+        }
+      ],
+      "largest_delta_runs_dose_negation_lateral": [
+        {
+          "from": 0.01,
+          "to": 0.53,
+          "value": "negation"
+        },
+        {
+          "from": 0.54,
+          "to": 0.99,
+          "value": "lateral"
+        }
+      ],
+      "smallest_delta_runs_dose_negation_lateral": [
+        {
+          "from": 0.01,
+          "to": 0.72,
+          "value": "dose"
+        },
+        {
+          "from": 0.73,
+          "to": 0.99,
+          "value": "negation"
+        }
+      ],
+      "delta_sigma_B_sign_runs": {
+        "dose": [
+          {
+            "from": 0.01,
+            "to": 0.31,
+            "value": "positive"
+          },
+          {
+            "from": 0.32,
+            "to": 0.99,
+            "value": "negative"
+          }
+        ],
+        "negation": [
+          {
+            "from": 0.01,
+            "to": 0.09,
+            "value": "positive"
+          },
+          {
+            "from": 0.1,
+            "to": 0.99,
+            "value": "negative"
+          }
+        ],
+        "lateral": [
+          {
+            "from": 0.01,
+            "to": 0.23,
+            "value": "positive"
+          },
+          {
+            "from": 0.24,
+            "to": 0.99,
+            "value": "negative"
+          }
+        ],
+        "diagnosis": [
+          {
+            "from": 0.01,
+            "to": 0.04,
+            "value": "positive"
+          },
+          {
+            "from": 0.05,
+            "to": 0.99,
+            "value": "negative"
+          }
+        ]
+      },
+      "smallest_delta_sigma_B_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": "diagnosis"
+        }
+      ],
+      "strata_with_sigma_B_cut_runs": [
+        {
+          "from": 0.01,
+          "to": 0.04,
+          "value": "none"
+        },
+        {
+          "from": 0.05,
+          "to": 0.09,
+          "value": "diagnosis"
+        },
+        {
+          "from": 0.1,
+          "to": 0.23,
+          "value": "negation, diagnosis"
+        },
+        {
+          "from": 0.24,
+          "to": 0.31,
+          "value": "negation, lateral, diagnosis"
+        },
+        {
+          "from": 0.32,
+          "to": 0.99,
+          "value": "dose, negation, lateral, diagnosis"
+        }
+      ],
+      "blindest_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": "diagnosis"
+        }
+      ]
+    },
+    "sigma_B_clamps": {
+      "own_share": 0,
+      "common_shares": 0,
+      "grid": 0
+    }
+  },
+  "gate_file": {
+    "source": "results/gate_calibration_full.json (all three judges under the deployed gate prompt; the file behind results/consensus_accuracy.json), Llama+Qwen -> +Nano, complete case",
+    "ci_note": "consensus_accuracy.json reports no CIs; these use the calibration file's stream convention",
+    "own_share": {
+      "dose": {
+        "n": 295,
+        "corrupted": 95,
+        "clean": 200,
+        "share": 0.322,
+        "phi_incumbent": 0.7497,
+        "phi_with_nano": 0.7218,
+        "delta_phi_v": -0.0279,
+        "ci95": [
+          -0.0625,
+          0.0042
+        ],
+        "ci95_6dp": [
+          -0.062466,
+          0.004195
+        ],
+        "ci_excludes_0": false,
+        "delta_sigma_B": 0.0166,
+        "delta_sigma_B_ci95": [
+          0.0023,
+          0.0318
+        ],
+        "delta_sigma_B_ci_excludes_0": true,
+        "delta_bal_acc": 0.0345
+      },
+      "negation": {
+        "n": 313,
+        "corrupted": 113,
+        "clean": 200,
+        "share": 0.361,
+        "phi_incumbent": 0.6186,
+        "phi_with_nano": 0.6187,
+        "delta_phi_v": 0.0001,
+        "ci95": [
+          -0.0256,
+          0.0234
+        ],
+        "ci95_6dp": [
+          -0.02561,
+          0.023371
+        ],
+        "ci_excludes_0": false,
+        "delta_sigma_B": 0.0145,
+        "delta_sigma_B_ci95": [
+          -0.0015,
+          0.0307
+        ],
+        "delta_sigma_B_ci_excludes_0": false,
+        "delta_bal_acc": 0.0096
+      },
+      "lateral": {
+        "n": 350,
+        "corrupted": 150,
+        "clean": 200,
+        "share": 0.4286,
+        "phi_incumbent": 0.8023,
+        "phi_with_nano": 0.785,
+        "delta_phi_v": -0.0173,
+        "ci95": [
+          -0.0428,
+          0.0062
+        ],
+        "ci95_6dp": [
+          -0.042843,
+          0.006198
+        ],
+        "ci_excludes_0": false,
+        "delta_sigma_B": 0.0204,
+        "delta_sigma_B_ci95": [
+          0.0107,
+          0.0294
+        ],
+        "delta_sigma_B_ci_excludes_0": true,
+        "delta_bal_acc": 0.0417
+      },
+      "diagnosis": {
+        "n": 350,
+        "corrupted": 150,
+        "clean": 200,
+        "share": 0.4286,
+        "phi_incumbent": 0.4324,
+        "phi_with_nano": 0.4762,
+        "delta_phi_v": 0.0438,
+        "ci95": [
+          0.0264,
+          0.0595
+        ],
+        "ci95_6dp": [
+          0.026381,
+          0.059468
+        ],
+        "ci_excludes_0": true,
+        "delta_sigma_B": -0.0416,
+        "delta_sigma_B_ci95": [
+          -0.0665,
+          -0.0153
+        ],
+        "delta_sigma_B_ci_excludes_0": true,
+        "delta_bal_acc": -0.0217
+      }
+    },
+    "common_share": {
+      "0.50": {
+        "dose": {
+          "phi_incumbent": 0.742,
+          "phi_with_nano": 0.7434,
+          "delta_phi_v": 0.0014,
+          "ci95": [
+            -0.0319,
+            0.0331
+          ],
+          "ci95_6dp": [
+            -0.031915,
+            0.033121
+          ],
+          "ci_excludes_0": false,
+          "delta_sigma_B": 0.0049,
+          "delta_sigma_B_ci95": [
+            -0.0135,
+            0.0213
+          ],
+          "delta_sigma_B_ci_excludes_0": false
+        },
+        "negation": {
+          "phi_incumbent": 0.5831,
+          "phi_with_nano": 0.601,
+          "delta_phi_v": 0.018,
+          "ci95": [
+            -0.0065,
+            0.0414
+          ],
+          "ci95_6dp": [
+            -0.006492,
+            0.041374
+          ],
+          "ci_excludes_0": false,
+          "delta_sigma_B": 0.0054,
+          "delta_sigma_B_ci95": [
+            -0.0136,
+            0.0249
+          ],
+          "delta_sigma_B_ci_excludes_0": false
+        },
+        "lateral": {
+          "phi_incumbent": 0.7999,
+          "phi_with_nano": 0.7939,
+          "delta_phi_v": -0.006,
+          "ci95": [
+            -0.0306,
+            0.0167
+          ],
+          "ci95_6dp": [
+            -0.030609,
+            0.016717
+          ],
+          "ci_excludes_0": false,
+          "delta_sigma_B": 0.0174,
+          "delta_sigma_B_ci95": [
+            0.0083,
+            0.0259
+          ],
+          "delta_sigma_B_ci_excludes_0": true
+        },
+        "diagnosis": {
+          "phi_incumbent": 0.4051,
+          "phi_with_nano": 0.4538,
+          "delta_phi_v": 0.0487,
+          "ci95": [
+            0.0327,
+            0.0645
+          ],
+          "ci95_6dp": [
+            0.032726,
+            0.064538
+          ],
+          "ci_excludes_0": true,
+          "delta_sigma_B": -0.0549,
+          "delta_sigma_B_ci95": [
+            -0.0829,
+            -0.0258
+          ],
+          "delta_sigma_B_ci_excludes_0": true
+        }
+      },
+      "0.30": {
+        "dose": {
+          "phi_incumbent": 0.7469,
+          "phi_with_nano": 0.7145,
+          "delta_phi_v": -0.0324,
+          "ci95": [
+            -0.0672,
+            -0.0
+          ],
+          "ci95_6dp": [
+            -0.067186,
+            -1.6e-05
+          ],
+          "ci_excludes_0": true,
+          "delta_sigma_B": 0.0181,
+          "delta_sigma_B_ci95": [
+            0.0043,
+            0.0333
+          ],
+          "delta_sigma_B_ci_excludes_0": true
+        },
+        "negation": {
+          "phi_incumbent": 0.6246,
+          "phi_with_nano": 0.6145,
+          "delta_phi_v": -0.0101,
+          "ci95": [
+            -0.0365,
+            0.0147
+          ],
+          "ci95_6dp": [
+            -0.036518,
+            0.014748
+          ],
+          "ci_excludes_0": false,
+          "delta_sigma_B": 0.0186,
+          "delta_sigma_B_ci95": [
+            0.0039,
+            0.0336
+          ],
+          "delta_sigma_B_ci_excludes_0": true
+        },
+        "lateral": {
+          "phi_incumbent": 0.7883,
+          "phi_with_nano": 0.7473,
+          "delta_phi_v": -0.041,
+          "ci95": [
+            -0.0713,
+            -0.014
+          ],
+          "ci95_6dp": [
+            -0.071256,
+            -0.013997
+          ],
+          "ci_excludes_0": true,
+          "delta_sigma_B": 0.0258,
+          "delta_sigma_B_ci95": [
+            0.0155,
+            0.0362
+          ],
+          "delta_sigma_B_ci_excludes_0": true
+        },
+        "diagnosis": {
+          "phi_incumbent": 0.4674,
+          "phi_with_nano": 0.4969,
+          "delta_phi_v": 0.0294,
+          "ci95": [
+            0.0092,
+            0.0468
+          ],
+          "ci95_6dp": [
+            0.009211,
+            0.046835
+          ],
+          "ci_excludes_0": true,
+          "delta_sigma_B": -0.0177,
+          "delta_sigma_B_ci95": [
+            -0.0385,
+            0.0034
+          ],
+          "delta_sigma_B_ci_excludes_0": false
+        }
+      }
+    },
+    "ci_overlap": {
+      "own_share": {
+        "dose|negation": true,
+        "dose|lateral": true,
+        "dose|diagnosis": false,
+        "negation|lateral": true,
+        "negation|diagnosis": false,
+        "lateral|diagnosis": false
+      },
+      "common_0.50": {
+        "dose|negation": true,
+        "dose|lateral": true,
+        "dose|diagnosis": true,
+        "negation|lateral": true,
+        "negation|diagnosis": true,
+        "lateral|diagnosis": false
+      },
+      "common_0.30": {
+        "dose|negation": true,
+        "dose|lateral": true,
+        "dose|diagnosis": false,
+        "negation|lateral": true,
+        "negation|diagnosis": true,
+        "lateral|diagnosis": false
+      }
+    },
+    "grid": {
+      "delta_sign_runs": {
+        "dose": [
+          {
+            "from": 0.01,
+            "to": 0.49,
+            "value": "negative"
+          },
+          {
+            "from": 0.5,
+            "to": 0.99,
+            "value": "positive"
+          }
+        ],
+        "negation": [
+          {
+            "from": 0.01,
+            "to": 0.36,
+            "value": "negative"
+          },
+          {
+            "from": 0.37,
+            "to": 0.99,
+            "value": "positive"
+          }
+        ],
+        "lateral": [
+          {
+            "from": 0.01,
+            "to": 0.53,
+            "value": "negative"
+          },
+          {
+            "from": 0.54,
+            "to": 0.99,
+            "value": "positive"
+          }
+        ],
+        "diagnosis": [
+          {
+            "from": 0.01,
+            "to": 0.16,
+            "value": "negative"
+          },
+          {
+            "from": 0.17,
+            "to": 0.99,
+            "value": "positive"
+          }
+        ]
+      },
+      "largest_delta_runs": [
+        {
+          "from": 0.01,
+          "to": 0.78,
+          "value": "diagnosis"
+        },
+        {
+          "from": 0.79,
+          "to": 0.99,
+          "value": "lateral"
+        }
+      ],
+      "smallest_delta_runs": [
+        {
+          "from": 0.01,
+          "to": 0.75,
+          "value": "lateral"
+        },
+        {
+          "from": 0.76,
+          "to": 0.85,
+          "value": "negation"
+        },
+        {
+          "from": 0.86,
+          "to": 0.99,
+          "value": "diagnosis"
+        }
+      ],
+      "largest_delta_runs_dose_negation_lateral": [
+        {
+          "from": 0.01,
+          "to": 0.74,
+          "value": "negation"
+        },
+        {
+          "from": 0.75,
+          "to": 0.76,
+          "value": "dose"
+        },
+        {
+          "from": 0.77,
+          "to": 0.99,
+          "value": "lateral"
+        }
+      ],
+      "smallest_delta_runs_dose_negation_lateral": [
+        {
+          "from": 0.01,
+          "to": 0.75,
+          "value": "lateral"
+        },
+        {
+          "from": 0.76,
+          "to": 0.99,
+          "value": "negation"
+        }
+      ],
+      "delta_sigma_B_sign_runs": {
+        "dose": [
+          {
+            "from": 0.01,
+            "to": 0.57,
+            "value": "positive"
+          },
+          {
+            "from": 0.58,
+            "to": 0.99,
+            "value": "negative"
+          }
+        ],
+        "negation": [
+          {
+            "from": 0.01,
+            "to": 0.58,
+            "value": "positive"
+          },
+          {
+            "from": 0.59,
+            "to": 0.99,
+            "value": "negative"
+          }
+        ],
+        "lateral": [
+          {
+            "from": 0.01,
+            "to": 0.91,
+            "value": "positive"
+          },
+          {
+            "from": 0.92,
+            "to": 0.99,
+            "value": "negative"
+          }
+        ],
+        "diagnosis": [
+          {
+            "from": 0.01,
+            "to": 0.2,
+            "value": "positive"
+          },
+          {
+            "from": 0.21,
+            "to": 0.99,
+            "value": "negative"
+          }
+        ]
+      },
+      "smallest_delta_sigma_B_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": "diagnosis"
+        }
+      ],
+      "strata_with_sigma_B_cut_runs": [
+        {
+          "from": 0.01,
+          "to": 0.2,
+          "value": "none"
+        },
+        {
+          "from": 0.21,
+          "to": 0.57,
+          "value": "diagnosis"
+        },
+        {
+          "from": 0.58,
+          "to": 0.58,
+          "value": "dose, diagnosis"
+        },
+        {
+          "from": 0.59,
+          "to": 0.91,
+          "value": "dose, negation, diagnosis"
+        },
+        {
+          "from": 0.92,
+          "to": 0.99,
+          "value": "dose, negation, lateral, diagnosis"
+        }
+      ],
+      "blindest_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": "diagnosis"
+        }
+      ]
+    },
+    "balanced_accuracy_note": "majority-vote balanced accuracy averages recall and specificity, so it does not depend on the share; Delta balanced accuracy is copied from consensus_accuracy.json",
+    "phi_v_and_bal_acc_opposite": {
+      "own_share": [
+        "diagnosis",
+        "dose",
+        "lateral"
+      ],
+      "common_0.50": [
+        "diagnosis",
+        "lateral"
+      ],
+      "common_0.30": [
+        "diagnosis",
+        "dose",
+        "lateral",
+        "negation"
+      ],
+      "count_runs": [
+        {
+          "from": 0.01,
+          "to": 0.16,
+          "value": 3
+        },
+        {
+          "from": 0.17,
+          "to": 0.36,
+          "value": 4
+        },
+        {
+          "from": 0.37,
+          "to": 0.49,
+          "value": 3
+        },
+        {
+          "from": 0.5,
+          "to": 0.53,
+          "value": 2
+        },
+        {
+          "from": 0.54,
+          "to": 0.99,
+          "value": 1
+        }
+      ]
+    },
+    "sigma_B_clamps": {
+      "own_share": 0,
+      "common_shares": 4,
+      "grid": 0
+    }
+  },
+  "null_control": {
+    "source": "audit_pool/ with the two synthetic raters of scripts/compute_null_baseline.py (inject_nulls, seed 42); Llama+Qwen -> +rater, complete case (results/null_baseline_cis.json)",
+    "mean_note": "unweighted mean of the four per-stratum Delta Phi_V, as in the committed 'net-negative / net-positive' text; no CI is computed for the mean",
+    "raters": {
+      "null_unsafe (constant UNSAFE)": {
+        "model": "null_unsafe",
+        "own_share": {
+          "dose": {
+            "n": 284,
+            "corrupted": 88,
+            "clean": 196,
+            "share": 0.3099,
+            "phi_incumbent": 0.743,
+            "phi_with_nano": 0.5739,
+            "delta_phi_v": -0.1691,
+            "ci95": [
+              -0.2291,
+              -0.1196
+            ],
+            "ci95_6dp": [
+              -0.229143,
+              -0.119608
+            ],
+            "ci_excludes_0": true,
+            "delta_sigma_B": 0.0503,
+            "delta_sigma_B_ci95": [
+              0.0341,
+              0.0658
+            ],
+            "delta_sigma_B_ci_excludes_0": true
+          },
+          "negation": {
+            "n": 298,
+            "corrupted": 102,
+            "clean": 196,
+            "share": 0.3423,
+            "phi_incumbent": 0.578,
+            "phi_with_nano": 0.5267,
+            "delta_phi_v": -0.0513,
+            "ci95": [
+              -0.0986,
+              -0.0122
+            ],
+            "ci95_6dp": [
+              -0.098612,
+              -0.012247
+            ],
+            "ci_excludes_0": true,
+            "delta_sigma_B": 0.0005,
+            "delta_sigma_B_ci95": [
+              -0.0259,
+              0.025
+            ],
+            "delta_sigma_B_ci_excludes_0": false
+          },
+          "lateral": {
+            "n": 342,
+            "corrupted": 146,
+            "clean": 196,
+            "share": 0.4269,
+            "phi_incumbent": 0.6973,
+            "phi_with_nano": 0.6166,
+            "delta_phi_v": -0.0807,
+            "ci95": [
+              -0.1249,
+              -0.0454
+            ],
+            "ci95_6dp": [
+              -0.12491,
+              -0.045403
+            ],
+            "ci_excludes_0": true,
+            "delta_sigma_B": 0.0275,
+            "delta_sigma_B_ci95": [
+              0.012,
+              0.0425
+            ],
+            "delta_sigma_B_ci_excludes_0": true
+          },
+          "diagnosis": {
+            "n": 336,
+            "corrupted": 140,
+            "clean": 196,
+            "share": 0.4167,
+            "phi_incumbent": 0.4044,
+            "phi_with_nano": 0.4529,
+            "delta_phi_v": 0.0486,
+            "ci95": [
+              0.026,
+              0.0666
+            ],
+            "ci95_6dp": [
+              0.025962,
+              0.066596
+            ],
+            "ci_excludes_0": true,
+            "delta_sigma_B": -0.1199,
+            "delta_sigma_B_ci95": [
+              -0.1541,
+              -0.0864
+            ],
+            "delta_sigma_B_ci_excludes_0": true
+          }
+        },
+        "mean_over_strata": {
+          "own_share": -0.0631,
+          "common_0.50": 0.0066,
+          "common_0.30": -0.1088
+        },
+        "common_share": {
+          "0.50": {
+            "dose": {
+              "phi_incumbent": 0.6788,
+              "phi_with_nano": 0.6358,
+              "delta_phi_v": -0.043,
+              "ci95": [
+                -0.0935,
+                -0.0035
+              ],
+              "ci95_6dp": [
+                -0.093504,
+                -0.003547
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": 0.0119,
+              "delta_sigma_B_ci95": [
+                -0.0103,
+                0.0336
+              ],
+              "delta_sigma_B_ci_excludes_0": false
+            },
+            "negation": {
+              "phi_incumbent": 0.5119,
+              "phi_with_nano": 0.5446,
+              "delta_phi_v": 0.0327,
+              "ci95": [
+                -0.0037,
+                0.0607
+              ],
+              "ci95_6dp": [
+                -0.003665,
+                0.060658
+              ],
+              "ci_excludes_0": false,
+              "delta_sigma_B": -0.0519,
+              "delta_sigma_B_ci95": [
+                -0.0846,
+                -0.0196
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            },
+            "lateral": {
+              "phi_incumbent": 0.6678,
+              "phi_with_nano": 0.6297,
+              "delta_phi_v": -0.0381,
+              "ci95": [
+                -0.0786,
+                -0.0059
+              ],
+              "ci95_6dp": [
+                -0.078596,
+                -0.005855
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": 0.0129,
+              "delta_sigma_B_ci95": [
+                -0.0037,
+                0.0296
+              ],
+              "delta_sigma_B_ci_excludes_0": false
+            },
+            "diagnosis": {
+              "phi_incumbent": 0.3684,
+              "phi_with_nano": 0.4431,
+              "delta_phi_v": 0.0747,
+              "ci95": [
+                0.0576,
+                0.0879
+              ],
+              "ci95_6dp": [
+                0.057598,
+                0.08792
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": -0.167,
+              "delta_sigma_B_ci95": [
+                -0.2032,
+                -0.1317
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            }
+          },
+          "0.30": {
+            "dose": {
+              "phi_incumbent": 0.7454,
+              "phi_with_nano": 0.5681,
+              "delta_phi_v": -0.1773,
+              "ci95": [
+                -0.238,
+                -0.1273
+              ],
+              "ci95_6dp": [
+                -0.237976,
+                -0.127309
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": 0.0524,
+              "delta_sigma_B_ci95": [
+                0.0365,
+                0.0676
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            },
+            "negation": {
+              "phi_incumbent": 0.5923,
+              "phi_with_nano": 0.5114,
+              "delta_phi_v": -0.0809,
+              "ci95": [
+                -0.1311,
+                -0.0389
+              ],
+              "ci95_6dp": [
+                -0.13106,
+                -0.038903
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": 0.0146,
+              "delta_sigma_B_ci95": [
+                -0.0094,
+                0.0366
+              ],
+              "delta_sigma_B_ci_excludes_0": false
+            },
+            "lateral": {
+              "phi_incumbent": 0.7362,
+              "phi_with_nano": 0.5645,
+              "delta_phi_v": -0.1717,
+              "ci95": [
+                -0.2215,
+                -0.1308
+              ],
+              "ci95_6dp": [
+                -0.221462,
+                -0.130811
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": 0.0533,
+              "delta_sigma_B_ci95": [
+                0.0407,
+                0.0653
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            },
+            "diagnosis": {
+              "phi_incumbent": 0.4476,
+              "phi_with_nano": 0.4424,
+              "delta_phi_v": -0.0052,
+              "ci95": [
+                -0.0353,
+                0.0198
+              ],
+              "ci95_6dp": [
+                -0.035269,
+                0.019752
+              ],
+              "ci_excludes_0": false,
+              "delta_sigma_B": -0.054,
+              "delta_sigma_B_ci95": [
+                -0.0831,
+                -0.0266
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            }
+          }
+        },
+        "mean_sign_runs": [
+          {
+            "from": 0.01,
+            "to": 0.48,
+            "value": "negative"
+          },
+          {
+            "from": 0.49,
+            "to": 0.99,
+            "value": "positive"
+          }
+        ],
+        "delta_sign_runs": {
+          "dose": [
+            {
+              "from": 0.01,
+              "to": 0.58,
+              "value": "negative"
+            },
+            {
+              "from": 0.59,
+              "to": 0.99,
+              "value": "positive"
+            }
+          ],
+          "negation": [
+            {
+              "from": 0.01,
+              "to": 0.43,
+              "value": "negative"
+            },
+            {
+              "from": 0.44,
+              "to": 0.99,
+              "value": "positive"
+            }
+          ],
+          "lateral": [
+            {
+              "from": 0.01,
+              "to": 0.57,
+              "value": "negative"
+            },
+            {
+              "from": 0.58,
+              "to": 0.99,
+              "value": "positive"
+            }
+          ],
+          "diagnosis": [
+            {
+              "from": 0.01,
+              "to": 0.3,
+              "value": "negative"
+            },
+            {
+              "from": 0.31,
+              "to": 0.99,
+              "value": "positive"
+            }
+          ]
+        }
+      },
+      "null_random (p=0.47)": {
+        "model": "null_random",
+        "own_share": {
+          "dose": {
+            "n": 284,
+            "corrupted": 88,
+            "clean": 196,
+            "share": 0.3099,
+            "phi_incumbent": 0.743,
+            "phi_with_nano": 0.6354,
+            "delta_phi_v": -0.1076,
+            "ci95": [
+              -0.1476,
+              -0.0754
+            ],
+            "ci95_6dp": [
+              -0.147584,
+              -0.075419
+            ],
+            "ci_excludes_0": true,
+            "delta_sigma_B": 0.0278,
+            "delta_sigma_B_ci95": [
+              0.014,
+              0.041
+            ],
+            "delta_sigma_B_ci_excludes_0": true
+          },
+          "negation": {
+            "n": 298,
+            "corrupted": 102,
+            "clean": 196,
+            "share": 0.3423,
+            "phi_incumbent": 0.578,
+            "phi_with_nano": 0.5625,
+            "delta_phi_v": -0.0155,
+            "ci95": [
+              -0.0506,
+              0.011
+            ],
+            "ci95_6dp": [
+              -0.05064,
+              0.011043
+            ],
+            "ci_excludes_0": false,
+            "delta_sigma_B": -0.0107,
+            "delta_sigma_B_ci95": [
+              -0.0324,
+              0.0102
+            ],
+            "delta_sigma_B_ci_excludes_0": false
+          },
+          "lateral": {
+            "n": 342,
+            "corrupted": 146,
+            "clean": 196,
+            "share": 0.4269,
+            "phi_incumbent": 0.6973,
+            "phi_with_nano": 0.6326,
+            "delta_phi_v": -0.0647,
+            "ci95": [
+              -0.0949,
+              -0.0385
+            ],
+            "ci95_6dp": [
+              -0.094863,
+              -0.038532
+            ],
+            "ci_excludes_0": true,
+            "delta_sigma_B": 0.0256,
+            "delta_sigma_B_ci95": [
+              0.0101,
+              0.0401
+            ],
+            "delta_sigma_B_ci_excludes_0": true
+          },
+          "diagnosis": {
+            "n": 336,
+            "corrupted": 140,
+            "clean": 196,
+            "share": 0.4167,
+            "phi_incumbent": 0.4044,
+            "phi_with_nano": 0.4425,
+            "delta_phi_v": 0.0381,
+            "ci95": [
+              0.0214,
+              0.0528
+            ],
+            "ci95_6dp": [
+              0.021441,
+              0.052767
+            ],
+            "ci_excludes_0": true,
+            "delta_sigma_B": -0.0821,
+            "delta_sigma_B_ci95": [
+              -0.1081,
+              -0.0558
+            ],
+            "delta_sigma_B_ci_excludes_0": true
+          }
+        },
+        "mean_over_strata": {
+          "own_share": -0.0374,
+          "common_0.50": -0.0156,
+          "common_0.30": -0.054
+        },
+        "common_share": {
+          "0.50": {
+            "dose": {
+              "phi_incumbent": 0.6788,
+              "phi_with_nano": 0.6091,
+              "delta_phi_v": -0.0697,
+              "ci95": [
+                -0.1066,
+                -0.0376
+              ],
+              "ci95_6dp": [
+                -0.106566,
+                -0.037636
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": 0.033,
+              "delta_sigma_B_ci95": [
+                0.011,
+                0.054
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            },
+            "negation": {
+              "phi_incumbent": 0.5119,
+              "phi_with_nano": 0.5258,
+              "delta_phi_v": 0.0139,
+              "ci95": [
+                -0.0165,
+                0.0384
+              ],
+              "ci95_6dp": [
+                -0.016458,
+                0.038371
+              ],
+              "ci_excludes_0": false,
+              "delta_sigma_B": -0.0259,
+              "delta_sigma_B_ci95": [
+                -0.0562,
+                0.0038
+              ],
+              "delta_sigma_B_ci_excludes_0": false
+            },
+            "lateral": {
+              "phi_incumbent": 0.6678,
+              "phi_with_nano": 0.6156,
+              "delta_phi_v": -0.0522,
+              "ci95": [
+                -0.0814,
+                -0.0264
+              ],
+              "ci95_6dp": [
+                -0.081368,
+                -0.026421
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": 0.0264,
+              "delta_sigma_B_ci95": [
+                0.0081,
+                0.0432
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            },
+            "diagnosis": {
+              "phi_incumbent": 0.3684,
+              "phi_with_nano": 0.414,
+              "delta_phi_v": 0.0457,
+              "ci95": [
+                0.0305,
+                0.0595
+              ],
+              "ci95_6dp": [
+                0.030485,
+                0.059549
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": -0.1033,
+              "delta_sigma_B_ci95": [
+                -0.1334,
+                -0.0727
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            }
+          },
+          "0.30": {
+            "dose": {
+              "phi_incumbent": 0.7454,
+              "phi_with_nano": 0.6347,
+              "delta_phi_v": -0.1107,
+              "ci95": [
+                -0.1513,
+                -0.0778
+              ],
+              "ci95_6dp": [
+                -0.151275,
+                -0.077844
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": 0.0276,
+              "delta_sigma_B_ci95": [
+                0.0143,
+                0.0404
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            },
+            "negation": {
+              "phi_incumbent": 0.5923,
+              "phi_with_nano": 0.5649,
+              "delta_phi_v": -0.0274,
+              "ci95": [
+                -0.0638,
+                0.0007
+              ],
+              "ci95_6dp": [
+                -0.063772,
+                0.000665
+              ],
+              "ci_excludes_0": false,
+              "delta_sigma_B": -0.0066,
+              "delta_sigma_B_ci95": [
+                -0.0258,
+                0.0118
+              ],
+              "delta_sigma_B_ci_excludes_0": false
+            },
+            "lateral": {
+              "phi_incumbent": 0.7362,
+              "phi_with_nano": 0.6389,
+              "delta_phi_v": -0.0973,
+              "ci95": [
+                -0.1314,
+                -0.0684
+              ],
+              "ci95_6dp": [
+                -0.131398,
+                -0.068354
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": 0.0245,
+              "delta_sigma_B_ci95": [
+                0.0135,
+                0.0358
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            },
+            "diagnosis": {
+              "phi_incumbent": 0.4476,
+              "phi_with_nano": 0.467,
+              "delta_phi_v": 0.0195,
+              "ci95": [
+                -0.0001,
+                0.0362
+              ],
+              "ci95_6dp": [
+                -9.5e-05,
+                0.036237
+              ],
+              "ci_excludes_0": false,
+              "delta_sigma_B": -0.0526,
+              "delta_sigma_B_ci95": [
+                -0.0722,
+                -0.032
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            }
+          }
+        },
+        "mean_sign_runs": [
+          {
+            "from": 0.01,
+            "to": 0.68,
+            "value": "negative"
+          },
+          {
+            "from": 0.69,
+            "to": 0.99,
+            "value": "positive"
+          }
+        ],
+        "delta_sign_runs": {
+          "dose": [
+            {
+              "from": 0.01,
+              "to": 0.99,
+              "value": "negative"
+            }
+          ],
+          "negation": [
+            {
+              "from": 0.01,
+              "to": 0.41,
+              "value": "negative"
+            },
+            {
+              "from": 0.42,
+              "to": 0.99,
+              "value": "positive"
+            }
+          ],
+          "lateral": [
+            {
+              "from": 0.01,
+              "to": 0.99,
+              "value": "negative"
+            }
+          ],
+          "diagnosis": [
+            {
+              "from": 0.01,
+              "to": 0.22,
+              "value": "negative"
+            },
+            {
+              "from": 0.23,
+              "to": 0.99,
+              "value": "positive"
+            }
+          ]
+        }
+      },
+      "Nemotron Nano (real)": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "own_share": {
+          "dose": {
+            "n": 280,
+            "corrupted": 85,
+            "clean": 195,
+            "share": 0.3036,
+            "phi_incumbent": 0.7458,
+            "phi_with_nano": 0.7331,
+            "delta_phi_v": -0.0127,
+            "ci95": [
+              -0.0552,
+              0.0208
+            ],
+            "ci95_6dp": [
+              -0.055229,
+              0.020831
+            ],
+            "ci_excludes_0": false,
+            "delta_sigma_B": 0.0005,
+            "delta_sigma_B_ci95": [
+              -0.0116,
+              0.0107
+            ],
+            "delta_sigma_B_ci_excludes_0": false
+          },
+          "negation": {
+            "n": 295,
+            "corrupted": 100,
+            "clean": 195,
+            "share": 0.339,
+            "phi_incumbent": 0.5758,
+            "phi_with_nano": 0.6183,
+            "delta_phi_v": 0.0425,
+            "ci95": [
+              0.0125,
+              0.0683
+            ],
+            "ci95_6dp": [
+              0.0125,
+              0.06834
+            ],
+            "ci_excludes_0": true,
+            "delta_sigma_B": -0.0357,
+            "delta_sigma_B_ci95": [
+              -0.0559,
+              -0.0154
+            ],
+            "delta_sigma_B_ci_excludes_0": true
+          },
+          "lateral": {
+            "n": 341,
+            "corrupted": 146,
+            "clean": 195,
+            "share": 0.4282,
+            "phi_incumbent": 0.6969,
+            "phi_with_nano": 0.7446,
+            "delta_phi_v": 0.0478,
+            "ci95": [
+              0.0207,
+              0.0724
+            ],
+            "ci95_6dp": [
+              0.020686,
+              0.072409
+            ],
+            "ci_excludes_0": true,
+            "delta_sigma_B": -0.0142,
+            "delta_sigma_B_ci95": [
+              -0.0281,
+              -0.0022
+            ],
+            "delta_sigma_B_ci_excludes_0": true
+          },
+          "diagnosis": {
+            "n": 333,
+            "corrupted": 138,
+            "clean": 195,
+            "share": 0.4144,
+            "phi_incumbent": 0.4059,
+            "phi_with_nano": 0.4764,
+            "delta_phi_v": 0.0706,
+            "ci95": [
+              0.0527,
+              0.0868
+            ],
+            "ci95_6dp": [
+              0.052708,
+              0.086784
+            ],
+            "ci_excludes_0": true,
+            "delta_sigma_B": -0.1163,
+            "delta_sigma_B_ci95": [
+              -0.1454,
+              -0.0868
+            ],
+            "delta_sigma_B_ci_excludes_0": true
+          }
+        },
+        "mean_over_strata": {
+          "own_share": 0.0371,
+          "common_0.50": 0.0647,
+          "common_0.30": 0.0198
+        },
+        "common_share": {
+          "0.50": {
+            "dose": {
+              "phi_incumbent": 0.6806,
+              "phi_with_nano": 0.7238,
+              "delta_phi_v": 0.0432,
+              "ci95": [
+                0.0074,
+                0.0729
+              ],
+              "ci95_6dp": [
+                0.007405,
+                0.072872
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": -0.0108,
+              "delta_sigma_B_ci95": [
+                -0.0294,
+                0.0052
+              ],
+              "delta_sigma_B_ci_excludes_0": false
+            },
+            "negation": {
+              "phi_incumbent": 0.5084,
+              "phi_with_nano": 0.5805,
+              "delta_phi_v": 0.0721,
+              "ci95": [
+                0.0452,
+                0.0966
+              ],
+              "ci95_6dp": [
+                0.045234,
+                0.096646
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": -0.0601,
+              "delta_sigma_B_ci95": [
+                -0.088,
+                -0.0316
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            },
+            "lateral": {
+              "phi_incumbent": 0.6678,
+              "phi_with_nano": 0.7351,
+              "delta_phi_v": 0.0674,
+              "ci95": [
+                0.043,
+                0.0909
+              ],
+              "ci95_6dp": [
+                0.043017,
+                0.090858
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": -0.0201,
+              "delta_sigma_B_ci95": [
+                -0.036,
+                -0.0065
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            },
+            "diagnosis": {
+              "phi_incumbent": 0.369,
+              "phi_with_nano": 0.4451,
+              "delta_phi_v": 0.0762,
+              "ci95": [
+                0.0595,
+                0.0915
+              ],
+              "ci95_6dp": [
+                0.059525,
+                0.091472
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": -0.143,
+              "delta_sigma_B_ci95": [
+                -0.1764,
+                -0.1102
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            }
+          },
+          "0.30": {
+            "dose": {
+              "phi_incumbent": 0.7466,
+              "phi_with_nano": 0.7326,
+              "delta_phi_v": -0.014,
+              "ci95": [
+                -0.057,
+                0.0195
+              ],
+              "ci95_6dp": [
+                -0.056962,
+                0.019519
+              ],
+              "ci_excludes_0": false,
+              "delta_sigma_B": 0.0007,
+              "delta_sigma_B_ci95": [
+                -0.0113,
+                0.0108
+              ],
+              "delta_sigma_B_ci_excludes_0": false
+            },
+            "negation": {
+              "phi_incumbent": 0.5889,
+              "phi_with_nano": 0.6211,
+              "delta_phi_v": 0.0322,
+              "ci95": [
+                0.0011,
+                0.0592
+              ],
+              "ci95_6dp": [
+                0.00107,
+                0.059163
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": -0.0299,
+              "delta_sigma_B_ci95": [
+                -0.0479,
+                -0.0116
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            },
+            "lateral": {
+              "phi_incumbent": 0.7362,
+              "phi_with_nano": 0.7411,
+              "delta_phi_v": 0.005,
+              "ci95": [
+                -0.0286,
+                0.0354
+              ],
+              "ci95_6dp": [
+                -0.028635,
+                0.03535
+              ],
+              "ci_excludes_0": false,
+              "delta_sigma_B": -0.0046,
+              "delta_sigma_B_ci95": [
+                -0.0149,
+                0.0048
+              ],
+              "delta_sigma_B_ci_excludes_0": false
+            },
+            "diagnosis": {
+              "phi_incumbent": 0.4482,
+              "phi_with_nano": 0.504,
+              "delta_phi_v": 0.0558,
+              "ci95": [
+                0.0354,
+                0.0744
+              ],
+              "ci95_6dp": [
+                0.035355,
+                0.074376
+              ],
+              "ci_excludes_0": true,
+              "delta_sigma_B": -0.0805,
+              "delta_sigma_B_ci95": [
+                -0.1045,
+                -0.0576
+              ],
+              "delta_sigma_B_ci_excludes_0": true
+            }
+          }
+        },
+        "mean_sign_runs": [
+          {
+            "from": 0.01,
+            "to": 0.24,
+            "value": "negative"
+          },
+          {
+            "from": 0.25,
+            "to": 0.99,
+            "value": "positive"
+          }
+        ],
+        "delta_sign_runs": {
+          "dose": [
+            {
+              "from": 0.01,
+              "to": 0.33,
+              "value": "negative"
+            },
+            {
+              "from": 0.34,
+              "to": 0.99,
+              "value": "positive"
+            }
+          ],
+          "negation": [
+            {
+              "from": 0.01,
+              "to": 0.21,
+              "value": "negative"
+            },
+            {
+              "from": 0.22,
+              "to": 0.99,
+              "value": "positive"
+            }
+          ],
+          "lateral": [
+            {
+              "from": 0.01,
+              "to": 0.28,
+              "value": "negative"
+            },
+            {
+              "from": 0.29,
+              "to": 0.99,
+              "value": "positive"
+            }
+          ],
+          "diagnosis": [
+            {
+              "from": 0.01,
+              "to": 0.13,
+              "value": "negative"
+            },
+            {
+              "from": 0.14,
+              "to": 0.99,
+              "value": "positive"
+            }
+          ]
+        }
+      }
+    },
+    "positive_mean_raters_runs": [
+      {
+        "from": 0.01,
+        "to": 0.24,
+        "value": "none"
+      },
+      {
+        "from": 0.25,
+        "to": 0.48,
+        "value": "Nemotron Nano (real)"
+      },
+      {
+        "from": 0.49,
+        "to": 0.68,
+        "value": "Nemotron Nano (real), null_unsafe (constant UNSAFE)"
+      },
+      {
+        "from": 0.69,
+        "to": 0.99,
+        "value": "Nemotron Nano (real), null_random (p=0.47), null_unsafe (constant UNSAFE)"
+      }
+    ],
+    "sigma_B_clamps": {
+      "null_unsafe (constant UNSAFE)": {
+        "own_share": 0,
+        "common_shares": 0,
+        "grid": 0
+      },
+      "null_random (p=0.47)": {
+        "own_share": 0,
+        "common_shares": 0,
+        "grid": 0
+      },
+      "Nemotron Nano (real)": {
+        "own_share": 0,
+        "common_shares": 0,
+        "grid": 0
+      }
+    }
+  },
+  "selector_with_nulls": {
+    "pool": "audit_pool/ (automated pool): six real candidates + the two synthetic nulls, incumbent Llama+Qwen",
+    "key": "selector.py: blind-spot Delta (tie rule below), then collateral floor (min Delta over the other strata), then fewest ERROR rows, specificity, mean Delta, model id. 'without_collateral_key' drops the collateral key only; membership of the top tie does not depend on it",
+    "tie_rules": {
+      "rounding": "blind-spot Delta rounded to 0.01 bins, round(Delta/0.01)*0.01; tied = the top candidate's bin (selector.py at 400ef54)",
+      "within_top": "tied = blind-spot Delta within TIE_BAND (0.01) of the top candidate's; the tied candidates share the top's primary key, the rest keep their own Delta"
+    },
+    "closest_distance_to_a_tie_edge": {
+      "rounding": 2.69e-06,
+      "within_top": 0.000111
+    },
+    "n_candidates": 8,
+    "by_share": {
+      "own_share": {
+        "blindest": "diagnosis",
+        "blind_delta": {
+          "nvidia/Nemotron-3-Ultra-550b-a55b": 0.0721,
+          "openai/gpt-oss-120b": 0.0719,
+          "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": 0.0706,
+          "nvidia/nemotron-3-super-120b-a12b": 0.0653,
+          "deepseek-ai/DeepSeek-V4-Flash-0731": 0.0597,
+          "null_unsafe": 0.0486,
+          "null_random": 0.0381,
+          "google/gemma-3-27b-it": 0.0017
+        },
+        "collateral_floor": {
+          "deepseek-ai/DeepSeek-V4-Flash-0731": -0.0321,
+          "google/gemma-3-27b-it": 0.0044,
+          "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": -0.0127,
+          "nvidia/Nemotron-3-Ultra-550b-a55b": -0.0318,
+          "nvidia/nemotron-3-super-120b-a12b": -0.0585,
+          "openai/gpt-oss-120b": -0.0299,
+          "null_unsafe": -0.1691,
+          "null_random": -0.1076
+        },
+        "rounding": {
+          "tied_top": [
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "openai/gpt-oss-120b",
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "nvidia/nemotron-3-super-120b-a12b"
+          ],
+          "order": [
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "openai/gpt-oss-120b",
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "nvidia/nemotron-3-super-120b-a12b",
+            "deepseek-ai/DeepSeek-V4-Flash-0731",
+            "null_unsafe",
+            "null_random",
+            "google/gemma-3-27b-it"
+          ],
+          "order_without_collateral_key": [
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "openai/gpt-oss-120b",
+            "nvidia/nemotron-3-super-120b-a12b",
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "deepseek-ai/DeepSeek-V4-Flash-0731",
+            "null_unsafe",
+            "null_random",
+            "google/gemma-3-27b-it"
+          ],
+          "recommendation": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "recommendation_without_collateral_key": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rank_of_null_unsafe": {
+            "with_collateral": 6,
+            "without_collateral": 6
+          },
+          "rank_of_null_random": {
+            "with_collateral": 7,
+            "without_collateral": 7
+          }
+        },
+        "within_top": {
+          "tied_top": [
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "openai/gpt-oss-120b",
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "nvidia/nemotron-3-super-120b-a12b"
+          ],
+          "order": [
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "openai/gpt-oss-120b",
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "nvidia/nemotron-3-super-120b-a12b",
+            "deepseek-ai/DeepSeek-V4-Flash-0731",
+            "null_unsafe",
+            "null_random",
+            "google/gemma-3-27b-it"
+          ],
+          "order_without_collateral_key": [
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "openai/gpt-oss-120b",
+            "nvidia/nemotron-3-super-120b-a12b",
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "deepseek-ai/DeepSeek-V4-Flash-0731",
+            "null_unsafe",
+            "null_random",
+            "google/gemma-3-27b-it"
+          ],
+          "recommendation": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "recommendation_without_collateral_key": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rank_of_null_unsafe": {
+            "with_collateral": 6,
+            "without_collateral": 6
+          },
+          "rank_of_null_random": {
+            "with_collateral": 7,
+            "without_collateral": 7
+          }
+        }
+      },
+      "common_0.50": {
+        "blindest": "diagnosis",
+        "blind_delta": {
+          "openai/gpt-oss-120b": 0.0798,
+          "nvidia/Nemotron-3-Ultra-550b-a55b": 0.0797,
+          "nvidia/nemotron-3-super-120b-a12b": 0.0764,
+          "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": 0.0762,
+          "null_unsafe": 0.0747,
+          "deepseek-ai/DeepSeek-V4-Flash-0731": 0.0676,
+          "null_random": 0.0457,
+          "google/gemma-3-27b-it": 0.0016
+        },
+        "collateral_floor": {
+          "deepseek-ai/DeepSeek-V4-Flash-0731": 0.0332,
+          "google/gemma-3-27b-it": 0.0046,
+          "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": 0.0432,
+          "nvidia/Nemotron-3-Ultra-550b-a55b": 0.0312,
+          "nvidia/nemotron-3-super-120b-a12b": 0.0204,
+          "openai/gpt-oss-120b": 0.0357,
+          "null_unsafe": -0.043,
+          "null_random": -0.0697
+        },
+        "rounding": {
+          "tied_top": [
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "openai/gpt-oss-120b",
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "nvidia/nemotron-3-super-120b-a12b"
+          ],
+          "order": [
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "openai/gpt-oss-120b",
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "nvidia/nemotron-3-super-120b-a12b",
+            "deepseek-ai/DeepSeek-V4-Flash-0731",
+            "null_unsafe",
+            "null_random",
+            "google/gemma-3-27b-it"
+          ],
+          "order_without_collateral_key": [
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "openai/gpt-oss-120b",
+            "nvidia/nemotron-3-super-120b-a12b",
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "null_unsafe",
+            "deepseek-ai/DeepSeek-V4-Flash-0731",
+            "null_random",
+            "google/gemma-3-27b-it"
+          ],
+          "recommendation": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "recommendation_without_collateral_key": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rank_of_null_unsafe": {
+            "with_collateral": 6,
+            "without_collateral": 5
+          },
+          "rank_of_null_random": {
+            "with_collateral": 7,
+            "without_collateral": 7
+          }
+        },
+        "within_top": {
+          "tied_top": [
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "openai/gpt-oss-120b",
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "nvidia/nemotron-3-super-120b-a12b",
+            "null_unsafe"
+          ],
+          "order": [
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "openai/gpt-oss-120b",
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "nvidia/nemotron-3-super-120b-a12b",
+            "null_unsafe",
+            "deepseek-ai/DeepSeek-V4-Flash-0731",
+            "null_random",
+            "google/gemma-3-27b-it"
+          ],
+          "order_without_collateral_key": [
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "openai/gpt-oss-120b",
+            "null_unsafe",
+            "nvidia/nemotron-3-super-120b-a12b",
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "deepseek-ai/DeepSeek-V4-Flash-0731",
+            "null_random",
+            "google/gemma-3-27b-it"
+          ],
+          "recommendation": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "recommendation_without_collateral_key": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rank_of_null_unsafe": {
+            "with_collateral": 5,
+            "without_collateral": 3
+          },
+          "rank_of_null_random": {
+            "with_collateral": 7,
+            "without_collateral": 7
+          }
+        }
+      },
+      "common_0.30": {
+        "blindest": "diagnosis",
+        "blind_delta": {
+          "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": 0.0558,
+          "nvidia/Nemotron-3-Ultra-550b-a55b": 0.0525,
+          "openai/gpt-oss-120b": 0.0518,
+          "deepseek-ai/DeepSeek-V4-Flash-0731": 0.0414,
+          "nvidia/nemotron-3-super-120b-a12b": 0.0396,
+          "null_random": 0.0195,
+          "google/gemma-3-27b-it": 0.0019,
+          "null_unsafe": -0.0052
+        },
+        "collateral_floor": {
+          "deepseek-ai/DeepSeek-V4-Flash-0731": -0.037,
+          "google/gemma-3-27b-it": 0.0043,
+          "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": -0.014,
+          "nvidia/Nemotron-3-Ultra-550b-a55b": -0.0361,
+          "nvidia/nemotron-3-super-120b-a12b": -0.0626,
+          "openai/gpt-oss-120b": -0.0344,
+          "null_unsafe": -0.1773,
+          "null_random": -0.1107
+        },
+        "rounding": {
+          "tied_top": [
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          ],
+          "order": [
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "openai/gpt-oss-120b",
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "deepseek-ai/DeepSeek-V4-Flash-0731",
+            "nvidia/nemotron-3-super-120b-a12b",
+            "null_random",
+            "google/gemma-3-27b-it",
+            "null_unsafe"
+          ],
+          "order_without_collateral_key": [
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "openai/gpt-oss-120b",
+            "nvidia/nemotron-3-super-120b-a12b",
+            "deepseek-ai/DeepSeek-V4-Flash-0731",
+            "null_random",
+            "google/gemma-3-27b-it",
+            "null_unsafe"
+          ],
+          "recommendation": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "recommendation_without_collateral_key": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "rank_of_null_unsafe": {
+            "with_collateral": 8,
+            "without_collateral": 8
+          },
+          "rank_of_null_random": {
+            "with_collateral": 6,
+            "without_collateral": 6
+          }
+        },
+        "within_top": {
+          "tied_top": [
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "openai/gpt-oss-120b",
+            "nvidia/Nemotron-3-Ultra-550b-a55b"
+          ],
+          "order": [
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "openai/gpt-oss-120b",
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "deepseek-ai/DeepSeek-V4-Flash-0731",
+            "nvidia/nemotron-3-super-120b-a12b",
+            "null_random",
+            "google/gemma-3-27b-it",
+            "null_unsafe"
+          ],
+          "order_without_collateral_key": [
+            "nvidia/Nemotron-3-Ultra-550b-a55b",
+            "openai/gpt-oss-120b",
+            "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "deepseek-ai/DeepSeek-V4-Flash-0731",
+            "nvidia/nemotron-3-super-120b-a12b",
+            "null_random",
+            "google/gemma-3-27b-it",
+            "null_unsafe"
+          ],
+          "recommendation": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "recommendation_without_collateral_key": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rank_of_null_unsafe": {
+            "with_collateral": 8,
+            "without_collateral": 8
+          },
+          "rank_of_null_random": {
+            "with_collateral": 6,
+            "without_collateral": 6
+          }
+        }
+      }
+    },
+    "grid": {
+      "blindest_runs": [
+        {
+          "from": 0.01,
+          "to": 0.99,
+          "value": "diagnosis"
+        }
+      ],
+      "largest_blind_delta_runs": [
+        {
+          "from": 0.01,
+          "to": 0.14,
+          "value": "google/gemma-3-27b-it"
+        },
+        {
+          "from": 0.15,
+          "to": 0.37,
+          "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+        },
+        {
+          "from": 0.38,
+          "to": 0.48,
+          "value": "nvidia/Nemotron-3-Ultra-550b-a55b"
+        },
+        {
+          "from": 0.49,
+          "to": 0.52,
+          "value": "openai/gpt-oss-120b"
+        },
+        {
+          "from": 0.53,
+          "to": 0.99,
+          "value": "null_unsafe"
+        }
+      ],
+      "rounding": {
+        "recommendation_runs": [
+          {
+            "from": 0.01,
+            "to": 0.14,
+            "value": "google/gemma-3-27b-it"
+          },
+          {
+            "from": 0.15,
+            "to": 0.44,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          },
+          {
+            "from": 0.45,
+            "to": 0.47,
+            "value": "openai/gpt-oss-120b"
+          },
+          {
+            "from": 0.48,
+            "to": 0.54,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          },
+          {
+            "from": 0.55,
+            "to": 0.99,
+            "value": "null_unsafe"
+          }
+        ],
+        "rank_of_null_unsafe_runs": [
+          {
+            "from": 0.01,
+            "to": 0.31,
+            "value": 8
+          },
+          {
+            "from": 0.32,
+            "to": 0.38,
+            "value": 7
+          },
+          {
+            "from": 0.39,
+            "to": 0.39,
+            "value": 6
+          },
+          {
+            "from": 0.4,
+            "to": 0.4,
+            "value": 7
+          },
+          {
+            "from": 0.41,
+            "to": 0.5,
+            "value": 6
+          },
+          {
+            "from": 0.51,
+            "to": 0.54,
+            "value": 5
+          },
+          {
+            "from": 0.55,
+            "to": 0.99,
+            "value": 1
+          }
+        ],
+        "rank_of_null_random_runs": [
+          {
+            "from": 0.01,
+            "to": 0.03,
+            "value": 5
+          },
+          {
+            "from": 0.04,
+            "to": 0.12,
+            "value": 6
+          },
+          {
+            "from": 0.13,
+            "to": 0.24,
+            "value": 7
+          },
+          {
+            "from": 0.25,
+            "to": 0.38,
+            "value": 6
+          },
+          {
+            "from": 0.39,
+            "to": 0.39,
+            "value": 7
+          },
+          {
+            "from": 0.4,
+            "to": 0.4,
+            "value": 6
+          },
+          {
+            "from": 0.41,
+            "to": 0.98,
+            "value": 7
+          },
+          {
+            "from": 0.99,
+            "to": 0.99,
+            "value": 8
+          }
+        ],
+        "recommendation_runs_without_collateral_key": [
+          {
+            "from": 0.01,
+            "to": 0.14,
+            "value": "google/gemma-3-27b-it"
+          },
+          {
+            "from": 0.15,
+            "to": 0.23,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          },
+          {
+            "from": 0.24,
+            "to": 0.24,
+            "value": "nvidia/Nemotron-3-Ultra-550b-a55b"
+          },
+          {
+            "from": 0.25,
+            "to": 0.27,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          },
+          {
+            "from": 0.28,
+            "to": 0.29,
+            "value": "nvidia/Nemotron-3-Ultra-550b-a55b"
+          },
+          {
+            "from": 0.3,
+            "to": 0.31,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          },
+          {
+            "from": 0.32,
+            "to": 0.54,
+            "value": "nvidia/Nemotron-3-Ultra-550b-a55b"
+          },
+          {
+            "from": 0.55,
+            "to": 0.98,
+            "value": "null_unsafe"
+          },
+          {
+            "from": 0.99,
+            "to": 0.99,
+            "value": "nvidia/Nemotron-3-Ultra-550b-a55b"
+          }
+        ],
+        "rank_of_null_unsafe_runs_without_collateral_key": [
+          {
+            "from": 0.01,
+            "to": 0.31,
+            "value": 8
+          },
+          {
+            "from": 0.32,
+            "to": 0.38,
+            "value": 7
+          },
+          {
+            "from": 0.39,
+            "to": 0.39,
+            "value": 6
+          },
+          {
+            "from": 0.4,
+            "to": 0.4,
+            "value": 7
+          },
+          {
+            "from": 0.41,
+            "to": 0.43,
+            "value": 6
+          },
+          {
+            "from": 0.44,
+            "to": 0.46,
+            "value": 5
+          },
+          {
+            "from": 0.47,
+            "to": 0.47,
+            "value": 3
+          },
+          {
+            "from": 0.48,
+            "to": 0.48,
+            "value": 4
+          },
+          {
+            "from": 0.49,
+            "to": 0.5,
+            "value": 5
+          },
+          {
+            "from": 0.51,
+            "to": 0.54,
+            "value": 3
+          },
+          {
+            "from": 0.55,
+            "to": 0.98,
+            "value": 1
+          },
+          {
+            "from": 0.99,
+            "to": 0.99,
+            "value": 3
+          }
+        ],
+        "rank_of_null_random_runs_without_collateral_key": [
+          {
+            "from": 0.01,
+            "to": 0.03,
+            "value": 5
+          },
+          {
+            "from": 0.04,
+            "to": 0.16,
+            "value": 6
+          },
+          {
+            "from": 0.17,
+            "to": 0.24,
+            "value": 7
+          },
+          {
+            "from": 0.25,
+            "to": 0.38,
+            "value": 6
+          },
+          {
+            "from": 0.39,
+            "to": 0.39,
+            "value": 7
+          },
+          {
+            "from": 0.4,
+            "to": 0.4,
+            "value": 6
+          },
+          {
+            "from": 0.41,
+            "to": 0.94,
+            "value": 7
+          },
+          {
+            "from": 0.95,
+            "to": 0.95,
+            "value": 5
+          },
+          {
+            "from": 0.96,
+            "to": 0.96,
+            "value": 7
+          },
+          {
+            "from": 0.97,
+            "to": 0.97,
+            "value": 6
+          },
+          {
+            "from": 0.98,
+            "to": 0.98,
+            "value": 4
+          },
+          {
+            "from": 0.99,
+            "to": 0.99,
+            "value": 8
+          }
+        ],
+        "null_unsafe_in_top_tie_runs": [
+          {
+            "from": 0.01,
+            "to": 0.5,
+            "value": false
+          },
+          {
+            "from": 0.51,
+            "to": 0.99,
+            "value": true
+          }
+        ],
+        "null_random_in_top_tie_runs": [
+          {
+            "from": 0.01,
+            "to": 0.99,
+            "value": false
+          }
+        ],
+        "tied_top_runs": [
+          {
+            "from": 0.01,
+            "to": 0.13,
+            "value": "google/gemma-3-27b-it"
+          },
+          {
+            "from": 0.14,
+            "to": 0.14,
+            "value": "google/gemma-3-27b-it, nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          },
+          {
+            "from": 0.15,
+            "to": 0.23,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          },
+          {
+            "from": 0.24,
+            "to": 0.24,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B, nvidia/Nemotron-3-Ultra-550b-a55b"
+          },
+          {
+            "from": 0.25,
+            "to": 0.27,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          },
+          {
+            "from": 0.28,
+            "to": 0.29,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B, openai/gpt-oss-120b, nvidia/Nemotron-3-Ultra-550b-a55b"
+          },
+          {
+            "from": 0.3,
+            "to": 0.31,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          },
+          {
+            "from": 0.32,
+            "to": 0.41,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B, openai/gpt-oss-120b, nvidia/Nemotron-3-Ultra-550b-a55b"
+          },
+          {
+            "from": 0.42,
+            "to": 0.44,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B, openai/gpt-oss-120b, nvidia/Nemotron-3-Ultra-550b-a55b, nvidia/nemotron-3-super-120b-a12b"
+          },
+          {
+            "from": 0.45,
+            "to": 0.47,
+            "value": "openai/gpt-oss-120b, nvidia/Nemotron-3-Ultra-550b-a55b"
+          },
+          {
+            "from": 0.48,
+            "to": 0.48,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B, openai/gpt-oss-120b, nvidia/Nemotron-3-Ultra-550b-a55b"
+          },
+          {
+            "from": 0.49,
+            "to": 0.5,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B, openai/gpt-oss-120b, nvidia/Nemotron-3-Ultra-550b-a55b, nvidia/nemotron-3-super-120b-a12b"
+          },
+          {
+            "from": 0.51,
+            "to": 0.54,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B, openai/gpt-oss-120b, nvidia/Nemotron-3-Ultra-550b-a55b, nvidia/nemotron-3-super-120b-a12b, null_unsafe"
+          },
+          {
+            "from": 0.55,
+            "to": 0.98,
+            "value": "null_unsafe"
+          },
+          {
+            "from": 0.99,
+            "to": 0.99,
+            "value": "null_unsafe, nvidia/Nemotron-3-Ultra-550b-a55b, openai/gpt-oss-120b, nvidia/nemotron-3-super-120b-a12b, deepseek-ai/DeepSeek-V4-Flash-0731, nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          }
+        ]
+      },
+      "within_top": {
+        "recommendation_runs": [
+          {
+            "from": 0.01,
+            "to": 0.15,
+            "value": "google/gemma-3-27b-it"
+          },
+          {
+            "from": 0.16,
+            "to": 0.55,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          },
+          {
+            "from": 0.56,
+            "to": 0.58,
+            "value": "openai/gpt-oss-120b"
+          },
+          {
+            "from": 0.59,
+            "to": 0.99,
+            "value": "null_unsafe"
+          }
+        ],
+        "rank_of_null_unsafe_runs": [
+          {
+            "from": 0.01,
+            "to": 0.31,
+            "value": 8
+          },
+          {
+            "from": 0.32,
+            "to": 0.37,
+            "value": 7
+          },
+          {
+            "from": 0.38,
+            "to": 0.46,
+            "value": 6
+          },
+          {
+            "from": 0.47,
+            "to": 0.55,
+            "value": 5
+          },
+          {
+            "from": 0.56,
+            "to": 0.57,
+            "value": 4
+          },
+          {
+            "from": 0.58,
+            "to": 0.58,
+            "value": 3
+          },
+          {
+            "from": 0.59,
+            "to": 0.99,
+            "value": 1
+          }
+        ],
+        "rank_of_null_random_runs": [
+          {
+            "from": 0.01,
+            "to": 0.01,
+            "value": 5
+          },
+          {
+            "from": 0.02,
+            "to": 0.13,
+            "value": 6
+          },
+          {
+            "from": 0.14,
+            "to": 0.23,
+            "value": 7
+          },
+          {
+            "from": 0.24,
+            "to": 0.37,
+            "value": 6
+          },
+          {
+            "from": 0.38,
+            "to": 0.99,
+            "value": 7
+          }
+        ],
+        "recommendation_runs_without_collateral_key": [
+          {
+            "from": 0.01,
+            "to": 0.15,
+            "value": "google/gemma-3-27b-it"
+          },
+          {
+            "from": 0.16,
+            "to": 0.2,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          },
+          {
+            "from": 0.21,
+            "to": 0.58,
+            "value": "nvidia/Nemotron-3-Ultra-550b-a55b"
+          },
+          {
+            "from": 0.59,
+            "to": 0.97,
+            "value": "null_unsafe"
+          },
+          {
+            "from": 0.98,
+            "to": 0.99,
+            "value": "nvidia/Nemotron-3-Ultra-550b-a55b"
+          }
+        ],
+        "rank_of_null_unsafe_runs_without_collateral_key": [
+          {
+            "from": 0.01,
+            "to": 0.31,
+            "value": 8
+          },
+          {
+            "from": 0.32,
+            "to": 0.37,
+            "value": 7
+          },
+          {
+            "from": 0.38,
+            "to": 0.46,
+            "value": 6
+          },
+          {
+            "from": 0.47,
+            "to": 0.47,
+            "value": 5
+          },
+          {
+            "from": 0.48,
+            "to": 0.58,
+            "value": 3
+          },
+          {
+            "from": 0.59,
+            "to": 0.97,
+            "value": 1
+          },
+          {
+            "from": 0.98,
+            "to": 0.98,
+            "value": 3
+          },
+          {
+            "from": 0.99,
+            "to": 0.99,
+            "value": 4
+          }
+        ],
+        "rank_of_null_random_runs_without_collateral_key": [
+          {
+            "from": 0.01,
+            "to": 0.01,
+            "value": 5
+          },
+          {
+            "from": 0.02,
+            "to": 0.13,
+            "value": 6
+          },
+          {
+            "from": 0.14,
+            "to": 0.23,
+            "value": 7
+          },
+          {
+            "from": 0.24,
+            "to": 0.37,
+            "value": 6
+          },
+          {
+            "from": 0.38,
+            "to": 0.98,
+            "value": 7
+          },
+          {
+            "from": 0.99,
+            "to": 0.99,
+            "value": 3
+          }
+        ],
+        "null_unsafe_in_top_tie_runs": [
+          {
+            "from": 0.01,
+            "to": 0.47,
+            "value": false
+          },
+          {
+            "from": 0.48,
+            "to": 0.99,
+            "value": true
+          }
+        ],
+        "null_random_in_top_tie_runs": [
+          {
+            "from": 0.01,
+            "to": 0.98,
+            "value": false
+          },
+          {
+            "from": 0.99,
+            "to": 0.99,
+            "value": true
+          }
+        ],
+        "tied_top_runs": [
+          {
+            "from": 0.01,
+            "to": 0.12,
+            "value": "google/gemma-3-27b-it"
+          },
+          {
+            "from": 0.13,
+            "to": 0.15,
+            "value": "google/gemma-3-27b-it, nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          },
+          {
+            "from": 0.16,
+            "to": 0.2,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          },
+          {
+            "from": 0.21,
+            "to": 0.21,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B, nvidia/Nemotron-3-Ultra-550b-a55b"
+          },
+          {
+            "from": 0.22,
+            "to": 0.35,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B, openai/gpt-oss-120b, nvidia/Nemotron-3-Ultra-550b-a55b"
+          },
+          {
+            "from": 0.36,
+            "to": 0.47,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B, openai/gpt-oss-120b, nvidia/Nemotron-3-Ultra-550b-a55b, nvidia/nemotron-3-super-120b-a12b"
+          },
+          {
+            "from": 0.48,
+            "to": 0.55,
+            "value": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B, openai/gpt-oss-120b, nvidia/Nemotron-3-Ultra-550b-a55b, nvidia/nemotron-3-super-120b-a12b, null_unsafe"
+          },
+          {
+            "from": 0.56,
+            "to": 0.57,
+            "value": "openai/gpt-oss-120b, nvidia/Nemotron-3-Ultra-550b-a55b, nvidia/nemotron-3-super-120b-a12b, null_unsafe"
+          },
+          {
+            "from": 0.58,
+            "to": 0.58,
+            "value": "openai/gpt-oss-120b, nvidia/Nemotron-3-Ultra-550b-a55b, null_unsafe"
+          },
+          {
+            "from": 0.59,
+            "to": 0.97,
+            "value": "null_unsafe"
+          },
+          {
+            "from": 0.98,
+            "to": 0.98,
+            "value": "null_unsafe, nvidia/Nemotron-3-Ultra-550b-a55b, openai/gpt-oss-120b, nvidia/nemotron-3-super-120b-a12b, nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+          },
+          {
+            "from": 0.99,
+            "to": 0.99,
+            "value": "null_unsafe, nvidia/Nemotron-3-Ultra-550b-a55b, openai/gpt-oss-120b, nvidia/nemotron-3-super-120b-a12b, deepseek-ai/DeepSeek-V4-Flash-0731, nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B, null_random"
+          }
+        ]
+      }
+    },
+    "sigma_B_clamps": {
+      "point_estimates_all_shares": 0
+    }
+  },
+  "diagnosis_automated_vs_v2": {
+    "note": "different labels (automated vs hand-verified), different items and different prompt pairings (the automated file pairs Llama and Qwen verdicts stored from Project v1 with Nano under the calibration prompt; v2 has all three judges under the calibration prompt in one column and under the deployed gate prompt in the other); only the share is equalised here",
+    "automated_calibration_file": {
+      "own_share": {
+        "share": 0.4144,
+        "delta_phi_v": 0.0706,
+        "ci95": [
+          0.0552,
+          0.0866
+        ]
+      },
+      "at_0.50": {
+        "delta_phi_v": 0.0762,
+        "ci95": [
+          0.0615,
+          0.0914
+        ]
+      }
+    },
+    "v2_at_0.50": {
+      "deployed_prompt": {
+        "delta_phi_v": 0.0765,
+        "ci95": [
+          0.0516,
+          0.0992
+        ]
+      },
+      "calibration_prompt": {
+        "delta_phi_v": 0.0591,
+        "ci95": [
+          0.0387,
+          0.0802
+        ]
+      },
+      "source": "results/judgebench_v2_prevalence_sensitivity.json by_prevalence 0.50"
+    },
+    "v2_at_automated_share": {
+      "share": 0.4144,
+      "deployed_prompt": {
+        "phi_incumbent": 0.4955,
+        "phi_with_candidate": 0.556,
+        "delta_phi_v": 0.0605,
+        "ci95": [
+          0.0332,
+          0.0851
+        ],
+        "band": "POSITIVE"
+      },
+      "calibration_prompt": {
+        "phi_incumbent": 0.4464,
+        "phi_with_candidate": 0.5007,
+        "delta_phi_v": 0.0543,
+        "ci95": [
+          0.0335,
+          0.0755
+        ],
+        "band": "POSITIVE"
+      },
+      "method": "run_prevalence_sensitivity_v2.at_p_raw (its bootstrap convention and bands)"
+    }
+  },
+  "a5_recall_by_type": {
+    "diagnosis_v2": {
+      "deployed_prompt": {
+        "nemotron": {
+          "unsafe": 110,
+          "valid": 120,
+          "n": 120,
+          "recall": 0.9167
+        },
+        "llama": {
+          "unsafe": 56,
+          "valid": 120,
+          "n": 120,
+          "recall": 0.4667
+        },
+        "qwen": {
+          "unsafe": 56,
+          "valid": 120,
+          "n": 120,
+          "recall": 0.4667
+        }
+      },
+      "calibration_prompt": {
+        "nemotron": {
+          "unsafe": 112,
+          "valid": 120,
+          "n": 120,
+          "recall": 0.9333
+        },
+        "llama": {
+          "unsafe": 114,
+          "valid": 120,
+          "n": 120,
+          "recall": 0.95
+        },
+        "qwen": {
+          "unsafe": 73,
+          "valid": 120,
+          "n": 120,
+          "recall": 0.6083
+        }
+      }
+    },
+    "automated": {
+      "calibration_file": {
+        "dose": {
+          "nemotron": {
+            "unsafe": 85,
+            "valid": 92,
+            "n": 95,
+            "recall": 0.9239
+          },
+          "llama": {
+            "unsafe": 42,
+            "valid": 95,
+            "n": 95,
+            "recall": 0.4421
+          },
+          "qwen": {
+            "unsafe": 76,
+            "valid": 88,
+            "n": 95,
+            "recall": 0.8636
+          }
+        },
+        "lateral": {
+          "nemotron": {
+            "unsafe": 145,
+            "valid": 149,
+            "n": 150,
+            "recall": 0.9732
+          },
+          "llama": {
+            "unsafe": 64,
+            "valid": 150,
+            "n": 150,
+            "recall": 0.4267
+          },
+          "qwen": {
+            "unsafe": 124,
+            "valid": 146,
+            "n": 150,
+            "recall": 0.8493
+          }
+        },
+        "negation": {
+          "nemotron": {
+            "unsafe": 91,
+            "valid": 111,
+            "n": 113,
+            "recall": 0.8198
+          },
+          "llama": {
+            "unsafe": 34,
+            "valid": 113,
+            "n": 113,
+            "recall": 0.3009
+          },
+          "qwen": {
+            "unsafe": 56,
+            "valid": 102,
+            "n": 113,
+            "recall": 0.549
+          }
+        }
+      },
+      "gate_file": {
+        "dose": {
+          "nemotron": {
+            "unsafe": 88,
+            "valid": 95,
+            "n": 95,
+            "recall": 0.9263
+          },
+          "llama": {
+            "unsafe": 80,
+            "valid": 95,
+            "n": 95,
+            "recall": 0.8421
+          },
+          "qwen": {
+            "unsafe": 82,
+            "valid": 95,
+            "n": 95,
+            "recall": 0.8632
+          }
+        },
+        "lateral": {
+          "nemotron": {
+            "unsafe": 144,
+            "valid": 150,
+            "n": 150,
+            "recall": 0.96
+          },
+          "llama": {
+            "unsafe": 122,
+            "valid": 150,
+            "n": 150,
+            "recall": 0.8133
+          },
+          "qwen": {
+            "unsafe": 140,
+            "valid": 150,
+            "n": 150,
+            "recall": 0.9333
+          }
+        },
+        "negation": {
+          "nemotron": {
+            "unsafe": 87,
+            "valid": 113,
+            "n": 113,
+            "recall": 0.7699
+          },
+          "llama": {
+            "unsafe": 74,
+            "valid": 113,
+            "n": 113,
+            "recall": 0.6549
+          },
+          "qwen": {
+            "unsafe": 66,
+            "valid": 113,
+            "n": 113,
+            "recall": 0.5841
+          }
+        }
+      }
+    }
+  },
+  "checks": {
+    "asserted": [
+      "calibration file: equal weights reproduce vagt_bootstrap_cis.json (n, Delta Phi_V, Delta sigma_B, CIs)",
+      "calibration file: n and corrupted share match vagt_nemotron_results.txt",
+      "gate file: equal weights reproduce consensus_accuracy.json (n, Phi_V, Delta Phi_V, Delta sigma_B, Delta balanced accuracy)",
+      "null control: equal weights reproduce null_baseline_cis.json (n, Delta Phi_V, CI) for all three raters",
+      "selector.audit_panel on the v1 pool reproduces results/audit_panel_live_receipt.json's order, per-stratum Delta Phi_V, recommended model and CI; the Nano four-stratum mean reproduces its mean_delta_Phi_V",
+      "selector.audit_panel, with its Delta swapped for the reweighted one, returns the same order and tied set as one of the two tie-rule mirrors (the one selector.py implements) at the strata's own shares, at 0.50, 0.30 and every grid share; unswapped at own shares it gives the same answer",
+      "README A5 recall-by-type table: every percentage reproduced (diagnosis row from results/judgebench_v2_panel_gate.json, the others from nemotron_calibration_full.json)",
+      "no sigma_B clamp in any grid point estimate or own-share cell"
+    ],
+    "v2_reference_asserted": "v2 figures at 0.50 read from judgebench_v2_prevalence_sensitivity.json (+0.0765, +0.0591)"
+  }
+}

@@ -1,0 +1,1590 @@
+{
+  "deliverable": "tau_recompute_v2_summary.json, docs/judgebench_v2_protocol.md §12: primary + premise-test + secondary, per Section 8",
+  "status": "Delivered 2026-09-29, after the v2 panel results were known (first reported 2026-09-23: recall in commit 8cc6ce5, the Φ_V recompute in 9365ec5) and after exploratory recomputes of these same statistics that were not committed. Pre-registered before those results (protocol §8; commits cc59c88, 2026-09-20, and 98e2bca, 2026-09-21): the three premise-test bands, the Wilson 95% CI on recall, specificity on the 200 clean controls, the expert-recoverability stratification and its advance prediction. Chosen at delivery: everything in METHODS that §8 does not specify (Wilson CIs on false-positive rates, the bootstrap CI and McNemar check for Nano's advantage, the 'ci' reading of the bands, Newcombe and Fisher for the advance prediction, the shared-miss statistics, and the controls used within strata).",
+  "script": "scripts/build_tau_recompute_v2_summary.py",
+  "sources": {
+    "verdicts": [
+      "results/judgebench_v2_panel_gate.json (deployed gate prompt)",
+      "results/judgebench_v2_panel_calib.json (calibration prompt: the calibration_judge_cot.py CoT prompt carried in scripts/run_panel_judgebench_v2.py, enable_thinking=True, as its prompt_source records)",
+      "results/gate_calibration_full.json (deployed gate prompt; the 200 clean controls only)"
+    ],
+    "labels_and_covariates": "results/judgebench_v2_tau1_final.json",
+    "pairing": "results/judgebench_v2_clean_controls.json (primary_paired)"
+  },
+  "methods": {
+    "recall": "UNSAFE / valid verdicts on the tau=1 drops (no ERROR verdicts in either panel file; asserted)",
+    "false_positive": "UNSAFE / valid verdicts on the controls; specificity = 1 - false-positive rate",
+    "wilson": "Wilson score 95% interval, z = 1.96",
+    "band_on_ci": "the protocol states the bands on recall itself; 'ci' adds whether the Wilson intervals put the band out of reach ('excluded'), inside it ('met') or neither ('undetermined')",
+    "nemotron_advantage_ci": "recall(Nano) - max(recall Llama, recall Qwen), paired percentile bootstrap over the drops, SEED=42, n_boot=1000 (§8's pipeline settings); exact two-sided McNemar vs each incumbent as a check",
+    "er_difference": "recall(ER=1) - recall(ER=0): Newcombe hybrid-score 95% CI (Wilson-based, independent samples); Fisher exact one-sided p for recall(ER=1) < recall(ER=0), the predicted direction",
+    "delta_phi_v": "run_phi_v_recompute.cell (vagt_core verbatim, SEED=42, n_boot=1000, paired item bootstrap); bands from the protocol's primary metric, applied descriptively to the strata",
+    "shared_misses": "drops that Llama and Qwen both pass as SAFE; expected count if their misses were independent = miss_L * miss_Q / n; Cohen kappa between Llama and Qwen on the drops (vagt_core.cohen_kappa); Fisher exact one-sided p for more shared misses than independence"
+  },
+  "deviations_from_protocol": [
+    "Controls: §8 asks for specificity on 'the 200 clean controls' (the original 200 calibration clean controls, §1). The v2 panel run judged the 240-row stratum only: the 120 drops and their 120 paired controls (28 of the paired controls are among the 200). The other 172 of the 200 (the supplementary_unpaired controls of results/judgebench_v2_clean_controls.json) were not re-judged in the v2 panel run. All 200 have deployed-prompt verdicts from the earlier 708-item run (results/gate_calibration_full.json), reported in premise_test.deployed.false_positive_protocol_200_controls. None of the 172 has a verdict from the v2 calibration-prompt run.",
+    "Within-stratum Delta Phi_V: §8 asks for Delta Phi_V within each expert_recoverable stratum but does not say which controls to use. Paired controls keep each stratum at 50% drops, like the full cells; all-120 cells run at other drop shares and are not comparable to the full cells (README A8 threat 11)."
+  ],
+  "disclosures": [
+    "Nemotron: §8 says 'Nemotron'; the panel's Nemotron is Nemotron Nano (nemotron_verdict), as protocol §2 and §7 name it.",
+    "expert_recoverable: protocol §6 defines it as whether 'an EXPERT / model' could still infer the diagnosis. It was set at construction from the oracle's (gpt-oss-120b) YES/NO answer to its expert-inference question (scripts/build_judgebench_v2.py, v3_oracle); results/judgebench_v2_tau1_final.json records no separate human or clinician rating of it."
+  ],
+  "primary": {
+    "deployed": {
+      "n": 240,
+      "prevalence": 0.5,
+      "phi_2rater_llama_qwen": 0.4764,
+      "phi_3rater_plus_nemotron": 0.5529,
+      "delta_phi_v": 0.0765,
+      "ci95": [
+        0.0516,
+        0.0992
+      ],
+      "band": "POSITIVE"
+    },
+    "calibration": {
+      "n": 240,
+      "prevalence": 0.5,
+      "phi_2rater_llama_qwen": 0.4745,
+      "phi_3rater_plus_nemotron": 0.5337,
+      "delta_phi_v": 0.0591,
+      "ci95": [
+        0.0387,
+        0.0802
+      ],
+      "band": "POSITIVE"
+    },
+    "source": "reproduces results/judgebench_v2_phi_v_recompute.json cells deployed_full, calibration_full (asserted)"
+  },
+  "premise_test": {
+    "deployed": {
+      "n_drops": 120,
+      "recall": {
+        "llama": {
+          "count": "56/120",
+          "rate": 0.4667,
+          "wilson95": [
+            0.3798,
+            0.5556
+          ]
+        },
+        "qwen": {
+          "count": "56/120",
+          "rate": 0.4667,
+          "wilson95": [
+            0.3798,
+            0.5556
+          ]
+        },
+        "nano": {
+          "count": "110/120",
+          "rate": 0.9167,
+          "wilson95": [
+            0.8534,
+            0.9541
+          ]
+        }
+      },
+      "n_controls": 120,
+      "false_positive": {
+        "llama": {
+          "count": "32/120",
+          "rate": 0.2667,
+          "wilson95": [
+            0.1957,
+            0.3521
+          ]
+        },
+        "qwen": {
+          "count": "13/120",
+          "rate": 0.1083,
+          "wilson95": [
+            0.0644,
+            0.1766
+          ]
+        },
+        "nano": {
+          "count": "53/120",
+          "rate": 0.4417,
+          "wilson95": [
+            0.356,
+            0.531
+          ]
+        }
+      },
+      "specificity": {
+        "llama": {
+          "count": "88/120",
+          "rate": 0.7333,
+          "wilson95": [
+            0.6479,
+            0.8043
+          ]
+        },
+        "qwen": {
+          "count": "107/120",
+          "rate": 0.8917,
+          "wilson95": [
+            0.8234,
+            0.9356
+          ]
+        },
+        "nano": {
+          "count": "67/120",
+          "rate": 0.5583,
+          "wilson95": [
+            0.469,
+            0.644
+          ]
+        }
+      },
+      "bands": {
+        "INCUMBENT BLIND SPOT CONFIRMED": {
+          "rule": "Llama recall AND Qwen recall each < 0.30",
+          "met": false,
+          "ci": "excluded"
+        },
+        "NO BLIND SPOT": {
+          "rule": "either incumbent recall >= 0.50",
+          "met": false,
+          "ci": "undetermined"
+        },
+        "NEMOTRON ADVANTAGE (material)": {
+          "rule": "recall(Nano) - max(recall Llama, Qwen) >= +0.15 with CI excluding 0",
+          "difference": 0.45,
+          "ci95_bootstrap": [
+            0.3417,
+            0.5002
+          ],
+          "mcnemar_exact": {
+            "vs_llama": {
+              "nano_only": 56,
+              "llama_only": 2,
+              "p_two_sided": 1.19e-14
+            },
+            "vs_qwen": {
+              "nano_only": 54,
+              "qwen_only": 0,
+              "p_two_sided": 1.11e-16
+            }
+          },
+          "met": true
+        },
+        "incumbent_outcome": "NEITHER BAND (not defined by the protocol)"
+      },
+      "shared_misses": {
+        "both_incumbents_safe": {
+          "count": "41/120",
+          "rate": 0.3417,
+          "wilson95": [
+            0.2629,
+            0.4303
+          ]
+        },
+        "expected_if_independent": 34.1,
+        "cohen_kappa_llama_qwen_on_drops": 0.2299,
+        "fisher_one_sided_p_more_shared": 0.00961,
+        "nano_catches_of_these": "33/41",
+        "all_three_safe": "8/120"
+      },
+      "controls": "the 120 paired controls of the v2 run (each drop's own pre-edit summary)",
+      "false_positive_protocol_200_controls": {
+        "source": "results/gate_calibration_full.json, condition == 'clean' (deployed gate prompt, src/run_gate_calibration.py; committed f5cb9d4, before the v2 stratum existed)",
+        "composition": "the 200 calibration clean controls = the 172 supplementary_unpaired + the 28 calib-origin primary_paired controls of results/judgebench_v2_clean_controls.json (asserted)",
+        "n_controls": 200,
+        "false_positive": {
+          "llama": {
+            "count": "19/200",
+            "rate": 0.095,
+            "wilson95": [
+              0.0617,
+              0.1436
+            ]
+          },
+          "qwen": {
+            "count": "19/200",
+            "rate": 0.095,
+            "wilson95": [
+              0.0617,
+              0.1436
+            ]
+          },
+          "nano": {
+            "count": "61/200",
+            "rate": 0.305,
+            "wilson95": [
+              0.2454,
+              0.372
+            ]
+          }
+        },
+        "specificity": {
+          "llama": {
+            "count": "181/200",
+            "rate": 0.905,
+            "wilson95": [
+              0.8564,
+              0.9383
+            ]
+          },
+          "qwen": {
+            "count": "181/200",
+            "rate": 0.905,
+            "wilson95": [
+              0.8564,
+              0.9383
+            ]
+          },
+          "nano": {
+            "count": "139/200",
+            "rate": 0.695,
+            "wilson95": [
+              0.628,
+              0.7546
+            ]
+          }
+        },
+        "on_the_28_also_in_the_v2_run": {
+          "note": "same prompt, two runs; the verdicts are not identical from run to run",
+          "same_verdict": {
+            "llama": "28/28",
+            "qwen": "23/28",
+            "nano": "21/28"
+          },
+          "flagged_v2_run": {
+            "llama": "1/28",
+            "qwen": "4/28",
+            "nano": "7/28"
+          },
+          "flagged_708_run": {
+            "llama": "1/28",
+            "qwen": "5/28",
+            "nano": "8/28"
+          }
+        }
+      }
+    },
+    "calibration": {
+      "n_drops": 120,
+      "recall": {
+        "llama": {
+          "count": "114/120",
+          "rate": 0.95,
+          "wilson95": [
+            0.8952,
+            0.9769
+          ]
+        },
+        "qwen": {
+          "count": "73/120",
+          "rate": 0.6083,
+          "wilson95": [
+            0.5189,
+            0.691
+          ]
+        },
+        "nano": {
+          "count": "112/120",
+          "rate": 0.9333,
+          "wilson95": [
+            0.8739,
+            0.9658
+          ]
+        }
+      },
+      "n_controls": 120,
+      "false_positive": {
+        "llama": {
+          "count": "98/120",
+          "rate": 0.8167,
+          "wilson95": [
+            0.738,
+            0.8757
+          ]
+        },
+        "qwen": {
+          "count": "30/120",
+          "rate": 0.25,
+          "wilson95": [
+            0.1811,
+            0.3344
+          ]
+        },
+        "nano": {
+          "count": "52/120",
+          "rate": 0.4333,
+          "wilson95": [
+            0.3481,
+            0.5227
+          ]
+        }
+      },
+      "specificity": {
+        "llama": {
+          "count": "22/120",
+          "rate": 0.1833,
+          "wilson95": [
+            0.1243,
+            0.262
+          ]
+        },
+        "qwen": {
+          "count": "90/120",
+          "rate": 0.75,
+          "wilson95": [
+            0.6656,
+            0.8189
+          ]
+        },
+        "nano": {
+          "count": "68/120",
+          "rate": 0.5667,
+          "wilson95": [
+            0.4773,
+            0.6519
+          ]
+        }
+      },
+      "bands": {
+        "INCUMBENT BLIND SPOT CONFIRMED": {
+          "rule": "Llama recall AND Qwen recall each < 0.30",
+          "met": false,
+          "ci": "excluded"
+        },
+        "NO BLIND SPOT": {
+          "rule": "either incumbent recall >= 0.50",
+          "met": true,
+          "ci": "met"
+        },
+        "NEMOTRON ADVANTAGE (material)": {
+          "rule": "recall(Nano) - max(recall Llama, Qwen) >= +0.15 with CI excluding 0",
+          "difference": -0.0167,
+          "ci95_bootstrap": [
+            -0.0667,
+            0.0333
+          ],
+          "mcnemar_exact": {
+            "vs_llama": {
+              "nano_only": 4,
+              "llama_only": 6,
+              "p_two_sided": 0.754
+            },
+            "vs_qwen": {
+              "nano_only": 42,
+              "qwen_only": 3,
+              "p_two_sided": 8.65e-10
+            }
+          },
+          "met": false
+        },
+        "incumbent_outcome": "NO BLIND SPOT"
+      },
+      "shared_misses": {
+        "both_incumbents_safe": {
+          "count": "3/120",
+          "rate": 0.025,
+          "wilson95": [
+            0.0085,
+            0.0709
+          ]
+        },
+        "expected_if_independent": 2.4,
+        "cohen_kappa_llama_qwen_on_drops": 0.0269,
+        "fisher_one_sided_p_more_shared": 0.438,
+        "nano_catches_of_these": "1/3",
+        "all_three_safe": "2/120"
+      },
+      "controls": "the 120 paired controls of the v2 run (each drop's own pre-edit summary)",
+      "false_positive_protocol_200_controls": {
+        "available": false,
+        "note": "The v2 calibration-prompt run judged 28 of the 200 (as paired controls) and none of the other 172. nemotron_calibration_full.json covers all 200, but its Llama and Qwen columns are Project v1's stored verdicts (nemotron_judge_test.py reads them from Project v1's calibration_verdicts.json) and its Nano calls used the same prompt text with other call settings (response_format json, no enable_thinking), so it is not reported here as this prompt's false-positive rate."
+      }
+    }
+  },
+  "expert_recoverability": {
+    "deployed": {
+      "n": {
+        "er0": 30,
+        "er1": 90
+      },
+      "covariate_source": "the construction oracle's (gpt-oss-120b) answer to its expert-inference question; see disclosures",
+      "recall_by_stratum": {
+        "er0": {
+          "n_drops": 30,
+          "recall": {
+            "llama": {
+              "count": "15/30",
+              "rate": 0.5,
+              "wilson95": [
+                0.3315,
+                0.6685
+              ]
+            },
+            "qwen": {
+              "count": "18/30",
+              "rate": 0.6,
+              "wilson95": [
+                0.4232,
+                0.7541
+              ]
+            },
+            "nano": {
+              "count": "30/30",
+              "rate": 1.0,
+              "wilson95": [
+                0.8865,
+                1.0
+              ]
+            }
+          },
+          "n_controls": 30,
+          "false_positive": {
+            "llama": {
+              "count": "9/30",
+              "rate": 0.3,
+              "wilson95": [
+                0.1666,
+                0.4788
+              ]
+            },
+            "qwen": {
+              "count": "5/30",
+              "rate": 0.1667,
+              "wilson95": [
+                0.0734,
+                0.3356
+              ]
+            },
+            "nano": {
+              "count": "10/30",
+              "rate": 0.3333,
+              "wilson95": [
+                0.1923,
+                0.5122
+              ]
+            }
+          },
+          "specificity": {
+            "llama": {
+              "count": "21/30",
+              "rate": 0.7,
+              "wilson95": [
+                0.5212,
+                0.8334
+              ]
+            },
+            "qwen": {
+              "count": "25/30",
+              "rate": 0.8333,
+              "wilson95": [
+                0.6644,
+                0.9266
+              ]
+            },
+            "nano": {
+              "count": "20/30",
+              "rate": 0.6667,
+              "wilson95": [
+                0.4878,
+                0.8077
+              ]
+            }
+          },
+          "bands": {
+            "INCUMBENT BLIND SPOT CONFIRMED": {
+              "rule": "Llama recall AND Qwen recall each < 0.30",
+              "met": false,
+              "ci": "excluded"
+            },
+            "NO BLIND SPOT": {
+              "rule": "either incumbent recall >= 0.50",
+              "met": true,
+              "ci": "undetermined"
+            },
+            "NEMOTRON ADVANTAGE (material)": {
+              "rule": "recall(Nano) - max(recall Llama, Qwen) >= +0.15 with CI excluding 0",
+              "difference": 0.4,
+              "ci95_bootstrap": [
+                0.2333,
+                0.5333
+              ],
+              "mcnemar_exact": {
+                "vs_llama": {
+                  "nano_only": 15,
+                  "llama_only": 0,
+                  "p_two_sided": 6.1e-05
+                },
+                "vs_qwen": {
+                  "nano_only": 12,
+                  "qwen_only": 0,
+                  "p_two_sided": 0.000488
+                }
+              },
+              "met": true
+            },
+            "incumbent_outcome": "NO BLIND SPOT"
+          },
+          "shared_misses": {
+            "both_incumbents_safe": {
+              "count": "7/30",
+              "rate": 0.2333,
+              "wilson95": [
+                0.1179,
+                0.4093
+              ]
+            },
+            "expected_if_independent": 6.0,
+            "cohen_kappa_llama_qwen_on_drops": 0.1333,
+            "fisher_one_sided_p_more_shared": 0.355,
+            "nano_catches_of_these": "7/7",
+            "all_three_safe": "0/30"
+          },
+          "bands_note": "the premise-test bands are pre-registered for all 120 drops; per stratum they are informational"
+        },
+        "er1": {
+          "n_drops": 90,
+          "recall": {
+            "llama": {
+              "count": "41/90",
+              "rate": 0.4556,
+              "wilson95": [
+                0.3566,
+                0.5582
+              ]
+            },
+            "qwen": {
+              "count": "38/90",
+              "rate": 0.4222,
+              "wilson95": [
+                0.3254,
+                0.5254
+              ]
+            },
+            "nano": {
+              "count": "80/90",
+              "rate": 0.8889,
+              "wilson95": [
+                0.8074,
+                0.9385
+              ]
+            }
+          },
+          "n_controls": 90,
+          "false_positive": {
+            "llama": {
+              "count": "23/90",
+              "rate": 0.2556,
+              "wilson95": [
+                0.1767,
+                0.3544
+              ]
+            },
+            "qwen": {
+              "count": "8/90",
+              "rate": 0.0889,
+              "wilson95": [
+                0.0457,
+                0.1657
+              ]
+            },
+            "nano": {
+              "count": "43/90",
+              "rate": 0.4778,
+              "wilson95": [
+                0.3776,
+                0.5798
+              ]
+            }
+          },
+          "specificity": {
+            "llama": {
+              "count": "67/90",
+              "rate": 0.7444,
+              "wilson95": [
+                0.6456,
+                0.8233
+              ]
+            },
+            "qwen": {
+              "count": "82/90",
+              "rate": 0.9111,
+              "wilson95": [
+                0.8343,
+                0.9543
+              ]
+            },
+            "nano": {
+              "count": "47/90",
+              "rate": 0.5222,
+              "wilson95": [
+                0.4202,
+                0.6224
+              ]
+            }
+          },
+          "bands": {
+            "INCUMBENT BLIND SPOT CONFIRMED": {
+              "rule": "Llama recall AND Qwen recall each < 0.30",
+              "met": false,
+              "ci": "excluded"
+            },
+            "NO BLIND SPOT": {
+              "rule": "either incumbent recall >= 0.50",
+              "met": false,
+              "ci": "undetermined"
+            },
+            "NEMOTRON ADVANTAGE (material)": {
+              "rule": "recall(Nano) - max(recall Llama, Qwen) >= +0.15 with CI excluding 0",
+              "difference": 0.4333,
+              "ci95_bootstrap": [
+                0.3222,
+                0.5222
+              ],
+              "mcnemar_exact": {
+                "vs_llama": {
+                  "nano_only": 41,
+                  "llama_only": 2,
+                  "p_two_sided": 2.15e-10
+                },
+                "vs_qwen": {
+                  "nano_only": 42,
+                  "qwen_only": 0,
+                  "p_two_sided": 4.55e-13
+                }
+              },
+              "met": true
+            },
+            "incumbent_outcome": "NEITHER BAND (not defined by the protocol)"
+          },
+          "shared_misses": {
+            "both_incumbents_safe": {
+              "count": "34/90",
+              "rate": 0.3778,
+              "wilson95": [
+                0.2846,
+                0.481
+              ]
+            },
+            "expected_if_independent": 28.3,
+            "cohen_kappa_llama_qwen_on_drops": 0.2564,
+            "fisher_one_sided_p_more_shared": 0.0129,
+            "nano_catches_of_these": "26/34",
+            "all_three_safe": "8/90"
+          },
+          "bands_note": "the premise-test bands are pre-registered for all 120 drops; per stratum they are informational"
+        }
+      },
+      "advance_prediction": {
+        "statement": "incumbent recall (Llama, Qwen) is LOWER on expert_recoverable=1 than on =0",
+        "applies_to": "llama, qwen; nano is given for comparison",
+        "outcome": "direction as predicted for 2 of 2 incumbents; the 95% CI excludes 0 for 0 of 2",
+        "by_judge": {
+          "llama": {
+            "er1": "41/90",
+            "er1_rate": 0.4556,
+            "er0": "15/30",
+            "er0_rate": 0.5,
+            "difference_er1_minus_er0": -0.0444,
+            "newcombe95": [
+              -0.2398,
+              0.1528
+            ],
+            "fisher_one_sided_p": 0.416,
+            "direction_as_predicted": true,
+            "ci_excludes_0": false
+          },
+          "qwen": {
+            "er1": "38/90",
+            "er1_rate": 0.4222,
+            "er0": "18/30",
+            "er0_rate": 0.6,
+            "difference_er1_minus_er0": -0.1778,
+            "newcombe95": [
+              -0.3598,
+              0.0269
+            ],
+            "fisher_one_sided_p": 0.0696,
+            "direction_as_predicted": true,
+            "ci_excludes_0": false
+          },
+          "nano": {
+            "er1": "80/90",
+            "er1_rate": 0.8889,
+            "er0": "30/30",
+            "er0_rate": 1.0,
+            "difference_er1_minus_er0": -0.1111,
+            "newcombe95": [
+              -0.1926,
+              0.0128
+            ],
+            "fisher_one_sided_p": 0.0493,
+            "direction_as_predicted": true,
+            "ci_excludes_0": false
+          }
+        }
+      },
+      "delta_phi_v_within_stratum": {
+        "er0_paired": {
+          "n": 60,
+          "pos_tau1": 30,
+          "neg_tau0": 30,
+          "prevalence": 0.5,
+          "dropped_incomplete": 0,
+          "phi_2rater_llama_qwen": 0.5042,
+          "phi_3rater_plus_nemotron": 0.6053,
+          "delta_phi_v": 0.1011,
+          "ci95": [
+            0.053,
+            0.1423
+          ],
+          "band": "POSITIVE"
+        },
+        "er0_all120": {
+          "n": 150,
+          "pos_tau1": 30,
+          "neg_tau0": 120,
+          "prevalence": 0.2,
+          "dropped_incomplete": 0,
+          "phi_2rater_llama_qwen": 0.503,
+          "phi_3rater_plus_nemotron": 0.5065,
+          "delta_phi_v": 0.0035,
+          "ci95": [
+            -0.0424,
+            0.0463
+          ],
+          "band": "NULL"
+        },
+        "er1_paired": {
+          "n": 180,
+          "pos_tau1": 90,
+          "neg_tau0": 90,
+          "prevalence": 0.5,
+          "dropped_incomplete": 0,
+          "phi_2rater_llama_qwen": 0.4677,
+          "phi_3rater_plus_nemotron": 0.5371,
+          "delta_phi_v": 0.0695,
+          "ci95": [
+            0.04,
+            0.0966
+          ],
+          "band": "POSITIVE"
+        },
+        "er1_all120": {
+          "n": 210,
+          "pos_tau1": 90,
+          "neg_tau0": 120,
+          "prevalence": 0.43,
+          "dropped_incomplete": 0,
+          "phi_2rater_llama_qwen": 0.4797,
+          "phi_3rater_plus_nemotron": 0.5413,
+          "delta_phi_v": 0.0617,
+          "ci95": [
+            0.0328,
+            0.087
+          ],
+          "band": "POSITIVE"
+        }
+      },
+      "prevalence_comparison": {
+        "er0_all120": {
+          "drop_share": 0.2,
+          "subset_cell_delta_phi_v": 0.0035,
+          "subset_cell_ci95": [
+            -0.0424,
+            0.0463
+          ],
+          "full_stratum_reweighted": {
+            "delta_phi_v": 0.0066,
+            "ci95": [
+              -0.0264,
+              0.0384
+            ],
+            "band": "NULL"
+          }
+        },
+        "er1_all120": {
+          "drop_share": 0.4286,
+          "subset_cell_delta_phi_v": 0.0617,
+          "subset_cell_ci95": [
+            0.0328,
+            0.087
+          ],
+          "full_stratum_reweighted": {
+            "delta_phi_v": 0.0633,
+            "ci95": [
+              0.0365,
+              0.0876
+            ],
+            "band": "POSITIVE"
+          }
+        }
+      }
+    },
+    "calibration": {
+      "n": {
+        "er0": 30,
+        "er1": 90
+      },
+      "covariate_source": "the construction oracle's (gpt-oss-120b) answer to its expert-inference question; see disclosures",
+      "recall_by_stratum": {
+        "er0": {
+          "n_drops": 30,
+          "recall": {
+            "llama": {
+              "count": "29/30",
+              "rate": 0.9667,
+              "wilson95": [
+                0.8333,
+                0.9941
+              ]
+            },
+            "qwen": {
+              "count": "21/30",
+              "rate": 0.7,
+              "wilson95": [
+                0.5212,
+                0.8334
+              ]
+            },
+            "nano": {
+              "count": "28/30",
+              "rate": 0.9333,
+              "wilson95": [
+                0.7868,
+                0.9815
+              ]
+            }
+          },
+          "n_controls": 30,
+          "false_positive": {
+            "llama": {
+              "count": "23/30",
+              "rate": 0.7667,
+              "wilson95": [
+                0.5907,
+                0.8821
+              ]
+            },
+            "qwen": {
+              "count": "5/30",
+              "rate": 0.1667,
+              "wilson95": [
+                0.0734,
+                0.3356
+              ]
+            },
+            "nano": {
+              "count": "14/30",
+              "rate": 0.4667,
+              "wilson95": [
+                0.3023,
+                0.6386
+              ]
+            }
+          },
+          "specificity": {
+            "llama": {
+              "count": "7/30",
+              "rate": 0.2333,
+              "wilson95": [
+                0.1179,
+                0.4093
+              ]
+            },
+            "qwen": {
+              "count": "25/30",
+              "rate": 0.8333,
+              "wilson95": [
+                0.6644,
+                0.9266
+              ]
+            },
+            "nano": {
+              "count": "16/30",
+              "rate": 0.5333,
+              "wilson95": [
+                0.3614,
+                0.6977
+              ]
+            }
+          },
+          "bands": {
+            "INCUMBENT BLIND SPOT CONFIRMED": {
+              "rule": "Llama recall AND Qwen recall each < 0.30",
+              "met": false,
+              "ci": "excluded"
+            },
+            "NO BLIND SPOT": {
+              "rule": "either incumbent recall >= 0.50",
+              "met": true,
+              "ci": "met"
+            },
+            "NEMOTRON ADVANTAGE (material)": {
+              "rule": "recall(Nano) - max(recall Llama, Qwen) >= +0.15 with CI excluding 0",
+              "difference": -0.0333,
+              "ci95_bootstrap": [
+                -0.1,
+                0.0
+              ],
+              "mcnemar_exact": {
+                "vs_llama": {
+                  "nano_only": 0,
+                  "llama_only": 1,
+                  "p_two_sided": 1.0
+                },
+                "vs_qwen": {
+                  "nano_only": 7,
+                  "qwen_only": 0,
+                  "p_two_sided": 0.0156
+                }
+              },
+              "met": false
+            },
+            "incumbent_outcome": "NO BLIND SPOT"
+          },
+          "shared_misses": {
+            "both_incumbents_safe": {
+              "count": "1/30",
+              "rate": 0.0333,
+              "wilson95": [
+                0.0059,
+                0.1667
+              ]
+            },
+            "expected_if_independent": 0.3,
+            "cohen_kappa_llama_qwen_on_drops": 0.1489,
+            "fisher_one_sided_p_more_shared": 0.3,
+            "nano_catches_of_these": "0/1",
+            "all_three_safe": "1/30"
+          },
+          "bands_note": "the premise-test bands are pre-registered for all 120 drops; per stratum they are informational"
+        },
+        "er1": {
+          "n_drops": 90,
+          "recall": {
+            "llama": {
+              "count": "85/90",
+              "rate": 0.9444,
+              "wilson95": [
+                0.8765,
+                0.976
+              ]
+            },
+            "qwen": {
+              "count": "52/90",
+              "rate": 0.5778,
+              "wilson95": [
+                0.4746,
+                0.6746
+              ]
+            },
+            "nano": {
+              "count": "84/90",
+              "rate": 0.9333,
+              "wilson95": [
+                0.8621,
+                0.9691
+              ]
+            }
+          },
+          "n_controls": 90,
+          "false_positive": {
+            "llama": {
+              "count": "75/90",
+              "rate": 0.8333,
+              "wilson95": [
+                0.7431,
+                0.8963
+              ]
+            },
+            "qwen": {
+              "count": "25/90",
+              "rate": 0.2778,
+              "wilson95": [
+                0.1958,
+                0.378
+              ]
+            },
+            "nano": {
+              "count": "38/90",
+              "rate": 0.4222,
+              "wilson95": [
+                0.3254,
+                0.5254
+              ]
+            }
+          },
+          "specificity": {
+            "llama": {
+              "count": "15/90",
+              "rate": 0.1667,
+              "wilson95": [
+                0.1037,
+                0.2569
+              ]
+            },
+            "qwen": {
+              "count": "65/90",
+              "rate": 0.7222,
+              "wilson95": [
+                0.622,
+                0.8042
+              ]
+            },
+            "nano": {
+              "count": "52/90",
+              "rate": 0.5778,
+              "wilson95": [
+                0.4746,
+                0.6746
+              ]
+            }
+          },
+          "bands": {
+            "INCUMBENT BLIND SPOT CONFIRMED": {
+              "rule": "Llama recall AND Qwen recall each < 0.30",
+              "met": false,
+              "ci": "excluded"
+            },
+            "NO BLIND SPOT": {
+              "rule": "either incumbent recall >= 0.50",
+              "met": true,
+              "ci": "met"
+            },
+            "NEMOTRON ADVANTAGE (material)": {
+              "rule": "recall(Nano) - max(recall Llama, Qwen) >= +0.15 with CI excluding 0",
+              "difference": -0.0111,
+              "ci95_bootstrap": [
+                -0.0778,
+                0.0556
+              ],
+              "mcnemar_exact": {
+                "vs_llama": {
+                  "nano_only": 4,
+                  "llama_only": 5,
+                  "p_two_sided": 1.0
+                },
+                "vs_qwen": {
+                  "nano_only": 35,
+                  "qwen_only": 3,
+                  "p_two_sided": 6.68e-08
+                }
+              },
+              "met": false
+            },
+            "incumbent_outcome": "NO BLIND SPOT"
+          },
+          "shared_misses": {
+            "both_incumbents_safe": {
+              "count": "2/90",
+              "rate": 0.0222,
+              "wilson95": [
+                0.0061,
+                0.0774
+              ]
+            },
+            "expected_if_independent": 2.1,
+            "cohen_kappa_llama_qwen_on_drops": -0.0057,
+            "fisher_one_sided_p_more_shared": 0.707,
+            "nano_catches_of_these": "1/2",
+            "all_three_safe": "1/90"
+          },
+          "bands_note": "the premise-test bands are pre-registered for all 120 drops; per stratum they are informational"
+        }
+      },
+      "advance_prediction": {
+        "statement": "incumbent recall (Llama, Qwen) is LOWER on expert_recoverable=1 than on =0",
+        "applies_to": "llama, qwen; nano is given for comparison",
+        "outcome": "direction as predicted for 2 of 2 incumbents; the 95% CI excludes 0 for 0 of 2",
+        "by_judge": {
+          "llama": {
+            "er1": "85/90",
+            "er1_rate": 0.9444,
+            "er0": "29/30",
+            "er0_rate": 0.9667,
+            "difference_er1_minus_er0": -0.0222,
+            "newcombe95": [
+              -0.0955,
+              0.1148
+            ],
+            "fisher_one_sided_p": 0.531,
+            "direction_as_predicted": true,
+            "ci_excludes_0": false
+          },
+          "qwen": {
+            "er1": "52/90",
+            "er1_rate": 0.5778,
+            "er0": "21/30",
+            "er0_rate": 0.7,
+            "difference_er1_minus_er0": -0.1222,
+            "newcombe95": [
+              -0.2908,
+              0.0811
+            ],
+            "fisher_one_sided_p": 0.166,
+            "direction_as_predicted": true,
+            "ci_excludes_0": false
+          },
+          "nano": {
+            "er1": "84/90",
+            "er1_rate": 0.9333,
+            "er0": "28/30",
+            "er0_rate": 0.9333,
+            "difference_er1_minus_er0": 0.0,
+            "newcombe95": [
+              -0.086,
+              0.1509
+            ],
+            "fisher_one_sided_p": 0.681,
+            "direction_as_predicted": false,
+            "ci_excludes_0": false
+          }
+        }
+      },
+      "delta_phi_v_within_stratum": {
+        "er0_paired": {
+          "n": 60,
+          "pos_tau1": 30,
+          "neg_tau0": 30,
+          "prevalence": 0.5,
+          "dropped_incomplete": 0,
+          "phi_2rater_llama_qwen": 0.528,
+          "phi_3rater_plus_nemotron": 0.5516,
+          "delta_phi_v": 0.0236,
+          "ci95": [
+            -0.0145,
+            0.0651
+          ],
+          "band": "NULL"
+        },
+        "er0_all120": {
+          "n": 150,
+          "pos_tau1": 30,
+          "neg_tau0": 120,
+          "prevalence": 0.2,
+          "dropped_incomplete": 0,
+          "phi_2rater_llama_qwen": 0.3104,
+          "phi_3rater_plus_nemotron": 0.3475,
+          "delta_phi_v": 0.0371,
+          "ci95": [
+            0.0171,
+            0.0597
+          ],
+          "band": "WEAK-POS"
+        },
+        "er1_paired": {
+          "n": 180,
+          "pos_tau1": 90,
+          "neg_tau0": 90,
+          "prevalence": 0.5,
+          "dropped_incomplete": 0,
+          "phi_2rater_llama_qwen": 0.459,
+          "phi_3rater_plus_nemotron": 0.5279,
+          "delta_phi_v": 0.0689,
+          "ci95": [
+            0.0453,
+            0.0946
+          ],
+          "band": "POSITIVE"
+        },
+        "er1_all120": {
+          "n": 210,
+          "pos_tau1": 90,
+          "neg_tau0": 120,
+          "prevalence": 0.43,
+          "dropped_incomplete": 0,
+          "phi_2rater_llama_qwen": 0.4482,
+          "phi_3rater_plus_nemotron": 0.5063,
+          "delta_phi_v": 0.0581,
+          "ci95": [
+            0.0375,
+            0.0804
+          ],
+          "band": "POSITIVE"
+        }
+      },
+      "prevalence_comparison": {
+        "er0_all120": {
+          "drop_share": 0.2,
+          "subset_cell_delta_phi_v": 0.0371,
+          "subset_cell_ci95": [
+            0.0171,
+            0.0597
+          ],
+          "full_stratum_reweighted": {
+            "delta_phi_v": 0.0402,
+            "ci95": [
+              0.0215,
+              0.0615
+            ],
+            "band": "WEAK-POS"
+          }
+        },
+        "er1_all120": {
+          "drop_share": 0.4286,
+          "subset_cell_delta_phi_v": 0.0581,
+          "subset_cell_ci95": [
+            0.0375,
+            0.0804
+          ],
+          "full_stratum_reweighted": {
+            "delta_phi_v": 0.0551,
+            "ci95": [
+              0.0342,
+              0.0762
+            ],
+            "band": "POSITIVE"
+          }
+        }
+      }
+    },
+    "incumbents_both_prompts": {
+      "direction_as_predicted": "4/4",
+      "ci_excludes_0": "0/4",
+      "smallest_fisher_one_sided_p": 0.0696,
+      "largest_gap": {
+        "prompt": "deployed",
+        "judge": "qwen",
+        "difference_er1_minus_er0": -0.1778,
+        "newcombe95": [
+          -0.3598,
+          0.0269
+        ]
+      }
+    },
+    "prevalence_note": "The *_paired cells are at 50% drops, like the full cells. The *_all120 cells are at 20% (er0: 30 drops + 120 controls) and 42.86% (er1: 90 + 120), so part of their difference from the paired cells is the drop share, not the stratum: prevalence_comparison gives the full 120-drop stratum reweighted to the same share (run_prevalence_sensitivity_v2.at_p_raw; at 20% both prompts reproduce results/judgebench_v2_prevalence_sensitivity.json, asserted). README A8 threat 11."
+  },
+  "secondary": {
+    "sources": {
+      "pool": "results/judgebench_v2_pool_table.json candidates_ranked",
+      "null_control": "results/judgebench_v2_null_control.json candidates",
+      "split_half": "results/judgebench_v2_split_half.json candidates"
+    },
+    "scope": "deployed gate prompt, each candidate added to Llama+Qwen on the 240-row stratum (DeepSeek-V4-Flash on its 233 complete rows); all at 50% drops (51% for DeepSeek), README A8 threat 11; the pool ranking is partly by construction for gpt-oss-120b and DeepSeek-V4-Flash, README A8 threat 10",
+    "candidates": {
+      "DeepSeek-V4-Flash-0731": {
+        "recall": {
+          "count": "118/119",
+          "rate": 0.9916,
+          "wilson95": [
+            0.9539,
+            0.9985
+          ]
+        },
+        "specificity": {
+          "count": "75/114",
+          "rate": 0.6579,
+          "wilson95": [
+            0.5669,
+            0.7386
+          ]
+        },
+        "catches_of_drops_both_incumbents_pass": "40/41",
+        "delta_phi_v": 0.1238,
+        "ci95": [
+          0.1024,
+          0.144
+        ],
+        "band": "POSITIVE",
+        "n": 233,
+        "null_control": {
+          "real_delta_phi_v": 0.1238,
+          "null_95_range": [
+            0.0052,
+            0.0408
+          ],
+          "perm_p_value": 0.001
+        },
+        "split_half": {
+          "halfA": {
+            "delta_phi_v": 0.1182,
+            "ci95": [
+              0.0842,
+              0.147
+            ],
+            "band": "POSITIVE"
+          },
+          "halfB": {
+            "delta_phi_v": 0.1285,
+            "ci95": [
+              0.0986,
+              0.1542
+            ],
+            "band": "POSITIVE"
+          }
+        }
+      },
+      "gpt-oss-120b": {
+        "recall": {
+          "count": "114/120",
+          "rate": 0.95,
+          "wilson95": [
+            0.8952,
+            0.9769
+          ]
+        },
+        "specificity": {
+          "count": "88/120",
+          "rate": 0.7333,
+          "wilson95": [
+            0.6479,
+            0.8043
+          ]
+        },
+        "catches_of_drops_both_incumbents_pass": "38/41",
+        "delta_phi_v": 0.122,
+        "ci95": [
+          0.1,
+          0.1416
+        ],
+        "band": "POSITIVE",
+        "n": 240,
+        "null_control": {
+          "real_delta_phi_v": 0.122,
+          "null_95_range": [
+            0.0004,
+            0.0367
+          ],
+          "perm_p_value": 0.001
+        },
+        "split_half": {
+          "halfA": {
+            "delta_phi_v": 0.1217,
+            "ci95": [
+              0.0881,
+              0.1511
+            ],
+            "band": "POSITIVE"
+          },
+          "halfB": {
+            "delta_phi_v": 0.1217,
+            "ci95": [
+              0.0889,
+              0.1487
+            ],
+            "band": "POSITIVE"
+          }
+        }
+      },
+      "Nemotron-3-Ultra-550b-a55b": {
+        "recall": {
+          "count": "107/120",
+          "rate": 0.8917,
+          "wilson95": [
+            0.8234,
+            0.9356
+          ]
+        },
+        "specificity": {
+          "count": "70/120",
+          "rate": 0.5833,
+          "wilson95": [
+            0.4939,
+            0.6676
+          ]
+        },
+        "catches_of_drops_both_incumbents_pass": "33/41",
+        "delta_phi_v": 0.0781,
+        "ci95": [
+          0.0552,
+          0.1003
+        ],
+        "band": "POSITIVE",
+        "n": 240,
+        "null_control": {
+          "real_delta_phi_v": 0.0781,
+          "null_95_range": [
+            0.0023,
+            0.0399
+          ],
+          "perm_p_value": 0.001
+        },
+        "split_half": {
+          "halfA": {
+            "delta_phi_v": 0.0746,
+            "ci95": [
+              0.0403,
+              0.1088
+            ],
+            "band": "POSITIVE"
+          },
+          "halfB": {
+            "delta_phi_v": 0.0809,
+            "ci95": [
+              0.0491,
+              0.1126
+            ],
+            "band": "POSITIVE"
+          }
+        }
+      },
+      "NVIDIA-Nemotron-3-Nano-30B-A3B": {
+        "recall": {
+          "count": "110/120",
+          "rate": 0.9167,
+          "wilson95": [
+            0.8534,
+            0.9541
+          ]
+        },
+        "specificity": {
+          "count": "67/120",
+          "rate": 0.5583,
+          "wilson95": [
+            0.469,
+            0.644
+          ]
+        },
+        "catches_of_drops_both_incumbents_pass": "33/41",
+        "delta_phi_v": 0.0765,
+        "ci95": [
+          0.0516,
+          0.0992
+        ],
+        "band": "POSITIVE",
+        "n": 240,
+        "null_control": {
+          "real_delta_phi_v": 0.0765,
+          "null_95_range": [
+            0.0046,
+            0.0395
+          ],
+          "perm_p_value": 0.001
+        },
+        "split_half": {
+          "halfA": {
+            "delta_phi_v": 0.0735,
+            "ci95": [
+              0.036,
+              0.1041
+            ],
+            "band": "POSITIVE"
+          },
+          "halfB": {
+            "delta_phi_v": 0.0789,
+            "ci95": [
+              0.0466,
+              0.1093
+            ],
+            "band": "POSITIVE"
+          }
+        }
+      },
+      "nemotron-3-super-120b-a12b": {
+        "recall": {
+          "count": "112/120",
+          "rate": 0.9333,
+          "wilson95": [
+            0.8739,
+            0.9658
+          ]
+        },
+        "specificity": {
+          "count": "35/120",
+          "rate": 0.2917,
+          "wilson95": [
+            0.2178,
+            0.3784
+          ]
+        },
+        "catches_of_drops_both_incumbents_pass": "36/41",
+        "delta_phi_v": 0.048,
+        "ci95": [
+          0.0225,
+          0.072
+        ],
+        "band": "WEAK-POS",
+        "n": 240,
+        "null_control": {
+          "real_delta_phi_v": 0.048,
+          "null_95_range": [
+            0.0084,
+            0.039
+          ],
+          "perm_p_value": 0.001
+        },
+        "split_half": {
+          "halfA": {
+            "delta_phi_v": 0.0362,
+            "ci95": [
+              -0.0104,
+              0.073
+            ],
+            "band": "NULL"
+          },
+          "halfB": {
+            "delta_phi_v": 0.0582,
+            "ci95": [
+              0.0247,
+              0.0903
+            ],
+            "band": "POSITIVE"
+          }
+        }
+      },
+      "gemma-3-27b-it": {
+        "recall": {
+          "count": "57/120",
+          "rate": 0.475,
+          "wilson95": [
+            0.3878,
+            0.5637
+          ]
+        },
+        "specificity": {
+          "count": "91/120",
+          "rate": 0.7583,
+          "wilson95": [
+            0.6745,
+            0.8261
+          ]
+        },
+        "catches_of_drops_both_incumbents_pass": "11/41",
+        "delta_phi_v": 0.0066,
+        "ci95": [
+          -0.0108,
+          0.0261
+        ],
+        "band": "NULL",
+        "n": 240,
+        "null_control": {
+          "real_delta_phi_v": 0.0066,
+          "null_95_range": [
+            -0.0101,
+            0.0236
+          ],
+          "perm_p_value": 0.4486
+        },
+        "split_half": {
+          "halfA": {
+            "delta_phi_v": -0.0177,
+            "ci95": [
+              -0.0397,
+              0.0057
+            ],
+            "band": "NULL"
+          },
+          "halfB": {
+            "delta_phi_v": 0.0286,
+            "ci95": [
+              -0.0002,
+              0.0554
+            ],
+            "band": "NULL"
+          }
+        }
+      }
+    }
+  },
+  "checks": [
+    "primary cells reproduce results/judgebench_v2_phi_v_recompute.json deployed_full / calibration_full",
+    "er0 paired and all-120 cells reproduce the committed deployed_/calibration_er0_* cells",
+    "deployed recall and false-positive counts and Wilson CIs for Llama, Qwen and Nano reproduce results/judgebench_v2_prevalence_sensitivity.json gate_operating_characteristics (llama_alone, block_consensus_unsafe = Qwen UNSAFE, nano_alone)",
+    "controls flagged per judge, both prompts, reproduce prevalence_sensitivity controls_flagged_by_judge; calibration Nano recall and specificity reproduce panel_calibration_prompt",
+    "each pool candidate's recall and specificity counts reproduce results/judgebench_v2_pool_table.json",
+    "deployed: both incumbents pass 41/120, Nano catches 33 of them, gpt-oss-120b 38 (README B4, NEMOTRON_INSIGHTS)",
+    "full stratum reweighted to 20% reproduces prevalence_sensitivity full_stratum_at_subset_shares deployed_er0_all120 (deployed) and panel_calibration_prompt by_prevalence 0.20 (calibration)",
+    "the 200 clean controls of results/gate_calibration_full.json are the 172 supplementary + 28 calib-origin paired controls; per-judge counts flagged equal the sum of results/split_half_validation.json b4_strategies dev + test (19, 19, 61 of 200, as in README B4) and Nano-UNSAFE/Qwen-SAFE equals prevalence_sensitivity gate_708_disagree_reference disagree_on_clean (51/200)",
+    "no ERROR verdicts among Llama, Qwen, Nano in either panel file or among the 200 clean controls"
+  ]
+}
