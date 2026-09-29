@@ -18,7 +18,7 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
      consistent with it (docs/judgebench_v2_protocol.md:40 "HUMAN = final arbiter (V4)"; :77 "a human reads source +
      clean_ref + perturbed"). No protocol text needs changing.
      [2026-09-28: the repo card's :64 now carries the human_arbiter wording verbatim (14c6a38); the live HF card still
-     shows the older wording until the re-upload.]
+     showed the older wording until the re-upload of 2026-09-29 (HF commit 532578bf).]
    - The only error: the top-level string `"human_arbiter": "V4 (Claude Opus 4.8), full-text one-at-a-time review;
      RETRY-cleared"` in results/judgebench_v2_tau1_final.json (added in 0fa51fb). It wrongly names Opus as the
      reviewer. No script reads this field. The published HF data files (data/drops.jsonl, data/controls.jsonl) carry
@@ -62,26 +62,31 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
    commit timeline (the only VAGT code in that repo is the 2026-08-16 prototype, which is this project's lineage).
 
 ### Decided (owner, 2026-09-28) — each change lands only after sign-off on its exact diff
-- Q1 selector: option B — keep the rounding bins; the docs must disclose the bin-edge rounding quirk plainly.
+- Q1 selector: option B — keep the rounding bins; the docs must disclose the bin-edge rounding quirk plainly. Landed in
+  f46dc89, trimmed to existing files (pick alternates above 51%, DeepSeek higher from 50% up, ties by 0.01 bin); the new
+  selector_tie_rule_check.json was not added (same category as results-note #6; a separate future ask if wanted).
 - Null control: keep results/judgebench_v2_null_control.json as committed, with a dated note; do not regenerate. Fix the
-  reproduce-steps wording and scripts/check_null_control_ties_v2.py (accept the committed and the re-run value).
+  reproduce-steps wording and scripts/check_null_control_ties_v2.py (accept the committed and the re-run value). Landed
+  in f46dc89; the README's reproduce order (re-run, then check) now passes.
 - Citing Project v1's repo: approved narrowly — pinned to commit dd6681b, for how its stored Llama/Qwen verdicts were
   produced only (perturbation_calibration.py:193–227, one-word prompt; the stored columns equal Project v1's
   calibration_verdicts.json at dd6681b on 708/708 rows, checked directly 2026-09-28). The approved citation text for the
-  README, FINDINGS, the tau_recompute_summary note and the erratum lands with the Q1 pass (those passages sit inside Q1
-  edits and the new erratum file); the CLAUDE_CODE_CONTEXT citation line is applied.
+  README, FINDINGS, the tau_recompute_summary note and the erratum landed in f46dc89; the CLAUDE_CODE_CONTEXT citation line
+  was applied earlier (14c6a38). One more citation, of the calibration prompt, now points at this repo's
+  scripts/run_panel_judgebench_v2.py instead of Project v1's repo (owner, 2026-09-28).
 - Smaller defaults approved and applied: "inversion" → "decoupling" in README :23, :83 and the A6 heading (no external
   link points at the old anchor; the Q1 draft's :198 follows); src/run_student_audit.py's prior strings. FINDINGS.md
   "inversion" (:71, :81) stays as is (automated pass, where Fleiss κ did go negative).
-- Protocol deviations: approved as a section of docs/judgebench_v2_protocol_erratum.md; lands with the Q1 pass.
+- Protocol deviations: approved as a section of docs/judgebench_v2_protocol_erratum.md; landed in f46dc89, with its §8 line
+  references moved +5 for the §5 bracket (owner-approved).
 - HF card :64: synced to the human_arbiter wording verbatim (other Opus mentions reviewed: :150–151 consistent; :60/:160
-  are about clean_ref authorship). Not uploaded yet (live card checked 2026-09-28 still shows the older :64); upload,
-  then again after the Q1 pass adds the expert_recoverable definition.
+  are about clean_ref authorship). Uploaded 2026-09-29 (HF commit 532578bf: the card as of 5df1219 — :64, :121, :125
+  and the 5-line prevalence note after :154). A second upload is still needed for the expert_recoverable definition that
+  the Q1 pass (f46dc89) adds to the repo card.
 - #6 (judgebench_v2_prevalence_sensitivity.json new computed-values block): skipped.
 - Results-file notes: the pattern (dated explanatory notes, values unchanged) is approved; five notes remain (#7 dropped
-  under option B, #6 skipped). They land with the Q1 pass, after the "Project v1" naming and landing-date fixes, each with
-  its exact diff for sign-off.
-- Pushed 2026-09-28: 4808ff2..6cdb49f, then 6cdb49f..32727cf.
+  under option B, #6 skipped). All five landed in f46dc89, dated 2026-09-29, with the "Project v1" naming.
+- Pushed 2026-09-28: 4808ff2..6cdb49f, then 6cdb49f..32727cf, then 32727cf..5df1219.
 - results/strata_spot_audit.json: committed (2016051). Its "auditor" field names the author, with Claude Opus 4.8 as a
   drafting aid, plus a dated auditor_note_2026_09_28. The framing is in the commit message and the Q1 deviations bullet
   only: the spot audit is complete per protocol §7; §7's numbers (lateral 50/50 genuine; dose ~22% contaminated;
@@ -99,7 +104,7 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
   batches don't each need their own 95%. The pilots were the iteration (all below 95%); the seed-42 SCALE batch is the
   one batch recorded as clearing it (50/52 = 96.2%, first pass). Re-audited it is 28/52 = 53.8%, so on the re-audited
   verdicts no batch has been shown to clear ≥95%. 120/203 is context, not the gate. docs/judgebench_v2_protocol.md §5
-  carries a dated clarification stating the single-batch rule; the deviations bullet lands with the Q1 pass.
+  carries a dated clarification stating the single-batch rule; the deviations bullet landed in f46dc89.
 - #26 + #27, student-audit bounds (owner, 2026-09-28): README B5 gives both bounds — diagnosis drops 10–30% of flagged
   cases (2/20 confirmed by both auditors, 6/20 flagged by either); any diagnosis-or-medication drop flagged by either
   auditor up to 40% (8/20) — with a note that idx 529 was counted as agreement (both auditors chose general
@@ -108,14 +113,18 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
 - Gate decision (owner, 2026-09-28): keep Nemotron Nano in the deployed gate; item closed. README B4 says why in one
   sentence (gpt-oss's v2 lead is partly by construction — A8 threat 10; its latency and cost inside the gate are
   unmeasured). The audit panel still presents gpt-oss-120b as the v2 recommendation, with that caveat.
+- Student-audit idx 47 (owner, 2026-09-28): README :71, :447, :633 and :897 narrowed to "diagnosis" (c559740).
+- Q1 pass (owner, 2026-09-28): landed as one commit, f46dc89. Q1 contradiction #8 (README :19, strict-tier lift not
+  detectable, band NULL) approved; Q1 contradiction #9 not applied (settled fact 2); Q1 contradiction #16 parked
+  (Pending).
 
 ### Pending owner answers (do NOT act on these)
-- Student-audit idx 47 (not code-audit #47 below): both auditors set medication_dropped: true (they differ only on
-  category), so README:631's "confirmed a genuine diagnosis/medication drop in only 2 of 20" is wrong for medication;
-  2/20 holds for diagnosis drops. Wording at :631, :71, :447, :895 left as is for now — owner to confirm whether to
-  narrow these four lines to "diagnosis" or leave as is (owner, 2026-09-28).
+- Q1 contradiction #16, parked (owner, 2026-09-28): Llama's stored column repeats its control verdict on 115 corrupted
+  rows (78 of them dose, negation or lateral), and the A5 Llama recall rows, threat 12's figures and the FINDINGS tables
+  inherit that (code-audit #6 is the same issue). Does not block the Q1 diff. Flag it as open before anything citing A5
+  Llama recall, threat 12 or the FINDINGS tables ships anywhere external.
 
-## CURRENT STATUS (as of 32727cf, on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); settled facts + standing rules, human_arbiter fix, sign-off batch, strata_spot_audit + the eight step-0 batch files, protocol §5 dated clarification (2b74155..32727cf); Q1 pass drafted, not written — see SETTLED FACTS above first)
+## CURRENT STATUS (as of f46dc89, on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); settled facts + standing rules, human_arbiter fix, sign-off batch, strata_spot_audit + the eight step-0 batch files, protocol §5 dated clarification (2b74155..32727cf); later: CCC sync + key-reminder removal (45de2e9), #26/#27 bounds + gate decision (027cfd4), idx 47 (5df1219, c559740), Q1 pass (f46dc89), HF card upload (532578bf) — see SETTLED FACTS above first)
 
 ## Track-A STATUS: COMPLETE
 All 9 residuals closed. Commits: db79b9c, 7a386d3, 32dc694, 2b462ff, 1579085, 2f70ad3, 0fa51fb, dc6d1c0.
@@ -299,18 +308,22 @@ Decided (owner, 2026-09-28): keep Nano; item closed. See the Decided list at the
    index-BD8XFq0N.js verified (new URL present, old absent, E-pass text live). While stopped, the page shows the committed chart.
 - Old endpoint medisimplifier-cpu-v2 (aiendpoint-e00xp7sjd5ffpj8ek7, audit-cpu-v2) untouched and stopped.
 - Build VM this session: ubuntu@89.169.125.84 (same instance computeinstance-e00krk6v948cndendb; checkout fast-forwarded to 400ef54).
-- Still stale in docs (edits drafted in the Q1 pass, not applied): README "always-on"/audit-cpu-v2 mentions (:369, :430,
-   :461), docs/REPRODUCIBILITY.md digest, app/README.md.
-- Owner actions open: HF card re-upload (the live card still has the older :64, :121 and :125 — checked 2026-09-28);
+- Docs updated for the endpoint change in the Q1 pass (f46dc89): README "always-on"/audit-cpu-v2 mentions,
+   docs/REPRODUCIBILITY.md (full v2.1 digest), app/README.md, app/demo.jsx's error text.
+- Owner actions open: the HF card's second upload (the expert_recoverable definition from f46dc89; the first upload,
+   HF commit 532578bf on 2026-09-29, synced :64, :121, :125 and the 5-line prevalence note after :154);
    consider deleting stopped endpoints no longer needed.
 
-### Q1 pass — status 2026-09-28 (DRAFT ONLY; nothing written to the repo)
+### Q1 pass — LANDED 2026-09-29 (f46dc89)
 - Scope: C1 (the −0.144 reversal), the Q2 premise test, automated-pass history caveats (C4/C5/C7, A5 caption, threat 7
    power wording, new threat 12), the six deferred items, selector #20, and the endpoint-doc updates.
-- Done: two drafting + adversarial-verification rounds and one integration check. Round 2: ~150 edits, 6 new scripts with
-   results files, a separate protocol erratum file; under option A 26 tests pass, under B 25. The drafts live in the
-   session scratchpad (…/scratchpad/q1/) and may not persist across sessions.
-- Draft findings, verified in scratch only (in no committed file yet):
+- Landed as one commit (f46dc89) after two drafting + verification rounds, an integration check and a cleanup round on
+   5df1219 + c559740: 133 edits in 13 files, plus the protocol erratum (with the deviations section), 5 new scripts and
+   their 5 results files. Cleanup: 18 of 23 cross-cluster contradictions fixed (#2 option A only; #9 not applied,
+   settled fact 2; #20 done in 14c6a38, its :198 in this pass; #8 owner-approved; #16 parked); "Project v1" naming;
+   stamps dated 2026-09-29; the approved citation text; the null-control check accepts both values. Results-notes #6
+   and #7 and the selector tie-rule check file were dropped. New scripts deterministic; 25 tests pass (option B).
+- Findings (now in the repo: README, the erratum and the results files):
    · −0.144 compared 3% drops with 41% and paired Project v1's stored Llama/Qwen verdicts (one-word prompt) with Nemotron's
      CoT column. With all three judges on the deployed prompt: hand-label cells −0.070 to −0.029 at their own 3–10% shares
      (inside or below a flag-rate-matched null); at 41%, +0.032 to +0.050 with the CI including 0 in 3 of 4 (not
@@ -325,14 +338,17 @@ Decided (owner, 2026-09-28): keep Nano; item closed. See the Decided list at the
      vs 0.002 on re-run.
    · Automated-pass null control: the selector would recommend the constant-UNSAFE rater at common shares ≥55% (rounding)
      or ≥59% (within-top), so the control does not validate the collateral key.
-- Remaining before a final diff: a cleanup round (23 cross-cluster inconsistencies, mostly
-   the prompt label for Project v1's stored verdicts; a reproduce-order failure — check_null_control_ties_v2.py after
-   run_null_control_v2.py; dating correction notes to the landing day; verifying the 40 endpoint-doc edits).
+- Open after Q1: Q1 contradiction #16 (Pending); the HF card's second upload, for the expert_recoverable definition.
 
 ### Code-audit inventory (audit at 1ee5081, section "Could produce wrong results", 47 items; status 2026-09-28)
 - Fixed: #10, #13, #15, #16 (dabd527, de03e44); #12 (d69f506 → e8ced82 → d48878e); #26, #27 (README B5 wording, 2026-09-28).
 - Partly fixed: #8, #30, #32 (400ef54).
-- In the Q1 draft: #9, #11, #17, #20; partly #6, #7.
+- Q1 pass (f46dc89), by code-audit number (not the Q1 contradiction numbers): fixed #17 (with the strict-tier name,
+   dabd527/de03e44); disclosed, not changed (option B) #20; partly #6 (disclosed in README :19, the summary note and the
+   erratum; the figures that inherit it are parked as Q1 contradiction #16), #7 (the docs; nemotron_judge_test.py's own
+   docstring still says "apples-to-apples"), #9 (the A5 caption; the note under the A5 table, README :173, still reads
+   the 68 / 14 / 7 → 92 / 47 / 47 change as relabelling alone), #11 (conclusion corrected and a committed generator
+   added; the summary still calls the 129 relabelled items "perturbed-but-faithful" — only the erratum describes them).
 - Not started (31): #1–#5, #14, #18, #19, #21–#25, #28, #29, #31, #33–#47.
 - Claude's priority read for after Q1 (asked by the owner; not acted on): #31, #23 (+#24), #2, #21, #40. #22 is downgraded
    (the V4 backstop was the owner's review).
