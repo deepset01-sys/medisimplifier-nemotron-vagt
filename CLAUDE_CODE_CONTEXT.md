@@ -121,7 +121,28 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
   empty content and cut-off <think> reasoning are ERROR) with C's reply capture, committed in 6ac1678; not deployed.
   Stored evidence covers Nemotron only: its 960 deployed-prompt calls in results/vagt_loop_v2_calls.json were one-word
   replies (954) or cut off with empty content (6), so its verdicts parse the same either way. Llama's and Qwen's
-  replies were never stored, so their past verdicts can't be checked until the measurement run.
+  replies were never stored, so the measurement run re-ran the 240 v2 panel items through the fixed gate code,
+  calling each judge as evaluate_safety does (49f1405; results/judgebench_v2_llama_parser_check.json, run
+  2026-09-30, and results/judgebench_v2_qwen_parser_check.json, run 2026-09-29). The fixed and earlier parsers read
+  every reply the same way: 0 of 240 differ for each judge. Llama's replies were single words and matched its
+  committed verdicts on 240/240; Qwen's were a single word after its reasoning, and 41/240 of its verdicts differ
+  from the committed run — run-to-run variation, not parsing (recall 56 → 59 of 120; false positives 13 → 13).
+- Code-audit #31 closed (owner, 2026-09-30):
+  · No README, HF card or demo text about #31; the drafted per-judge re-check notes are retired. The two
+    parser-check files are in the repo as data only, not listed in the README.
+  · Re-checked: Llama and Qwen (above), Nemotron Nano (above) and DeepSeek-V4-Flash, whose 42 stored calls
+    re-running its 7 ERROR items (results/judgebench_v2_deepseek_budget_check.json) were single words (36) or cut
+    off without a verdict (6, ERROR either way); its 233 scored pool verdicts were not re-run. Not re-checked,
+    accepted: gpt-oss-120b, gemma-3-27b-it, Nemotron-3-Ultra and Nemotron-3-Super (pool verdicts read by the earlier
+    parser, not re-run); the calibration-prompt rows (read by _parse_cot before 16cadf0); and the deployed-gate row
+    for Project v1's 200 clean controls (results/gate_calibration_full.json).
+  · Deployment deferred: endpoint-v5 is not rebuilt, so the live /v1/simplify keeps the earlier parser. Both
+    parsers read every reply checked the same way.
+  · scripts/run_vagt_loop_v2.py keeps its pre-registered last-word A0 parser
+    (docs/vagt_loop_v2_preregistration.md:45-46); since 16cadf0 changed scripts/run_vagt_loop_experiment.py, "the
+    v1 parsers" there means the parsers as of d69f506.
+  · src/audit_panel/gen_pool_verdicts.py (JSON-only parser; builds the superseded 708-row audit pool) is outside
+    #31.
 
 ### Pending owner answers (do NOT act on these)
 - Q1 contradiction #16, parked (owner, 2026-09-28): Llama's stored column repeats its control verdict on 115 corrupted
@@ -135,7 +156,7 @@ If new evidence seems to contradict a settled fact, ask the owner — do not re-
   Nemotron or the deployed-prompt re-run; threat 9, the A5 caption and the FINDINGS banner cite these. The effect on
   the Φ_V, σ²_B and κ figures built on Llama's column is still not measured.
 
-## CURRENT STATUS (as of 6ac1678, on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); settled facts + standing rules, human_arbiter fix, sign-off batch, strata_spot_audit + the eight step-0 batch files, protocol §5 dated clarification (2b74155..32727cf); later: CCC sync + key-reminder removal (45de2e9), #26/#27 bounds + gate decision (027cfd4), idx 47 (5df1219, c559740), Q1 pass (f46dc89), HF card upload (532578bf), CCC Q1-landed update (78157a3), #16 inline caveat (28a41b6), push record + demo redeploy (508be5a), #16 recall quantified (f0c6d9c), #16 figures cited (fcb19fc), HF card second upload (babf0c73), CCC record updates (8174879, 6e2c665, 6bc5a78), #31 gate-parser fix in the repo, not deployed (6ac1678), CCC #31 entry + inventory corrections (7ffaff3) — see SETTLED FACTS above first)
+## CURRENT STATUS (as of 49f1405, on top of the 2026-09-27 commits on 1ee5081 — Track-A complete; Track-B landed; README tail sections landed; NEMOTRON_INSIGHTS F1 on v2; JudgeBench v2 published (HF); DeepSeek budget check + tie-break/specificity corrections; scoped-gate v2 re-run (d69f506 prereg, e8ced82 results); audit #10/#13/#15/#16 + C2 fixes; prevalence disclosure E; 2026-09-28: audit-cpu-v2.1 image + new CPU endpoint + demo URL (4808ff2); settled facts + standing rules, human_arbiter fix, sign-off batch, strata_spot_audit + the eight step-0 batch files, protocol §5 dated clarification (2b74155..32727cf); later: CCC sync + key-reminder removal (45de2e9), #26/#27 bounds + gate decision (027cfd4), idx 47 (5df1219, c559740), Q1 pass (f46dc89), HF card upload (532578bf), CCC Q1-landed update (78157a3), #16 inline caveat (28a41b6), push record + demo redeploy (508be5a), #16 recall quantified (f0c6d9c), #16 figures cited (fcb19fc), HF card second upload (babf0c73), CCC record updates (8174879, 6e2c665, 6bc5a78), #31 gate-parser fix in the repo, not deployed (6ac1678), CCC #31 entry + inventory corrections (7ffaff3), push records (0eb9cd9), #31 research-script parsers (16cadf0), #31 parser check for Qwen and Llama (49f1405) — see SETTLED FACTS above first)
 
 ## Track-A STATUS: COMPLETE
 All 9 residuals closed. Commits: db79b9c, 7a386d3, 32dc694, 2b462ff, 1579085, 2f70ad3, 0fa51fb, dc6d1c0.
@@ -354,7 +375,7 @@ Decided (owner, 2026-09-28): keep Nano; item closed. See the Decided list at the
 - Open after Q1: Q1 contradiction #16 (Pending). The HF card's second upload, for the expert_recoverable definition, is
    done (babf0c73, 2026-09-29).
 
-### Code-audit inventory (audit at 1ee5081, section "Could produce wrong results", 47 items; status 2026-09-29)
+### Code-audit inventory (audit at 1ee5081, section "Could produce wrong results", 47 items; status 2026-09-30)
 - Fixed: #10, #15, #16 (dabd527, de03e44); #12 (d69f506 → e8ced82 → d48878e); #26 (README B5 wording, 027cfd4); #30
    (README wording, 400ef54 and f46dc89; run_student_audit.py's printed prior, 14c6a38).
 - Resolved in documentation, code unchanged: #13 — the split-half is described as a stability check, not an
@@ -372,16 +393,17 @@ Decided (owner, 2026-09-28): keep Nano; item closed. See the Decided list at the
    under the A5 table, README :173, still reads
    the 68 / 14 / 7 → 92 / 47 / 47 change as relabelling alone), #11 (conclusion corrected and a committed generator
    added; the summary still calls the 129 relabelled items "perturbed-but-faithful" — only the erratum describes them).
-- Fixed in the repo, not deployed: #31 (6ac1678). src/safety_gate.py reads finish_reason ("length" is ERROR, not
-   retried), treats empty content and cut-off <think> reasoning as ERROR, and anchors the verdict (a lone word; else all
-   verdict words agree; else exactly one "Verdict: X" line; else ERROR). Each reply is captured on the "safety_gate"
-   logger (off by default, never in the API response); 24 offline tests. The live /v1/simplify keeps the old parser
-   until the endpoint-v5 image is rebuilt. Open follow-ups: (1) the research-script parsers — _parse_cot's last-word
-   fallback in scripts/run_panel_judgebench_v2.py and the parser in scripts/run_vagt_loop_experiment.py; (2) the paid
-   measurement run (C) on Llama and Qwen, comparing the captured legacy and new verdicts; (3) rebuild the endpoint-v5
-   image and create a new endpoint (the nebius CLI has no update, so its URL changes), then update what names it.
+- Fixed, closed 2026-09-30; not deployed, by decision: #31 (6ac1678). src/safety_gate.py reads finish_reason
+   ("length" is ERROR, not retried), treats empty content and cut-off <think> reasoning as ERROR, and anchors the
+   verdict (a lone word; else all verdict words agree; else exactly one "Verdict: X" line; else ERROR). Each reply is
+   captured on the "safety_gate" logger (off by default, never in the API response); 24 offline tests. Follow-ups:
+   (1) done — the research-script parsers, _parse_cot in scripts/run_panel_judgebench_v2.py and call_A0/call_A1 in
+   scripts/run_vagt_loop_experiment.py (16cadf0; 27 offline tests); (2) done — the measurement run on Llama and Qwen
+   (49f1405; results under "Decided" above); (3) not done, by decision (2026-09-30) — endpoint-v5 is not rebuilt, so
+   the live /v1/simplify keeps the earlier parser. Note: docker/Dockerfile.endpoint copies all of src/ onto an
+   unpinned vllm-openai:latest, so a rebuild from it would ship more than #31.
 - Not started (29): #1–#5, #18, #19, #21–#25, #28, #29, #33–#47.
-- Claude's priority read for after Q1 (asked by the owner): #31 (fixed in the repo, 6ac1678), then #23 (+#24), #2, #21,
+- Claude's priority read for after Q1 (asked by the owner): #31 (closed 2026-09-30), then #23 (+#24), #2, #21,
    #40 (not acted on). #22 is downgraded
    (the V4 backstop was the owner's review).
 - The audit report itself is in the session scratchpad (code_audit_report.md), not in the repo.
