@@ -19,6 +19,7 @@ jobs/safe_endpoint_v2.yaml. Locally, on a GPU machine:
     chambul/medisimplifier:endpoint-v6
 """
 
+import asyncio
 import os
 import sys
 import time
@@ -127,7 +128,9 @@ async def simplify(req: SimplifyRequest):
     t_vllm = (time.time() - t0) * 1000
 
     # ── Step 2: the three-judge safety gate ──────────────────────────
-    safety = evaluate_safety(req.text, simplified, safety_mode=req.safety_mode)
+    # In a worker thread: the gate blocks while it waits on the judges (minutes, when one never answers), and the
+    # server must go on answering other requests, /health included.
+    safety = await asyncio.to_thread(evaluate_safety, req.text, simplified, safety_mode=req.safety_mode)
     t_total = (time.time() - t0) * 1000
 
     return SimplifyResponse(

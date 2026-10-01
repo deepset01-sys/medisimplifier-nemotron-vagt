@@ -1,13 +1,16 @@
 """
 Offline tests for the Safe Endpoint's POST /v1/simplify and GET /health: the evaluation prompt and stop markers
 (audit #2, #3, #4), the 1,024 default limit and `truncated` (D2), HTTP 413 for inputs that do not fit, a 503 that
-names the failed vLLM step, and /health's judge routing-key flags (D17) and pool status (audit #48). vLLM and the
-safety gate are replaced with fakes; nothing leaves the machine.
+names the failed vLLM step, /health's judge routing-key flags (D17) and pool status (audit #48), and a slow gate not
+holding up other requests. vLLM and the safety gate are replaced with fakes; nothing leaves the machine.
 """
+import asyncio
 import sys
+import threading
 from pathlib import Path
 from types import SimpleNamespace
 
+import httpx
 import pytest
 
 REPO = Path(__file__).resolve().parents[1]
@@ -166,3 +169,29 @@ def test_health_audit_panel_needs_its_pool(client, monkeypatch):   # audit #48
     h = c.get("/health").json()
     assert (h["audit_panel"], h["pool_loaded"], h["pool_error"]) == (False, False, "audit pool missing")
     assert h["ready"] is True   # /v1/simplify can still serve
+
+
+def test_a_slow_gate_does_not_hold_up_other_requests(client, monkeypatch):
+    client(FakeVLLM())   # installs the fake vLLM and the API key; this TestClient is not used
+    gate_started, health_answered = threading.Event(), threading.Event()
+    seen = {}
+
+    def slow_gate(original, simplified, safety_mode):
+        gate_started.set()
+        # Stands in for a gate still waiting on its judges: it returns once /health has been answered, or after 10 s.
+        seen["health_answered_meanwhile"] = health_answered.wait(timeout=10)
+        return dict(GATE)
+
+    monkeypatch.setattr(se, "evaluate_safety", slow_gate)
+
+    async def run():
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=se.app), base_url="http://test") as ac:
+            simplify = asyncio.create_task(ac.post("/v1/simplify", json={"text": "x"}))
+            while not gate_started.is_set() and not simplify.done():
+                await asyncio.sleep(0.01)
+            health = await ac.get("/health")
+            health_answered.set()
+            return (await simplify).status_code, health.status_code
+
+    assert asyncio.run(run()) == (200, 200)
+    assert seen["health_answered_meanwhile"]   # with the gate on the event loop, /health could not be answered
