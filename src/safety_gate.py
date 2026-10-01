@@ -1,6 +1,7 @@
 """
 safety_gate.py — Three-judge safety gate for Safe Simplification Endpoint (v2)
-Llama + Nemotron Nano via Token Factory serverless; Qwen3-32B via a dedicated Nebius endpoint. Judges run in parallel.
+Qwen3-32B and Llama-3.3-70B on Token Factory dedicated endpoints; Nemotron Nano on Token Factory serverless. Judges run
+in parallel.
 Decision rule informed by VAGT 3-rater calibration (Nemotron catches the
 diagnosis drops Llama and Qwen miss).
 
@@ -18,10 +19,20 @@ import requests
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+# Llama-3.3-70B and Qwen3-32B run on Token Factory dedicated endpoints. Set LLAMA_JUDGE_MODEL and QWEN_JUDGE_MODEL to
+# your endpoints' routing keys ("dedicated/..."); the defaults are this project's own endpoints. Surrounding whitespace
+# is removed; an empty or whitespace-only value counts as unset.
+_LLAMA_FROM_ENV = os.environ.get("LLAMA_JUDGE_MODEL", "").strip()
+_QWEN_FROM_ENV = os.environ.get("QWEN_JUDGE_MODEL", "").strip()
 LLAMA = "meta-llama/Llama-3.3-70B-Instruct"
-LLAMA_DEDICATED = "dedicated/meta-llama/Llama-3.3-70B-Instruct-KrpmhZ"   # Llama-3.3-70B via dedicated Nebius endpoint (serverless returns 403 on this account)
+LLAMA_DEDICATED = (_LLAMA_FROM_ENV
+                   or "dedicated/meta-llama/Llama-3.3-70B-Instruct-KrpmhZ")   # serverless Llama returns 403 on this account
 QWEN  = "Qwen/Qwen3-32B"   # canonical model name (the dedicated endpoint serves this)
-QWEN_DEDICATED = "dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6"   # Qwen3-32B via dedicated Nebius endpoint (not Token Factory serverless)
+QWEN_DEDICATED = (_QWEN_FROM_ENV
+                  or "dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6")   # Qwen3-32B left Token Factory's serverless catalog
+# Whether each routing key came from the environment rather than the default. The endpoint's /health reports these
+# flags (never the values), so a missing or misnamed variable shows up even where the default would still work.
+JUDGE_MODELS_SET = {"qwen": bool(_QWEN_FROM_ENV), "llama": bool(_LLAMA_FROM_ENV)}
 NEMOTRON_NANO = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
 NEBIUS_API_URL = "https://api.studio.nebius.ai/v1/chat/completions"
 
