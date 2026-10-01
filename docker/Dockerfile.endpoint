@@ -1,18 +1,27 @@
-FROM vllm/vllm-openai:latest
+# Pinned base: the vLLM image endpoint-v5 was built on (its 33 base layers match), so the serving stack is the one v5
+# ran. Docker resolves the platform image (linux/amd64: sha256:e1c1ff1af9a15921bfa11d1d95047258c1797392cdbfa296e7639da446b23f97).
+FROM vllm/vllm-openai:v0.25.0@sha256:fc56161ee42a011aeee78b65d0a81b6683c7d04402fd40503d14d4d6c98f07cb
 
 WORKDIR /app
 
-# Install FastAPI dependencies
-RUN pip install fastapi uvicorn httpx pydantic requests --quiet
+# The endpoint's Python dependencies already ship with this base (in endpoint-v5 the former
+# `pip install fastapi uvicorn httpx pydantic requests` installed nothing), so check them instead of installing
+# unpinned versions.
+RUN python3 -c "import fastapi, uvicorn, httpx, pydantic, requests"
 
-# Copy endpoint source (structure-preserving so audit_panel/ + audit_pool/ path
-# resolution works: safe_endpoint.py at /app/src, pool_loader finds /app/audit_pool).
+# Copy endpoint source (structure-preserving so audit_panel/ + audit_pool*/ path
+# resolution works: safe_endpoint.py at /app/src, pool_loader finds /app/audit_pool*).
 COPY src/ ./src/
 COPY audit_pool/ ./audit_pool/
+COPY audit_pool_v2/ ./audit_pool_v2/
 COPY scripts/start_endpoint.sh /start.sh
 RUN chmod +x /start.sh
 
 ENV PYTHONUNBUFFERED=1
 ENV HF_HOME=/tmp/hf_cache
+# Serve the v2 hand-verified pool on /v1/audit_panel, like the CPU service (run with -e AUDIT_POOL_DIR= for the earlier pool).
+ENV AUDIT_POOL_DIR=audit_pool_v2
 
-CMD ["/start.sh"]
+# The vLLM base image's entry point is `vllm serve`; start this image with /start.sh instead, so `docker run` works
+# without --entrypoint (Nebius's --container-command /start.sh does the same).
+ENTRYPOINT ["/start.sh"]
