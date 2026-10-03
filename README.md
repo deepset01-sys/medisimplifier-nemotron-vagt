@@ -545,9 +545,10 @@ The expected result: all three judges catch the dropped diagnosis → consensus 
 | Field | Type | Required | Default | Notes |
 |--|--|--|--|--|
 | `text` | string | yes | — | the medical text to simplify |
+| `max_tokens` | integer | no | `1024` | upper limit on the rewrite's length, in tokens; the published evaluation outputs were generated with 512 |
 | `safety_mode` | string | no | `"flag"` | `"flag"`, `"block"`, or `"strict"` — see below |
 
-Maximum input length and input language are **not formally constrained** in the current implementation.
+**Input limit:** the instruction, `text` and `max_tokens` must fit the endpoint's 4,096-token context window together; a longer request returns HTTP 413 with the token counts. Input language is not formally constrained.
 
 **`safety_mode` values:**
 - `"flag"` (default) — returns simplified text even if UNSAFE; adds `warning` field
@@ -560,6 +561,7 @@ Maximum input length and input language are **not formally constrained** in the 
 ```json
 {
   "simplified_text": "...",
+  "truncated": false,
   "blocked": false,
   "safety": {
     "llama_verdict": "SAFE|UNSAFE|ERROR",
@@ -575,18 +577,23 @@ Maximum input length and input language are **not formally constrained** in the 
   }
 }
 ```
+`truncated` is `true` when the rewrite stopped at `max_tokens`; the text is then incomplete.
 
 **`GET /health`** — readiness probe. Returns:
 ```json
-{"vllm": true, "token_factory": true, "audit_panel": true, "ready": true}
+{"vllm": true, "token_factory": true, "ready": true, "judge_models_set": {"qwen": true, "llama": true}, "audit_panel": true, "pool_loaded": true, "pool_error": null}
 ```
+`ready` means the endpoint can serve `/v1/simplify`: vLLM answers and `NEBIUS_API_KEY` is set. The judges are not called, so a stopped judge endpoint does not show here; [`scripts/verify_endpoint.py`](scripts/verify_endpoint.py) checks them with a real request. `judge_models_set` says whether `QWEN_JUDGE_MODEL` and `LLAMA_JUDGE_MODEL` were set; where `false`, the gate uses this project's own routing key, which belongs to this project's account. `audit_panel` is `true` only when the `/v1/audit_panel` route is mounted and its verdict pool loaded; `pool_error` gives the reason when it did not.
 On the CPU audit_panel service, `/health` also names the served pool:
 ```json
 {"service": "audit_panel-cpu", "audit_panel": true, "pool_loaded": true, "benchmark": "MedSimp-JudgeBench-v2", "ready": true, "pool_error": null}
 ```
 
 **Error semantics:**
-- **`consensus: "ERROR"`** — a judge call failed or timed out — e.g. a stopped Token Factory dedicated endpoint (each judge bounds its HTTP call at 60 s with 3 retries, then returns `ERROR`).
+- **`consensus: "ERROR"`** — a judge call failed or its reply could not be read as a verdict, e.g. because its Token Factory dedicated endpoint is stopped. Each judge makes up to three attempts, each allowed 60 s to connect and 60 s for each wait for data, with pauses of 1 s and 2 s between them: a judge that never answers becomes `ERROR` after about 3 minutes (183 s in a local test), and the whole call can then take about 4 minutes. A judge that fails at once costs a few seconds.
+- **HTTP 413** — the input does not fit (see **Input limit**); the response's `detail` holds an `error` message and the token counts `prompt_tokens`, `max_tokens` and `context_window`.
+- **HTTP 422** — the request is invalid, e.g. `max_tokens` below 1.
+- **HTTP 503** — a call to vLLM failed; the detail names the step, `vLLM tokenize failed: …` or `vLLM generation failed: …`, and the judges are not called.
 - **Fail-safe:** an `ERROR` consensus blocks in `block` mode (same as UNSAFE).
 - **`warning`** — set only on a DISAGREE verdict (`"diagnosis-drop risk"`); `null` for every other verdict.
 
