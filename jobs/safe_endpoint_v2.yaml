@@ -1,5 +1,8 @@
-name: medisimplifier-safe-endpoint-v5
-description: "Safe Simplification Endpoint v5 — vLLM + calibration-informed gate (Qwen+Nemotron decide, Llama advisory) + /v1/audit_panel (VAGT panel selection)"
+# Reference manifest: the settings of the Safe Endpoint deploy in docs/REPRODUCIBILITY.md ("Deploy the endpoint").
+# No tool reads this file; the endpoint is created with the `nebius ai endpoint create` command there. "v2" in the
+# file name is the project generation, not the image version.
+name: medisimplifier-safe-endpoint-v6
+description: "Safe Simplification Endpoint (endpoint-v6) — vLLM + calibration-informed gate (Qwen+Nemotron decide, Llama advisory) + /v1/audit_panel (VAGT panel selection, v2 pool)"
 parent_id: ${NEBIUS_PROJECT_ID}
 
 resources:
@@ -7,15 +10,14 @@ resources:
   preset: 1gpu-16vcpu-200gb
   disk_size: 250Gi
   subnet_id: ${NEBIUS_SUBNET_ID}
+  public: true
 
 docker:
-  image: chambul/medisimplifier:endpoint-v5@sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe
+  image: chambul/medisimplifier@sha256:<B1-DIGEST>
   command: /start.sh
+  container_port: 8000
 
 env:
-  HF_TOKEN: "${HF_TOKEN}"
-  HF_HOME: "/tmp/hf_cache"
   NEBIUS_API_KEY: "${NEBIUS_API_KEY}"
-  PYTHONUNBUFFERED: "1"
-
-timeout: 24h
+  QWEN_JUDGE_MODEL: "${QWEN_JUDGE_MODEL}"
+  LLAMA_JUDGE_MODEL: "${LLAMA_JUDGE_MODEL}"

@@ -730,8 +730,8 @@ The LoRA adapter is merged into the base model before serving:
 2. Publish to HuggingFace:
    `chambul/MediSimplifier-OpenBioLLM-v2-merged` (public — no bucket credentials required to reproduce)
 
-3. Deploy Safe Endpoint v5 (Nebius GPU Endpoint):
-   `endpoint-v5` image (see docs/REPRODUCIBILITY.md) — vLLM loads model from HuggingFace, judges via Token Factory with `NEBIUS_API_KEY` (Qwen on a dedicated endpoint that must be running — B9)
+3. Deploy the Safe Endpoint (Nebius AI Endpoint, with the Nebius CLI):
+   `endpoint-v6` image (see docs/REPRODUCIBILITY.md → Deploy the endpoint) — vLLM loads the model from HuggingFace (public, no token); the gate calls the judges through Token Factory with `NEBIUS_API_KEY`, Qwen3-32B and Llama-3.3-70B (advisory) on your own dedicated endpoints, which must be running (B9)
 
 ```bash
 # Step 1: Merge (Nebius Job)
@@ -748,16 +748,15 @@ huggingface-cli upload \
   chambul/MediSimplifier-OpenBioLLM-v2-merged \
   /tmp/merged_openbio_v2/
 
-# Step 3: Deploy endpoint
-# Deploy via Nebius Console → AI Services → Endpoints → Create Endpoint (see B9 + docs/REPRODUCIBILITY.md for the verified CLI command)
-# Requires: NEBIUS_API_KEY, HF_TOKEN
+# Step 3: Deploy the endpoint with the Nebius CLI (docs/REPRODUCIBILITY.md → Deploy the endpoint)
+# Requires: NEBIUS_API_KEY, QWEN_JUDGE_MODEL, LLAMA_JUDGE_MODEL
 ```
 
-Note: Judges reproducing the endpoint load directly from `chambul/MediSimplifier-OpenBioLLM-v2-merged` on HuggingFace — no bucket credentials required.
+Note: Judges reproducing the endpoint load directly from `chambul/MediSimplifier-OpenBioLLM-v2-merged` on HuggingFace — no bucket credentials and no HuggingFace token required.
 
 > **Why Token Factory?** Nemotron Super and Nano are both served per-token with zero idle cost. The teacher JudgeBench-reference run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min (Nebius Console; billing export pending — #12); the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
 
-> **Dedicated judge endpoints (Token Factory; configuration and pricing from the Nebius Console):** Qwen3-32B (H100 NVLink, eu-north1, $0.07/min) and Llama-3.3-70B (H200 NVLink, us-central1, $0.08/min) — stop between uses. Endpoint IDs in `src/safety_gate.py:15-17`.
+> **Dedicated judge endpoints (Token Factory; configuration and pricing from the Nebius Console):** Qwen3-32B (H100 NVLink, eu-north1, FP8, $0.07/min) and Llama-3.3-70B (H200 NVLink, us-central1, FP8, $0.08/min) — stop between uses. The gate reads their routing keys from `QWEN_JUDGE_MODEL` and `LLAMA_JUDGE_MODEL`; where one is unset, it uses this project's own routing key (`src/safety_gate.py`).
 
 Full adapter storage flow → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
 
@@ -791,13 +790,13 @@ Merge job requires: `AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY` (Nebius S3 key
 The merged model is publicly available — no training required to test the endpoint:
 `chambul/MediSimplifier-OpenBioLLM-v2-merged`
 
-#### Nebius Endpoint (deploy the Safe Endpoint v5)
+#### Nebius Endpoint (deploy the Safe Endpoint)
 
-The Safe Endpoint is a **Nebius AI *Endpoint*** — not a Job. Deploy it via **Console → AI Services → Endpoints → Create Endpoint** (image, preset, command, and env from `jobs/safe_endpoint_v2.yaml`), or with the **verified CLI command** in [docs/REPRODUCIBILITY.md → Deploy the endpoint](docs/REPRODUCIBILITY.md).
+The Safe Endpoint is a **Nebius AI *Endpoint*** — not a Job. Deploy it with the Nebius CLI, step by step in [docs/REPRODUCIBILITY.md → Deploy the endpoint](docs/REPRODUCIBILITY.md#deploy-the-endpoint), which also lists the prerequisites and the cost; `jobs/safe_endpoint_v2.yaml` is a reference manifest of the same settings.
 
-- **Image:** `chambul/medisimplifier:endpoint-v5@sha256:0e40cff4…` — public Docker Hub, digest-pinned (no `--registry-*` auth needed).
-- **Prerequisites:** `NEBIUS_API_KEY`, `HF_TOKEN`, and the **Qwen3-32B judge dedicated endpoint must be running** (`dedicated/Qwen/Qwen3-32B-…`) — otherwise the gate returns `ERROR` on the Qwen verdict (see B7/B8). The endpoint-v5 image calls serverless Llama — see B8 item 4.
-- **Verify:** `GET /health` → `{"audit_panel": true, "ready": true}`
+- **Image:** `chambul/medisimplifier@sha256:<B1-DIGEST>` (endpoint-v6) — public Docker Hub, digest-pinned (no `--registry-*` auth needed).
+- **Prerequisites:** `NEBIUS_API_KEY`, and your own **Qwen3-32B and Llama-3.3-70B dedicated endpoints** in Token Factory, running, with their routing keys in `QWEN_JUDGE_MODEL` and `LLAMA_JUDGE_MODEL` — a stopped one makes its judge's verdict `ERROR`. Llama's verdict is advisory and does not change the consensus (B4). No HuggingFace token.
+- **Verify:** `python scripts/verify_endpoint.py https://<your-endpoint-url> --all` → `verify: PASS (0 failed, 0 warnings)`
 
 ## Hardware and cost
 

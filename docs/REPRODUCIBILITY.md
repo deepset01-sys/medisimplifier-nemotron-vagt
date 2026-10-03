@@ -34,12 +34,13 @@ Full digests:
 - `train-v31` — `sha256:9d832391f85130114534a36881b8e5acab895d36ceed522126c86fbef02f728f`
 - `train-v32` — `sha256:2c95dfef0a298ce258f094fa5d5647b0d7c84e297850bff8b7daba5a719694dc`
 
-Safe Endpoint image (current: **endpoint-v5** — selector blind-spot-first fix → recommends Nemotron Nano; supersedes v4/v3):
+Safe Endpoint image (current: **endpoint-v6** — the published evaluation's prompt, judge routing keys from environment variables, a pinned vLLM base and model revision, and the v2 pool on `/v1/audit_panel`; supersedes v5):
 ```bash
-docker pull chambul/medisimplifier:endpoint-v5
+docker pull chambul/medisimplifier@sha256:<B1-DIGEST>
 ```
 Digests:
-- `endpoint-v5` — `sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe`  (deploy this; selector blind-spot-first ranking → Nano)
+- `endpoint-v6` — `sha256:<B1-DIGEST>`  (deploy this)
+- `endpoint-v5` — `sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe`  (superseded; selector blind-spot-first ranking → Nano)
 - `endpoint-v4` — `sha256:0e1d1b5abf5afb08d85dabaa5483399a8035bafbb620c11d82e01c92d17f547f`  (superseded; old selector → gemma)
 - `endpoint-v3` — `sha256:9d950d839497e9ee35c1676b5e75424016b52efa6827930c34f171300ae38795`  (prior, no audit_panel)
 
@@ -57,13 +58,15 @@ docker push cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:train-v3
 Note: train-v29 and train-v30 use the same Dockerfile.train — rebuild with the appropriate tag (e.g., train-v29 for training, train-v30 for evaluation).
 
 ```bash
-# Rebuild endpoint-v5 (Dockerfile.endpoint COPYs src/ + audit_pool/ → serves /v1/audit_panel)
-docker build -t chambul/medisimplifier:endpoint-v5 \
-             -t cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint-v5 \
-             -f docker/Dockerfile.endpoint .
-docker push chambul/medisimplifier:endpoint-v5
-docker push cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:endpoint-v5
+# Rebuild the Safe Endpoint image (endpoint-v6) under your own name. Dockerfile.endpoint pins the vLLM base by digest
+# and COPYs src/ + both pools (serves /v1/audit_panel); scripts/start_endpoint.sh pins the model revision.
+git clone https://github.com/deepset01-sys/medisimplifier-nemotron-vagt.git
+cd medisimplifier-nemotron-vagt
+docker build -t <your-image>:endpoint-v6 -f docker/Dockerfile.endpoint .
+docker login <registry-host>
+docker push <your-image>:endpoint-v6
 ```
+`<your-image>` is your repository, e.g. `docker.io/<user>/medisimplifier` or `cr.eu-north1.nebius.cloud/<registry-id>/medisimplifier`, and `<registry-host>` its host (`docker.io`, `cr.eu-north1.nebius.cloud`). Your build gets its own digest, which `docker push` prints; deploy it by that digest (**Deploy the endpoint**, step 3).
 
 Note: `docker/requirements_train.txt` pins `cryptography==48.0.1` via a Dockerfile post-install step — resolves the pyOpenSSL/cryptography drift that broke train-v28.
 
@@ -105,40 +108,80 @@ docker push chambul/medisimplifier:audit-cpu-v2.1
 
 ## Deploy the endpoint
 
-The Safe Endpoint runs as a Nebius AI Endpoint from `jobs/safe_endpoint_v2.yaml`. To stand it up on your own Nebius account:
+The Safe Endpoint runs as a Nebius AI Endpoint, created with the Nebius CLI (step 4). `jobs/safe_endpoint_v2.yaml` is a reference manifest of the same settings ("v2" in its file name is the project generation, not the image version); no step below reads it. Steps marked *not re-run by us* are written from our own setup; we did not repeat them from a new account. The commands in this section assume a bash shell (on Windows, Git Bash).
 
 **Prerequisites**
-- `NEBIUS_PROJECT_ID`, `NEBIUS_SUBNET_ID` — your Nebius project and subnet.
-- `HF_TOKEN` — a HuggingFace token with access to the gated base model (`aaditya/Llama3-OpenBioLLM-8B`).
-- `NEBIUS_API_KEY` — used for the Token Factory judge calls (Llama-3.3-70B, Nemotron Nano).
-- **The Qwen3-32B judge dedicated endpoint must be running.** The gate's Qwen verdict comes from a *separate* dedicated Nebius endpoint (`dedicated/Qwen/Qwen3-32B-…`), not Token Factory — start it before testing `/v1/simplify`, or the gate returns `ERROR` on the Qwen verdict (see README **B7**).
-- An H100 quota (`gpu-h100-sxm`); vLLM cold-starts in ~10–15 min.
+- A Nebius AI Cloud account with billing set up, and a project in `eu-north1` with a subnet (*not re-run by us*).
+- GPU quota for one H100 (`gpu-h100-sxm`) for the endpoint (*not re-run by us*).
+- The Nebius CLI, installed and logged in with a profile for your project: `nebius ai endpoint create` takes the project from the profile (`--parent-id` sets another) (*not re-run by us*).
+- A Token Factory API key (`NEBIUS_API_KEY`) for the three judges: your two dedicated endpoints (step 1) and serverless Nemotron Nano (`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`).
+- No HuggingFace token: the endpoint loads the public `chambul/MediSimplifier-OpenBioLLM-v2-merged`, at the revision pinned in `scripts/start_endpoint.sh`.
+- For step 5, a clone of this repository and Python with `requests` (`pip install -r requirements.txt`). Docker only to copy or rebuild the image.
 
-**Image** — public on Docker Hub, digest-pinned: `chambul/medisimplifier:endpoint-v5@sha256:0e40cff4…`. If your Nebius endpoint pulls only from your own Container Registry, mirror it first:
+**Cost** (Nebius list prices during this project): about $3.85/h for the endpoint's H100, $0.07/min for the Qwen3-32B judge endpoint and $0.08/min for the Llama-3.3-70B one — about $12.85/h while all three run; Nemotron Nano is billed per token. Loading the model takes 10–15 min of endpoint time. Stop all three when you are done (step 6).
+
+**1. Create the two judge endpoints** (Token Factory console; *not re-run by us*). In the model catalog, open the model, choose **Deploy dedicated endpoint**, fill in the form as below, then **Review configuration**. Our settings:
+
+| Judge | Base model | GPU, region | Quantization | GPUs per replica | Autoscaling |
+|--|--|--|--|--|--|
+| Qwen3-32B | `Qwen/Qwen3-32B` | H100 NVLink (`gpu-h100-sxm`), eu-north1 | FP8 | 1 | 1–1 |
+| Llama-3.3-70B | `meta-llama/Llama-3.3-70B-Instruct` | H200 NVLink (`gpu-h200-sxm`), us-central1 | FP8 | 1 | 1–1 |
+
+Flavor: base. The console offers the GPU types available without a reservation, which may change. Each endpoint's card shows a **routing key** (`dedicated/…`) and a separate Endpoint ID; the gate needs the routing key, which stays the same when the endpoint is stopped and started. Qwen3-32B and Nemotron Nano decide the gate's verdict. Llama-3.3-70B's verdict is advisory: it is returned with the others but does not change the consensus (README **B4**). This path sets up all three judges anyway, and step 5 checks all three. Start both (Start on each card) before step 5.
+
+**2. Variables** for the endpoint (step 4):
+
+| Variable | Required | Value |
+|--|--|--|
+| `NEBIUS_API_KEY` | yes | your Token Factory API key; the gate calls all three judges with it |
+| `QWEN_JUDGE_MODEL` | yes | the routing key of your Qwen3-32B endpoint |
+| `LLAMA_JUDGE_MODEL` | yes | the routing key of your Llama-3.3-70B endpoint (the advisory judge) |
+| `VLLM_START_TIMEOUT` | no | seconds `/start.sh` waits for vLLM to load before it stops with an error (default 1800) |
+
+Where `QWEN_JUDGE_MODEL` or `LLAMA_JUDGE_MODEL` is unset or empty, the gate uses this project's own routing key, which belongs to this project's account; `/health` shows which are set (`judge_models_set`, README **B3**). The image already sets `PYTHONUNBUFFERED=1` and `HF_HOME=/tmp/hf_cache`.
+
+**3. Image** — public on Docker Hub, pinned by digest: `chambul/medisimplifier@sha256:<B1-DIGEST>` (`endpoint-v6`). Pulling it needs no login and no `--registry-*` flag. Only if your endpoint must pull from your own registry, copy the image there first (`<your-image>` and `<registry-host>` as in the rebuild above):
 ```bash
-docker pull chambul/medisimplifier:endpoint-v5
-docker tag  chambul/medisimplifier:endpoint-v5 <your-cr>/medisimplifier:endpoint-v5
-docker push <your-cr>/medisimplifier:endpoint-v5
+docker login <registry-host>
+docker pull chambul/medisimplifier@sha256:<B1-DIGEST>
+docker tag  chambul/medisimplifier@sha256:<B1-DIGEST> <your-image>:endpoint-v6
+docker push <your-image>:endpoint-v6
 ```
+Then deploy with `--image <your-image>@<digest>`, using the digest `docker push` prints, and pass `--registry-username` and `--registry-password` (or `--registry-secret`) if your registry needs credentials. Deploying from a copy was *not re-run by us*.
 
-**Create the endpoint — Nebius Console (primary).** In the Nebius AI Endpoints console, create an endpoint with the image, preset (`gpu-h100-sxm` / `1gpu-16vcpu-200gb`), command (`/start.sh`), and the env vars above, exactly as declared in `jobs/safe_endpoint_v2.yaml`. See README **B7** for the deployment walkthrough.
-
-**Or via CLI (secondary)** — flag-based, the same form v1 used (`jobs/safe_endpoint_v2.yaml` above is a *reference* manifest, not the Endpoint deploy form):
+**4. Create the endpoint:**
 ```bash
 nebius ai endpoint create \
-  --name medisimplifier-safe-endpoint-v5 \
+  --name medisimplifier-safe-endpoint-v6 \
   --public --container-port 8000 \
   --platform gpu-h100-sxm \
   --preset 1gpu-16vcpu-200gb \
   --disk-size 250Gi \
-  --image chambul/medisimplifier:endpoint-v5@sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe \
+  --image chambul/medisimplifier@sha256:<B1-DIGEST> \
   --container-command /start.sh \
-  --env HF_HOME=/tmp/hf_cache \
-  --env HF_TOKEN=<your-hf-token> \
-  --env NEBIUS_API_KEY=<your-nebius-api-key> \
-  --subnet-id <your-subnet-id>
+  --env NEBIUS_API_KEY=<your-token-factory-key> \
+  --env QWEN_JUDGE_MODEL=<your-qwen-routing-key> \
+  --env LLAMA_JUDGE_MODEL=<your-llama-routing-key> \
+  --subnet-id <your-subnet-id> \
+  --timeout 30m | grep 'Endpoint created'
 ```
-Flags verified against the live Nebius CLI (`nebius ai endpoint create --help`, eu-north1). The public Docker Hub image requires no `--registry-*` auth flags. Or use `--env-secret HF_TOKEN=<secret-selector>` if the token is stored in Nebius MysteryBox (secret store) — the production-secure form.
+The command waits for the endpoint to be created and prints its ID; the `grep` keeps only that line. `--timeout 30m` raises the CLI's limit for a request, one minute by default (`--help`). The endpoint's settings hold the value of `NEBIUS_API_KEY` in plain text, so no command in steps 4–6 prints them. The endpoint has no authentication (the CLI's default, `--auth none`): anyone with its URL can call it, at your cost, while it runs. To keep the key out of the command, `--env-secret NEBIUS_API_KEY=<secret-selector>` reads it from Nebius MysteryBox (secret store) — the production-secure form, not exercised in our runs.
+
+**5. Check it.** Print the endpoint's URL, the `https://port8000-…` address in its `status.public_endpoints`, and nothing else, since the full output includes the key:
+```bash
+nebius ai endpoint get --id <endpoint-id> --format json | grep -o 'https://port8000-[^"]*'
+```
+vLLM first loads the model (10–15 min); the URL answers once it is ready. Then, from your clone of this repository:
+```bash
+curl https://<your-endpoint-url>/health
+python scripts/verify_endpoint.py https://<your-endpoint-url> --all
+```
+`/health` should show `"ready": true` and `"judge_models_set": {"qwen": true, "llama": true}`. The script checks `/health`, sends one `/v1/simplify` request and prints one PASS / WARN / FAIL line per check, ending in `verify: PASS (0 failed, 0 warnings)` when everything works; `--all` also requires the advisory Llama judge. A judge endpoint that does not answer can hold the request for about 4 minutes before that judge's verdict becomes `ERROR` (README **B3**).
+
+**6. Stop** the endpoint when you are done, and both judge endpoints (Stop on each card in the Token Factory console). `stop` waits until the endpoint has stopped and then prints it, settings included, so its output is discarded:
+```bash
+nebius ai endpoint stop --id <endpoint-id> --timeout 15m > /dev/null
+```
 
 ## Adapter Storage Flow
 
