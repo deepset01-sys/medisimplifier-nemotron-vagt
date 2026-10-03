@@ -875,6 +875,7 @@ jobs/
 scripts/
   start_endpoint.sh              Boot vLLM + Safe Endpoint v5 API (inside endpoint-v5 image)
   start_cpu_endpoint.sh          Boot the CPU-only audit_panel service (uvicorn cpu_endpoint:app)
+  verify_endpoint.py             Check a deployed endpoint end to end: /health, then one /v1/simplify call; PASS / WARN / FAIL per check (--all also requires the advisory Llama judge)
   build_physician_review.py      Build blinded 50-case physician spreadsheet (seed=42)
   merge_physician_labels.py      Merge physician labels → human-anchored τ + inter-rater κ
   compute_pool_cis.py            Per-candidate paired bootstrap CIs (all 5 pool candidates × 4 strata; automated pass)
