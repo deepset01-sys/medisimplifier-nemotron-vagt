@@ -1014,9 +1014,34 @@ Full container image digests and rebuild steps → [docs/REPRODUCIBILITY.md](doc
 
 > Underlying clinical notes: [Asclepius-Synthetic-Clinical-Notes](https://huggingface.co/datasets/starmpcc/Asclepius-Synthetic-Clinical-Notes) (CC-BY-NC-SA-4.0) — anonymized synthetic notes, no real patient data. CC-BY-NC-SA-4.0 restricts commercial use and requires derivatives to share under the same license.
 
+> Text from these notes or derived from them — the notes themselves, simplifications and references, edited summaries, model outputs and quoted excerpts — is CC-BY-NC-SA-4.0 (inherited), not Apache 2.0, in these tracked files:
+> - `nemotron_references.json`
+> - `teacher_comparison.json`
+> - `README.md` — the qualitative example table (train/0)
+> - `app/demo.jsx` — its embedded example texts
+> - `scripts/build_judgebench_v2.py` — the example sentences in its editor prompt
+> - `results/student_predictions.json`
+> - `results/student_audit_review.json`
+> - `results/physician_review.csv`
+> - `results/disagree_case_gate.json`
+> - `results/tau_hand_labels_150.json`
+> - `results/vagt_loop_A1.json`
+> - `results/vagt_loop_v2_pilot.json`
+> - `results/vagt_loop_v2_calls.json`
+> - `results/judgebench_v2_tau1_final.json`
+> - `results/judgebench_v2_clean_controls.json`
+> - `results/judgebench_v2_step0_seed42.json`
+> - `results/judgebench_v2_step0_seed42_original.json`
+> - `results/judgebench_v2_step0_seed99.json`
+> - `results/judgebench_v2_step0_seed99_expanded.json`
+> - `results/judgebench_v2_step0_seed137.json`
+> - `results/judgebench_v2_step0_seed137_expanded.json`
+> - `results/judgebench_v2_step0_seed211.json`
+> - `results/judgebench_v2_step0_seed211_expanded.json`
+
 ## License
 
-Apache 2.0 — see [LICENSE](LICENSE).
+Apache 2.0 — see [LICENSE](LICENSE). It applies to everything in this repository except the note-derived text in the files listed above, which is CC-BY-NC-SA-4.0.
 
 ## Future Work & Limitations
 
