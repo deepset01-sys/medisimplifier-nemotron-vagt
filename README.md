@@ -314,7 +314,7 @@ Research-side threats to the VAGT and calibration findings. Product and operatio
 
 ### A9. Reproduce the analysis
 
-**Environment:** Python 3.11+ (`docker/Dockerfile.cpu` uses `python:3.11-slim`) · `pip install -r requirements.txt` installs openai, numpy, requests, tqdm — enough for the safety gate and the judge/VAGT scripts. The endpoint and tests also need fastapi, pydantic, httpx, uvicorn and pytest; training, evaluation and data prep use the pinned [`docker/requirements_train.txt`](docker/requirements_train.txt) (torch, transformers, peft, datasets) inside the train image.
+**Environment:** Python 3.11+ (`docker/Dockerfile.cpu` uses `python:3.11-slim`) · `pip install -r requirements.txt` installs openai, numpy, requests, tqdm — enough for the safety gate and the judge/VAGT scripts. The endpoint and tests also need fastapi, pydantic, httpx, uvicorn and pytest; training, evaluation and data prep use the pinned [`docker/requirements_train.txt`](docker/requirements_train.txt) (torch, transformers, peft, datasets) inside the train image. Run the tests from the repository root with `python -m pytest`; `tests/test_start_endpoint.py` needs bash (on Windows, run them from Git Bash) and is skipped where none is found.
 **Auth:** `export NEBIUS_API_KEY=<your-token-factory-key>`
 
 ```bash
@@ -762,7 +762,7 @@ Full adapter storage flow → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
 
 ### B9. Reproduce the deployment
 
-**Environment:** Python 3.11+ (`docker/Dockerfile.cpu` uses `python:3.11-slim`) · `pip install -r requirements.txt` installs openai, numpy, requests, tqdm — enough for the safety gate and the judge/VAGT scripts. The endpoint and tests also need fastapi, pydantic, httpx, uvicorn and pytest; training, evaluation and data prep use the pinned [`docker/requirements_train.txt`](docker/requirements_train.txt) (torch, transformers, peft, datasets) inside the train image.
+**Environment:** Python 3.11+ (`docker/Dockerfile.cpu` uses `python:3.11-slim`) · `pip install -r requirements.txt` installs openai, numpy, requests, tqdm — enough for the safety gate and the judge/VAGT scripts. The endpoint and tests also need fastapi, pydantic, httpx, uvicorn and pytest; training, evaluation and data prep use the pinned [`docker/requirements_train.txt`](docker/requirements_train.txt) (torch, transformers, peft, datasets) inside the train image. Run the tests from the repository root with `python -m pytest`; `tests/test_start_endpoint.py` needs bash (on Windows, run them from Git Bash) and is skipped where none is found.
 **Auth:** `export NEBIUS_API_KEY=<your-token-factory-key>`
 
 #### Nebius Jobs (Console)
