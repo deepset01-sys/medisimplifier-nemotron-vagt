@@ -1,7 +1,8 @@
 """
 scripts/start_endpoint.sh gives up instead of hanging (D15): it exits non-zero, with the reason, if vLLM dies before
 it is ready or is not ready within VLLM_START_TIMEOUT. vLLM (python3) and curl are replaced with stubs on PATH, so
-nothing is started or downloaded. Needs bash; skipped where there is none.
+nothing is started or downloaded. The time measured is the script's own exit: its output goes to files, not pipes, so
+a stub that outlives the script cannot hold the test open. Needs bash; skipped where there is none.
 """
 import os
 import shutil
@@ -24,9 +25,18 @@ def _run(tmp_path, python3_body, start_timeout):
         stub.chmod(0o755)
     env = dict(os.environ, PATH=str(tmp_path) + os.pathsep + os.environ.get("PATH", ""),
                VLLM_START_TIMEOUT=str(start_timeout))
-    t0 = time.time()
-    p = subprocess.run([BASH, str(SCRIPT)], env=env, capture_output=True, text=True, timeout=90)
-    return p, time.time() - t0
+    out_path, err_path = tmp_path / "stdout.txt", tmp_path / "stderr.txt"
+    with open(out_path, "wb") as out, open(err_path, "wb") as err:
+        t0 = time.time()
+        proc = subprocess.Popen([BASH, str(SCRIPT)], env=env, stdout=out, stderr=err)
+        try:
+            returncode = proc.wait(timeout=90)
+        finally:
+            if proc.poll() is None:
+                proc.kill()
+        seconds = time.time() - t0
+    stdout, stderr = (p.read_text(encoding="utf-8", errors="replace") for p in (out_path, err_path))
+    return subprocess.CompletedProcess(proc.args, returncode, stdout, stderr), seconds
 
 
 def test_exits_when_vllm_dies_before_it_is_ready(tmp_path):
