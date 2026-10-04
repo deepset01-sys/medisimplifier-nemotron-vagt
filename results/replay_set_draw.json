@@ -1,0 +1,113 @@
+{
+  "description": "The replay set drawn once by the rule in docs/replay_set.md; identifiers only.",
+  "generated_by": "scripts/draw_replay_set.py",
+  "rule": {
+    "file": "docs/replay_set.md",
+    "commit": "8153c30cd07c7e9e4492fef90b3818bce7e12c53",
+    "sha256": "sha256:31734c4c9e7719be93918e21df43a7da1b36a445ee1bed6816f09ec5abe90064"
+  },
+  "python": "3.12.7",
+  "sources": {
+    "results/student_predictions.json": "sha256:8c94bb7c3914cbbe796142331a15ac7ed59658cc42f5c88ae5d5281b69b72557",
+    "results/judgebench_v2_panel_gate.json": "sha256:a66b1e05448d56f865d9fc2d9ee6c25d63e907439b7d318486d9288e9225233d"
+  },
+  "sources_note": "sha256 of each file with LF line endings, as stored in git",
+  "part_a_index": {
+    "short": [
+      967,
+      159,
+      35,
+      407
+    ],
+    "middle": [
+      378,
+      345,
+      224,
+      168
+    ],
+    "long": [
+      861,
+      148,
+      931,
+      680
+    ]
+  },
+  "part_b_idx_condition": {
+    "drop caught": [
+      [
+        "hf656",
+        "corrupted"
+      ],
+      [
+        "633",
+        "corrupted"
+      ],
+      [
+        "194",
+        "corrupted"
+      ],
+      [
+        "hf79",
+        "corrupted"
+      ]
+    ],
+    "drop missed": [
+      [
+        "hf330",
+        "corrupted"
+      ],
+      [
+        "hf319",
+        "corrupted"
+      ],
+      [
+        "hf953",
+        "corrupted"
+      ],
+      [
+        "171",
+        "corrupted"
+      ]
+    ],
+    "control falsely flagged": [
+      [
+        "hf767",
+        "clean"
+      ],
+      [
+        "762",
+        "clean"
+      ],
+      [
+        "hf7",
+        "clean"
+      ],
+      [
+        "hf532",
+        "clean"
+      ]
+    ],
+    "control correctly passed": [
+      [
+        "457",
+        "clean"
+      ],
+      [
+        "hf625",
+        "clean"
+      ],
+      [
+        "hf383",
+        "clean"
+      ],
+      [
+        "296",
+        "clean"
+      ]
+    ]
+  },
+  "part_b_removed_before_sampling": {
+    "built_from_part_a_inputs": 0,
+    "idx_drawn_as_a_drop": 8
+  }
+}
