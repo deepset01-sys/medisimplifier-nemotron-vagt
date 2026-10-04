@@ -40,11 +40,11 @@ recorded cases contain text derived from them, so the replay data file joins the
 
 ## Both parts
 
-- **Overlaps:** 184 of the 240 Part B items were built from evaluation inputs (`idx` `hf<N>` is the input with
-  `index` N), and every `idx` names one drop and its paired control. Before Part B is sampled, every item built from
-  one of Part A's 12 inputs is removed from the four cells; before each control cell is sampled, every `idx` already
-  drawn in the two drop cells is removed from it. No Part A input reappears in Part B, and no note appears there as
-  both a drop and a control.
+- **Overlaps:** all 240 Part B items were built from evaluation inputs (`idx` `hf<N>` and a numeric `idx` `N` both
+  name the input with `index` N), and every `idx` names one drop and its paired control. Before Part B is sampled,
+  every item built from one of Part A's 12 inputs is removed from the four cells; before each control cell is
+  sampled, every `idx` already drawn in the two drop cells is removed from it. No Part A input reappears in Part B,
+  and no note appears there as both a drop and a control.
 - **Before the session:** the recording starts only after `scripts/verify_endpoint.py --all` passes against the
   endpoint.
 - **Failed calls:** a Part A call that gets no usable response (a connection error, a time-out or an HTTP 5xx) is
@@ -57,3 +57,13 @@ recorded cases contain text derived from them, so the replay data file joins the
 
 Pasted text is never processed in Replay mode. Pasting switches to Live mode, which needs the user's own endpoint
 URL; without one, the app says that new text needs a running endpoint and links the reproduction guide.
+
+## Corrections
+
+- 2026-10-03, after the draw was run and before it was committed: "Overlaps" first said 184 of the 240 Part B items
+  were built from evaluation inputs, counting only `idx` `hf<N>`. The other 56, a drop and its control for each of
+  28 numeric `idx` values, were built from evaluation inputs too: each numeric `idx` N names the input with `index` N.
+  Checked by exact text: the 28 notes in Project v1's `results/nebius_evidence/calibration_verdicts.json` (public
+  repository [github.com/deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius/tree/dd6681bed29199f7ed2f1eb10af3ad2c99b734d3)
+  at commit `dd6681b`) equal those inputs in `results/student_predictions.json`. So all 240 are, and the exclusion
+  covers both forms. No numeric `idx` is among Part A's 12 inputs, so the drawn identifiers are unchanged.
