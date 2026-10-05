@@ -785,7 +785,7 @@ The merged model is publicly available — no training required to test the endp
 
 The Safe Endpoint is a **Nebius AI *Endpoint*** — not a Job. Deploy it with the Nebius CLI, step by step in [docs/REPRODUCIBILITY.md → Deploy the endpoint](docs/REPRODUCIBILITY.md#deploy-the-endpoint), which also lists the prerequisites and the cost; `jobs/safe_endpoint_v2.yaml` is a reference manifest of the same settings.
 
-- **Image:** `chambul/medisimplifier@sha256:<B1-DIGEST>` (endpoint-v6) — public Docker Hub, digest-pinned (no `--registry-*` auth needed).
+- **Image:** `chambul/medisimplifier@sha256:48265cd103c9f37fe37d9d135455573139126cb9f05991974c5c915e38caa176` (endpoint-v6) — public Docker Hub, digest-pinned (no `--registry-*` auth needed).
 - **Prerequisites:** `NEBIUS_API_KEY`, and your own **Qwen3-32B and Llama-3.3-70B dedicated endpoints** in Token Factory, running, with their routing keys in `QWEN_JUDGE_MODEL` and `LLAMA_JUDGE_MODEL` — a stopped one makes its judge's verdict `ERROR`. Llama's verdict is advisory and does not change the consensus (B4). No HuggingFace token.
 - **Verify:** `python scripts/verify_endpoint.py https://<your-endpoint-url> --all` → `verify: PASS (0 failed, 0 warnings)`
 

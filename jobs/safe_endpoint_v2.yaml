@@ -12,7 +12,7 @@ resources:
   subnet_id: ${NEBIUS_SUBNET_ID}
 
 docker:
-  image: chambul/medisimplifier@sha256:<B1-DIGEST>
+  image: chambul/medisimplifier@sha256:48265cd103c9f37fe37d9d135455573139126cb9f05991974c5c915e38caa176
   command: /start.sh
   container_port: 8000
 

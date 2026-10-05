@@ -36,10 +36,10 @@ Full digests:
 
 Safe Endpoint image (current: **endpoint-v6** — the published evaluation's prompt, judge routing keys from environment variables, a pinned vLLM base and model revision, and the v2 pool on `/v1/audit_panel`; supersedes v5):
 ```bash
-docker pull chambul/medisimplifier@sha256:<B1-DIGEST>
+docker pull chambul/medisimplifier@sha256:48265cd103c9f37fe37d9d135455573139126cb9f05991974c5c915e38caa176
 ```
 Digests:
-- `endpoint-v6` — `sha256:<B1-DIGEST>`  (deploy this)
+- `endpoint-v6` — `sha256:48265cd103c9f37fe37d9d135455573139126cb9f05991974c5c915e38caa176`  (deploy this)
 - `endpoint-v5` — `sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe`  (superseded; selector blind-spot-first ranking → Nano)
 - `endpoint-v4` — `sha256:0e1d1b5abf5afb08d85dabaa5483399a8035bafbb620c11d82e01c92d17f547f`  (superseded; old selector → gemma)
 - `endpoint-v3` — `sha256:9d950d839497e9ee35c1676b5e75424016b52efa6827930c34f171300ae38795`  (prior, no audit_panel)
@@ -140,11 +140,11 @@ Flavor: base. The console offers the GPU types available without a reservation, 
 
 Where `QWEN_JUDGE_MODEL` or `LLAMA_JUDGE_MODEL` is unset or empty, the gate uses this project's own routing key, which belongs to this project's account; `/health` shows which are set (`judge_models_set`, README **B3**). The image already sets `PYTHONUNBUFFERED=1` and `HF_HOME=/tmp/hf_cache`.
 
-**3. Image** — public on Docker Hub, pinned by digest: `chambul/medisimplifier@sha256:<B1-DIGEST>` (`endpoint-v6`). Pulling it needs no login and no `--registry-*` flag. Only if your endpoint must pull from your own registry, copy the image there first (`<your-image>` and `<registry-host>` as in the rebuild above):
+**3. Image** — public on Docker Hub, pinned by digest: `chambul/medisimplifier@sha256:48265cd103c9f37fe37d9d135455573139126cb9f05991974c5c915e38caa176` (`endpoint-v6`). Pulling it needs no login and no `--registry-*` flag. Only if your endpoint must pull from your own registry, copy the image there first (`<your-image>` and `<registry-host>` as in the rebuild above):
 ```bash
 docker login <registry-host>
-docker pull chambul/medisimplifier@sha256:<B1-DIGEST>
-docker tag  chambul/medisimplifier@sha256:<B1-DIGEST> <your-image>:endpoint-v6
+docker pull chambul/medisimplifier@sha256:48265cd103c9f37fe37d9d135455573139126cb9f05991974c5c915e38caa176
+docker tag  chambul/medisimplifier@sha256:48265cd103c9f37fe37d9d135455573139126cb9f05991974c5c915e38caa176 <your-image>:endpoint-v6
 docker push <your-image>:endpoint-v6
 ```
 Then deploy with `--image <your-image>@<digest>`, using the digest `docker push` prints, and pass `--registry-username` and `--registry-password` (or `--registry-secret`) if your registry needs credentials. Deploying from a copy was *not re-run by us*.
@@ -157,7 +157,7 @@ nebius ai endpoint create \
   --platform gpu-h100-sxm \
   --preset 1gpu-16vcpu-200gb \
   --disk-size 250Gi \
-  --image chambul/medisimplifier@sha256:<B1-DIGEST> \
+  --image chambul/medisimplifier@sha256:48265cd103c9f37fe37d9d135455573139126cb9f05991974c5c915e38caa176 \
   --container-command /start.sh \
   --env NEBIUS_API_KEY=<your-token-factory-key> \
   --env QWEN_JUDGE_MODEL=<your-qwen-routing-key> \
