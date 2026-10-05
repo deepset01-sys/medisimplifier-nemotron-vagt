@@ -10,7 +10,6 @@ resources:
   preset: 1gpu-16vcpu-200gb
   disk_size: 250Gi
   subnet_id: ${NEBIUS_SUBNET_ID}
-  public: true
 
 docker:
   image: chambul/medisimplifier@sha256:<B1-DIGEST>

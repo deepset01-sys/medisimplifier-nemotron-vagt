@@ -153,7 +153,7 @@ Then deploy with `--image <your-image>@<digest>`, using the digest `docker push`
 ```bash
 nebius ai endpoint create \
   --name medisimplifier-safe-endpoint-v6 \
-  --public --container-port 8000 \
+  --container-port 8000 \
   --platform gpu-h100-sxm \
   --preset 1gpu-16vcpu-200gb \
   --disk-size 250Gi \
