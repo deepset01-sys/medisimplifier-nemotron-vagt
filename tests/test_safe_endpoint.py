@@ -5,9 +5,11 @@ names the failed vLLM step, /health's judge routing-key flags (D17) and pool sta
 holding up other requests, and P2's explanation: only for a flagged rewrite, changing nothing the gate decided (D9),
 the same response with it on and off apart from the explanation and the times, given at most its time limit, and
 never failing the request (any failure: unavailable, explainer_error; only its kind logged, never any text). vLLM,
-the safety gate and the explanation are replaced with fakes; nothing leaves the machine.
+the safety gate and the explanation are replaced with fakes; nothing leaves the machine. Also the CORS allowlist,
+CORS_ALLOW_ORIGINS, and that CORS limits browsers only.
 """
 import asyncio
+import importlib
 import logging
 import os
 import subprocess
@@ -181,6 +183,62 @@ def test_health_audit_panel_needs_its_pool(client, monkeypatch):   # audit #48
     h = c.get("/health").json()
     assert (h["audit_panel"], h["pool_loaded"], h["pool_error"]) == (False, False, "audit pool missing")
     assert h["ready"] is True   # /v1/simplify can still serve
+
+
+# ── CORS: in browsers, only the demo page and a local dev server; other clients are not restricted ──
+def _preflight(app, origin):
+    return TestClient(app).options("/v1/simplify", headers={
+        "Origin": origin, "Access-Control-Request-Method": "POST", "Access-Control-Request-Headers": "Content-Type"})
+
+
+@pytest.mark.parametrize("origin", ["https://deepset01-sys.github.io", "http://localhost:5173"])
+def test_cors_allows_the_demo_page(origin):
+    r = _preflight(se.app, origin)
+    assert r.status_code == 200
+    assert r.headers["access-control-allow-origin"] == origin
+
+
+def test_cors_refuses_other_origins():
+    r = _preflight(se.app, "https://example.com")
+    assert r.status_code == 400
+    assert "access-control-allow-origin" not in r.headers
+
+
+def test_cors_limits_browsers_only(client):
+    """Another origin, or none (curl, a script), is still answered; only the header a browser needs is missing."""
+    c = client(FakeVLLM())
+    other, none = c.get("/health", headers={"Origin": "https://example.com"}), c.get("/health")
+    demo = c.get("/health", headers={"Origin": "https://deepset01-sys.github.io"})
+    assert other.status_code == none.status_code == demo.status_code == 200
+    assert "access-control-allow-origin" not in other.headers and "access-control-allow-origin" not in none.headers
+    assert demo.headers["access-control-allow-origin"] == "https://deepset01-sys.github.io"
+
+
+def test_cors_header_on_an_error_too(client):
+    """The demo page can read an error as well, e.g. the 413 with its token counts."""
+    r = client(FakeVLLM(count=3500, window=4096)).post(
+        "/v1/simplify", json={"text": "x"}, headers={"Origin": "https://deepset01-sys.github.io"})
+    assert r.status_code == 413
+    assert r.headers["access-control-allow-origin"] == "https://deepset01-sys.github.io"
+
+
+@pytest.fixture
+def reload_endpoint(monkeypatch):
+    """Reload safe_endpoint with CORS_ALLOW_ORIGINS set; restore the default module afterwards."""
+    def _reload(value):
+        monkeypatch.setenv("CORS_ALLOW_ORIGINS", value)
+        return importlib.reload(se)
+    yield _reload
+    monkeypatch.delenv("CORS_ALLOW_ORIGINS", raising=False)
+    importlib.reload(se)
+
+
+def test_cors_allow_origins_replaces_the_list(reload_endpoint):
+    app = reload_endpoint("https://me.example.org, http://localhost:3000").app
+    assert _preflight(app, "https://me.example.org").headers["access-control-allow-origin"] == "https://me.example.org"
+    assert _preflight(app, "http://localhost:3000").status_code == 200
+    assert _preflight(app, "https://deepset01-sys.github.io").status_code == 400
+    assert se.cors_origins("") == se.cors_origins(" , ") == se.DEFAULT_CORS_ORIGINS   # empty counts as unset
 
 
 def test_a_slow_gate_does_not_hold_up_other_requests(client, monkeypatch):

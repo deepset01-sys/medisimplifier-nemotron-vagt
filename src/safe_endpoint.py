@@ -13,6 +13,10 @@ FastAPI app with three routes:
   GET  /health          — readiness: vLLM answers and an API key is set (the judges are not called), plus whether the
                           judge routing keys are set and the pool status.
 
+Browsers may call it cross-origin only from the project's demo page (GitHub Pages) and a local `npm run dev` of it;
+CORS_ALLOW_ORIGINS, a comma-separated list of origins, replaces that list. CORS limits browsers only: any other client
+can call the endpoint, so its URL is its only access control.
+
 The rewrite uses the published evaluation's prompt (src/prompts.py), stops at the model's end-of-answer marker, and is
 limited to max_tokens (default 1,024; the published evaluation outputs used 512). `truncated` reports a rewrite cut at
 that limit. A request whose prompt and max_tokens do not fit the context window together returns HTTP 413.
@@ -34,6 +38,7 @@ from pathlib import Path
 
 import httpx
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import Optional, Literal
 
@@ -43,6 +48,24 @@ import safety_gate
 from safety_gate import evaluate_safety
 
 app = FastAPI(title="MediSimplifier Safe Endpoint", version="2.0")
+
+# Browsers may call this endpoint cross-origin only from the project's demo page (GitHub Pages) and from a local
+# `npm run dev` of it (app/README.md). CORS_ALLOW_ORIGINS, a comma-separated list of origins, replaces this list.
+# CORS binds browsers only; it does not restrict other clients: the endpoint URL is the only access control.
+DEFAULT_CORS_ORIGINS = ["https://deepset01-sys.github.io", "http://localhost:5173"]
+
+
+def cors_origins(value):
+    """The origins in a CORS_ALLOW_ORIGINS value; the default list when it is unset or empty."""
+    return [o.strip() for o in (value or "").split(",") if o.strip()] or list(DEFAULT_CORS_ORIGINS)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=cors_origins(os.environ.get("CORS_ALLOW_ORIGINS")),   # read once, at start-up
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
+)
 
 # ── Mount the /v1/audit_panel router. Graceful: a missing/broken audit_pool
 # disables it but leaves /v1/simplify fully working; /health reports the status. ──
