@@ -8,6 +8,8 @@ export default defineConfig({
     : '/',
   plugins: [react()],
   server: {
+    port: 5173,
+    strictPort: true, // the endpoint's CORS allows http://localhost:5173: stop rather than move to another port
     proxy: {
       '/v1': {
         target: 'https://port8000-vnvvxqt68q703dy.tunnel.applications.eu-north1.nebius.cloud',

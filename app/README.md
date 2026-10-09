@@ -1,27 +1,38 @@
-# MediSimplifier — Safety Gate Demo
+# MediSimplifier — demo page
 
-A single-page demo of the MediSimplifier diagnosis-drop safety gate, built on two
-real, captured cases from the 1,001-item student self-audit
-(`../results/student_audit_review.json`) — nothing synthetic, nothing staged.
+A single-page app with two modes, Replay and Live, and the panel section below them.
 
-## The two cases
+## Replay — the page opens here
 
-**FLAGGED — Case #44:** the plain-language rewrite silently dropped the diagnosis
-"liquoral hypotension" (intracranial hypotension). Llama-3.3-70B and Qwen3-32B
-passed it; Nemotron Nano flagged it; the gate returned DISAGREE. Both LLM auditors
-(Claude Sonnet 5 + Gemini 2.5 Pro) independently confirmed the drop.
+Replay shows the 28 cases chosen by [`docs/replay_set.md`](../docs/replay_set.md), recorded
+once on the final endpoint image: 12 texts rewritten and checked end to end, and 16
+known-answer pairs scored by the safety gate. The recording is not in this version of the
+page yet; until it is, Replay says so. Pasted text is never processed in Replay: pasting
+switches to Live.
 
-**SAFE — Case #820:** a faithful COVID-19 rewrite. All three judges SAFE; the gate
-passes it — showing the gate is a real discriminator, not a flag-everything alarm.
+## Live
 
-Toggle between them with the **"Show SAFE example" / "Show FLAGGED example"** button.
+Live sends a text to a running Safe Endpoint, straight from your browser, and shows what
+it returns: the safety gate's verdict (the three judges and the consensus), the rewrite,
+and, for a flagged rewrite, the endpoint's explanation in its own words. It sends the same
+request as the replay recording: the text, `max_tokens` 1,024 and flag mode, so the rewrite
+is never withheld; the verdict is shown beside it.
 
-## The two acts (FLAGGED case only)
+- **Your own endpoint.** Deploy one with [`docs/REPRODUCIBILITY.md`](../docs/REPRODUCIBILITY.md)
+  and paste its URL into the page; **Check endpoint** asks its `/health` whether it is ready
+  (that check does not call the judges).
+  The URL stays in the page: it is not saved and not added to the address bar.
+- **Where your text goes:** to that endpoint, nowhere else. This is not medical advice.
+- **Browser access:** the endpoint answers browsers only from this page on GitHub Pages and
+  from a local `npm run dev` (below); its `CORS_ALLOW_ORIGINS` setting replaces that list.
+- **Waiting:** a rewrite and its check usually take under 30 seconds, a flagged one about a
+  minute, a cold start longer. The page gives up after 5 minutes, and **Cancel** stops the
+  wait at any time (the endpoint may still finish the request). These times are provisional
+  until they are measured on the real endpoint.
 
-**Act 1 — the gate catches the drop.** Cached real verdicts — stable,
-auditor-confirmed. The red highlight shows exactly what was dropped.
+## The panel section
 
-**Act 2 — why trust the panel?** *"We don't trust one call. We measured it."* The
+**Why trust the panel?** *"We don't trust one call. We measured it."* The
 audit_panel ΔΦ_V leaderboard ranks 6 candidate judges on 240 hand-verified items
 (120 real dropped diagnoses + 120 paired controls — a 50% drop rate; ΔΦ_V depends on it,
 README A8 threat 11). gpt-oss-120b recommended: +0.1220,
@@ -42,13 +53,14 @@ which judge to add for that panel.
 ```bash
 npm install && npm run dev
 ```
-→ http://localhost:5173
+→ http://localhost:5173. Open exactly this address: the endpoint's CORS allows it (not
+`127.0.0.1`), and the dev server stops rather than move to another port if 5173 is taken.
 
 ## Live calls — CPU audit_panel service
 
-The demo makes live calls from two places — the **"Run audit_panel live →"** button and
+The panel section makes live calls from two places — the **"Run audit_panel live →"** button and
 **"Try a different panel"** — both POSTing directly to `/v1/audit_panel` on the
-**CPU audit_panel service** (CORS-enabled; the URL is `AUDIT_ENDPOINT` in `demo.jsx`).
+**CPU audit_panel service** (open to any origin; the URL is `AUDIT_ENDPOINT` in `demo.jsx`).
 That route is **pure CPU** — it re-ranks pre-computed verdict files and calls no
 models — so it returns in ~1 s, deterministically, the same recommendation every time.
 
@@ -62,9 +74,5 @@ A live result is shown only if the response reports `benchmark: "MedSimp-JudgeBe
 If the service is unreachable — or answers from any other pool — the button shows
 *"Live service unavailable — the chart above is the committed v2 receipt"*, so the demo
 still works fully and never displays numbers that contradict the chart.
-
-Note: **Act 1 (the gate verdicts) is cached** — the demo does *not* call `/v1/simplify`
-live — so the DISAGREE result and the auditor confirmation display with no endpoint
-running at all.
 
 Research prototype — **not for clinical use.**
