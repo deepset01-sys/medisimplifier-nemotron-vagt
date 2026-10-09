@@ -3,7 +3,8 @@
  * rule's request (the text, max_tokens 1,024, flag mode), and shows the safety gate's verdict, the rewrite and, for a
  * flagged rewrite, the endpoint's explanation in its own words. The URL stays in this component's state only (not
  * saved, not in the address bar). A request gives up after CEILING_S, and the visitor can cancel it while waiting.
- * Every text it shows is in liveText.js.
+ * Every text it shows is in liveText.js. Replay (replay.jsx) shows a recorded answer with Result, and verdicts with
+ * Judges and Banner.
  */
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -29,35 +30,50 @@ async function readJson(res) {
   }
 }
 
-function Result({ result, pageMs }) {
-  const verdict = T.verdict[result.consensus];
+/** The three judges' verdicts as chips (Replay shows its verdicts with these too). */
+export function Judges({ judges }) {
+  return (
+    <div className="ms-chips">
+      {judges.map((j) => {
+        const kind = j.verdict === "SAFE" ? "safe" : j.verdict === "UNSAFE" ? "unsafe" : "error";
+        return (
+          <span className={"ms-chip " + kind} key={j.name}>
+            <span className="dot" />
+            <span className="who">
+              {j.name}
+              <span className="role"> · {j.role}</span>
+            </span>
+            <span className="vd">{j.verdict || "—"}</span>
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
+/** The gate's consensus and its line, with the endpoint's warning when there is one. */
+export function Banner({ consensus, warning }) {
+  const verdict = T.verdict[consensus];
+  return (
+    <div className={"ms-banner " + consensus.toLowerCase()}>
+      <div>
+        <div className="b-title">{verdict.title}</div>
+        <div className="b-body">{verdict.body}</div>
+        {warning && <div className="b-body">{T.warning(warning)}</div>}
+      </div>
+    </div>
+  );
+}
+
+/** An endpoint's answer: the gate's verdict, the rewrite, the explanation of a flag, and a line on the times. */
+export function Result({ result, timesLine }) {
   const explanation = explanationView(result.consensus, result.explanation);
   return (
     <div className="ms-lv-result">
       <section className="ms-gate">
         <div className="ms-gate-label">{T.gateLabel}</div>
-        <div className="ms-chips">
-          {result.judges.map((j) => {
-            const kind = j.verdict === "SAFE" ? "safe" : j.verdict === "UNSAFE" ? "unsafe" : "error";
-            return (
-              <span className={"ms-chip " + kind} key={j.name}>
-                <span className="dot" />
-                <span className="who">
-                  {j.name}
-                  <span className="role"> · {j.role}</span>
-                </span>
-                <span className="vd">{j.verdict || "—"}</span>
-              </span>
-            );
-          })}
-        </div>
-        <div className={"ms-banner " + result.consensus.toLowerCase()}>
-          <div>
-            <div className="b-title">{verdict.title}</div>
-            <div className="b-body">{verdict.body}</div>
-            {result.warning && <div className="b-body">{T.warning(result.warning)}</div>}
-          </div>
-        </div>
+        <Judges judges={result.judges} />
+        <Banner consensus={result.consensus} warning={result.warning} />
         <p className="ms-lv-hint">{T.gateNotes}</p>
       </section>
 
@@ -92,9 +108,7 @@ function Result({ result, pageMs }) {
         </div>
       )}
 
-      <p className="ms-lv-times">
-        {T.times(result.endpointMs != null ? oneDecimal(result.endpointMs) : null, oneDecimal(pageMs))}
-      </p>
+      {timesLine && <p className="ms-lv-times">{timesLine}</p>}
     </div>
   );
 }
@@ -251,7 +265,15 @@ export default function Live({ text, setText, reproUrl }) {
           </div>
         )}
         {run.status === "cancelled" && <div className="ms-lv-status">{T.cancelled}</div>}
-        {run.status === "done" && <Result result={run.result} pageMs={run.pageMs} />}
+        {run.status === "done" && (
+          <Result
+            result={run.result}
+            timesLine={T.times(
+              run.result.endpointMs != null ? oneDecimal(run.result.endpointMs) : null,
+              oneDecimal(run.pageMs),
+            )}
+          />
+        )}
       </div>
     </section>
   );

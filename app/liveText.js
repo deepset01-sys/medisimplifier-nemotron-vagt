@@ -1,7 +1,8 @@
 /**
  * Every text that Live mode and the mode switch display, and the small pure functions that pick one by state. They
  * are kept apart from the components so that all of this wording sits in one place and can be checked without a
- * browser. The times in the wait lines are provisional until they are measured on the real endpoint.
+ * browser. The times in the wait lines are provisional until they are measured on the real endpoint. Replay shows an
+ * endpoint's answer and the gate's verdicts with these same texts (replayText.js holds the rest of Replay's).
  */
 
 export const CEILING_S = 300; // a simplify request gives up after 5 minutes
@@ -105,7 +106,17 @@ export const T = {
       : `The whole wait in this page was ${pageS} s.`,
 };
 
-const CONSENSUS = ["SAFE", "UNSAFE", "DISAGREE", "ERROR"];
+export const CONSENSUS = ["SAFE", "UNSAFE", "DISAGREE", "ERROR"];
+
+/** The three judges in display order, from an object with llama_verdict, qwen_verdict and nemotron_verdict. */
+export function judgeList(s) {
+  const v = (x) => (typeof x === "string" ? x : "");
+  return [
+    { name: "Llama-3.3-70B", role: T.roleAdvisory, verdict: v(s.llama_verdict) },
+    { name: "Qwen3-32B", role: T.roleDecides, verdict: v(s.qwen_verdict) },
+    { name: "Nemotron Nano", role: T.roleDecides, verdict: v(s.nemotron_verdict) },
+  ];
+}
 
 /** The line shown while waiting, by elapsed seconds. */
 export function waitLine(seconds) {
@@ -141,14 +152,9 @@ export function readSimplify(b) {
   if (!b || typeof b !== "object" || !b.safety || typeof b.safety !== "object") return null;
   const s = b.safety;
   if (!CONSENSUS.includes(s.consensus)) return null;
-  const v = (x) => (typeof x === "string" ? x : "");
   return {
     consensus: s.consensus,
-    judges: [
-      { name: "Llama-3.3-70B", role: T.roleAdvisory, verdict: v(s.llama_verdict) },
-      { name: "Qwen3-32B", role: T.roleDecides, verdict: v(s.qwen_verdict) },
-      { name: "Nemotron Nano", role: T.roleDecides, verdict: v(s.nemotron_verdict) },
-    ],
+    judges: judgeList(s),
     warning: typeof s.warning === "string" && s.warning ? s.warning : null,
     blocked: b.blocked === true || s.blocked === true,
     rewrite: typeof b.simplified_text === "string" ? b.simplified_text : null,

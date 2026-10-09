@@ -5,10 +5,18 @@ A single-page app with two modes, Replay and Live, and the panel section below t
 ## Replay — the page opens here
 
 Replay shows the 28 cases chosen by [`docs/replay_set.md`](../docs/replay_set.md), recorded
-once on the final endpoint image: 12 texts rewritten and checked end to end, and 16
-known-answer pairs scored by the safety gate. The recording is not in this version of the
-page yet; until it is, Replay says so. Pasted text is never processed in Replay: pasting
-switches to Live.
+once on the final endpoint image, from `replay_recording.json` (`replay.jsx`):
+
+- **Part A:** 12 texts, each with the endpoint's full answer as Live shows it (the gate's
+  verdict, the rewrite and, for a flagged rewrite, the explanation), whatever the gate said.
+  A case says when its answer came from a repeated call, and a case with no usable answer
+  in three attempts is shown as not recorded.
+- **Part B:** 16 known-answer pairs, each with the gate's recorded verdict beside its
+  committed one, grouped by the cell each pair was drawn from.
+
+Replay sends nothing: it shows what the recording holds. Until `replay_recording.json` is in
+the page, Replay says the cases are not in this version yet. Pasted text is never processed
+in Replay: pasting switches to Live.
 
 ## Live
 

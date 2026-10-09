@@ -2,18 +2,20 @@
  * MediSimplifier — demo page (single-page React app)
  * ---------------------------------------------------
  * Two modes, then the panel section below them:
- *  Replay (the page opens here) — the 28 cases of docs/replay_set.md, recorded once on the final endpoint image.
- *    Until the recording is in this page, Replay says so. Pasted text is never processed in Replay: pasting
- *    switches to Live, with the pasted text in place.
+ *  Replay (the page opens here; replay.jsx) — the 28 cases of docs/replay_set.md, recorded once on the final endpoint
+ *    image, read from replay_recording.json. Until that file is in this page, Replay says so. Pasted text is never
+ *    processed in Replay: pasting switches to Live, with the pasted text in place.
  *  Live (live.jsx) — sends the visitor's text to the endpoint URL they enter, straight from the browser, in flag
  *    mode, and shows the gate's verdict and the endpoint's explanation in its own words.
  *  Panel section — the ΔΦ_V leaderboard, the live audit_panel call and "Try a different panel" (CPU service).
  *
- * Usage: rendered by src/main.jsx (Vite). Styles are injected inline; Live's wording is in liveText.js.
+ * Usage: rendered by src/main.jsx (Vite). Styles are injected inline; the wording is in liveText.js (Live, the mode
+ * switch) and replayText.js (Replay).
  */
 import React, { useEffect, useState } from "react";
 import Live from "./live.jsx";
 import { T } from "./liveText.js";
+import Replay from "./replay.jsx";
 
 /* ===================== audit_panel — Act 2 (live) ====================== */
 
@@ -345,6 +347,41 @@ const CSS = `
 .ms-lv-explain ul { margin: 8px 0 0; padding-left: 20px; }
 .ms-lv-times { margin: 14px 0 0; font-size: 12.5px; color: var(--ink-faint); }
 
+/* Replay: the recorded cases */
+.ms-replay a { color: var(--brand); font-weight: 600; }
+.ms-rp-meta { margin: 0 0 10px; font-size: 13px; color: var(--ink-soft); overflow-wrap: anywhere; }
+.ms-rp-part { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--line); }
+.ms-rp-part h3 { margin: 0 0 8px; font-size: 17px; font-weight: 700; color: var(--ink); }
+.ms-rp-about { margin: 0 0 8px; font-size: 13.5px; color: var(--ink-soft); max-width: 820px; }
+.ms-rp-group { margin-top: 14px; }
+.ms-rp-group h4 {
+  margin: 0 0 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ink-faint);
+}
+.ms-rp-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.ms-rp-chip {
+  appearance: none; cursor: pointer; display: inline-flex; align-items: baseline; gap: 8px;
+  border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 6px 12px;
+  font-size: 13px; font-weight: 700; color: var(--ink);
+}
+.ms-rp-chip.on { border-color: var(--brand); background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand); }
+.ms-rp-chip:focus-visible { outline: 2px solid #a9c3e6; outline-offset: 2px; }
+.ms-rp-v { font-size: 12px; font-weight: 600; }
+.ms-rp-v.v-none { color: var(--ink-faint); }
+.ms-rp-case {
+  margin-top: 18px; border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; background: #fbfcfe;
+}
+.ms-rp-label { font-size: 14px; font-weight: 700; color: var(--ink); }
+.ms-rp-note { margin: 8px 0 0; font-size: 14px; color: var(--ink-soft); }
+.ms-rp-text {
+  margin: 0; white-space: pre-wrap; font-size: 14.5px; color: var(--ink); max-height: 360px; overflow: auto;
+  background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px;
+}
+.ms-rp-verdicts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.ms-rp-vlabel { margin: 0 0 8px; font-size: 13px; font-weight: 700; color: var(--ink-soft); overflow-wrap: anywhere; }
+@media (max-width: 820px) { .ms-rp-verdicts { grid-template-columns: 1fr; } }
+.ms-rp-end { margin-top: 24px; }
+
 /* panel section, below both modes */
 .ms-panelsec { margin-top: 28px; }
 `;
@@ -480,14 +517,7 @@ export default function App() {
         </div>
 
         {mode === "replay" ? (
-          <section className="ms-replay" role="tabpanel">
-            <p className="ms-replay-text">{T.replayNotYet}</p>
-            <p className="ms-replay-text">{T.replayPaste}</p>
-            <p className="ms-lv-notice">{T.notAdvice}</p>
-            <button className="ms-runbtn" onClick={() => setMode("live")}>
-              {T.tryLive}
-            </button>
-          </section>
+          <Replay ruleUrl={REPO_URL + "/blob/main/docs/replay_set.md"} onTryLive={() => setMode("live")} />
         ) : (
           <Live text={liveText} setText={setLiveText} reproUrl={REPO_URL + "/blob/main/docs/REPRODUCIBILITY.md"} />
         )}
