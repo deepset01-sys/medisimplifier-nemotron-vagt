@@ -67,3 +67,16 @@ URL; without one, the app says that new text needs a running endpoint and links 
   repository [github.com/deepset01-sys/medisimplifier-nebius](https://github.com/deepset01-sys/medisimplifier-nebius/tree/dd6681bed29199f7ed2f1eb10af3ad2c99b734d3)
   at commit `dd6681b`) equal those inputs in `results/student_predictions.json`. So all 240 are, and the exclusion
   covers both forms. No numeric `idx` is among Part A's 12 inputs, so the drawn identifiers are unchanged.
+- 2026-10-09, before the recording:
+  - **Review.** The author reads every recorded Part A rewrite in full after the recording. That read is the review
+    "Shown" means, so no recorded case reads "not reviewed"; a case not recorded has no rewrite to read.
+  - **Added content** is, in Replay mode's words, a statement about the patient or their care that the input does
+    not contain. Explaining a term the input uses does not count.
+  - **How both parts run.** `scripts/record_replay.py` runs both parts in one container of the final image, in the
+    same session. Part A sends its requests to the endpoint; Part B calls the gate directly (`evaluate_safety` in
+    the image's `src/safety_gate.py`), because the endpoint scores no given original and rewrite.
+  - **Failed calls.** A Part A call is repeated, up to twice, 30 seconds after an attempt that gets a connection
+    error, no answer within 600 seconds, an HTTP error (4xx or 5xx) or an answer that cannot be read. "Failed calls"
+    above named only a connection error, a time-out and an HTTP 5xx.
+
+  None of this changes the draw (`results/replay_set_draw.json`), made under this rule as of commit `8153c30`.
