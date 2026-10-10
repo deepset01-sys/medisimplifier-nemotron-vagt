@@ -76,7 +76,7 @@ URL; without one, the app says that new text needs a running endpoint and links 
     same session. Part A sends its requests to the endpoint; Part B calls the gate directly (`evaluate_safety` in
     the image's `src/safety_gate.py`), because the endpoint scores no given original and rewrite.
   - **Failed calls.** A Part A call is repeated, up to twice, 30 seconds after an attempt that gets a connection
-    error, no answer within 600 seconds, an HTTP error (4xx or 5xx) or an answer that cannot be read. "Failed calls"
-    above named only a connection error, a time-out and an HTTP 5xx.
+    error, no answer within 600 seconds, an HTTP status other than 200 or an answer that cannot be read. "Failed
+    calls" above named only a connection error, a time-out and an HTTP 5xx.
 
   None of this changes the draw (`results/replay_set_draw.json`), made under this rule as of commit `8153c30`.
