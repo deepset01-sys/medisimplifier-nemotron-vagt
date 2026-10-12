@@ -341,7 +341,7 @@ Decided (owner, 2026-09-28): keep Nano; item closed. See the Decided list at the
    Redeployed 2026-09-29 with the push of 28a41b6 (Q1's demo text): Pages run 36548436713 success; live bundle now
    index-B2gUugaQ.js, verified (new error text present, endpoint URL unchanged).
 - Old endpoint medisimplifier-cpu-v2 (aiendpoint-e00xp7sjd5ffpj8ek7, audit-cpu-v2) untouched and stopped.
-- Build VM this session: ubuntu@89.169.125.84 (same instance computeinstance-e00krk6v948cndendb; checkout fast-forwarded to 400ef54).
+- Build VM this session: ubuntu@[build-VM address] (same instance computeinstance-e00krk6v948cndendb; checkout fast-forwarded to 400ef54).
 - Docs updated for the endpoint change in the Q1 pass (f46dc89): README "always-on"/audit-cpu-v2 mentions,
    docs/REPRODUCIBILITY.md (full v2.1 digest), app/README.md, app/demo.jsx's error text.
 - Owner actions open: consider deleting stopped endpoints no longer needed. (HF card: both uploads done 2026-09-29 —
@@ -529,7 +529,7 @@ Goal: the public demo and its live endpoint still showed the refuted automated-p
      loads the pool at import; the v1 endpoint test needs the default pool).
 - ✅ Image chambul/medisimplifier:audit-cpu-v2 @
    sha256:44cec5211cd0904d568e4f6715dcd865d5daed406c247bd32203a957d30d0d67 — built on build VM
-   ubuntu@89.169.121.54 (VM checkout pulled 7d4d7f7 → 6948067, ff-only, clean), smoke-tested
+   ubuntu@[build-VM address] (VM checkout pulled 7d4d7f7 → 6948067, ff-only, clean), smoke-tested
    in a local container (health v2, gpt-oss 0.122 [0.1,0.1416]), pushed to DOCKER HUB ONLY
    (like audit-cpu; not the Nebius CR). New tag on purpose — audit-cpu @3df2a39e left intact.
 - ✅ Nebius CPU endpoint redeployed BY OWNER (Console) → LIVE at
@@ -665,7 +665,7 @@ Diagnosis ΔΦ_V — each candidate added to the Llama+Qwen incumbent (vs the +0
 
 **STEP 7 — CODE/CONFIG COMPLETE ✅ (5b2e711); BUILD+DEPLOY PENDING (your side):** `router.py` was already mounted in safe_endpoint.py; the gap was packaging — the old Dockerfile copied neither `src/audit_panel/` nor `audit_pool/`, so the route silently 404'd. Fixed: `Dockerfile.endpoint` now `COPY src/ ./src/` + `COPY audit_pool/ ./audit_pool/` (structure-preserving), and `start_endpoint.sh` runs from `cd /app/src` — so `pool_loader._HERE.parents[1]/"audit_pool"` resolves to `/app/audit_pool` and `safe_endpoint`'s `sys.path.insert(…/"audit_panel")` resolves to `/app/src/audit_panel` (both traced). No `.py`/pip changes (numpy in vLLM base; pool_loader reads JSON only, no PyYAML). REMAINING (your side): (1) `docker build -f docker/Dockerfile.endpoint` → endpoint-v4, dual-tag Docker Hub + Nebius CR; (2) redeploy Nebius GPU Endpoint; (3) live smoke: `GET /health` → `"audit_panel": true`; `POST /v1/audit_panel` {incumbent [Llama,Qwen] + 8-model pool} → recommendation + ΔΦ_V + CI, capture to results/.
 
-**STEP 7 — endpoint-v4 BUILT + DEPLOYED ✅:** built on VM ubuntu@195.242.28.221 (git pull → d7dac0d ⊇ 5b2e711; `COPY src/` + `COPY audit_pool/` confirmed), dual-pushed CR + Docker Hub, **digest `sha256:0e1d1b5abf5afb08d85dabaa5483399a8035bafbb620c11d82e01c92d17f547f`** (safe_endpoint_v2.yaml → v4 @ 5da315f; CCC/REPRODUCIBILITY @ acc519d). Live smoke (via python requests — Windows curl schannel TLS fails on the tunnel URL): `/health` → `{"audit_panel": true, "ready": true}` ✅; `/v1/simplify` → 200, simplification OK BUT **qwen_verdict=ERROR → consensus=ERROR** (dedicated Qwen3-32B endpoint STOPPED / key); `/v1/audit_panel` → 200 (route live; note candidate_pool must be an explicit list, "all" → 422).
+**STEP 7 — endpoint-v4 BUILT + DEPLOYED ✅:** built on VM ubuntu@[build-VM address] (git pull → d7dac0d ⊇ 5b2e711; `COPY src/` + `COPY audit_pool/` confirmed), dual-pushed CR + Docker Hub, **digest `sha256:0e1d1b5abf5afb08d85dabaa5483399a8035bafbb620c11d82e01c92d17f547f`** (safe_endpoint_v2.yaml → v4 @ 5da315f; CCC/REPRODUCIBILITY @ acc519d). Live smoke (via python requests — Windows curl schannel TLS fails on the tunnel URL): `/health` → `{"audit_panel": true, "ready": true}` ✅; `/v1/simplify` → 200, simplification OK BUT **qwen_verdict=ERROR → consensus=ERROR** (dedicated Qwen3-32B endpoint STOPPED / key); `/v1/audit_panel` → 200 (route live; note candidate_pool must be an explicit list, "all" → 422).
 
 **SELECTOR MAXIMIN BUG — FOUND via live smoke, FIXED (5f22863):** the live `/v1/audit_panel` recommended **gemma** (+0.0017 on diagnosis!) — contradicting the README's "recommend Nemotron Nano". Root cause: selector ranked by `worst_stratum_delta_Phi_V = min(per_phi.values())` (maximin/do-no-harm) → gemma is the only candidate that never regresses a stratum, but it barely fixes the blind spot. The diagnosis-fixers (Nano/gpt-oss/Ultra +0.071) all hurt dose slightly → lost under maximin. Fix (user chose Option B): rank by **blindest-stratum ΔΦ_V banded to TIE_BAND=0.01** (statistical tie), tie-break on **least collateral** (highest min ΔΦ_V on other strata) → **Nemotron Nano** (0.0706, CI [0.0552,0.0866] = the receipt, gemma ranked LAST). Verified offline + 14/14 tests (incl. new `test_full_pool_recommends_nemotron_not_gemma` regression lock; test pool 3→8 models). NOTE: the DEPLOYED endpoint-v4 still has the OLD selector → **needs endpoint-v5 rebuild** for the live route to recommend Nano.
 
@@ -967,7 +967,7 @@ Bucket v2: medisimplifier-adapters-v2
   eval_v2/              → evaluation results (Claude refs)
   eval_v2_nemotron/     → predictions.json + results.json (Fix #3 run)
 CR path: cr.eu-north1.nebius.cloud/e00p4ryvm6npw9w9pz/medisimplifier:<tag>
-Build host: VM ubuntu@89.169.125.84 (as of 2026-09-28; was 89.169.121.54 on 2026-09-24; nebius_vm key; host computeinstance-e00krk6v948cndendb — same instance, public IP changes across restarts: earlier 195.242.30.65 / .28.221 / .10.164); has nebius CLI + boto3 + ~/.aws/credentials + docker (Docker Hub login chambul)
+Build host: VM ubuntu@[build-VM address] (as of 2026-09-28; was [build-VM address] on 2026-09-24; nebius_vm key; host computeinstance-e00krk6v948cndendb — same instance, public IP changes across restarts: earlier [build-VM address] / [build-VM address] / [build-VM address]); has nebius CLI + boto3 + ~/.aws/credentials + docker (Docker Hub login chambul)
 ```
 
 ---
@@ -1537,6 +1537,6 @@ Late September – October:
 - CLI reproduction: `nebius ai job create --volume` does NOT work for the bucket mounts these jobs use — bare
   bucket → "unsupported volume source type"; `s3://BUCKET:/path:rw` → "s3_config.endpoint: value is required"
   (needs an S3 endpoint + creds profile the native YAML `bucket:` mount supplies automatically). Verified twice
-  on VM 195.242.10.164; no job created either time (zero GPU spend). VERIFIED reproduction path = Nebius
+  on VM [build-VM address]; no job created either time (zero GPU spend). VERIFIED reproduction path = Nebius
   Console + committed YAMLs. Decision (Option 1): do NOT put unverified CLI commands in the README.
 - Reviews done: Opus 4.8 v1/v2/v4 33-34 + v3 bonus; Fable 5 v1 28/40, v2 27/40 (no-bonus). Next: fix v2 inconsistencies, then Fable 5 bonus.
