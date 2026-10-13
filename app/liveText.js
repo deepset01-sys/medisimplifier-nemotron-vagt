@@ -1,8 +1,9 @@
 /**
  * Every text that Live mode and the mode switch display, and the small pure functions that pick one by state. They
  * are kept apart from the components so that all of this wording sits in one place and can be checked without a
- * browser. The times in the wait lines are provisional until they are measured on the real endpoint. Replay shows an
- * endpoint's answer and the gate's verdicts with these same texts (replayText.js holds the rest of Replay's).
+ * browser. The times in the wait lines come from a running endpoint (October 2026): discharge summaries of about 1,000
+ * characters took 16 to 29 seconds, flagged ones included, and the lines allow a margin. Replay shows an endpoint's
+ * answer and the gate's verdicts with these same texts (replayText.js holds the rest of Replay's).
  */
 
 export const CEILING_S = 300; // a simplify request gives up after 5 minutes
@@ -54,8 +55,10 @@ export const T = {
   healthTimeout: `The endpoint did not answer within ${HEALTH_TIMEOUT_S} seconds.`,
 
   // Live: waiting, giving up, failures
-  wait0: "Rewriting and checking with three judges. This usually takes under 30 seconds.",
-  wait30: "Still working. A flagged rewrite takes about a minute, because the endpoint adds its explanation.",
+  wait0:
+    "Rewriting and checking with three judges. This usually takes under 30 seconds, or under 45 when the rewrite " +
+    "is flagged and the endpoint adds its explanation.",
+  wait45: "Still working. A longer text takes longer to rewrite and check.",
   wait90: "Still working. A cold start, or a judge endpoint that is still starting, can take several minutes.",
   seconds: (n) => `${n} s`,
   ceiling: "No answer after 5 minutes. The endpoint may be stopped, still starting or busy. Check it and try again.",
@@ -120,7 +123,7 @@ export function judgeList(s) {
 
 /** The line shown while waiting, by elapsed seconds. */
 export function waitLine(seconds) {
-  return seconds >= 90 ? T.wait90 : seconds >= 30 ? T.wait30 : T.wait0;
+  return seconds >= 90 ? T.wait90 : seconds >= 45 ? T.wait45 : T.wait0;
 }
 
 /** The endpoint's base URL from what the visitor typed: http(s) only; a pasted /v1/simplify or /health is dropped. */

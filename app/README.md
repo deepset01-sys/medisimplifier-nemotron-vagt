@@ -33,10 +33,12 @@ is never withheld; the verdict is shown beside it.
 - **Where your text goes:** to that endpoint, nowhere else. This is not medical advice.
 - **Browser access:** the endpoint answers browsers only from this page on GitHub Pages and
   from a local `npm run dev` (below); its `CORS_ALLOW_ORIGINS` setting replaces that list.
-- **Waiting:** a rewrite and its check usually take under 30 seconds, a flagged one about a
-  minute, a cold start longer. The page gives up after 5 minutes, and **Cancel** stops the
-  wait at any time (the endpoint may still finish the request). These times are provisional
-  until they are measured on the real endpoint.
+- **Waiting:** a rewrite and its check usually take under 30 seconds, or under 45 when the
+  rewrite is flagged and the endpoint adds its explanation; a cold start takes longer. The
+  page gives up after 5 minutes, and **Cancel** stops the wait at any time (the endpoint may
+  still finish the request). Measured on a running endpoint in October 2026: 16 to 29 seconds
+  for discharge summaries of about 1,000 characters, flagged ones included; the times above
+  allow a margin.
 
 ## The panel section
 
