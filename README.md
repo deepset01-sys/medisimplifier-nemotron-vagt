@@ -51,7 +51,7 @@ The **[`/v1/audit_panel`](#b3-api-contract)** endpoint runs exactly this analysi
 
 ## What this project does
 
-The result above is the point; this section is the package around it. The submission ships as a reproducible whole — a discharge-summary student model, the three-judge safety gate that scores its output, the VAGT measurement framework that anchors the panel to ground truth, and a live Nebius GPU Endpoint that serves the model behind the gate. The models, the MedSimp-JudgeBench benchmark, and the raw calibration verdicts are public on HuggingFace, and every stage — teach, train, evaluate, merge, deploy — rebuilds from committed configs as a Nebius Job or Token Factory call.
+The result above is the point; this section is the package around it. The submission ships as a reproducible whole — a discharge-summary student model, the three-judge safety gate that scores its output, the VAGT measurement framework that anchors the panel to ground truth, and the Safe Endpoint that serves the model behind the gate on a Nebius GPU Endpoint; ours is stopped between demos and not kept running, so to call `/v1/simplify` you deploy your own (B2). The models, both versions of the MedSimp-JudgeBench benchmark and the two training datasets are public on HuggingFace; the benchmark's first version holds the Llama and Qwen calibration verdicts, and Nemotron's are in this repository (`nemotron_calibration_full.json`). [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) gives the rebuild and deploy steps: the Safe Endpoint is created with the Nebius CLI, the CPU panel service is deployed from the Nebius Console, which this repository does not script, and steps marked *not re-run by us* are written from our own setup, not repeated from a new account.
 
 ## What's new in v2 (vs v1)
 
@@ -62,7 +62,7 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 | Teacher model | Claude Opus 4.5 (proprietary) | ✅ Nemotron Super 120B via Token Factory |
 | Training data | Claude references (9,999) | ✅ Nemotron Super references (7,983 train) |
 | Student model | OpenBioLLM v1 | ✅ OpenBioLLM v2 (Nemotron-taught) |
-| Safety judges | Llama + Qwen (2 judges) | ✅ + Nemotron Nano (3 judges, calibrated) |
+| Safety judges | Llama + Qwen (2 judges) | ✅ + Nemotron Nano (3 judges; measured, not threshold-calibrated — A5, B4) |
 | Judge calibration metric | Cohen's κ only | ✅ VAGT — σ²_B, σ²_R, σ²_N, Φ_V |
 | Robust statistics validation | ❌ (post-submission only) | ✅ Fleiss κ and Krippendorff α recomputed on v2 clean stratum (n=240): κ 0.214 → 0.179 as Φ_V rises, a change that is not detectable (Δ −0.0356 [−0.1310, +0.0565]); near-identical on binary complete-case data, so one robustness check, not two independent ones |
 | Measurement framework | Cohen's κ | ✅ VAGT — detects shared blind spots invisible to κ |
@@ -72,7 +72,7 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 | Safety enforcement modes | flag/block only | ✅ + strict mode: DISAGREE blocks (Nemotron diagnosis-drop tripwire enforces) |
 | VAGT panel-selection service | ❌ not built | ✅ /v1/audit_panel — callable Nebius service: given any incumbent panel + candidate pool, recommends the judge to add (ΔΦ_V on blindest stratum + bootstrap CI); 6-candidate pool validated on MedSimp-JudgeBench (see Why VAGT) |
 | Judge pool experiment | ❌ not measured | ✅ 5×708 verdicts (gemma 27B / gpt-oss 120B / Nemotron Super 120B / DeepSeek Flash / Nemotron Ultra 550B) — scale flat within Nemotron family (30B ≈ 550B); Nano recommended on merit (automated calibration pass; on clean pool gpt-oss 120B and DeepSeek Flash tie at the top, ΔΦ_V +0.1220 / +0.1238) |
-| Reproducibility | Public HuggingFace adapters | ✅ Public HuggingFace dataset + adapters v2 |
+| Reproducibility | Public HuggingFace adapters | ✅ Public HuggingFace Nemotron training dataset, MedSimp-JudgeBench-v2 and merged v2 model (the v2 adapters are not on HuggingFace) |
 
 The novel v2 finding: VAGT decoupling — adding Nemotron Nano as third judge raises Φ_V on diagnosis (0.4764 → 0.5529, ΔΦ_V +0.0765 [+0.0516, +0.0992], at the stratum's 50% drop share — A8 threat 11) while inter-rater agreement shows no detectable change (Fleiss κ 0.214 → 0.179, Δ −0.0356 [−0.1310, +0.0565]; full decomposition in A6), so Cohen's κ — the only metric used in Project v1 — does not register the gain here.
 
@@ -661,7 +661,7 @@ The deployed rule **maximizes recall (82.1%)** (by construction: it flags whenev
 
 A dropped diagnosis a two-judge panel would have shipped; the third judge catches it. Captured verdict: [`results/disagree_case_gate.json`](results/disagree_case_gate.json).
 
-> **Scope.** *Real:* the gate, the three Token Factory judge calls, and the verdicts. *Synthetic:* the input — the failing simplification is a **benchmark perturbation, not MediSimplifier's own output**. Our model's **confirmed self-drops are few** — a dual-auditor sample of flagged outputs confirmed a genuine diagnosis drop in only **2 of 20 flagged cases** (10%; 6 contested pending physician review, see B5) — so this failure is hard to elicit from `/v1/simplify`; we source it from MedSimp-JudgeBench and run it through the real gate. The DISAGREE branch is therefore a **defense-in-depth** path against a downstream or third-party simplifier feeding the gate — not a routinely-triggered path on our own model's output. The gate returns only a verdict (not Nemotron's rationale), so we attribute the flag to the item's single injected diagnosis drop (depression) — the only diagnosis-level change in the perturbation. idx 21 (the primary candidate) returned all-SAFE through the live gate despite UNSAFE in calibration — confirming that calibration verdicts do not transfer verbatim across prompts; we report the first item that actually split.
+> **Scope.** *Real:* the gate, the three Token Factory judge calls, and the verdicts. *Synthetic:* the input — the failing simplification is a **benchmark perturbation, not MediSimplifier's own output**: a benchmark item carries one known injected diagnosis drop, while a drop in our model's own output has to be established by review — in a dual-auditor sample of flagged outputs, both auditors confirmed a genuine diagnosis drop in **2 of 20 flagged cases** (10%), and **6 of 20 are contested**, awaiting physician adjudication (B5). We source this case from MedSimp-JudgeBench and run it through the real gate. The DISAGREE branch is a **defense-in-depth** path against a downstream or third-party simplifier feeding the gate, and it also fires on our own model's output: on 265 of 1,001 real outputs, though in the audited sample most flags were general simplification (B5). The gate returns only a verdict (not Nemotron's rationale), so we attribute the flag to the item's single injected diagnosis drop (depression) — the only diagnosis-level change in the perturbation. idx 21 (the primary candidate) returned all-SAFE through the live gate despite UNSAFE in calibration — confirming that calibration verdicts do not transfer verbatim across prompts; we report the first item that actually split.
 
 ### B5. Operating characteristics
 
@@ -1059,4 +1059,4 @@ Apache 2.0 — see [LICENSE](LICENSE). It applies to everything in this reposito
 | Benchmark | JudgeBench v2 is published (`chambul/MedSimp-JudgeBench-v2`), but the v1 card (`chambul/MedSimp-JudgeBench`) still has no label caveat (Dataset and models) | Correct the v1 card |
 | Product | `/v1/audit_panel` ranks a fixed, pre-computed pool; a new judge needs its verdicts generated first | Live scoring of new judges |
 
-**Addressed in this submission:** scale/family confound — pool experiment across 5 families and scales, confirmed on v2 (results/judgebench_v2_pool_table.json).
+**Scale/family confound — checked in part, still open.** The pool experiment checked scale within one family: a 550B Nemotron (Ultra, +0.0781) breaks the incumbents' diagnosis blind spot no better than a 30B one (Nano, +0.0765) — indistinguishable on per-candidate CIs, not proven equal (Why VAGT; results/judgebench_v2_pool_table.json). What stays open is the panel's own confound (A8 threat 3): no same-scale cross-family control (a 72B-class Qwen) was available on Token Factory, so effects attributed to family diversity may partly be scale effects, direction of bias unclear.
