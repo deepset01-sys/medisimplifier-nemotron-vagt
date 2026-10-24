@@ -60,7 +60,7 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 | | v1 (Nebius Serverless Challenge 🥇) | v2 (This Hackathon) |
 |--|--|--|
 | Teacher model | Claude Opus 4.5 (proprietary) | ✅ Nemotron Super 120B via Token Factory |
-| Training data | Claude references (9,999) | ✅ Nemotron Super references (7,983 train) |
+| Training data | Claude references (7,999 train) | ✅ Nemotron Super references (7,983 train) |
 | Student model | OpenBioLLM v1 | ✅ OpenBioLLM v2 (Nemotron-taught) |
 | Safety judges | Llama + Qwen (2 judges) | ✅ + Nemotron Nano (3 judges; measured, not threshold-calibrated — A5, B4) |
 | Judge calibration metric | Cohen's κ only | ✅ VAGT — σ²_B, σ²_R, σ²_N, Φ_V |
@@ -70,8 +70,8 @@ The Nebius Serverless Challenge submission (v1) was training + serving + dual-ju
 | Gate operating characteristics | ❌ not measured | ✅ 708-item re-run through deployed gate prompt (0 ERRORs) — DISAGREE 20.8%, Qwen FP 9.5% (see B5) |
 | Diagnosis-retention audit | ❌ not measured | ✅ 1,001 student outputs through gate + dual-auditor review (Claude Sonnet 5 + Gemini 2.5 Pro); 2/20 confirmed diagnosis drops (see B5) |
 | Safety enforcement modes | flag/block only | ✅ + strict mode: DISAGREE blocks (Nemotron diagnosis-drop tripwire enforces) |
-| VAGT panel-selection service | ❌ not built | ✅ /v1/audit_panel — callable Nebius service: given any incumbent panel + candidate pool, recommends the judge to add (ΔΦ_V on blindest stratum + bootstrap CI); 6-candidate pool validated on MedSimp-JudgeBench (see Why VAGT) |
-| Judge pool experiment | ❌ not measured | ✅ 5×708 verdicts (gemma 27B / gpt-oss 120B / Nemotron Super 120B / DeepSeek Flash / Nemotron Ultra 550B) — scale flat within Nemotron family (30B ≈ 550B); Nano recommended on merit (automated calibration pass; on clean pool gpt-oss 120B and DeepSeek Flash tie at the top, ΔΦ_V +0.1220 / +0.1238) |
+| VAGT panel-selection service | ❌ not built | ✅ /v1/audit_panel — callable Nebius service: given any incumbent panel + candidate pool, recommends the judge to add (ΔΦ_V on blindest stratum + bootstrap CI); 6-candidate pool scored on the v2 clean 240-item diagnosis stratum (see Why VAGT) |
+| Judge pool experiment | ❌ not measured | ✅ 5×708 verdicts (gemma 27B / gpt-oss 120B / Nemotron Super 120B / DeepSeek Flash / Nemotron Ultra 550B) — the first, automated pass recommended Nano, but on the contaminated 708 machine-labeled items, so its numbers are superseded; on clean pool gpt-oss 120B and DeepSeek Flash tie at the top, ΔΦ_V +0.1220 / +0.1238, and within the Nemotron family scale buys no measurable gain, 30B to 550B (statistically indistinguishable) |
 | Reproducibility | Public HuggingFace adapters | ✅ Public HuggingFace Nemotron training dataset, MedSimp-JudgeBench-v2 and merged v2 model (the v2 adapters are not on HuggingFace) |
 
 The novel v2 finding: VAGT decoupling — adding Nemotron Nano as third judge raises Φ_V on diagnosis (0.4764 → 0.5529, ΔΦ_V +0.0765 [+0.0516, +0.0992], at the stratum's 50% drop share — A8 threat 11) while inter-rater agreement shows no detectable change (Fleiss κ 0.214 → 0.179, Δ −0.0356 [−0.1310, +0.0565]; full decomposition in A6), so Cohen's κ — the only metric used in Project v1 — does not register the gain here.
@@ -970,7 +970,7 @@ Actual Nebius billing for v2 (all figures from Nebius Console):
 
 H100 NVLink rate: ~$3.85/hr on Nebius eu-north1.
 Training: ~2.4h (8,523s), 3 epochs, seed=42.
-The dedicated Qwen3-32B endpoint ($91.80, 22.67 GPU hours) is the single largest line — left running across the gate calibration and student self-audit. Nemotron Super teacher generation is $75.51 (16,000-token reasoning budget per call). Llama and Nemotron Nano are per-token serverless; both the dedicated Qwen endpoint and the vLLM student host are stopped between demos to avoid idle GPU-hour billing.
+The dedicated Qwen3-32B endpoint ($91.80, 22.67 GPU hours) is the single largest line — left running across the gate calibration and student self-audit. Nemotron Super teacher generation is $75.51 (16,000-token reasoning budget per call). Nemotron Nano is per-token serverless; the gate calls Llama on a dedicated endpoint because serverless Llama returns 403 on this project's account (B8 item 4); the dedicated judge endpoints and the vLLM student host are stopped between demos to avoid idle GPU-hour billing.
 
 ## Project structure
 
@@ -1010,7 +1010,7 @@ jobs/
   job_eval_v2.yaml               v2 evaluation job (train-v30, sha256:6c3cd4cd..., GuyDor007 test)
   job_eval_v2_nemotron_refs.yaml v2 Nemotron-refs eval job (train-v32, sha256:2c95dfef..., aijob-e00gz7bez5pwq35fze)
   job_merge_v2.yaml              v2 merge job (train-v31, sha256:9d832391..., adapter → bucket → HuggingFace)
-  safe_endpoint_v2.yaml          Safe Endpoint reference manifest (the first endpoint-v6 build, sha256:48265cd1...; deployed with the CLI command in docs/REPRODUCIBILITY.md)
+  safe_endpoint_v2.yaml          Safe Endpoint reference manifest (the final endpoint image, sha256:da1a4145...; deployed with the CLI command in docs/REPRODUCIBILITY.md)
 scripts/
   start_endpoint.sh              Boot vLLM + Safe Endpoint API (the endpoint-v6 image's entry point, /start.sh)
   start_cpu_endpoint.sh          Boot the CPU-only audit_panel service (uvicorn cpu_endpoint:app)
