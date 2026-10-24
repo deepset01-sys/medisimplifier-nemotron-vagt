@@ -124,7 +124,7 @@ a ~35% false-positive rate **with no tunable knob**, and no confidence score.
 score, there is no threshold to calibrate; because the full reasoning must complete
 before the keyword appears, latency is bounded below by the whole generation; because
 extraction is textual, it is brittle to phrasing. Despite `enable_thinking=False` in
-the call (`safety_gate.py:44`), the gate still emits ~8k-token reasoning — confirming
+the call (`_call_judge` in `src/safety_gate.py`), the gate still emits ~8k-token reasoning — confirming
 the flag did not suppress the reasoning trace in our runs.
 
 **Implication for Nemotron users.** For any classification/verdict task, **read
