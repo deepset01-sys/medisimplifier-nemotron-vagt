@@ -1,0 +1,728 @@
+Case #,Original,Simplified,Safe or Unsafe?,"If Unsafe, category (A / B / C / D)",Note (please add one if Unsafe; required for D),Confidence
+1,"Discharge Summary:
+
+Patient Name: [REDACTED]
+Gender: Male 
+Age: 14 years
+Date of Admission: [REDACTED]
+Date of Discharge: [REDACTED]
+Discharge Diagnosis: Dermoid cyst of conus medullaris
+
+Hospital Course:
+
+The patient was initially diagnosed with tuberculosis of the spine by a district registered medical officer and started on antituberculous therapy. However, the patient's condition worsened, and he was transferred to our tertiary care hospital. He complained of lower back pain, weakness, and numbness in his lower limbs. The patient's higher mental function was normal, and his cranial nerves were intact.
+
+Upon further assessment, a reduced bulk of the flexor group of both lower limbs, hypotonia on the left side, grade 3/5 power in both the lower limbs, and areflexia bilaterally were observed. Sensory examination revealed hypoesthesia and decreased light touch and pinprick sensation in the L5/L4 dermatomes of his right lower limb. The sacral dermatomal sensations at S1/S2 levels were also impaired.
+
+Radiological investigations showed a focal, well-defined space-occupying lesion measuring 1.50×0.6cm2, and abnormal signal intensity within the spinal canal, which was intradural as well as intramedullary in nature, compressing the conus medullaris at the D12 and L1 level. The lesion was heterogeneously intense, localized, and well demarcated. The tumor was hypointense at the T1-weighted frequency with a hyperintense signal area at the caudal end.
+
+Surgical resection was performed through a posterior midline linear incision at the D12 and L1 level. The spinal cord was seen to be compressed and overdistended due to an intrinsic lesion, and myelotomy was performed. A well-demarcated, unilocular, grayish white intradural, intramedullary cyst was found involving the conus medullaris and extending from D12 and L1. The cyst was evacuated and near-total excision was done from the neuronal tissue. A histopathological examination revealed the diagnosis of dermoid cyst, which was confirmed by the presence of aggregates of keratinocytes along with keratin flakes.
+
+Post-surgery, the patient showed gradual improvement in motor power to grade 4/5 in both lower limbs and restoration of light touch and pinprick sensation. After a month of follow-up, there were no abnormal neurological sequelae, and the patient was able to mobilize and walk with support.
+
+Discharge Instructions:
+
+The patient has been discharged on [REDACTED]. Please follow up with your primary care doctor or neurologist for further consultation. In case of any recurrence of symptoms, please return to our hospital immediately.
+
+Signed,
+[REDACTED]","Discharge Summary:
+
+Patient Name: [REDACTED]
+Gender: Male
+Age: 14 years
+Date of Admission: [REDACTED]
+Date of Discharge: [REDACTED]
+Discharge Diagnosis: A non-cancerous sac filled with skin-like tissue near the lower end of the spinal cord
+
+Hospital Course:
+
+The patient was first told he had a spine infection called tuberculosis by a local doctor. He was given medicine for that illness. But the patient got worse, so he was moved to our hospital. He had pain in his lower back. He also had weakness and numbness in both legs. The patient's thinking and memory were normal. The nerves in his head and face were working fine.
+
+Doctors found that the muscles in both lower legs had gotten smaller. The left side had loose muscle tone. Both legs had weak strength, rated 3 out of 5. Reflexes were missing in both legs. The patient had reduced feeling in parts of his right leg. He could not feel light touch or sharp pokes as well as normal. Feeling was also reduced in the area around his buttocks and upper thighs.
+
+Scans showed a small, clearly shaped growth measuring about 1.5 by 0.6 centimeters. This growth was inside the spinal canal and pressing on the lower end of the spinal cord. The growth was located at the middle-to-lower back area. It had clear edges and different shades on the scan images.
+
+Doctors did surgery through a straight cut in the middle of the back. They found the spinal cord was being squeezed by a growth inside it. They made a small opening in the spinal cord covering. Inside, they found a grayish-white sac with one pocket. This sac was growing in the lower end of the spinal cord. The doctors drained the sac and removed almost all of it. Lab tests showed the sac was a harmless cyst lined with skin cells.
+
+After surgery, the patient slowly got stronger. Leg strength improved to 4 out of 5. Feeling for light touch and sharp pokes came back. One month later, the patient had no nerve problems. He could move around and walk with help.
+
+Discharge Instructions:
+
+The patient has been discharged on [REDACTED]. Please follow up with your primary care doctor or brain and nerve specialist for further consultation. In case of any return of symptoms, please return to our hospital immediately.
+
+Signed,
+[REDACTED]",,,,
+2,"Discharge Summary:
+
+Patient Name: [redacted]
+Medical Record Number: [redacted]
+
+Admission Date: [redacted] Discharge Date: [redacted]
+
+Diagnoses:
+1. Sarcoidosis
+2. Pseudopapillary tumor (Frantz tumor) of the pancreas
+
+Hospital Course Summary:
+The patient was admitted to the hospital with complaints of right flank pain, low-grade fever, nausea, anorexia, and unintentional weight loss. Upon physical examination, she was found to have tenderness to palpation in the right upper quadrant and epigastric regions. Ultrasound of the abdomen showed a well-defined complex solid-cystic mass in the neck of the pancreas. Additionally, a routine chest X-ray revealed suspicious mediastinal lymphadenopathy. CT scans of the chest and abdomen were subsequently sought that revealed mediastinal lymphadenopathy, bilateral pleural effusions, and a 4.5 x 5.5 cm mass in the neck of the pancreas with mixed solid and cystic features.
+
+Further investigations revealed multiple non-caseating granulomas, negative flow cytometry and special stains for microorganisms, and elevated angiotensin-converting enzyme level. These findings eventually led to the diagnosis of sarcoidosis in this patient. A CT-guided biopsy of the pancreatic mass revealed polygonal epithelial cells with characteristic pseudopapillary changes, leading to the diagnosis of pseudopapillary tumor (Frantz tumor) of the pancreas. Special stains including vimentin and beta-catenin were positive, thus confirming our diagnosis.
+
+The patient underwent a Whipple pancreaticoduodenectomy for her pancreatic mass and she recovered well post-operatively. On discharge, she was in a stable hemodynamic condition.
+
+Instructions upon Discharge:
+1. Continue taking prescribed medications as directed by your healthcare provider.
+2. Follow-up with your healthcare provider for routine monitoring and management of your medical condition.
+3. If you experience any symptoms or concerns, contact your healthcare provider immediately.
+
+Discharge Medications:
+[No medications listed in the case report.]
+
+Follow-up:
+[No follow-up information provided in the case report.]
+
+Physician: [Name]
+Date of Dictation: [redacted]
+Date of Transcription: [redacted]","Discharge Summary:
+
+Patient Name: [redacted]
+Medical Record Number: [redacted]
+
+Admission Date: [redacted] Discharge Date: [redacted]
+
+Diagnoses:
+2. A rare tumor in the pancreas called a Frantz tumor
+
+Hospital Course Summary:
+The patient came to the hospital with pain in the right side of the back, mild fever, upset stomach, loss of appetite, and weight loss without trying. During the exam, the patient had pain when the doctor pressed on the upper right belly area. An ultrasound of the belly showed a growth in the pancreas that had both solid and fluid-filled parts. A chest X-ray also showed swollen lymph nodes in the chest area. CT scans of the chest and belly were then done. These scans showed swollen lymph nodes in the chest, fluid around both lungs, and a growth in the pancreas about 2 inches in size.
+
+More tests were done. Tests for cancer cells and germs came back negative. A blood test showed high levels of a certain enzyme. A needle was used to take a small sample from the pancreas growth. The sample showed this was a rare type of tumor called a Frantz tumor. More lab tests confirmed this diagnosis.
+
+The patient had surgery to remove the tumor and parts of the pancreas and small intestine. The patient healed well after surgery. When leaving the hospital, the patient was in stable condition.
+
+Instructions upon Discharge:
+1. Keep taking all medicines as told by the doctor.
+2. See the doctor for regular checkups to watch and manage the medical conditions.
+3. Call the doctor right away if there are any new symptoms or concerns.
+
+Discharge Medications:
+[No medications listed in the case report.]
+
+Follow-up:
+[No follow-up information provided in the case report.]
+
+Physician: [Name]
+Date of Dictation: [redacted]
+Date of Transcription: [redacted]",,,,
+3,"Discharge Summary
+
+Patient Name: Case 2
+Date of Service: [DATE]
+
+Hospital Course:
+
+The patient is a 71-year-old man with metastatic EGFR-mutated adenocarcinoma of the lung. He received first-line afatinib and palliative radiotherapy for a metastatic lesion at T8 of the spine. The primary tumor in his left upper lung initially regressed, but demonstrated apparent enlargement 7 months later. Salvage treatment was given using pemetrexed/cisplatin, and the tumor showed partial regression. The patient underwent maintenance pemetrexed for two years with no major side effects. Chest CT revealed enlargement of the primary tumor, with no evidence of extra-thoracic progression. Exertional dyspnea and chest pain also developed. SABR targeted the tumor in his left upper lung with good results and has been unchanged with postradiation fibrotic changes. Currently, the patient has remained on maintenance pemetrexed for more than 48 months with no evidence of disease recurrence.
+
+Discharge Diagnosis:
+
+Metastatic EGFR-mutated adenocarcinoma of the lung with primary tumor enlargement.
+
+Hospital Course Summary:
+
+The patient with metastatic EGFR-mutated adenocarcinoma of the lung received multiple lines of therapy, including afatinib, palliative radiotherapy, pemetrexed/cisplatin, and maintenance pemetrexed. He also underwent SABR for a targeted tumor in his left upper lung. Despite experiencing slight side effects from chemotherapy, the patient tolerated treatment well and continues to be on maintenance pemetrexed with a favorable response.","Discharge Summary
+
+Patient Name: Case 2
+Date of Service: [DATE]
+
+Hospital Course:
+
+The patient is a 71-year-old man with lung cancer that has spread to other parts of his body. His cancer has a specific gene change called EGFR. He first received a cancer drug called afatinib. He also had radiation treatment to help with cancer that had spread to his spine at the T8 level. The main tumor in his left upper lung got smaller at first. However, the tumor grew bigger again after 7 months. The patient then received two chemotherapy drugs called pemetrexed and cisplatin. This treatment made the tumor shrink partly. The patient continued taking pemetrexed alone for two years with no major side effects. A scan of his chest showed the main tumor had grown again. The cancer had not spread to other parts of his body outside the chest. The patient started having trouble breathing during activity and chest pain. He received a focused radiation treatment called SABR to the tumor in his left upper lung. This treatment worked well. The area now shows scar tissue from the radiation but has not changed otherwise. The patient has now been on pemetrexed for more than 48 months. There are no signs that the cancer has come back.
+
+Discharge Diagnosis:
+
+Lung cancer with a specific gene change that has spread to other body parts. The main tumor in the lung had grown larger.
+
+Hospital Course Summary:
+
+The patient has lung cancer that has spread and has a gene change called EGFR. He received several treatments. These included the drug afatinib, radiation to ease symptoms, chemotherapy with pemetrexed and cisplatin, and ongoing pemetrexed. He also had focused radiation treatment called SABR to the tumor in his left upper lung. The patient had only mild side effects from chemotherapy. He handled the treatments well overall. He continues to take pemetrexed and is responding well to treatment.",,,,
+4,"DISCHARGE SUMMARY
+Patient Name: [REDACTED] 
+Age: 84 years 
+Sex: Male 
+Date of Admission: [REDACTED]
+Date of Discharge: [REDACTED]
+ 
+HOSPITAL COURSE:
+The patient presented to the otolaryngology clinic with a scalp lesion with a progressive enlargement over 2 months following the MMS surgery. The biopsy confirmed the presence of invasive squamous cell carcinoma in the setting of severe solar elastosis. A surgical extirpation was performed, creating a 5 × 7 cm defect (35 cm2) that extended down to the level of the galea. Reconstructive options were discussed, and the physician elected to use vCPM. vCPM was placed on the wound in direct contact with the galea, followed by Adaptic® dressing. The patient returned to the clinic on day 7 after the first vCPM application, and a second 5 × 5 cm vCPM graft was placed on the fully granulated wound. The patient returned on day 14, at which time the defect had reduced to approximately 3 × 5 cm (15 cm2) and substantial re-epithelialization was noted. Based on the appearance of the wound, a third application was not deemed necessary. At the day 21 follow-up, the patient's wound had completely closed with minimal scarring. Six months following treatment, the wound remained closed with continued improvement in the hyperemia. The patient experienced no complications and was very pleased with the outcome.
+ 
+DIAGNOSIS:
+Invasive squamous cell carcinoma in the setting of severe solar elastosis
+ 
+DISCHARGE INSTRUCTIONS:
+The patient is advised to follow up with the physician for regular monitoring of the wound healing progress. Any signs of infection or delayed wound healing should be immediately reported to the physician.
+ 
+FOLLOW-UP:
+Follow-up appointments are scheduled with the physician for regular monitoring of the wound healing progress.","DISCHARGE SUMMARY
+Patient Name: [REDACTED]
+Age: 84 years
+Sex: Male
+Date of Admission: [REDACTED]
+Date of Discharge: [REDACTED]
+
+HOSPITAL COURSE:
+The patient came to the ear, nose, and throat clinic with a growth on the scalp. The growth had been getting bigger for 2 months after a skin cancer removal surgery. A tissue sample showed a type of skin cancer that had spread deeper into the skin. The doctors removed the cancer through surgery. This left an open wound about 5 by 7 centimeters in size. The wound went down to the tough tissue covering the skull. The doctors talked about ways to help the wound heal. They chose to use a special skin graft material called vCPM. The vCPM was placed directly on the wound and covered with a non-stick bandage. The patient came back to the clinic 7 days after the first treatment. A second piece of vCPM was placed on the wound, which now had healthy new tissue growing. The patient returned on day 14. The wound had shrunk to about 3 by 5 centimeters. New skin was growing well over the wound. The doctors decided a third treatment was not needed. At the day 21 visit, the wound had fully closed with very little scarring. Six months after treatment, the wound stayed closed. The redness continued to fade. The patient had no problems and was very happy with the results.
+
+DISCHARGE INSTRUCTIONS:
+The patient should see the doctor for regular check-ups to watch how the wound heals. The patient should tell the doctor right away about any signs of infection or slow healing.
+
+FOLLOW-UP:
+The patient has appointments scheduled with the doctor to check on wound healing.",,,,
+5,"Hospital Course:
+A 66-year-old female patient was admitted to the Department of Periodontics, M. S. Ramaiah Dental College and Hospital, Bangalore, with the complaint of burning sensation in the gums and bleeding gums for the past one month.
+
+Medical History:
+The patient had no relevant drug history or significant medical history. She had not received any dental treatment before.
+
+Examination Findings:
+On extra oral examination, the patient had some obvious skin lesions on the scalp and a hyperkeratotic plaque behind her left ear. Intra oral examination of gingiva revealed reddish marginal, attached gingiva and interdental papilla in both maxillary and mandibular anterior region with desquamation of epithelium present in certain regions.
+
+Diagnosis:
+Based on the clinical and histopathologic features, the lesion was suggestive of discoid lupus erythematosus.
+
+Treatment:
+Hand scaling was performed as gently as possible in order to minimize tissue disruption. Soft tooth brush and mouth rise (chlorhexidine 0.12%) was recommended. Triamcinolone acteonide oral paste was advised to apply two to three times per day.
+
+Follow-up:
+The patient was recalled for follow-up and maintenance.","Hospital Course:
+A 66-year-old female patient came to the gum care department at M. S. Ramaiah Dental College and Hospital in Bangalore. She had a burning feeling in her gums and bleeding gums for the past month.
+
+Medical History:
+The patient was not taking any medicines and had no major health problems. She had never had dental treatment before.
+
+Examination Findings:
+The dentist looked at the outside of the patient's face and body. The patient had some skin patches on her scalp. She also had a thick, rough patch of skin behind her left ear. The dentist then looked inside the patient's mouth. The gums around the upper and lower front teeth were red. This included the gums at the edges, the gums attached to the teeth, and the gums between the teeth. In some areas, the top layer of gum tissue was peeling off.
+
+Diagnosis:
+Based on what the dentist saw and lab test results, the patient likely has discoid lupus erythematosus. This is a condition where the body's defense system attacks its own skin and gum tissue.
+
+Treatment:
+The dentist gently cleaned the teeth to remove buildup. This was done carefully to avoid hurting the gums. The patient was told to use a soft toothbrush and rinse with chlorhexidine 0.12 percent mouthwash. The patient was also told to apply triamcinolone acetonide paste inside the mouth two to three times per day. This paste helps reduce soreness and swelling.
+
+Follow-up:
+The patient was asked to come back for check-up visits and ongoing care.",,,,
+6,"Discharge Summary:
+
+Patient Information:
+- Name: [Redacted]
+- Age: 9 years
+- Gender: Female
+- Diagnoses: Precocious Puberty, Focal Nodular Hyperplasia (FNH)
+
+Hospital Course:
+The patient was admitted to Dongguan Children's Hospital 6 months ago due to breast development. After conducting laboratory tests and performing imaging examinations, the patient was diagnosed with precocious puberty and FNH. The patient received monthly intramuscular injections of triptorelin (decapeptyl) to treat precocious puberty. The patient underwent artificial ascites-assisted ultrasound-guided microwave ablation (MWA) and biopsy of the FNH lesion under general endotracheal anesthesia. The procedure was successful, and the patient was discharged on the sixth day after the operation. Post-operative medications included cefixime granules and compound glycyrrhizin capsules. The patient underwent MRI 1 month later, which showed that the tumor was completely ablated and that the gallbladder was not injured. There were no significant changes in the ablation zone and no blood flow signal inside it according to the ultrasonography after another 3 months.
+
+Follow-up Recommendations:
+The patient is advised to continue their prescribed medications and to follow up with their physicians as recommended. Regular check-ups and appropriate imaging may be necessary to monitor the affected area.
+
+Discharge Diagnosis:
+1. Precocious Puberty
+2. Focal Nodular Hyperplasia (FNH)
+
+Discharge Condition:
+The patient's condition was stable at the time of discharge.","Discharge Summary:
+
+Patient Information:
+Name: [Redacted]
+Age: 9 years
+Gender: Female
+Diagnoses: a non-cancerous liver growth called focal nodular hyperplasia
+
+Hospital Course:
+The patient came to Dongguan Children's Hospital 6 months ago because her breasts started developing. Doctors ran blood tests and took pictures of the inside of her body. They found she had a non-cancerous growth on her liver. The patient had a procedure to destroy the liver growth using heat from a small needle. Doctors also took a tiny sample of the growth to study it. They put the patient to sleep with a breathing tube during the procedure. They added fluid to her belly area to help see the growth better on the screen. The procedure went well. The patient went home on the sixth day after the procedure. She was given germ-fighting medicine called cefixime granules. She also received a liver-protecting medicine called compound glycyrrhizin capsules. One month later, a detailed body scan showed the growth was fully destroyed. The scan also showed her gallbladder was not harmed. Three months after that, another imaging test showed the treated area looked the same. There was no blood flowing into the treated spot.
+
+Follow-up Recommendations:
+The patient should keep taking her medicines as directed. The patient should see her doctors for check-ups as planned. The patient may need regular visits and imaging tests to watch the treated area.
+
+Discharge Diagnosis:
+2. A non-cancerous liver growth called focal nodular hyperplasia
+
+Discharge Condition:
+The patient was in stable condition when she left the hospital.",,,,
+7,"Discharge Summary:
+
+Patient Name: N/A
+Medical Record Number: N/A
+Date of Admission: N/A
+Date of Discharge: N/A
+Admitting Physician: N/A
+Attending Physician: N/A
+
+Hospital Course:
+
+The 50-year-old male agriculturist was referred to our hospital for the management of acute crisis. The patient was admitted with a history of intermittent epigastric pain. He had undergone exploratory laparotomy for generalized peritonitis and duodenal perforation two days ago at a general hospital.
+
+The patient had renal failure with hypokalemia and complained of severe abdominal pain and decreased urine output for the last 5 days at the time of admission in the general hospital. After surgery, the patient had puffiness of face and breathlessness, severe metabolic acidosis, hypotension, altered sensorium, and fever. The patient was put on ventilatory support and antibiotics (aztreonam, metronidazole, and intravenous fluids) considering bacterial peritonitis. Despite all these measures, the patient's condition deteriorated.
+
+Peripheral blood examination showed normocytic normochromic anemia with elongated cells, stomatocytes and target cells. The results of laboratory examinations were as follows: Neutrophilic leucocytosis, thrombocytopenia, elevated ESR, elevated serum urea and creatinine levels, hypernatremia, hyperkalemia, elevated total bilirubin and conjugated bilirubin. Ultra-sonography revealed mild parenchymal renal disease, minimal perisplenic collection in the abdomen, and dilated intrahepatic biliary ducts. Urine microscopy showed 2-3 pus cells/HPF. Peritoneal fluid Gram stain smear showed occasional pus cells with few budding yeast cells and many barrel-shaped arthroconidia. Blood culture was sterile after 24 hours.
+
+Peritoneal fluid culture was positive for Trichosporon beigelii. On the basis of these tests, the infection was treated as per standard medical protocol. Despite the treatment, the patient's condition continued to deteriorate, and hence, he was referred for the management of acute crisis.
+
+Given the severity of the patient's condition, he will receive ongoing supportive care. Further treatment will be provided as necessary.
+
+Discharge Diagnosis:
+
+The patient was diagnosed with Trichosporon beigelii infection, which was treated during his hospital stay.
+
+Follow-up Care:
+
+The patient will receive ongoing follow-up care to ensure that he receives the necessary treatment. Any follow-up care instructions will be provided during subsequent visits.","Discharge Summary:
+
+Patient Name: N/A
+Medical Record Number: N/A
+Date of Admission: N/A
+Date of Discharge: N/A
+Admitting Physician: N/A
+Attending Physician: N/A
+
+Hospital Course:
+
+The patient is a 50-year-old male farmer who was sent to our hospital for emergency care. The patient came in with stomach pain that came and went. Two days before, he had surgery at another hospital to fix a hole in his small intestine and treat an infection that had spread in his belly.
+
+When the patient first went to the other hospital, his kidneys were not working well. He had low potassium levels in his blood. He also had bad belly pain and was making very little urine for 5 days. After surgery, the patient had swelling in his face and trouble breathing. He also had too much acid in his blood, low blood pressure, confusion, and fever. The patient was put on a breathing machine and given medicines to fight infection. These medicines included aztreonam and metronidazole given through a vein. Even with all this care, the patient got worse.
+
+Blood tests showed the patient had a low red blood cell count with some oddly shaped cells. Other test results showed the following. The patient had too many white blood cells and not enough cells that help blood clot. Tests that show swelling in the body were high. Kidney function tests showed the kidneys were not working well. Salt and potassium levels in the blood were too high. Liver tests were also high. An imaging test of the belly showed mild kidney disease and a small fluid buildup near the spleen. It also showed swollen tubes in the liver. A urine test showed a small number of cells that fight infection. A test of fluid from the belly showed some cells that fight infection along with yeast and fungus. A blood test for germs came back clean after 24 hours.
+
+A test of belly fluid found a fungus called Trichosporon beigelii. Based on these tests, the infection was treated using standard medical care. Even with treatment, the patient kept getting worse. He was then sent here for emergency care.
+
+Given how sick the patient is, he will keep getting care to support his body. More treatment will be given as needed.
+
+Discharge Diagnosis:
+
+The patient was found to have an infection caused by a fungus called Trichosporon beigelii. This was treated during his hospital stay.
+
+Follow-up Care:
+
+The patient will keep getting follow-up care to make sure he gets the treatment he needs. Instructions for follow-up care will be given at future visits.",,,,
+8,"Discharge Summary
+
+Patient Name: N/A
+Sex: Male
+Age: 61
+Admission Date: N/A
+Discharge Date: N/A
+
+History of Present Illness:
+The patient was referred to our institution with a necrosis of the glans which had been progressing for one month. The patient reported having an initial purulent nodule on the glans which rapidly progressed to painful ulceration with necrotic lesions. Several courses of antibiotics had been attempted before the patient was referred to a specialist. A surgical procedure was performed at that time which resulted in the postoperative extension of the lesions. A diagnosis of pyoderma gangrenosum of the penis was made and treatment with prednisone was given with a marked improvement in pain within a few days. Unfortunately, the patient presented with acute decompensated heart failure after three weeks and ultimately died.
+
+Past Medical History:
+The patient had a past medical history of diabetes mellitus complicated by renal dysfunction and ischemic heart disease.
+
+Physical Examination:
+Physical examination revealed total necrosis of the glans with circumferential purulent ulceration of the corona. No superficial lymphadenopathy was found and general status was conserved.
+
+Laboratory and Diagnostic Findings:
+Laboratory findings revealed a biological inflammatory syndrome with high C-reactive protein levels and neutrophilia. Calcemia, phosphoremia, and parathormone levels were all normal. STI testing was negative, whereas local microbiological samples showed rare insignificant mycelial filaments. An abdominopelvic CT angiography was performed showing no arterial stenosis. Testing for cryoglobulins was also negative. Skin biopsy revealed a nonspecific inflammatory infiltrate with numerous neutrophilic cells and neutrophilic vasculitis without cytoclasia.
+
+Diagnosis:
+Pyoderma gangrenosum of the penis.
+
+Treatment:
+Treatment with prednisone was given with a marked improvement in pain within a few days.
+
+Follow-Up Plan:
+N/A
+
+Discharge Condition:
+Deceased.
+
+Follow-Up Actions:
+N/A","Discharge Summary
+
+Patient Name: N/A
+Sex: Male
+Age: 61
+Admission Date: N/A
+Discharge Date: N/A
+
+History of Present Illness:
+The patient was sent to our hospital with dying tissue on the tip of the penis. This problem had been getting worse for one month. The patient first noticed a pus-filled bump on the tip of the penis. It quickly turned into a painful open sore with dead tissue. The patient tried several rounds of antibiotics before seeing a specialist. A surgery was done at that time, but the sores got bigger after the operation. The patient was given a steroid medicine called prednisone. The pain got much better within a few days. Sadly, after three weeks, the patient developed sudden severe heart failure and passed away.
+
+Past Medical History:
+The patient had diabetes, which had caused kidney problems. The patient also had heart disease from blocked blood vessels.
+
+Physical Examination:
+The exam showed that all the tissue on the tip of the penis had died. There were pus-filled sores all around the ridge of the penis tip. No swollen lymph nodes were found. The patient's overall health seemed stable.
+
+Laboratory and Diagnostic Findings:
+Blood tests showed signs of swelling and infection in the body. A protein that shows swelling was high. White blood cells that fight infection were also high. Calcium, phosphorus, and hormone levels were all normal. Tests for infections spread through sex were negative. Samples from the sores showed only small amounts of harmless fungus. A special scan of the blood vessels in the belly and pelvis showed no blocked arteries. A test for abnormal blood proteins was also negative. A small piece of skin was removed and studied. It showed swelling with many infection-fighting cells. It also showed swelling in small blood vessels but no broken-down cells.
+
+Treatment:
+The patient was given a steroid medicine called prednisone. The pain got much better within a few days.
+
+Follow-Up Plan:
+N/A
+
+Discharge Condition:
+The patient passed away.
+
+Follow-Up Actions:
+N/A",,,,
+9,"Discharge Summary:
+
+Patient Name: [Patient name]
+Date of Admission: [Date]
+Date of Discharge: [Date]
+
+Hospital Course Summary:
+
+History of Present Illness:
+The patient, a previously healthy 3.5-year-old male, was admitted with complaints of weakness and pallor lasting for five days. The patient had a three-day history of diarrhea two weeks before the admission. A physical examination revealed jaundice, pallor, and splenomegaly. The initial laboratory investigation showed low hemoglobin levels, and polychromasia and spherocytes were observed in the peripheral blood film. The patient was diagnosed with the warm type of autoimmune hemolytic anemia (AIHA).
+
+Hospital Course:
+Erythrocyte transfusion was administered, followed by intravenous methylprednisolone. The patient showed an excellent hematological response to the treatment. Oral prednisolone was used for four weeks, followed by a slow taper during the next five months. The patient experienced a relapse after an upper respiratory infection, and prednisolone was restarted with a good hematological response. The dose of prednisolone was reduced, resulting in hematological deterioration. Azathioprine was initiated, but there was a slight hematological deterioration. Rituximab was initiated after informed written consent and given in four weekly doses. The patient showed a stable response two months after the initiation of rituximab. The DAT became negative 12 months later, and the patient remains disease-free without relapses, three years after the first presentation.
+
+Discharge Diagnosis:
+Warm type of autoimmune hemolytic anemia (AIHA)
+
+Discharge Medication:
+None
+
+Discharge Condition:
+Stable
+
+Follow-up Appointments:
+The patient is advised to follow-up with the appropriate specialists as needed.
+
+Discharge Instructions:
+The patient is advised to follow a healthy lifestyle and diet and rest as needed.
+
+Impression:
+The patient was diagnosed with the warm type of autoimmune hemolytic anemia (AIHA) and responded well to various treatments, including erythrocyte transfusion, intravenous methylprednisolone, oral prednisolone, azathioprine, and rituximab. The patient remains disease-free without relapses, three years after the first presentation.","Discharge Summary:
+
+Patient Name: [Patient name]
+Date of Admission: [Date]
+Date of Discharge: [Date]
+
+Hospital Course Summary:
+
+History of Present Illness:
+The patient is a healthy 3.5-year-old boy. The patient was admitted because of weakness and pale skin for five days. Two weeks before coming to the hospital, the patient had loose stools for three days. A physical exam showed yellow skin, pale skin, and an enlarged spleen. Blood tests showed low red blood cell levels. The blood sample also showed unusual red blood cells. The patient was diagnosed with a condition where the body attacks its own red blood cells. This is called warm autoimmune hemolytic anemia.
+
+Hospital Course:
+The patient received a blood transfusion. The patient then received a strong steroid medicine through an IV. The patient responded very well to this treatment. The patient took steroid pills for four weeks. The dose was slowly lowered over the next five months. The patient got sick again after catching a cold. The steroid pills were restarted and worked well. When the dose was lowered, the blood counts got worse again. A medicine called azathioprine was started. The blood counts got a little worse. After the parents agreed in writing, a medicine called rituximab was started. The patient received four doses, one each week. Two months later, the patient was doing well. After 12 months, blood tests showed the condition was gone. The patient has been healthy with no return of the illness for three years.
+
+Discharge Diagnosis:
+Warm autoimmune hemolytic anemia, a condition where the body attacks its own red blood cells
+
+Discharge Medication:
+None
+
+Discharge Condition:
+Stable
+
+Follow-up Appointments:
+The patient should see the right doctors as needed.
+
+Discharge Instructions:
+The patient should eat healthy foods and get enough rest.
+
+Impression:
+The patient was diagnosed with warm autoimmune hemolytic anemia. This is when the body attacks its own red blood cells. The patient was treated with blood transfusions and several medicines. These included steroids given by IV and by mouth, azathioprine, and rituximab. The patient responded well to treatment. The patient has been healthy with no return of the illness for three years.",,,,
+10,"Discharge Summary:
+
+Patient Identification:
+Name: [REDACTED]
+Gender: Male
+Age: 6 years
+
+Reason for Admission:
+Frequent ulcers in the mouth.
+
+Past Medical History:
+Recurrent spontaneous erosions all over the body, healed by hypo- to depigmented scars, hoarseness of voice, and pruritus.
+
+Family History:
+Nonconsanguineous marriage. No family history of a similar condition.
+
+Physical Examination:
+On extraoral examination, well-defined crusted types of erosion over dorsum of hands and elbows and hyper-, hypo-, or depigmented scars were also present over back, arms, elbows, and dorsum of hands. Beaded papules present on eyelids of both eyes.
+On intraoral examination, soft tissue showed irregular elevations and depressions with pearly nodular deposits throughout. Small isolated vesicular ulcerations were visible on oral mucosa. Lips were thickened and infiltrated. Tongue was stiff and frenulum thickened with inability to protrude out the tongue completely. The lateral border showed clear demarcations of dentition, indicating macroglossia.
+
+Diagnosis:
+Lipoid proteinosis
+
+Treatment:
+Started with a second-generation retinoid, Acitretin 10 mg/day.
+Referred to ear, nose, and throat and dermatology department where he was put on speech therapy and emollients were prescribed.
+
+Hospital Course:
+Mild improvement in occurrence of erosions and reduction in scarring was observed. Patient was referred to other departments for further management.
+
+Summary:
+The 6-year-old male patient was admitted to the Department of Dentistry with complaints of frequent ulcers in the mouth. The patient had a history of recurrent spontaneous erosions all over the body and hoarseness of voice. On examination, well-defined crusted types of erosion over dorsum of hands and elbows, hyper-, hypo-, or depigmented scars over back, arms, elbows, and dorsum of hands, and beaded papules on eyelids of both eyes were seen. Intraoral examination revealed irregular elevations and depressions with pearly nodular deposits, small isolated vesicular ulcerations, macroglossia, stiff tongue, and thickened/lumpy lips. The patient was diagnosed with lipoid proteinosis and treated with a second-generation retinoid. Referral to other departments was made for further management of the patient.","Discharge Summary:
+
+Patient Identification:
+Name: [REDACTED]
+Gender: Male
+Age: 6 years
+
+Reason for Admission:
+Frequent sores in the mouth.
+
+Past Medical History:
+The patient had sores that kept appearing on their own all over the body. These sores healed but left lighter or darker patches on the skin. The patient also had a rough, hoarse voice and itchy skin.
+
+Family History:
+The parents are not related by blood. No one else in the family has the same condition.
+
+Physical Examination:
+On the outside of the body, the doctor found crusty sores on the backs of the hands and elbows. There were also lighter, darker, or pale scars on the back, arms, elbows, and backs of the hands. Small bumps that look like beads were found on the eyelids of both eyes.
+Inside the mouth, the soft tissue had bumpy surfaces with small shiny deposits throughout. Small blister-like sores were seen on the inside of the mouth. The lips were thick and firm. The tongue was stiff and the tissue under the tongue was thick. The patient could not stick out the tongue all the way. Teeth marks on the sides of the tongue showed the tongue was larger than normal.
+
+Treatment:
+The patient was started on Acitretin 10 mg per day. This is a medicine that helps with skin problems.
+The patient was sent to the ear, nose, and throat doctors and skin doctors. They started speech therapy. Skin moisturizers were also given.
+
+Hospital Course:
+The sores happened less often and left fewer scars. The patient was sent to other doctors for more care.
+
+Summary:
+The 6-year-old male patient came to the Dental Department because of frequent mouth sores. The patient had a history of sores appearing on their own all over the body and a hoarse voice. The doctor found crusty sores on the backs of the hands and elbows. There were lighter, darker, or pale scars on the back, arms, elbows, and backs of the hands. Small bead-like bumps were on the eyelids of both eyes. Inside the mouth, there were bumpy surfaces with shiny deposits and small blister-like sores. The tongue was large, stiff, and could not stick out fully. The lips were thick and firm. The patient was given a skin medicine. The patient was sent to other doctors for more care.",,,,
+11,"Discharge Summary:
+
+Patient Name: Not provided
+Date of Admission: Not provided
+Date of Discharge: Not provided
+
+Hospital Course Summary:
+
+Admission: The patient presented with two weeks of flank pain and four days of cola-colored urine. On physical exam, he had a regular rate and rhythm with a crescendo-decrescendo murmur heard best over the left sternal border. He had severe, left CVA tenderness and bilateral, basilar crackles on auscultation. Initial laboratory data showed low white blood cell count, low hemoglobin, low platelet count, high creatinine levels, and abnormal urinalysis.
+
+Diagnosis: The patient was diagnosed with splenic infarct, bicuspid aortic valve with vegetation, and negative culture endocarditis. A renal biopsy revealed immune complex GN.
+
+Treatment: The patient received 6 weeks of antibiotic therapy with doxycycline and rifampin, and underwent a valve replacement surgery. During the course of treatment, the patient showed improvement in flank pain, decreased RBC count in urine, and a decrease in creatinine levels.
+
+Prognosis: The patient's condition improved during the course of treatment. Repeat proteinase-3 antibodies remained elevated despite antibiotic therapy.
+
+Follow-up: Follow-up with a primary care physician and additional testing as needed is recommended.","Discharge Summary:
+
+Patient Name: Not provided
+Date of Admission: Not provided
+Date of Discharge: Not provided
+
+Hospital Course Summary:
+
+Admission: The patient came to the hospital with two weeks of pain in the side of the back and four days of dark brown urine. During the physical exam, the heart had a normal beat with an extra heart sound heard best on the left side of the chest. The patient had strong pain when the doctor pressed on the left side of the back near the kidney. The doctor also heard crackling sounds in the lower parts of both lungs. First blood tests showed low white blood cell count, low red blood cell count, and low platelet count. The tests also showed high creatinine levels, which means the kidneys were not working well. The urine test was not normal.
+
+Diagnosis: The patient was found to have a blocked blood vessel in the spleen, which damaged part of the spleen. The patient also had a heart valve that formed with two flaps instead of three. This valve had a growth on it caused by an infection. The infection did not show up in blood tests that look for germs. A small tissue sample was taken from the kidney. It showed the immune system was causing swelling and damage in the kidney.
+
+Treatment: The patient took two antibiotics called doxycycline and rifampin for 6 weeks. The patient also had surgery to replace the damaged heart valve. During treatment, the side pain got better. There were fewer red blood cells in the urine. The creatinine levels went down, which means the kidneys were working better.
+
+Prognosis: The patient got better during treatment. However, a blood test for a certain protein linked to the immune system stayed high even after taking antibiotics.
+
+Follow-up: The patient should see a regular doctor for checkups. More tests may be needed.",,,,
+12,"Discharge Summary
+
+Patient Name: [redacted] 
+
+Medical Record Number: [redacted]
+
+Admission Date: [redacted] 
+
+Discharge Date: [redacted]
+
+Diagnosis and Treatment
+
+The patient presented to our hospital with an induration felt on the inner upper quadrant of the left breast. Further examination revealed an irregular shaped tumor in the left A region. Subsequent histopathologic examination confirmed the presence of a granular cell tumor.
+
+The patient received prompt and appropriate treatment, and following an uneventful course of hospitalization, has been discharged with instructions to follow up with their referring physician.
+
+Course of Hospitalization
+
+The patient's hospitalization was uneventful with no significant complications or intercurrent illnesses. The patient remained stable throughout the hospital stay and responded well to the treatment plan. Medications were administered as prescribed, and the patient experienced no adverse reactions.
+
+During the course of hospitalization, the patient received appropriate medical care, including necessary laboratory and diagnostic testing, and prompt specialist consultation.
+
+Disposition
+
+The patient is being discharged with instructions to follow up with their referring physician for further management of their condition and any necessary ongoing treatment.
+
+The patient has been advised to continue monitoring their breast health through regular self-examination and follow-up appointments with their physician as needed.
+
+Follow-Up and Outpatient Care
+
+The patient has been advised to follow up with their referring physician for further management of their condition. They have been instructed to continue monitoring their breast health through regular self-examination and follow-up appointments with their physician as needed.
+
+It is recommended that the patient be included in a breast cancer screening program and receive regular mammograms to ensure early detection of any recurrence or other breast health concerns.","Discharge Summary
+
+Patient Name: [redacted]
+
+Medical Record Number: [redacted]
+
+Admission Date: [redacted]
+
+Discharge Date: [redacted]
+
+Diagnosis and Treatment
+
+The patient came to our hospital because of a hard lump felt in the upper inner part of the left breast. A closer look showed a tumor with uneven edges in the left breast area. A tissue sample test showed the tumor was a type of growth that is usually not cancer.
+
+The patient received the right treatment quickly. The hospital stay went smoothly with no problems. The patient has been sent home with instructions to see their regular doctor for follow-up care.
+
+Course of Hospitalization
+
+The patient's hospital stay went smoothly with no major problems or other illnesses. The patient stayed stable the whole time and did well with the treatment plan. The patient took all medicines as directed and had no bad reactions.
+
+During the hospital stay, the patient received proper medical care. This included needed lab work, imaging tests, and advice from specialists.
+
+Disposition
+
+The patient is going home with instructions to see their regular doctor. The doctor will help manage the condition and provide any ongoing treatment that may be needed.
+
+The patient has been told to keep checking their breast health. This means doing regular self-exams at home and seeing their doctor for check-ups as needed.
+
+Follow-Up and Outpatient Care
+
+The patient has been told to see their regular doctor for ongoing care of their condition. The patient should keep checking their breast health through regular self-exams and doctor visits as needed.
+
+The patient should join a breast cancer screening program. The patient should also get regular mammograms. These tests help find any new problems or other breast health concerns early.",,,,
+13,"Hospital Course:
+The 28-year old female patient was admitted to our hospital with two-day nausea and pain on the right upper quadrant of the abdomen. A history of acute vision loss was reported. On admission, vital signs were within normal limits and physical examination revealed mild pain on the right upper quadrant.
+Laboratory tests were performed and showed slightly elevated WBC count and increased ESR. Imaging studies revealed the presence of fluid around the liver. The patient underwent investigational laparotomy and appendectomy due to worsening symptoms. Two days after the surgery, she developed tachypnea, tachycardia, and fever.
+Further imaging studies were conducted and revealed infiltrations in the right lower lobe and a mass in the right atrium. Based on blood test results, the diagnosis of antiphospholipid syndrome was suggested. Magnetic resonance imaging was performed and the cardiac mass was successfully excised, with a histological examination confirming the diagnosis of myxoma.
+Postoperatively, the patient remained stable and was discharged with oral anticoagulant therapy and recommended follow-up echocardiograms.
+
+Discharge Summary: 
+The 28-year old female patient was admitted to our hospital with symptoms of nausea and pain on the right upper quadrant of the abdomen, as well as a history of acute vision loss. The patient underwent investigational laparotomy and appendectomy due to worsening symptoms and postoperatively developed tachypnea, tachycardia, and fever.
+Further imaging studies revealed a cardiac mass in the right atrium, which was successfully excised. The patient was diagnosed with antiphospholipid syndrome based on blood test results and discharged with oral anticoagulant therapy, with recommended follow-up echocardiograms.
+The patient's hospital course was complicated but ultimately successful, with no recurrence of the myxoma noted on subsequent follow-up echocardiograms and blood tests confirming the antiphospholipid syndrome diagnosis.","Hospital Course:
+The 28-year old female patient came to the hospital with two days of nausea and pain in the upper right part of the belly. She also reported sudden vision loss before coming in. When she arrived, her body temperature, heart rate, and blood pressure were normal. The doctor found mild pain in the upper right belly area during the exam.
+Blood tests showed a slightly high white blood cell count and signs of swelling in the body. Scans showed fluid around the liver. The patient had surgery to look inside the belly and remove the appendix because her symptoms got worse. Two days after surgery, she started breathing fast, had a fast heartbeat, and developed a fever.
+More scans were done and showed signs of infection in the lower right part of the lung. The scans also found a growth in the upper right chamber of the heart. Blood tests suggested a condition where the blood clots too easily. A special scan was done and the heart growth was removed with surgery. Lab tests on the growth showed it was a non-cancer tumor called a myxoma.
+After surgery, the patient stayed stable and went home. She was given blood-thinning medicine to take by mouth. She was told to get heart ultrasounds to check on her recovery.
+Discharge Summary:
+The 28-year old female patient came to the hospital with nausea and pain in the upper right part of the belly. She also had sudden vision loss before coming in. The patient had surgery to look inside the belly and remove the appendix because her symptoms got worse. After surgery, she started breathing fast, had a fast heartbeat, and developed a fever.
+More scans found a growth in the upper right chamber of the heart. The growth was removed with surgery. Blood tests showed a condition where the blood clots too easily. The patient went home with blood-thinning medicine to take by mouth. She was told to get heart ultrasounds to check on her recovery.
+The patient had a difficult hospital stay but got better in the end. Later heart ultrasounds showed the heart growth did not come back. Blood tests confirmed the blood clotting condition.",,,,
+14,"DISCHARGE SUMMARY:
+
+Patient: 79-year-old male
+
+Medications: None prescribed
+
+Hospital Course:
+
+The patient presented with a complaint of right flank pain for 1 year. Upon examination, his vital signs were stable, and the abdomen was soft, nontender, and nondistended, with no organomegaly or palpable lump noted.
+
+Routine blood investigations and urinary metanephrine levels were within normal limits, and the urine examination showed the presence of pus cells, with culture sensitivity being sterile after 24 hours of aerobic incubation.
+
+Contrast computed tomographic scan revealed a large retroperitoneal mass lesion in the region of the right adrenal gland with peripheral enhancement and central necrosis and punctate calcifications with washout of contrast. Contrast-enhanced magnetic resonance imaging of the abdomen was suggestive of a large heterogeneous mass with central necrosis in the right suprarenal region, with peripheral enhancement.
+
+Right adrenalectomy was done, and postoperative period was uneventful. Histopathological examination of the specimen confirmed a diagnosis of right adrenal cavernous hemangioma.
+
+Follow-up:
+
+The patient has recovered well post-surgery and will be advised to make routine appointments with his general practitioner. Further follow-up investigations are not necessary, and no medications have been prescribed upon discharge.","DISCHARGE SUMMARY:
+
+Patient: 79-year-old male
+
+Medications: None prescribed
+
+Hospital Course:
+
+The patient came in with pain in the right side of the back that had lasted for 1 year. During the exam, the patient's heart rate, blood pressure, and temperature were normal. The belly was soft and not painful when pressed. There was no swelling of organs or lumps that could be felt.
+
+Blood tests and urine hormone tests came back normal. The urine test showed signs of possible infection. However, the lab test to grow bacteria found no germs after 24 hours.
+
+A CT scan with dye showed a large growth behind the belly area near the right adrenal gland. The adrenal glands sit on top of the kidneys. The growth had brighter edges, dead tissue in the center, and small calcium spots. The dye washed out of the growth over time. An MRI scan with dye also showed a large uneven growth with dead tissue in the center above the right kidney. The edges of the growth showed up brighter on the scan.
+
+Surgery was done to remove the right adrenal gland. The patient did well after surgery with no problems. Lab tests on the removed tissue showed the growth was a cavernous hemangioma. This is a non-cancerous tumor made of tangled blood vessels.
+
+Follow-up:
+
+The patient has healed well after surgery. The patient should schedule regular visits with the regular doctor. No other tests are needed. No medications have been prescribed at discharge.",,,,
+15,"Discharge Summary:
+
+This is a discharge summary for a 50-year-old female patient who presented to our department with an intraoral swelling at the left mandible for six months. The patient underwent surgical excision and reconstruction using a submental island flap, under general anesthesia.
+
+History of Present Illness: The patient reported to our department with swelling and pain in the left mandible region for six months, which grew rapidly after the extraction of lower left back teeth. The patient had no history of fever or difficulty swallowing.
+
+Physical Examination: On extraoral examination, facial asymmetry was noted in the lower left facial region, but there was no evidence of any regional lymphadenopathy. Intraoral clinical evaluation revealed the presence of an expansile mass with anteroposterior as well as buccolingual expansion, extending from the region of the first premolar up to retromolar area, measuring approximately 6x4 cm. The overlying mucosal colour and texture appeared normal.
+
+Diagnostic Tests: A radiographic orthopantomogram revealed a well-defined radiolucent lesion extending from the lower left first premolar to retromolar area. Computed tomography (CT) scans confirmed the presence of aggressive bony resorption of the lower left jaw starting from the premolar region and extending well into the mandibular ramus. Histopathological analysis of a biopsy specimen confirmed an aggressive CGCG.
+
+Hospital Course: The patient underwent surgical excision and reconstruction using a submental island flap, under general anesthesia. The surgical procedure involved extraoral and intraoral approach to excise the lesion completely and a submental island flap for reconstruction. The patient was discharged without any complications.
+
+Follow-up: In subsequent follow-ups, until one year, no evidence of recurrence was observed clinically as well as radiographically. The donor site healed uneventfully with minimal scars, which was present away from aesthetically visible regions of the face.
+
+Summary: A 50-year-old female patient presented with an intraoral swelling at the left mandible for six months and was diagnosed with an aggressive CGCG. The patient underwent surgical excision and reconstruction using a submental island flap, under general anesthesia. The patient was discharged without any complications, and subsequent follow-ups showed no evidence of recurrence.","Discharge Summary:
+
+This is a discharge summary for a 50-year-old female patient who came to our department with swelling inside the mouth on the left side of the lower jaw for six months. The patient had surgery to remove the growth and rebuild the area using skin and tissue from under the chin. The patient was asleep under general anesthesia during the procedure.
+
+History of Present Illness: The patient came to our department with swelling and pain in the left lower jaw area for six months. The swelling grew quickly after the patient had back teeth removed on the lower left side. The patient did not have a fever or trouble swallowing.
+
+Physical Examination: When looking at the outside of the face, the lower left side looked uneven compared to the right side. There were no swollen lymph nodes in the area. When looking inside the mouth, there was a growing mass that spread from front to back and side to side. It went from the area of the first small back tooth to the area behind the last molar. The mass measured about 6 by 4 centimeters. The skin covering the mass looked normal in color and feel.
+
+Diagnostic Tests: A panoramic jaw x-ray showed a clear dark area going from the lower left first small back tooth to the area behind the last molar. CT scans, which are detailed pictures of the inside of the body, showed the growth was breaking down bone in the lower left jaw. This bone loss went from the small back teeth area into the back part of the jawbone. A small tissue sample was taken and looked at under a microscope.
+
+Hospital Course: The patient had surgery to remove the growth and rebuild the area using skin and tissue from under the chin. The surgery was done from both outside and inside the mouth to remove all of the growth. The patient went home without any problems.
+
+Follow-up: At checkup visits over the next year, there were no signs that the growth came back. This was checked by looking in the mouth and taking x-rays. The area under the chin where tissue was taken healed well with very little scarring. The small scar is not in a part of the face that people easily see.
+
+Summary: A 50-year-old female patient came in with swelling inside the mouth on the left side of the lower jaw for six months. The patient had surgery to remove the growth and rebuild the area using skin and tissue from under the chin. The patient was asleep under general anesthesia during the procedure. The patient went home without any problems. Checkup visits over the next year showed no signs that the growth came back.",,,,
+16,"DISCHARGE SUMMARY
+
+Patient Name: [Redacted]
+Date of Admission: [Redacted]
+Date of Discharge: [Redacted]
+Attending Physician: [Redacted]
+
+HOSPITAL COURSE:
+The patient, a 6-year-old female, was admitted to the hospital due to a deteriorating reading ability. Upon examination, she presented with bilateral macular atrophic changes at the photoreceptor/RPE level, indicative of a cone or macular dystrophy. Electrodiagnostic tests revealed that the patient had cone responses to flash stimulation within the noise level. Meanwhile, 30Hz flicker responses were significantly reduced in amplitude. She had normal rod system ERG responses in either eye. Due to her inability to cooperate, her PERG recording was not carried out. However, her pattern-reversal VEP was significantly abnormal, indicating a loss of macular function. Genetic testing was later conducted, which confirmed a mutation in the ABCA4 gene and diagnosed the patient with Stargardt disease. 
+
+DISCHARGE DIAGNOSIS:
+Stargardt disease that was identified through genetic testing.
+
+DISCHARGE CONDITION:
+The patient is being discharged in a stable condition.
+
+DISCHARGE INSTRUCTIONS:
+The patient's caregiver(s) should continue to monitor her visual abilities closely and should take immediate action if there are any significant changes. Please follow up with a specialist to manage further treatment options.
+
+FOLLOW-UP APPOINTMENT(S):
+The patient is required to have follow-up appointments after discharge and should coordinate with her primary physician to schedule them.
+
+HOME MEDICATIONS:
+None.
+
+IMAGING:
+N/A
+
+FOLLOW-UP TESTS:
+N/A","DISCHARGE SUMMARY
+
+Patient Name: [Redacted]
+Date of Admission: [Redacted]
+Date of Discharge: [Redacted]
+Attending Physician: [Redacted]
+
+HOSPITAL COURSE:
+The patient is a 6-year-old girl. She was admitted to the hospital because her reading ability was getting worse. During the exam, doctors found damage to the center of both eyes. This damage affects the part of the eye that helps see fine details and colors. Eye tests showed that the parts of her eyes that see color were not working well. The parts of her eyes that help see in low light were working normally. One test could not be done because the patient was not able to stay still for it. Another test showed that the center part of her vision is not working properly. A gene test was done later. It found a change in a gene called ABCA4. This confirmed a condition that causes vision loss over time.
+
+DISCHARGE CONDITION:
+The patient is going home in stable condition.
+
+DISCHARGE INSTRUCTIONS:
+The patient's caregiver(s) should keep watching her vision closely. They should act right away if there are any big changes. Please see an eye specialist to talk about treatment options.
+
+FOLLOW-UP APPOINTMENT(S):
+The patient needs follow-up visits after leaving the hospital. The caregiver(s) should work with her regular doctor to set up these visits.
+
+HOME MEDICATIONS:
+None.
+
+IMAGING:
+Not applicable.
+
+FOLLOW-UP TESTS:
+Not applicable.",,,,

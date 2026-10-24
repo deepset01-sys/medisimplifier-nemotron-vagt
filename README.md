@@ -1122,6 +1122,9 @@ results/judgebench_v2_tau1_final.json  v2 stratum: 120 hand-verified primary-dia
 results/judgebench_v2_clean_controls.json  292 controls: 120 primary-paired (used) + 172 supplementary
 results/judgebench_v2_panel_gate.json  240-item panel, deployed gate prompt (0 ERROR)
 results/judgebench_v2_panel_calib.json 240-item panel, calibration prompt
+results/physician_review_16_sheet_as_sent.csv  16-pair physician review: the sheet as sent, its cells (16 pairs, answer columns empty); the brief sent with it: docs/physician_review_16_brief.md
+results/physician_review_16_answers.csv  16-pair physician review: the returned sheet's answers by case number, as written (its texts and file properties left out)
+results/physician_review_16_sha256.txt  16-pair physician review: sha256 of the sheet as sent, the sheet as returned and the merged answers
 results/judgebench_v2_phi_v_recompute.json  Φ_V on v2: deployed full +0.0765 [+0.0516, +0.0992]
 results/judgebench_v2_pool_table.json  6-candidate pool on v2 (gpt-oss +0.1220, DeepSeek +0.1238, …)
 results/judgebench_v2_pool_<model>.json  per-candidate 240-row verdicts (5 files)
@@ -1187,6 +1190,7 @@ Full container image digests and rebuild steps → [docs/REPRODUCIBILITY.md](doc
 > - `results/vagt_loop_v2_calls.json`
 > - `results/judgebench_v2_tau1_final.json`
 > - `results/judgebench_v2_clean_controls.json`
+> - `results/physician_review_16_sheet_as_sent.csv`
 > - `results/judgebench_v2_step0_seed42.json`
 > - `results/judgebench_v2_step0_seed42_original.json`
 > - `results/judgebench_v2_step0_seed99.json`

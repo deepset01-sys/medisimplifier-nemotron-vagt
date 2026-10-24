@@ -1,0 +1,5 @@
+# Physician review, 16 pairs: sha256 of three files that are not in this repository, so that anyone later shown
+# them can check them. Both sheets are .xlsx workbooks; the merged answers hold one row per case (JSON Lines).
+766c224fa3260e6d1d529a4680a01c5e971316518a006a82f4fe5b283f01ccc5  the sheet as sent, 2026-10-06
+eed5001324cd2a070c42b51e72f834804b0c6dd7007dcbfdf36eb16db2c16b77  the sheet as returned, received 2026-10-09 19:08 UTC
+0c9f59f08cdc4eebbfad4282fa839886778627f01335795c6bed1ff79d1ef69e  the merged answers, written 2026-10-10 08:49 UTC
