@@ -592,7 +592,7 @@ On the CPU audit_panel service, `/health` also names the served pool:
 ```
 
 **Error semantics:**
-- **`consensus: "ERROR"`** — a Qwen or Nemotron call failed or its reply could not be read as a verdict, e.g. because Qwen's Token Factory dedicated endpoint is stopped; a failed Llama call only sets `llama_verdict` to `ERROR` and leaves the consensus to Qwen and Nemotron. Each judge makes up to three attempts, each allowed 60 s to connect and 60 s for each wait for data, with pauses of 1 s and 2 s between them: a judge that never answers becomes `ERROR` after about 3 minutes (183 s in a local test), and the whole call can then take about 4 minutes. A judge that fails at once costs a few seconds. Checked live on 2026-10-06: each direct request to a stopped dedicated judge endpoint was answered with an HTTP error within about half a second (Llama: 409 right after Stop, 404 later; Qwen: 404), and with Llama stopped, `/v1/simplify` still answered in 6 s, with consensus `SAFE`.
+- **`consensus: "ERROR"`** — a Qwen or Nemotron call failed or its reply could not be read as a verdict, e.g. because Qwen's Token Factory dedicated endpoint is stopped; a failed Llama call only sets `llama_verdict` to `ERROR` and leaves the consensus to Qwen and Nemotron. Each judge makes up to three attempts, each allowed 60 s to connect and 60 s for each wait for data, with pauses of 1 s and 2 s between them: a judge that never answers becomes `ERROR` after about 3 minutes (183 s in a local test), and the whole call can then take about 4 minutes. A judge that fails at once costs a few seconds. Checked live on 2026-10-06, on the first endpoint-v6 build (`sha256:48265cd103c9f37fe37d9d135455573139126cb9f05991974c5c915e38caa176`): each direct request to a stopped dedicated judge endpoint was answered with an HTTP error within about half a second (Llama: 409 right after Stop, 404 later; Qwen: 404), and with Llama stopped, `/v1/simplify` still answered in 6 s, with consensus `SAFE`.
 - **HTTP 413** — the input does not fit (see **Input limit**); the response's `detail` holds an `error` message and the token counts `prompt_tokens`, `max_tokens` and `context_window`.
 - **HTTP 422** — the request is invalid, e.g. `max_tokens` below 1.
 - **HTTP 503** — a call to vLLM failed; the detail names the step, `vLLM tokenize failed: …` or `vLLM generation failed: …`, and the judges are not called.
@@ -798,7 +798,7 @@ The merged model is publicly available — no training required to test the endp
 
 The Safe Endpoint is a **Nebius AI *Endpoint*** — not a Job. Deploy it with the Nebius CLI, step by step in [docs/REPRODUCIBILITY.md → Deploy the endpoint](docs/REPRODUCIBILITY.md#deploy-the-endpoint), which also lists the prerequisites and the cost; `jobs/safe_endpoint_v2.yaml` is a reference manifest of the same settings.
 
-- **Image:** `chambul/medisimplifier@sha256:48265cd103c9f37fe37d9d135455573139126cb9f05991974c5c915e38caa176` (endpoint-v6) — public Docker Hub, digest-pinned (no `--registry-*` auth needed).
+- **Image:** `chambul/medisimplifier@sha256:da1a41458375a52719b328ef18b450e03bc6c135b785def539be37cd518bb352` (endpoint-v6) — public Docker Hub, digest-pinned (no `--registry-*` auth needed). This README calls it *the final endpoint image*.
 - **Prerequisites:** `NEBIUS_API_KEY`, and your own **Qwen3-32B and Llama-3.3-70B dedicated endpoints** in Token Factory, running, with their routing keys in `QWEN_JUDGE_MODEL` and `LLAMA_JUDGE_MODEL` — a stopped one makes its judge's verdict `ERROR`. Llama's verdict is advisory and does not change the consensus (B4). No HuggingFace token.
 - **Explanation (`EXPLANATION`):** on unless set to `off`, `false`, `0` or `no` (letter case and surrounding spaces aside), read once at start-up. When on, a response the gate flags carries the `explanation` object (B3), from Nemotron Nano calls on Token Factory with the same `NEBIUS_API_KEY`, within 30 s.
 - **Verify:** `python scripts/verify_endpoint.py https://<your-endpoint-url> --all` → `verify: PASS (0 failed, 0 warnings)`
@@ -878,7 +878,7 @@ jobs/
   job_eval_v2.yaml               v2 evaluation job (train-v30, sha256:6c3cd4cd..., GuyDor007 test)
   job_eval_v2_nemotron_refs.yaml v2 Nemotron-refs eval job (train-v32, sha256:2c95dfef..., aijob-e00gz7bez5pwq35fze)
   job_merge_v2.yaml              v2 merge job (train-v31, sha256:9d832391..., adapter → bucket → HuggingFace)
-  safe_endpoint_v2.yaml          Safe Endpoint reference manifest (endpoint-v6; deployed with the CLI command in docs/REPRODUCIBILITY.md)
+  safe_endpoint_v2.yaml          Safe Endpoint reference manifest (the first endpoint-v6 build, sha256:48265cd1...; deployed with the CLI command in docs/REPRODUCIBILITY.md)
 scripts/
   start_endpoint.sh              Boot vLLM + Safe Endpoint API (the endpoint-v6 image's entry point, /start.sh)
   start_cpu_endpoint.sh          Boot the CPU-only audit_panel service (uvicorn cpu_endpoint:app)
