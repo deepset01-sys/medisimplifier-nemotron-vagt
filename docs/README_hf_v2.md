@@ -118,13 +118,15 @@ no patient with the paired set.
 | `expert_recoverable` | 90 | 30 |
 | `patient_recoverable` | 0 | 120 (by definition) |
 
+Two items sit in the `= 0` columns on a missing oracle answer, which the build counts as no ([`scripts/build_judgebench_v2.py`](https://github.com/deepset01-sys/medisimplifier-nemotron-vagt/blob/main/scripts/build_judgebench_v2.py#L507-L510)): hf730 among the 30 with `expert_recoverable = 0`, its expert question unanswered, and hf646 among the 47 with `category_retained = 0`, its category question unanswered.
+
 The protocol's pre-registered strict tier is `expert_recoverable = 0` (30 items: the name was the only clue). `category_retained = 0` (47 items: even the broad category is gone) is a covariate subset. The repository analyses both, with paired controls (`results/judgebench_v2_phi_v_recompute.json`).
 
 ## Leaderboard
 
 Headline set only (120 drops / 120 paired controls, i.e. 50% drops; DeepSeek-V4-Flash: 233 rows, 51%), deployed gate prompt (`JUDGE_PROMPT` in
 `src/safety_gate.py`). Recall on the drops; specificity on the paired controls; ΔΦ_V when the
-judge is added to a Llama-3.3-70B + Qwen3-32B panel (panel Φ_V 0.4764; paired item bootstrap,
+judge is added to a Llama-3.3-70B + Qwen3-32B panel (panel Φ_V 0.4764 on all 240 rows, not on DeepSeek-V4-Flash's 233; paired item bootstrap,
 seed 42, 1,000 resamples).
 
 | Judge | Recall | Specificity | ΔΦ_V added to Llama+Qwen [95% CI] |
@@ -142,13 +144,18 @@ seed 42, 1,000 resamples).
 family as V4-Flash) was the editor, so these two scores are partly by construction. The Nemotron,
 Llama, Qwen and gemma scores are not affected by construction roles.
 
+gpt-oss-120b and DeepSeek-V4-Flash-0731 are statistically tied (overlapping CIs). The repository's
+panel selector recommends gpt-oss-120b, chosen on reliability (0 errors vs 7) by a tie-break added
+after the v2 result was known.
+
 Sources: [`results/judgebench_v2_pool_table.json`](https://github.com/deepset01-sys/medisimplifier-nemotron-vagt/blob/main/results/judgebench_v2_pool_table.json),
 [`results/judgebench_v2_panel_gate.json`](https://github.com/deepset01-sys/medisimplifier-nemotron-vagt/blob/main/results/judgebench_v2_panel_gate.json).
 
 ## Caveats
 
 - **Author-verified, not clinician-verified:** a single reviewer (the author), with Claude Opus 4.8
-  as a drafting aid; no inter-rater κ; no clinician review.
+  as a drafting aid; no inter-rater κ. A physician also marked 16 of the 240 items:
+  [Physician review: 16 drop/control pairs](https://github.com/deepset01-sys/medisimplifier-nemotron-vagt/blob/main/README.md#physician-review-16-dropcontrol-pairs).
 - **Construction circularity** for gpt-oss-120b and DeepSeek-family judges (see above).
 - **Synthetic source:** the notes derive from Asclepius synthetic clinical notes — no real patient data.
 - **Diagnosis stratum only:** no dose, lateral or negation items.
@@ -157,7 +164,9 @@ Sources: [`results/judgebench_v2_pool_table.json`](https://github.com/deepset01-
   assumes drops and controls behave as they do here), the same verdicts give Nemotron-3-Nano-30B a
   ΔΦ_V of +0.0066 [−0.0264, +0.0384] and gpt-oss-120b ⚠️ +0.0736 [+0.0414, +0.1030]
   ([`results/judgebench_v2_prevalence_sensitivity.json`](https://github.com/deepset01-sys/medisimplifier-nemotron-vagt/blob/main/results/judgebench_v2_prevalence_sensitivity.json)).
-- **LLM-written references:** `clean_ref` is Claude Opus 4.5 output, not clinician-reviewed.
+- **LLM-written references:** `clean_ref` is Claude Opus 4.5 output; no clinician reviewed it except
+  16 references in [Physician review: 16 drop/control pairs](https://github.com/deepset01-sys/medisimplifier-nemotron-vagt/blob/main/README.md#physician-review-16-dropcontrol-pairs), 8 of them with the primary
+  diagnosis removed.
 - **Relationship to v1:** replaces v1's diagnosis stratum; v1's diagnosis labels should not be used.
 
 ## Citation
