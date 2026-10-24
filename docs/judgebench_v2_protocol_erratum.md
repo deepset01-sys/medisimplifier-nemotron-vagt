@@ -65,7 +65,7 @@ v2 shows the same dependence on share under the deployed prompt: Nano's +0.0765 
 
 In this repo:
 - `nemotron_judge_test.py:13` gives the source of the Llama and Qwen columns of
-  `nemotron_calibration_full.json`: Project v1's `results/nebius_evidence/calibration_verdicts.json`.
+  `nemotron_calibration_full.json`: Project v1's [`results/nebius_evidence/calibration_verdicts.json`](https://github.com/deepset01-sys/medisimplifier-nebius/blob/dd6681bed29199f7ed2f1eb10af3ad2c99b734d3/results/nebius_evidence/calibration_verdicts.json).
   Only the Nemotron column was run by that script. It used the 4-step CoT prompt with a system
   message, `max_tokens` 8000 and JSON output (`nemotron_judge_test.py:78-124`).
 - Llama's column repeats one verdict per item index. On all 160 indices that appear on more than one
@@ -77,7 +77,7 @@ In this repo:
 - Qwen's column does not show this pattern: 50 of 160 and 49 of 115 (`idx_repeat_check`).
 
 In Project v1's repo at `dd6681b`:
-- `results/nebius_evidence/calibration_verdicts.json` is written by `perturbation_calibration.py`, with a one-word
+- [`results/nebius_evidence/calibration_verdicts.json`](https://github.com/deepset01-sys/medisimplifier-nebius/blob/dd6681bed29199f7ed2f1eb10af3ad2c99b734d3/results/nebius_evidence/calibration_verdicts.json) is written by [`perturbation_calibration.py`](https://github.com/deepset01-sys/medisimplifier-nebius/blob/dd6681bed29199f7ed2f1eb10af3ad2c99b734d3/perturbation_calibration.py#L193-L227), with a one-word
   prompt, one user message and `max_tokens` 2000 (`:193-227`).
 - The Llama and Qwen columns of `nemotron_calibration_full.json` equal that file's on all 708 rows. This was checked
   against Project v1's repo and cannot be reproduced from this repo alone.
