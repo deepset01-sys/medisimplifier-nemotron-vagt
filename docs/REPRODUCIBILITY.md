@@ -34,7 +34,7 @@ Full digests:
 - `train-v31` — `sha256:9d832391f85130114534a36881b8e5acab895d36ceed522126c86fbef02f728f`
 - `train-v32` — `sha256:2c95dfef0a298ce258f094fa5d5647b0d7c84e297850bff8b7daba5a719694dc`
 
-Safe Endpoint image (current: **endpoint-v6** — the published evaluation's prompt, judge routing keys from environment variables, a pinned vLLM base and model revision, and the v2 pool on `/v1/audit_panel`; supersedes v5):
+Safe Endpoint image (current: **endpoint-v6** — the published evaluation's prompt, judge routing keys from environment variables, a pinned vLLM base and model revision, and the v2 pool on `/v1/audit_panel`; supersedes v5). This is the final endpoint image (README **B9**): when the gate flags a rewrite, the endpoint also returns an advisory explanation from Nemotron Nano, within 30 s (README **B3**; `EXPLANATION=off` skips it), and by default browsers may call it only from the project's demo page and a local `npm run dev` of it (CORS, which limits browsers only). Pull it by digest:
 ```bash
 docker pull chambul/medisimplifier@sha256:da1a41458375a52719b328ef18b450e03bc6c135b785def539be37cd518bb352
 ```
@@ -137,6 +137,8 @@ Flavor: base. The console offers the GPU types available without a reservation, 
 | `QWEN_JUDGE_MODEL` | yes | the routing key of your Qwen3-32B endpoint |
 | `LLAMA_JUDGE_MODEL` | yes | the routing key of your Llama-3.3-70B endpoint (the advisory judge) |
 | `VLLM_START_TIMEOUT` | no | seconds `/start.sh` waits for vLLM to load before it stops with an error (default 1800) |
+| `EXPLANATION` | no | `off`, `false`, `0` or `no` (in any letter case) skips the explanation of a flagged rewrite (README **B3**); unset or anything else leaves it on |
+| `CORS_ALLOW_ORIGINS` | no | the origins browsers may call the endpoint from, comma-separated, in place of the default: the project's demo page and a local `npm run dev` of it |
 
 Where `QWEN_JUDGE_MODEL` or `LLAMA_JUDGE_MODEL` is unset or empty, the gate uses this project's own routing key, which belongs to this project's account; `/health` shows which are set (`judge_models_set`, README **B3**). The image already sets `PYTHONUNBUFFERED=1` and `HF_HOME=/tmp/hf_cache`.
 
