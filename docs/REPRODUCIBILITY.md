@@ -74,7 +74,7 @@ Note: `docker/requirements_train.txt` pins `cryptography==48.0.1` via a Dockerfi
 
 A slim, CPU-only image that serves **only** `/v1/audit_panel` + `/health` — no vLLM,
 no torch, no CUDA, no gate, no simplifier. Request-time work is pure CPU over the
-committed `audit_pool/` verdict files, so it needs **no API key** and no GPU. This is
+committed `audit_pool_v2/` verdict files, so it needs **no API key** and no GPU. This is
 the demo's live backend (the deterministic VAGT panel selector), decoupled from the
 H100 endpoint (~$1–3/day while running, instead of ~$4/hr). Since 4808ff2 it runs as the Nebius
 endpoint `medisimplifier-cpu-v2-1`, started for judging windows and stopped between them.
