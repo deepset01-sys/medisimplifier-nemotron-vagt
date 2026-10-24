@@ -621,7 +621,7 @@ export default function App() {
                       <span className="ms-live-consensus v-SAFE">Recommended: {rec.model}</span>
                       {rec.expected_Phi_V_lift != null && (
                         <span className="ms-live-meta">
-                          ΔΦ_V +{rec.expected_Phi_V_lift}
+                          ΔΦ_V {rec.expected_Phi_V_lift >= 0 ? "+" : ""}{rec.expected_Phi_V_lift}
                           {ci.length === 2 && ` · CI [${ci[0]}, ${ci[1]}]`}
                         </span>
                       )}
@@ -664,6 +664,7 @@ export default function App() {
                   className={"ms-exp-card" + (on ? " on" : "")}
                   onClick={() => togglePanel(m.id)}
                   aria-pressed={on}
+                  disabled={explore.status === "loading"}
                 >
                   <span className="ms-exp-check" aria-hidden="true">{on ? "✓" : "+"}</span>
                   <span className="ms-exp-name">{m.label}</span>
@@ -716,14 +717,14 @@ export default function App() {
                       <span className="ms-exp-rec-model">{label}</span>
                       {rec.expected_Phi_V_lift != null && (
                         <span className="ms-exp-rec-meta">
-                          ΔΦ_V +{rec.expected_Phi_V_lift}
+                          ΔΦ_V {rec.expected_Phi_V_lift >= 0 ? "+" : ""}{rec.expected_Phi_V_lift}
                           {ci.length === 2 ? ` · 95% CI [${ci[0]}, ${ci[1]}]` : ""}
                         </span>
                       )}
                     </div>
                     <p className="ms-exp-why">
                       {straddles
-                        ? `${label} is the best available add, but its 95% CI straddles zero — no candidate in the pool clearly improves this panel on ${blind} drops. Sometimes the honest answer is "none of these clearly helps."`
+                        ? `${label} is the best available add, but its 95% CI does not lie above zero — no candidate in the pool clearly improves this panel on ${blind} drops. Sometimes the honest answer is "none of these clearly helps."`
                         : `Of the remaining models, ${label} most improves this panel on ${blind} drops.${tieNote}${rec.caveat ? " Caveat: " + rec.caveat : ""}`}
                     </p>
                   </>
