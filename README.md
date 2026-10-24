@@ -400,7 +400,7 @@ choosing which LLM judges to trust for a safety check (product 2).
 
 | Tier | What runs | Cost to try |
 |--|--|--|
-| Public demo | [Public demo](https://deepset01-sys.github.io/medisimplifier-nemotron-vagt/) + `/v1/audit_panel` on a CPU service (`audit-cpu-v2.1`), started for judging windows; while it is stopped the demo shows the committed v2 receipt | nothing — no account, no GPU |
+| Public demo | [Public demo](https://deepset01-sys.github.io/medisimplifier-nemotron-vagt/): Replay (the 28 recorded cases) and the `/v1/audit_panel` section on a CPU service (`audit-cpu-v2.1`), started for judging windows; while it is stopped the panel section shows the committed v2 receipt. Live sends a text to a Safe Endpoint you deploy yourself | nothing for Replay and the panel — no account, no GPU; Live needs your own Safe Endpoint (the On-demand row) |
 | On-demand | `/v1/simplify` + gate on your own Nebius GPU Endpoint (endpoint-v6) + your dedicated judge endpoints | deploy them on your Nebius account, ~$13/h while they run (B2 Tier 2, B9) |
 | Library | `evaluate_safety` from `src/safety_gate.py` | a Nebius API key + your dedicated Qwen3-32B endpoint running, its routing key in `QWEN_JUDGE_MODEL` (Llama's in `LLAMA_JUDGE_MODEL`, for its advisory verdict) |
 
@@ -483,15 +483,15 @@ choosing which LLM judges to trust for a safety check (product 2).
 
 ### B2. Quickstart
 
-#### Tier 1 — Public demo (no setup)
+#### Tier 1 — Public demo (no setup for Replay and the panel)
 
-**🔗 Live demo:** https://deepset01-sys.github.io/medisimplifier-nemotron-vagt/
+**🔗 Demo page:** https://deepset01-sys.github.io/medisimplifier-nemotron-vagt/
 
-**Two live interactive elements** (CPU, no GPU):
+**On the page** — it opens on Replay, which shows the 28 cases recorded once on the final endpoint image; Live sends a text of yours to a Safe Endpoint you deploy yourself and shows what it returns; and two panel elements answer live while the CPU service runs (CPU, no GPU):
 1. **"Run audit_panel live →"** — the deterministic VAGT recommendation for *our* gate panel (Llama + Qwen) on the 240-item hand-verified diagnosis stratum: **gpt-oss-120b, +0.122, CI [0.100, 0.142]** (at the stratum's 50% drop share, A8 threat 11) — statistically tied with DeepSeek-V4-Flash, chosen on reliability (0 errors vs 7) by a tie-break added after the v2 result was known. Same answer every call.
 2. **"Try a different panel"** — pick any **2+ of the 8** pooled judges and VAGT recommends which judge to add for *your* panel (the recommendation changes with the panel).
 
-No account, no GPU, nothing to install.
+Replay and the panel need no account, no GPU and nothing to install; Live needs a Safe Endpoint of your own (Tier 2).
 
 **Serves `/v1/audit_panel` only** — pure CPU over pre-computed verdicts. No GPU and no key (backed by the CPU service `chambul/medisimplifier:audit-cpu-v2.1`, serving `audit_pool_v2/`). The service is started for judging windows and stopped between them; while it is stopped, the live button reports it unavailable and the page shows the committed v2 receipt.
 
@@ -1051,7 +1051,12 @@ docs/
   judgebench_v2_protocol_erratum.md  Erratum to the frozen protocol: §0 "+0.071 reversed to −0.144" and §7 "apples-to-apples with the +0.071" (2026-09-29)
   vagt_loop_v2_preregistration.md  Git-enforced pre-registration of the v2 scoped-gate experiment (committed d69f506 before any call; its blob id is recorded in the results)
 app/
-  demo.jsx                       React single-page demo — Act 1 (gate catches drop) + Act 2 (audit_panel leaderboard)
+  demo.jsx                       React single-page demo — two modes (Replay, where the page opens, and Live), then the audit_panel section below them
+  replay.jsx                     Replay mode: the 28 cases of docs/replay_set.md as recorded once on the final endpoint image (Part A, 12 texts end to end; Part B, 16 cases scored by the gate alone, four from each cell of its committed result: 8 drops and 8 controls, no note both a drop and a control); sends nothing
+  replayText.js                  Every text Replay shows, and the small pure functions that read the recording
+  replay_recording.json          The replay recording: 28 cases (12 Part A, 16 Part B), with the author's reads of the 12 Part A rewrites
+  live.jsx                       Live mode: sends your text to the Safe Endpoint URL you enter, from the browser, and shows the verdict, the rewrite and, for a flagged rewrite, the endpoint's explanation
+  liveText.js                    Every text Live mode and the mode switch display, and the small pure functions that pick one
   index.html                     Vite entry point
   src/main.jsx                   React mount
   src/index.css                  Minimal CSS reset (clinical layout)
@@ -1179,7 +1184,7 @@ Full container image digests and rebuild steps → [docs/REPRODUCIBILITY.md](doc
 > - `nemotron_references.json`
 > - `teacher_comparison.json`
 > - `README.md` — the qualitative example table (train/0)
-> - `app/demo.jsx` — its embedded example texts
+> - `app/replay_recording.json` — the 28 replay cases' texts and rewrites
 > - `scripts/build_judgebench_v2.py` — the example sentences in its editor prompt
 > - `results/student_predictions.json`
 > - `results/student_audit_review.json`
