@@ -123,7 +123,7 @@ This README is organized into two tracks — read whichever fits:
 
 Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qwen3-32B (cross-family) as a third safety judge, all via Token Factory. Judge prompt is the 4-step CoT-with-anti-sycophancy prompt ([`safety_eval_v2.py`](https://github.com/deepset01-sys/medisimplifier-nebius/blob/cc4bc8fc60e77ecc2e961427171e70d766b10691/src/safety_eval_v2.py)) developed and run in v1 (Llama+Qwen dual-judge, Cohen's κ), reused verbatim for v2's VAGT calibration — VAGT is new in v2. In the automated 708-item pass only Nemotron was judged with it; Llama's and Qwen's verdicts there are stored from Project v1's calibration run (A8 threat 9).
 
-> **Note on the Qwen judge.** All calibration, VAGT, and recall numbers in this README describe the `Qwen/Qwen3-32B` panel. The deployed gate runs the same Qwen3-32B via a dedicated Nebius endpoint — see B8.
+> **Note on the Qwen judge.** All calibration, VAGT, and recall numbers in this README describe the `Qwen/Qwen3-32B` panel. The deployed gate runs the same Qwen3-32B only through a Token Factory dedicated endpoint, as it does Llama-3.3-70B: neither is available per-token to this account any more, and both are kept as Project v1's two judges — see B8.
 
 **Judge parameters (safety_gate.py):**
 
@@ -133,7 +133,7 @@ Nemotron Nano joins Llama-3.3-70B (same-family as the OpenBioLLM student) and Qw
 | Qwen3-32B | 0 | off* | 8,000 |
 | Nemotron Nano | 0 | off* | 8,000 |
 
-> *`enable_thinking=False` is set, but both **Nemotron Nano and Qwen3-32B** reason internally at inference regardless (see the reasoning-token-budget finding in [A7](#a7-results-iii--nemotron-super-as-teacher)) — only Llama does not, which is why both reasoning judges get the larger 8,000-token budget. Qwen3-32B is served via a dedicated Nebius endpoint (see B8).
+> *`enable_thinking=False` is set, but both **Nemotron Nano and Qwen3-32B** reason internally at inference regardless (see the reasoning-token-budget finding in [A7](#a7-results-iii--nemotron-super-as-teacher)) — only Llama does not, which is why both reasoning judges get the larger 8,000-token budget. Qwen3-32B is served through a Token Factory dedicated endpoint (see B8).
 
 > **On reasoning budget.** In the automated 708-item pass only Nemotron was judged in this project, at `max_tokens=8000`; Llama's and Qwen's verdicts are stored from Project v1's calibration run (A8 threat 9). The v2 panel ran the two reasoning judges, Qwen and Nemotron, at 8,000 under both prompts and Llama at 2,000 (deployed prompt) or 3,000 (calibration prompt) ([`scripts/run_panel_judgebench_v2.py`](scripts/run_panel_judgebench_v2.py)), so on v2 Nemotron's recall edge over Qwen is not a budget difference. Two of the three judges (Nemotron Nano, Qwen3-32B) reason internally regardless of `enable_thinking=False`; Llama does not. The deployed gate runs Llama at 2,000 and Qwen/Nemotron at 8,000 (see the A3 table).
 ### A4. Measurement — VAGT
@@ -467,12 +467,12 @@ choosing which LLM judges to trust for a safety check (product 2).
 
 **Validation pipeline** (post-deployment measurement):
 
-    Token Factory + Dedicated Endpoint: gate calibration (708 items, gate prompt)
+    Token Factory, Qwen3-32B on a dedicated endpoint: gate calibration (708 items, gate prompt)
         run_gate_calibration.py  ->  results/gate_calibration_full.json
         (DISAGREE 20.8%, Qwen FP 9.5% under gate prompt — see B5)
         |
         v
-    Token Factory + Dedicated Endpoint: student self-audit (1,001 test outputs)
+    Token Factory, Qwen3-32B on a dedicated endpoint: student self-audit (1,001 test outputs)
         run_student_audit.py  ->  results/student_audit.json
         (SAFE 47.4% / flagged 52.0%, plus 0.6% ERROR — see B5)
         |
@@ -768,7 +768,7 @@ Full adapter storage flow → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
 
 ### B8. Known issues & operating caveats
 
-1. **Qwen judge swap — RESOLVED.** `Qwen/Qwen3-32B` was removed from Token Factory's serverless catalog mid-project; the gate now runs the same model via a dedicated Nebius endpoint (`dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6`). Calibration re-run confirmed 0 ERRORs and measured the gate's actual operating characteristics (see B5).
+1. **Qwen judge swap — RESOLVED.** `Qwen/Qwen3-32B` was removed from Token Factory's serverless catalog mid-project; the gate runs the same model through a Token Factory dedicated endpoint (`dedicated/Qwen/Qwen3-32B-AcpEMaRtFNy6`). Calibration re-run confirmed 0 ERRORs and measured the gate's actual operating characteristics (see B5).
 2. **Prompt drift.** Calibration used a different prompt than the deployed gate (idx 21 returned all-SAFE through the live gate despite UNSAFE in calibration — confirming verdicts do not transfer verbatim across prompts). Rates are therefore reported per prompt: calibration-prompt rates (A5) and deployed-gate-prompt rates (B4, B5).
 3. **endpoint-v5 served the earlier pool — fixed in endpoint-v6.** Its `POST /v1/audit_panel` answered from the earlier automated pool (the v5 image predates `audit_pool_v2/`). The endpoint-v6 image copies `audit_pool_v2/` and sets `AUDIT_POOL_DIR=audit_pool_v2` (`docker/Dockerfile.endpoint`, asserted by `tests/test_endpoint_image.py`), so it serves the v2 pool like the CPU service (B2 Tier 1); not yet checked live.
 4. **Llama routing — RESOLVED (checked live on 2026-10-06 and 2026-10-12).** Serverless Llama-3.3-70B returns 403 on this account, so the gate calls Llama on a dedicated endpoint (`LLAMA_JUDGE_MODEL`; `src/safety_gate.py`); outside the endpoint, that call answered all 240 items of a 2026-09-30 re-run without an `ERROR` ([`results/judgebench_v2_llama_parser_check.json`](results/judgebench_v2_llama_parser_check.json)). The endpoint-v5 image still called serverless Llama, so its advisory Llama verdict would have been `ERROR` (not verified live; consensus unaffected). On endpoint-v6, `scripts/verify_endpoint.py --all`, which fails when Llama's verdict is `ERROR`, passed live with Llama answering `SAFE`: on 2026-10-06 on the first endpoint-v6 build (`sha256:48265cd103c9f37fe37d9d135455573139126cb9f05991974c5c915e38caa176`, built from commit `ede99dc`) and on 2026-10-12 on the final endpoint image (B9, built from commit `71ce08e`).
