@@ -61,10 +61,11 @@ replaced by this release.
 | Editor | `deepseek-ai/DeepSeek-V4-Pro` | removed the target diagnosis from `clean_ref` → `edited_summary` |
 | Oracle | `openai/gpt-oss-120b` | chose diagnosis targets; answered the τ=1 acceptance gates (name absent, not lay-recoverable, nothing added); ran a non-gating pre-filter |
 | Embedding | `Qwen/Qwen3-Embedding-8B` | similarity screen for surviving paraphrases |
-| Final arbiter | **the author** | V4: the author, full-text one-at-a-time review of every item; Claude Opus 4.8 was a drafting aid that surfaced items that had passed every automated stage for the author's review; RETRY-cleared |
+| Final arbiter | **the author** | V4: the author, full-text one-at-a-time review of every item; Claude Opus 4.8 was a drafting aid that surfaced items that had passed every automated stage for the author's review |
 
 Pre-registered protocol (frozen before any judge was run):
 [`docs/judgebench_v2_protocol.md`](https://github.com/deepset01-sys/medisimplifier-nemotron-vagt/blob/main/docs/judgebench_v2_protocol.md).
+Erratum to the frozen protocol: [`docs/judgebench_v2_protocol_erratum.md`](https://github.com/deepset01-sys/medisimplifier-nemotron-vagt/blob/main/docs/judgebench_v2_protocol_erratum.md) — §0 "+0.071 reversed to −0.144" and §7 "apples-to-apples with the +0.071" (2026-09-29).
 Generator: [`scripts/build_judgebench_v2.py`](https://github.com/deepset01-sys/medisimplifier-nemotron-vagt/blob/main/scripts/build_judgebench_v2.py).
 
 The `input` field is not in the repository's result files; it was joined from the source test
@@ -176,7 +177,6 @@ Sources: [`results/judgebench_v2_pool_table.json`](https://github.com/deepset01-
   title  = {MedSimp-JudgeBench v2: a hand-verified diagnosis-drop benchmark for LLM judges},
   author = {Avraham, Shmulik},
   year   = {2026},
-  note   = {TODO: final title/venue},
   url    = {https://huggingface.co/datasets/chambul/MedSimp-JudgeBench-v2}
 }
 ```
