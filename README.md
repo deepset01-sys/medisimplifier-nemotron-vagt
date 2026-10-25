@@ -60,7 +60,7 @@ Three findings:
 
 **Split-half replication** (deployed prompt): splitting the 120 patients 60/60 so no patient appears in both halves ([`scripts/run_split_half_v2.py`](scripts/run_split_half_v2.py), [`results/judgebench_v2_split_half.json`](results/judgebench_v2_split_half.json)), the top tier holds on **both** halves — gpt-oss **+0.122 / +0.122** and DeepSeek **+0.118 / +0.129**, POSITIVE on each; Nemotron Nano and Ultra hold too. The weaker candidates don't: Nemotron-Super is POSITIVE in one half but null in the other (CI-width at n ≈ 120), and gemma is null in both. The recommendation survives the split that matters. (Nothing is fitted on either half, so this shows the ranking is stable across patients; it is not an out-of-sample test.)
 
-The **[`/v1/audit_panel`](#b3-api-contract)** endpoint runs exactly this analysis on any incumbent panel + candidate pool, returning the recommended judge, its ΔΦ_V, and a bootstrap CI. The **v2 recommendation is gpt-oss-120b (+0.1220, CI [+0.1000, +0.1416])** (caveats: A8 threats 10 and 11) — an offline recompute on the clean stratum in [`results/audit_panel_receipt_v2_diagnosis.json`](results/audit_panel_receipt_v2_diagnosis.json). The CPU `/v1/audit_panel` service **serves this v2 pool** and returned the same answer live — captured in [`results/audit_panel_live_receipt_v2.json`](results/audit_panel_live_receipt_v2.json) from the `audit-cpu-v2` image on 2026-09-25. It now runs the `audit-cpu-v2.1` image, built after the σ²_N estimator fix (A4), and is started for judging windows rather than always on (B2). The earlier live receipt ([`results/audit_panel_live_receipt.json`](results/audit_panel_live_receipt.json)) records the **superseded** pick from the automated pool (Nemotron Nano, +0.0706) and is preserved unchanged as a genuine capture. The endpoint re-ranks **pre-computed** verdict files (`audit_pool_v2/verdicts/`; the earlier pool stays in `audit_pool/`) on CPU in milliseconds; it does not call the candidate models live, so adding a genuinely new judge means generating its verdicts first (`gen_pool_verdicts.py`).
+The **[`/v1/audit_panel`](#b3-api-contract)** endpoint runs exactly this analysis on any incumbent panel + candidate pool, returning the recommended judge, its ΔΦ_V, and a bootstrap CI. The **v2 recommendation is gpt-oss-120b (+0.1220, CI [+0.1000, +0.1416])** (caveats: A8 threats 10 and 11) — an offline recompute on the clean stratum in [`results/audit_panel_receipt_v2_diagnosis.json`](results/audit_panel_receipt_v2_diagnosis.json). The CPU `/v1/audit_panel` service **serves this v2 pool** and returned the same answer live — captured in [`results/audit_panel_live_receipt_v2.json`](results/audit_panel_live_receipt_v2.json) from the `audit-cpu-v2` image on 2026-09-25. It has since moved to the `audit-cpu-v2.1` image, built after the σ²_N estimator fix (A4), and is kept running through the judging period (B2). The earlier live receipt ([`results/audit_panel_live_receipt.json`](results/audit_panel_live_receipt.json)) records the **superseded** pick from the automated pool (Nemotron Nano, +0.0706) and is preserved unchanged as a genuine capture. The endpoint re-ranks **pre-computed** verdict files (`audit_pool_v2/verdicts/`; the earlier pool stays in `audit_pool/`) on CPU in milliseconds; it does not call the candidate models live, so adding a genuinely new judge means generating its verdicts first (`gen_pool_verdicts.py`).
 
 ## What this project does
 
@@ -420,7 +420,7 @@ choosing which LLM judges to trust for a safety check (product 2).
 **What it is *not*.**
 - **Not clinician-validated** — a research prototype, not a medical device.
 - **Not authenticated** — do not route real patient data through it.
-- **Not scale-to-zero** — the GPU endpoint is a persistent Nebius GPU Endpoint, stopped between demos (not a serverless auto-waking service). The CPU `/v1/audit_panel` service is also started for judging windows and stopped between them.
+- **Not scale-to-zero** — the GPU endpoint is a persistent Nebius GPU Endpoint, stopped between demos (not a serverless auto-waking service). The CPU `/v1/audit_panel` service is kept running through the judging period.
 
 **Pipeline 1 — training, deployment, and the first (automated) calibration.** Training/calibration: Token Factory (serverless, per-token). Deployed endpoint: persistent Nebius GPU Endpoint (see B7). The calibration and VAGT steps at the bottom are the **automated 708-item pass**; its diagnosis labels were later found ~85% wrong and are superseded by Pipeline 2 (A6, A8).
 
@@ -475,7 +475,7 @@ choosing which LLM judges to trust for a safety check (product 2).
     Serving pool  (build_audit_pool_v2.py  ->  audit_pool_v2/, self-verified vs the pool table)
         |
         v
-    CPU service: /v1/audit_panel  (audit-cpu-v2.1, started for judging windows)  ->  public demo (GitHub Pages)
+    CPU service: /v1/audit_panel  (audit-cpu-v2.1, kept running through judging)  ->  public demo (GitHub Pages)
         live receipt: results/audit_panel_live_receipt_v2.json  (captured from audit-cpu-v2)
 
 **Validation pipeline** (post-deployment measurement):
@@ -506,7 +506,7 @@ choosing which LLM judges to trust for a safety check (product 2).
 
 Replay and the panel need no account, no GPU and nothing to install; Live needs a Safe Endpoint of your own (Tier 2).
 
-**Serves `/v1/audit_panel` only** — pure CPU over pre-computed verdicts. No GPU and no key (backed by the CPU service `chambul/medisimplifier:audit-cpu-v2.1`, serving `audit_pool_v2/`). The service is started for judging windows and stopped between them; while it is stopped, the live button reports it unavailable and the page shows the committed v2 receipt.
+**Serves `/v1/audit_panel` only** — pure CPU over pre-computed verdicts. No GPU and no key (backed by the CPU service `chambul/medisimplifier:audit-cpu-v2.1`, serving `audit_pool_v2/`). The service is kept running through the judging period; if it cannot be reached, the live button reports it unavailable and the page shows the committed v2 receipt.
 
 #### Tier 2 — Full pipeline (GPU, on-demand)
 
