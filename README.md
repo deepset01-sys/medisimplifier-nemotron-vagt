@@ -413,7 +413,7 @@ choosing which LLM judges to trust for a safety check (product 2).
 
 | Tier | What runs | Cost to try |
 |--|--|--|
-| Public demo | [Public demo](https://deepset01-sys.github.io/medisimplifier-nemotron-vagt/): Replay (the 28 recorded cases) and the `/v1/audit_panel` section on a CPU service (`audit-cpu-v2.1`), started for judging windows; while it is stopped the panel section shows the committed v2 receipt. Live sends a text to a Safe Endpoint you deploy yourself | nothing for Replay and the panel — no account, no GPU; Live needs your own Safe Endpoint (the On-demand row) |
+| Public demo | [Public demo](https://deepset01-sys.github.io/medisimplifier-nemotron-vagt/): Replay (the 28 recorded cases) and the `/v1/audit_panel` section on a CPU service (`audit-cpu-v2.1`), kept running through the judging period; if it cannot be reached, the panel section shows the committed v2 receipt. Live sends a text to a Safe Endpoint you deploy yourself | nothing for Replay and the panel — no account, no GPU; Live needs your own Safe Endpoint (the On-demand row) |
 | On-demand | `/v1/simplify` + gate on your own Nebius GPU Endpoint (endpoint-v6) + your dedicated judge endpoints | deploy them on your Nebius account, ~$13/h while they run (B2 Tier 2, B9) |
 | Library | `evaluate_safety` from `src/safety_gate.py` | a Nebius API key + your dedicated Qwen3-32B endpoint running, its routing key in `QWEN_JUDGE_MODEL` (Llama's in `LLAMA_JUDGE_MODEL`, for its advisory verdict) |
 
