@@ -950,20 +950,48 @@ Changes to the plan: none. The consent request asked about "the responses" witho
 
 ## Hardware and cost
 
-Actual Nebius billing for v2 (all figures from Nebius Console):
+Nebius billing for v2, 2026-08-27 to 2026-10-25, line for line from the two Nebius Console billing tables (both updated 2026-10-25 17:36 UTC):
 
-| Step | Service | Usage | Cost |
-|------|---------|-------|------|
-| Nemotron Super teacher (9,999 calls) | Token Factory | 83.90M output tokens | $75.51 |
-| Nemotron Nano calibration + student self-audit (708 × 3 judges + 1,001 × 3) | Token Factory | 3.22M input + 8.23M output tokens | $2.17 |
-| Llama (endpoint smoke tests) | Token Factory | 3.03M input + 0.12M output | $0.44 |
-| Gate calibration — Llama + Nemotron Nano (708 items, per-token share) | Token Factory | 1.28M input + 1.10M output | $0.46 |
-| Dedicated Endpoint (Qwen3-32B judge) | Dedicated Endpoint | 22.67 GPU hours | $91.80 |
-| Audit-pool candidates (5×708: Ultra/Super/gpt-oss/DeepSeek/gemma) | Token Factory | ~14M output tokens | $8.74 |
-| H100 NVLink (training + eval + merge) | Jobs | 11.82 GPU hours | $45.53 |
-| CPU + RAM | Jobs | 629.52 vCPU / 2,518.07 GiB hours | $15.61 |
-| Disk + Object Storage | Storage | 76,542.64 GiB hours | $7.84 |
-| **Total v2 (Nebius)** | | | **$248.10** |
+| Token Factory | Region | Usage | Unit | Cost |
+|---------------|--------|-------|------|------|
+| Dedicated Endpoint with NVIDIA® H100 | eu-north1 | 39.73 | GPU hour | $168.11 |
+| Dedicated Endpoint with NVIDIA® H200 | eu-north1 | 13.28 | GPU hour | $72.18 |
+| DeepSeek-V4-Flash Input | eu-north1 | 1.06 | 1M tokens | $0.15 |
+| DeepSeek-V4-Flash Output | eu-north1 | 3.14 | 1M tokens | $0.88 |
+| DeepSeek-V4-Pro Input | eu-north1 | 1.10 | 1M tokens | $1.92 |
+| DeepSeek-V4-Pro Output | eu-north1 | 0.27 | 1M tokens | $0.96 |
+| Gemma-3-27b-it Input | eu-north1 | 0.99 | 1M tokens | $0.10 |
+| Gemma-3-27b-it Output | eu-north1 | 0.05 | 1M tokens | $0.02 |
+| Llama-3.3-70B-Instruct Input | eu-north1 | 2.27 | 1M tokens | $0.30 |
+| Llama-3.3-70B-Instruct Output | eu-north1 | < 0.01 | 1M tokens | < $0.01 |
+| Nemotron-3-Ultra-550B-a55B Input | eu-north1 | 1.00 | 1M tokens | $1.00 |
+| Nemotron-3-Ultra-550B-a55B Output | eu-north1 | 2.61 | 1M tokens | $7.84 |
+| Nvidia-Nemotron-3-Nano-30B-A3B Input | eu-north1 | 11.80 | 1M tokens | $0.71 |
+| Nvidia-Nemotron-3-Nano-30B-A3B Output | eu-north1 | 21.41 | 1M tokens | $5.14 |
+| Nvidia-Nemotron-3-Super-120B-A12B Input | eu-north1 | 7.93 | 1M tokens | $2.38 |
+| Nvidia-Nemotron-3-Super-120B-A12B Output | eu-north1 | 84.36 | 1M tokens | $75.92 |
+| Qwen3-30B-A3B-Instruct-2507 Input | eu-north1 | < 0.01 | 1M tokens | < $0.01 |
+| Qwen3-30B-A3B-Instruct-2507 Output | eu-north1 | < 0.01 | 1M tokens | < $0.01 |
+| Qwen3-32B Input | eu-north1 | 0.53 | 1M tokens | $0.05 |
+| Qwen3-32B Output | eu-north1 | 0.43 | 1M tokens | $0.13 |
+| Qwen3-Embedding-8B Input | eu-north1 | 0.29 | 1M tokens | < $0.01 |
+| Qwen3.5-397B-A17B Input | eu-north1 | 0.02 | 1M tokens | $0.01 |
+| Qwen3.5-397B-A17B Output | eu-north1 | 0.08 | 1M tokens | $0.29 |
+| gpt-oss-120b Input | eu-north1 | 6.88 | 1M tokens | $1.03 |
+| gpt-oss-120b Output | eu-north1 | 3.76 | 1M tokens | $2.26 |
+| **Total** | | | | **$341.39** |
+
+| AI Cloud | Region | Usage | Unit | Cost |
+|----------|--------|-------|------|------|
+| *Compute* | | | | *$336.94* |
+| NVIDIA® H100 NVLink | eu-north1 | 21.94 | GPU hour | $89.67 |
+| Non-GPU AMD Epyc Genoa. CPU | eu-north1 | 7754.48 | vCPU hour | $107.48 |
+| Non-GPU AMD Epyc Genoa. RAM | eu-north1 | 31,017.93 | GiB hour | $124.26 |
+| Disk (Network SSD) | eu-north1 | 159,743.60 | GiB hour | $15.53 |
+| *Object Storage* | | | | *$1.04* |
+| **Total** | | | | **$337.98** |
+
+The two consoles together: **$679.37** ($341.39 + $337.98).
 
 *Note: the gate calibration's Qwen3-32B calls ran on the dedicated endpoint — that share is inside the $91.80 row. External API costs (dual-auditor review: Claude Sonnet 5 + Gemini 2.5 Pro, ~60 calls) are estimated at ~$1–2 and not included in the Nebius total.*
 
