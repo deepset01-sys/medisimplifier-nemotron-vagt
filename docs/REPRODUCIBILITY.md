@@ -77,7 +77,7 @@ no torch, no CUDA, no gate, no simplifier. Request-time work is pure CPU over th
 committed `audit_pool_v2/` verdict files, so it needs **no API key** and no GPU. This is
 the demo's live backend (the deterministic VAGT panel selector), decoupled from the
 H100 endpoint (~$1–3/day while running, instead of ~$4/hr). Since 4808ff2 it runs as the Nebius
-endpoint `medisimplifier-cpu-v2-1`, started for judging windows and stopped between them.
+endpoint `medisimplifier-cpu-v2-1`, kept running through the judging period.
 
 - **Image:** `chambul/medisimplifier:audit-cpu-v2.1` (current since 4808ff2 — built at 400ef54, after vagt_core's σ²_N estimator fix; serves the v2 hand-verified pool, `audit_pool_v2/`)
 - **Digest:** `sha256:5e09e9df2d153cfe312e0af7b2bbdbde5696dfe21308effe0011a75400ac8270`
