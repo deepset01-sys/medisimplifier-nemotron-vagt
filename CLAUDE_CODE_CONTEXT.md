@@ -588,7 +588,7 @@ Each carries a one-line ⚠️ SUPERSEDED / ✅ RESOLVED marker under its headin
 figures: STRATEGIC PIVOT (Step-6 table), ### ENDPOINT, DIAGNOSIS RECALL, VAGT RESULTS, NEMOTRON CALIBRATION,
 AUDIT_PANEL BUILD. Resolved/obsolete: QWEN JUDGE REMOVAL, ENDPOINT ARCHITECTURE, MASTER ACTION LIST,
 PENDING TASKS, README STATUS, SCHEDULE. Corrected in place: MODELS (Llama/Qwen dedicated), INFRASTRUCTURE
-(build VM IP), DOCKER IMAGES (build method), KEY NUMBERS (cost → README $248.10), SAFE ENDPOINT DECISION
+(build VM IP), DOCKER IMAGES (build method), KEY NUMBERS (cost → README $248.10) [⚠️ corrected 2026-10-26: the current total is the two Nebius Console billing tables' $679.37, Token Factory $341.39 and AI Cloud $337.98 for 2026-08-27 to 2026-10-25 (README Hardware and cost), not $248.10], SAFE ENDPOINT DECISION
 RULE (0.5% vs 9.5% note). Source of truth = README + results/.
 
 ### Still-open items carried from the old lists
@@ -903,7 +903,7 @@ dca6961 - feat: VAGT loop experiment committed (run_vagt_loop_experiment.py + A0
 | Training samples | 7,983 | chambul/medisimplifier-nemotron-dataset |
 | Training time | 8,523s (~2.4h) | logs/train_v2.json.gz (train_runtime) |
 | Total cost v2 | $225.45 | Nebius Console actual billing (incl. dedicated endpoint 21.95 GPU-hr + gate calibration) |
-| Total cost v2 (current) | $248.10 | README Hardware-and-cost table (a8aae74: + pool runs, exact Console figures). The $225.45 row + NEBIUS BILLING table below are the earlier snapshot; no billing export committed yet (#12). |
+| Total cost v2 (current) | $248.10 | README Hardware-and-cost table (a8aae74: + pool runs, exact Console figures). The $225.45 row + NEBIUS BILLING table below are the earlier snapshot; no billing export committed yet (#12). [⚠️ corrected 2026-10-26: the current total is the two Nebius Console billing tables' $679.37, Token Factory $341.39 and AI Cloud $337.98 for 2026-08-27 to 2026-10-25 (README Hardware and cost), not $248.10] |
 | H100 hours | 10.22 | Nebius Console |
 | Nemotron Super cost | $75.19 | Nebius Console Token Factory |
 | Nemotron Nano cost | $2.17 | Nebius Console Token Factory (calibration + 1,001-item student audit) |
