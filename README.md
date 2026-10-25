@@ -294,7 +294,7 @@ The Nemotron-taught student was evaluated on the **same GuyDor007 test set (n=1,
 
 > **Output cap.** The v2 student's scores in both tables come from outputs generated with a 512-token cap (`max_new_tokens=512`); in the saved outputs, 146 of the 1,001 stopped at that cap ([`results/eval_v2_output_truncation.json`](results/eval_v2_output_truncation.json)). The other 855 keep the end-of-answer marker `<|im_end|>` in the scored text, and 8 of them run on past it into invented turns; cut at the marker, ROUGE-L is 0.5272 instead of 0.5254 (BERTScore, SARI and FK-Grade were not re-scored). The live endpoint's default is 1,024 (B3).
 
-**Training run:** LoRA (r=32, all_attn, 3 epochs) on 7,983 train / 995 val / 998 test — ~2.4 hours (8,523 s) on 1×H100, ~$9 for training alone (combined train+eval+merge GPU cost: $45.53 — see cost table). Teacher references agree with Claude's at ROUGE-L **0.525** ([`teacher_comparison.json`](teacher_comparison.json)).
+**Training run:** LoRA (r=32, all_attn, 3 epochs) on 7,983 train / 995 val / 998 test — ~2.4 hours (8,523 s) on 1×H100, ~$9 for training alone (combined train+eval+merge GPU cost: $45.53 — see [Hardware and cost](#hardware-and-cost)). Teacher references agree with Claude's at ROUGE-L **0.525** ([`teacher_comparison.json`](teacher_comparison.json)).
 
 > **Interpretation:** v2 ROUGE-L reflects **style divergence from Claude references, not a quality failure** — Nemotron Super produces *less* simplified references — measured FK-Grade **10.1** (Nemotron refs) vs **7.2** (Claude refs), Δ **+2.9** grade levels, both on textstat 0.7.13 over 9,976 pairs (see [`results/reference_fk_grade.json`](results/reference_fk_grade.json)) — and the student model faithfully learned this style. (The student's published FK-Grade 8.87 is a separate measurement — student output, scored with the train-v32 image's textstat — so it is not directly comparable to these reference figures.) The lower ROUGE-L/SARI is the student matching a *different teacher's style*, scored against Claude's references; it is not evidence the v2 outputs are worse, only that they are less Claude-like (and at a slightly higher reading level). Note the ~0.525 student↔Claude ROUGE-L closely tracks the ~0.525 teacher↔teacher ROUGE-L — the student inherited exactly the teacher gap.
 
@@ -992,6 +992,7 @@ Nebius billing for v2, 2026-08-27 to 2026-10-25, line for line from the two Nebi
 | **Total** | | | | **$337.98** |
 
 The two consoles together: **$679.37** ($341.39 + $337.98).
+The figures for single runs elsewhere in this README, for the teacher run, the audit-pool candidates and training, evaluation and merge, are the Nebius Console figures by step from the table these two replace, as it stood on 2026-09-10 (commit a8aae74).
 
 *Note: the gate calibration's Qwen3-32B calls ran on the dedicated endpoint — that share is inside the Dedicated Endpoint with NVIDIA® H100 line. External API costs (dual-auditor review: Claude Sonnet 5 + Gemini 2.5 Pro, ~60 calls) are estimated at ~$1–2 and not included in the Nebius total.*
 
