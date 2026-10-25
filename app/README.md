@@ -76,8 +76,8 @@ models — so it returns in ~1 s, deterministically, the same recommendation eve
 
 That route is served by the **CPU audit_panel service** (`chambul/medisimplifier:audit-cpu-v2.1`)
 — a slim CPU-only container with no vLLM, no GPU, and no API key (~$1–3/day while running).
-It is started for judging windows and stopped between them, so **start it before presenting**;
-while it is stopped, the page falls back as described below. It does **not** touch the H100 endpoint, the Qwen3-32B dedicated
+It is kept running through the judging period;
+if it cannot be reached, the page falls back as described below. It does **not** touch the H100 endpoint, the Qwen3-32B dedicated
 judge, or any GPU inference — audit_panel touches none of them.
 
 A live result is shown only if the response reports `benchmark: "MedSimp-JudgeBench-v2"`.
