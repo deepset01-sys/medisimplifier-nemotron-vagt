@@ -335,7 +335,7 @@ Decided (owner, 2026-09-28): keep Nano; item closed. See the Decided list at the
    Public-URL smoke test passed (health v2; 0.1887; deterministic; CORS preflight from github.io 200; v1 benchmark → 400);
    then STOPPED and confirmed. The URL survives stop/start.
 - The CPU endpoint is NOT always-on: the owner starts it only during judging windows and stops it otherwise (cost). Being
-   stopped is by design, not an outage. The nebius CLI has no image update: a new image needs a new endpoint and URL.
+   stopped is by design, not an outage. The nebius CLI has no image update: a new image needs a new endpoint and URL. [⚠️ corrected 2026-10-26: the CPU service is kept running through the judging period (owner, 2026-09-30 and 2026-10-15), not started per judging window]
 - Demo: 4808ff2 points app/demo.jsx (and the vite dev proxy) at the new URL; Pages run 36335017124 success; live bundle
    index-BD8XFq0N.js verified (new URL present, old absent, E-pass text live). While stopped, the page shows the committed chart.
    Redeployed 2026-09-29 with the push of 28a41b6 (Q1's demo text): Pages run 36548436713 success; live bundle now
@@ -877,7 +877,7 @@ dca6961 - feat: VAGT loop experiment committed (run_vagt_loop_experiment.py + A0
 
 ### ENDPOINT
 
-> ⚠️ SUPERSEDED: GPU endpoint is a persistent Nebius Endpoint (not serverless), URL now port8000-vjbksde9vzhgtcx (stopped between demos); always-on CPU service = port8000-y1sj2wa6m10y8qp. [⚠️ corrected 2026-09-29 (4808ff2): the CPU service is now audit-cpu-v2.1 on the endpoint medisimplifier-cpu-v2-1, port8000-vnvvxqt68q703dy, started for judging windows, not always on]
+> ⚠️ SUPERSEDED: GPU endpoint is a persistent Nebius Endpoint (not serverless), URL now port8000-vjbksde9vzhgtcx (stopped between demos); always-on CPU service = port8000-y1sj2wa6m10y8qp. [⚠️ corrected 2026-09-29 (4808ff2): the CPU service is now audit-cpu-v2.1 on the endpoint medisimplifier-cpu-v2-1, port8000-vnvvxqt68q703dy, started for judging windows, not always on] [⚠️ corrected 2026-10-26: the CPU service is kept running through the judging period (owner, 2026-09-30 and 2026-10-15), not started per judging window]
 
 - URL: https://port8000-qzv93v671z09ej5.tunnel.applications.eu-north1.nebius.cloud
 - Latency: ~27s (3-judge Token Factory gate; corrected from ~73s)
@@ -985,7 +985,7 @@ Build host: VM ubuntu@[build-VM address] (as of 2026-09-28; was [build-VM addres
 | endpoint-v5 | sha256:0e40cff4d8db7d3b4fcfde81ccf6ace22c64feb9246e3e6c7db3876d99e50bfe | Safe Endpoint v5 — selector blind-spot-first fix → Nano; **DEPLOY THIS** (safe_endpoint_v2.yaml) |
 | audit-cpu | sha256:3df2a39ead023bc2ca79feddccd43d6988366f0197966b43ed36aa8e457cb06d | CPU-only audit_panel service, earlier automated pool — SUPERSEDED by audit-cpu-v2 |
 | audit-cpu-v2 | sha256:44cec5211cd0904d568e4f6715dcd865d5daed406c247bd32203a957d30d0d67 | CPU-only audit_panel service, v2 pool (AUDIT_POOL_DIR=audit_pool_v2) — SUPERSEDED by audit-cpu-v2.1 (2026-09-28); kept for rollback on endpoint medisimplifier-cpu-v2 (port8000-y1sj2wa6m10y8qp, stopped); recommends gpt-oss +0.122 [0.1, 0.1416] |
-| audit-cpu-v2.1 | sha256:5e09e9df2d153cfe312e0af7b2bbdbde5696dfe21308effe0011a75400ac8270 | CPU-only audit_panel service, v2 pool, built at 400ef54 (#10 σ²_N fix: panel σ²_B diagnosis 0.1887) — CURRENT, on endpoint medisimplifier-cpu-v2-1 (port8000-vnvvxqt68q703dy); started by the owner for judging windows, otherwise stopped; the demo points here (4808ff2) |
+| audit-cpu-v2.1 | sha256:5e09e9df2d153cfe312e0af7b2bbdbde5696dfe21308effe0011a75400ac8270 | CPU-only audit_panel service, v2 pool, built at 400ef54 (#10 σ²_N fix: panel σ²_B diagnosis 0.1887) — CURRENT, on endpoint medisimplifier-cpu-v2-1 (port8000-vnvvxqt68q703dy); started by the owner for judging windows, otherwise stopped; the demo points here (4808ff2) [⚠️ corrected 2026-10-26: the CPU service is kept running through the judging period (owner, 2026-09-30 and 2026-10-15), not started per judging window] |
 
 **Critical:** cryptography==48.0.1 pinned via post-install step in Dockerfile.train
 **Build method:** manual `docker build` dual-tagged to Docker Hub + Nebius CR, tag bumped per version — EXCEPT audit-cpu / audit-cpu-v2 (Docker Hub only). build_and_push.sh is STALE (hardcodes v28, Docker-Hub only). CR login: `nebius iam get-access-token | docker login cr.eu-north1.nebius.cloud --username iam --password-stdin`.
