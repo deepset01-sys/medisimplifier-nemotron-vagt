@@ -775,7 +775,7 @@ Note: Judges reproducing the endpoint load directly from `chambul/MediSimplifier
 
 > **Why Token Factory?** Nemotron Super and Nano are both served per-token with zero idle cost. The teacher JudgeBench-reference run (519 unique calls → 708 references) cost ~$1.7 and finished in ~21 min (Nebius Console; billing export pending — #12); the judge panel and VAGT analysis add no GPU management. Model strings verified live via `/v1/models`.
 
-> **Dedicated judge endpoints (Token Factory; configuration and pricing from the Nebius Console):** Qwen3-32B (H100 NVLink, eu-north1, FP8, $0.07/min) and Llama-3.3-70B (H200 NVLink, us-central1, FP8, $0.08/min) — stop between uses. The gate reads their routing keys from `QWEN_JUDGE_MODEL` and `LLAMA_JUDGE_MODEL`; where one is unset, it uses this project's own routing key (`src/safety_gate.py`).
+> **Dedicated judge endpoints (Token Factory; configuration from the Nebius Console):** Qwen3-32B (H100 NVLink, eu-north1, FP8) and Llama-3.3-70B (H200 NVLink, FP8) — stop between uses. The gate reads their routing keys from `QWEN_JUDGE_MODEL` and `LLAMA_JUDGE_MODEL`; where one is unset, it uses this project's own routing key (`src/safety_gate.py`).
 
 Full adapter storage flow → [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
 
@@ -993,7 +993,7 @@ Nebius billing for v2, 2026-08-27 to 2026-10-25, line for line from the two Nebi
 
 The two consoles together: **$679.37** ($341.39 + $337.98).
 
-*Note: the gate calibration's Qwen3-32B calls ran on the dedicated endpoint — that share is inside the $91.80 row. External API costs (dual-auditor review: Claude Sonnet 5 + Gemini 2.5 Pro, ~60 calls) are estimated at ~$1–2 and not included in the Nebius total.*
+*Note: the gate calibration's Qwen3-32B calls ran on the dedicated endpoint — that share is inside the Dedicated Endpoint with NVIDIA® H100 line. External API costs (dual-auditor review: Claude Sonnet 5 + Gemini 2.5 Pro, ~60 calls) are estimated at ~$1–2 and not included in the Nebius total.*
 
 **Training run (verified from `logs/train_v2.json.gz`, Nebius Job `aijob-e00rwxv72fe81f54we`):**
 
@@ -1009,9 +1009,8 @@ The two consoles together: **$679.37** ($341.39 + $337.98).
 
 > **Checkpoint selection:** training runs `save_strategy='epoch'` with `load_best_model_at_end=True` on `eval_loss` — so the saved adapter is the **epoch-2** checkpoint (eval_loss 0.8378), the best, **not** the epoch-3 overfit (0.8610). `merge_adapter.py` merges that saved adapter.
 
-H100 NVLink rate: ~$3.85/hr on Nebius eu-north1.
 Training: ~2.4h (8,523s), 3 epochs, seed=42.
-The dedicated Qwen3-32B endpoint ($91.80, 22.67 GPU hours) is the single largest line — left running across the gate calibration and student self-audit. Nemotron Super teacher generation is $75.51 (16,000-token reasoning budget per call). Nemotron Nano is per-token serverless; the gate calls Llama on a dedicated endpoint because serverless Llama returns 403 on this project's account (B8 item 4); the dedicated judge endpoints and the vLLM student host are stopped between demos to avoid idle GPU-hour billing.
+The Dedicated Endpoint with NVIDIA® H100 is the single largest line — left running across the gate calibration and student self-audit. Nemotron Super teacher generation is $75.51 (16,000-token reasoning budget per call). Nemotron Nano is per-token serverless; the gate calls Llama on a dedicated endpoint because serverless Llama returns 403 on this project's account (B8 item 4); the dedicated judge endpoints and the vLLM student host are stopped between demos to avoid idle GPU-hour billing.
 
 ## Project structure
 
