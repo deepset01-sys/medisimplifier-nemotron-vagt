@@ -6,6 +6,17 @@
 [![JudgeBench](https://img.shields.io/badge/HF-MedSimp--JudgeBench-yellow)](https://huggingface.co/datasets/chambul/MedSimp-JudgeBench)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 
+## At a glance
+
+**What if the AI quietly drops a diagnosis?** MediSimplifier rewrites hospital discharge summaries into plain language, and three LLM judges check each rewrite against the original.
+
+- **Try it in 30 seconds** (no account, no GPU): open the [demo](https://deepset01-sys.github.io/medisimplifier-nemotron-vagt/) on Replay, go to Part B and open pair B3. Llama and Qwen say SAFE, NVIDIA Nemotron Nano says UNSAFE, so the gate flags it.
+- **The finding, and its price.** On 120 benchmark rewrites with the primary diagnosis removed (the author verified each removal by hand), Llama-3.3-70B and Qwen3-32B each catch 56 under the deployed gate prompt. Nemotron Nano catches 110, and also flags 53 of the 120 clean controls.
+- **Agreement is not validity.** Adding Nano shows no detectable change in judge agreement (Fleiss κ 0.214 → 0.179), while Φ_V, which scores the panel against the hand-verified errors, rises from 0.476 to 0.553 at the benchmark's 50% drop share.
+- **A tool that decides.** `/v1/audit_panel` recommends which judge to add to a panel. On our data it picks gpt-oss-120b (statistically tied with DeepSeek-V4-Flash; we added the tie-break after seeing the result), and the 30B Nemotron Nano is statistically indistinguishable from the 550B Nemotron Ultra.
+- **Who does what.** Nemotron Super wrote the 7,983 training references and Nemotron Nano is the third judge, both per-token on Nebius Token Factory. Nebius AI Cloud trains the student, hosts it on a GPU endpoint (deployed on demand) and runs the panel selector.
+- **Limits.** The gate raises a flag, not a verdict: at the benchmark's 50% drops, 45 of its 99 DISAGREE flags were false alarms. This is a research prototype, not a medical device.
+
 > **Nebius x NVIDIA Global AI Hackathon submission by Shmulik Avraham.**
 > MediSimplifier v2 is built on top of [MediSimplifier-Nebius](https://github.com/deepset01-sys/medisimplifier-nebius), Project v1, first-place winner of the Nebius Serverless AI Builders Challenge.
 > The VAGT measurement framework was developed in the six weeks between submissions, after v1's κ=0.11 finding (July 15) and before the v2 window opened (August 26), and its estimand files are in the v1 repo but were not part of the v1 submission.
