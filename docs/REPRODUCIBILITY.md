@@ -76,7 +76,7 @@ A slim, CPU-only image that serves **only** `/v1/audit_panel` + `/health` — no
 no torch, no CUDA, no gate, no simplifier. Request-time work is pure CPU over the
 committed `audit_pool_v2/` verdict files, so it needs **no API key** and no GPU. This is
 the demo's live backend (the deterministic VAGT panel selector), decoupled from the
-H100 endpoint (~$1–3/day while running, instead of ~$4/hr). Since 4808ff2 it runs as the Nebius
+H100 endpoint (about $4/hr while running; the CPU service's own cost is not itemized in the Console tables). Since 4808ff2 it runs as the Nebius
 endpoint `medisimplifier-cpu-v2-1`, kept running through the judging period.
 
 - **Image:** `chambul/medisimplifier:audit-cpu-v2.1` (current since 4808ff2 — built at 400ef54, after vagt_core's σ²_N estimator fix; serves the v2 hand-verified pool, `audit_pool_v2/`)
@@ -118,7 +118,7 @@ The Safe Endpoint runs as a Nebius AI Endpoint, created with the Nebius CLI (ste
 - No HuggingFace token: the endpoint loads the public `chambul/MediSimplifier-OpenBioLLM-v2-merged`, at the revision pinned in `scripts/start_endpoint.sh`.
 - For step 5, a clone of this repository and Python with `requests` (`pip install -r requirements.txt`). Docker only to copy or rebuild the image.
 
-**Cost** (Nebius list prices during this project): about $3.85/h for the endpoint's H100, $0.07/min for the Qwen3-32B judge endpoint and $0.08/min for the Llama-3.3-70B one — about $12.85/h while all three run; Nemotron Nano is billed per token. Loading the model takes 10–15 min of endpoint time. Stop all three when you are done (step 6).
+**Cost** (Nebius billing during this project, rounded from the Console totals in the README's Hardware and cost section): about $4/h for the endpoint's H100, $0.07/min for the Qwen3-32B judge endpoint and $0.09/min for the Llama-3.3-70B one — about $14/h while all three run; Nemotron Nano is billed per token. Loading the model takes 10–15 min of endpoint time. Stop all three when you are done (step 6).
 
 **1. Create the two judge endpoints** (Token Factory console; *not re-run by us*). In the model catalog, open the model, choose **Deploy dedicated endpoint**, fill in the form as below, then **Review configuration**. Our settings:
 

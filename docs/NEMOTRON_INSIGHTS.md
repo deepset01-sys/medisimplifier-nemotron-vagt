@@ -20,11 +20,11 @@ result that surprised us. We lead with the surprise.
 
 | # | Role | Outcome | One-line takeaway for Nemotron users |
 |---|------|---------|--------------------------------------|
-| 1 | Nano — third judge in a validity panel | **Real, detection-specific lift** (ΔΦ_V +0.0765 at a 50% drop share) | A 30B Nano matches a 550B Nemotron; two other families added more (partly by construction — see Finding 1) — choose judges against verified labels, not agreement |
+| 1 | Nano — third judge in a validity panel | **Real, detection-specific lift** (ΔΦ_V +0.0765 at a 50% drop share) | A 30B Nano is statistically indistinguishable from a 550B Nemotron; two other families added more (partly by construction — see Finding 1) — choose judges against verified labels, not agreement |
 | 2 | Super — reasoning budget | `content=None` at 1024 tokens; needs ~16k | Budget the *reasoning* tokens, not just the answer — a silent `content=None` if under-budgeted |
-| 3 | Both — verdict extraction | Regex-scraped from 8k-token reasoning | Expose/use logprobs for classification verdicts — unlocks thresholds and cuts latency |
+| 3 | Both — verdict extraction | Regex-scraped from reasoning text (8k-token budget) | Expose/use logprobs for classification verdicts — unlocks thresholds and cuts latency |
 | 4 | Nano — scoped faithfulness gate | Pre-registered: **no recall cost, no demonstrated gain** | Narrowing the prompt doesn't fix name-match false positives on paraphrased text; the lever is semantic grounding |
-| 5 | Super — teacher for fine-tuning | Below Claude Opus 4.5 on generation | Strong as a *judge*, weaker as a *generator* for lay-language rewriting |
+| 5 | Super — teacher for fine-tuning, and a candidate judge | Rewrites read at FK-Grade 10.1 vs 7.2 for Claude Opus 4.5's; as a judge, ΔΦ_V +0.0480, the smallest of the three Nemotrons | Benchmark each role separately: Super was the weakest Nemotron judge we tested and wrote less-simplified rewrites than Claude |
 
 ---
 
@@ -41,12 +41,11 @@ deployed gate prompt (0.4745 → 0.5337, +0.0591 [+0.0387, +0.0802] under the
 calibration prompt). It replicates across patients — split by patient, **+0.0735 [0.036,
 0.104]** and **+0.0789 [0.047, 0.109]** on the two halves — and it is detection, not
 flag-rate: the lift sits far outside a τ-blind permutation null (p = 0.001). Nano
-**matches Nemotron Ultra-550B** (+0.0781 [0.0552, 0.1003]; overlapping CIs) at ~18×
+is **statistically indistinguishable from Nemotron Ultra-550B** (+0.0781 [0.0552, 0.1003]; overlapping CIs, not proven equal) at ~18×
 fewer total parameters. It is **not** the strongest addition: **gpt-oss-120b**
 (+0.1220 [0.1000, 0.1416]) and **DeepSeek-V4-Flash** (+0.1238 [0.1024, 0.1440]) add
 more, though on the same rows their CIs only just clear Nano's or overlap it (gpt-oss +0.1000
-vs Nano's upper +0.0992 on all 240 rows; DeepSeek +0.1024 vs +0.1056 on its 233 completed rows). Of six candidates, five pass the permutation null (gemma-3-27b
-does not, p = 0.449).
+vs Nano's upper +0.0992 on all 240 rows; DeepSeek +0.1024 vs +0.1056 on its 233 completed rows). Of six candidates, five clear the permutation null at p < 0.05 (four lie above all 1,000 of their own shuffles, p = 0.001; Super ties one shuffle, p = 0.002), and gemma-3-27b does not (p = 0.449).
 
 **Mechanism.** Under the deployed gate prompt the two incumbents each catch 56 of the 120
 genuine drops, and both pass the same **41 of the 120** as SAFE (34 would be expected if
@@ -63,7 +62,7 @@ both the version missing the diagnosis and the faithful one; in 63 it flags only
 lossy version.
 
 **Implication for Nemotron users.** Within the Nemotron family, **scale did not buy
-detection** — Nano matched Ultra-550B — so try the smallest Nemotron first in a
+detection** — Nano was statistically indistinguishable from Ultra-550B — so try the smallest Nemotron first in a
 many-call safety loop, after checking your drop rate: every candidate adds less at 20%
 drops than at 50%, and under the deployed prompt Nano's gain is no longer detectable at
 20% (ΔΦ_V +0.0066 [−0.0264, +0.0384]; point estimate below zero at 17% and below). The bias
@@ -93,8 +92,9 @@ README (A6, A8).*
 data-generation path), called via the Nebius OpenAI-compatible API.
 
 **Outcome.** At `max_tokens=1024` the API returned a well-formed response whose
-`content` was **`None`** — no error, no truncation flag, just empty content. Raising
-to **~16,000** was required before usable text appeared.
+`content` was **`None`**, with `finish_reason="length"` as the only hint — no error, just empty content. Raising
+to **~16,000** was required before usable text appeared (at 8,000 the longest notes still truncated
+mid-sentence; README A7).
 
 **Mechanism.** The reasoning trace consumes the token budget *before* any answer
 tokens are emitted. A budget sized for the visible answer is entirely absorbed by
@@ -115,17 +115,20 @@ a valid empty result.
 **Role.** Nano and the panel producing a binary SAFE / UNSAFE gate verdict in
 production.
 
-**Outcome.** Verdicts are obtained by **regex over an ~8,000-token reasoning
-generation** (`\b(SAFE|UNSAFE)\b`). Consequences we measured: ~26.5 s gate latency,
-a ~35% false-positive rate **with no tunable knob**, and no confidence score.
+**Outcome.** Verdicts are obtained by **regex over a reasoning generation of up to
+8,000 tokens** (`\b(SAFE|UNSAFE)\b`). Consequences we measured: Nano flags 44.2% of the 120
+hand-verified paired controls under the deployed prompt (53 of 120; 30.5% of the 200 automated
+clean controls) **with no tunable knob**, and there is no confidence score. We recorded latency only
+end to end: 9.7–43.9 s for each of the 12 `/v1/simplify` requests recorded on the final endpoint
+image, explanation included (README B2, Timing).
 
 **Mechanism.** All three symptoms share one root cause: the decision is read from
 *generated text* instead of from the model's *distribution*. Because there is no
 score, there is no threshold to calibrate; because the full reasoning must complete
 before the keyword appears, latency is bounded below by the whole generation; because
-extraction is textual, it is brittle to phrasing. Despite `enable_thinking=False` in
-the call (`_call_judge` in `src/safety_gate.py`), the gate still emits ~8k-token reasoning — confirming
-the flag did not suppress the reasoning trace in our runs.
+extraction is textual, it is brittle to phrasing. The call sends `enable_thinking=False`
+(`_call_judge` in `src/safety_gate.py`), yet Nano still reasons before it answers. Whether the server
+never applies the flag or the model ignores it cannot be told from our runs (README, note under the A3 table).
 
 **Implication for Nemotron users.** For any classification/verdict task, **read
 logprobs or use constrained decoding** rather than scraping reasoning:
@@ -162,23 +165,28 @@ Scoping the prompt costs no recall: a loss of more than about 3 points is ruled 
 
 ---
 
-## Finding 5 — Super is a strong judge but a weaker generator for lay-language rewriting
+## Finding 5 — Super is the weakest Nemotron judge in our pool, and a teacher whose rewrites read harder than Claude's
 
 **Role.** Nemotron Super as a **teacher** generating reference simplifications for
-fine-tuning, compared against Claude Opus 4.5 references.
+fine-tuning, compared against Claude Opus 4.5 references; and as one of six candidate
+third judges in the validity panel (Finding 1).
 
-**Outcome.** A measurable generation-quality gap: Super's lay-language rewrites were
-weaker than the Claude-authored references we compared against, even though Super is
-entirely serviceable in the **judge/verifier** roles above.
+**Outcome.** As a teacher, Super's references read at FK-Grade 10.1 against 7.2 for the
+Claude references (+2.9 grade levels, 9,976 pairs, textstat 0.7.13) and agree with them at
+ROUGE-L 0.525. The README (A7) reads this as style divergence from Claude's references
+rather than a quality failure: Super's rewrites are less simplified, and the student
+trained on them inherited the gap. As a judge, Super added the smallest lift of the three
+Nemotron models: ΔΦ_V +0.0480 [+0.0225, +0.0720], against +0.0765 for Nano and +0.0781
+for Ultra, with 93% recall on the drops but 29% specificity on the controls.
 
-**Mechanism.** The two roles stress different capabilities. Judging a simplification
-is a discrimination task (is fact X preserved?); *producing* a good simplification is
-an open-ended generation task requiring register control and audience modeling.
-Super's strengths line up with the former.
+**Mechanism.** We did not isolate why. One reading, untested here: the two roles stress
+different capabilities. Judging a simplification is a discrimination task (is fact X
+preserved?); *producing* a good simplification is an open-ended generation task requiring
+register control and audience modeling.
 
-**Implication for Nemotron users.** Role-match matters: **use Super where the task is
-evaluation/verification, and benchmark carefully before using it as a generator** for
-audience-specific rewriting. "Good judge" does not imply "good author."
+**Implication for Nemotron users.** Benchmark Super for each role before relying on it. In
+our data it was the weakest of the three Nemotron judges, and its rewrites read 2.9 grade
+levels above Claude's.
 
 ---
 
@@ -192,9 +200,10 @@ audience-specific rewriting. "Good judge" does not imply "good author."
   stored numbers, and the harness reproduces the original pipeline's automated-pass Φ_V (0.472 ≈ 0.476).
 - **Hand-verified benchmark:** Finding 1 is measured on 120 hand-verified drops + 120 paired
   controls, pre-registered before any judge ran (`docs/judgebench_v2_protocol.md`).
+- **What is not powered:** the 120-drop benchmark size was a pre-registered target (at least 100 genuine drops), not a power calculation, and no document has a power calculation for ΔΦ_V. The scoped-gate re-run's primary test was underpowered: a true +0.10 improvement would have passed about half the time. Intervals capture sampling variability of these items only (README A8, threat 7).
 - **Honest mix:** one favorable result (Finding 1), two actionable engineering gotchas
-  (2, 3), two capability characterizations (4, 5). The negatives are credible *because*
-  the method also produced a positive.
+  (2, 3), two capability characterizations (4, 5). Finding 4's result (no demonstrated gain) was
+  pre-registered, like Finding 1's benchmark, and is reported on the same footing.
 
 ## Reproduce
 - Benchmark (hand-verified v2): `results/judgebench_v2_tau1_final.json`, `results/judgebench_v2_clean_controls.json`
