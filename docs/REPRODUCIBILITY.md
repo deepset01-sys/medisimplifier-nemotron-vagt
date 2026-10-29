@@ -118,7 +118,7 @@ The Safe Endpoint runs as a Nebius AI Endpoint, created with the Nebius CLI (ste
 - No HuggingFace token: the endpoint loads the public `chambul/MediSimplifier-OpenBioLLM-v2-merged`, at the revision pinned in `scripts/start_endpoint.sh`.
 - For step 5, a clone of this repository and Python with `requests` (`pip install -r requirements.txt`). Docker only to copy or rebuild the image.
 
-**Cost** (Nebius billing during this project, rounded from the Console totals in the README's Hardware and cost section): about $4/h for the endpoint's H100, $0.07/min for the Qwen3-32B judge endpoint and $0.09/min for the Llama-3.3-70B one — about $14/h while all three run; Nemotron Nano is billed per token. Loading the model takes 10–15 min of endpoint time. Stop all three when you are done (step 6).
+**Cost** (Nebius billing during this project, rounded from the Console totals in the README's Hardware and cost section): about $4/h for the endpoint's H100, $0.07/min for the Qwen3-32B judge endpoint and $0.09/min for the Llama-3.3-70B one — about $14/h while all three run; Nemotron Nano is billed per token. Loading the model takes about 8 to 10 minutes of endpoint time. Stop all three when you are done (step 6).
 
 **1. Create the two judge endpoints** (Token Factory console; *not re-run by us*). In the model catalog, open the model, choose **Deploy dedicated endpoint**, fill in the form as below, then **Review configuration**. Our settings:
 
@@ -173,7 +173,7 @@ The command waits for the endpoint to be created and prints its ID; the `grep` k
 ```bash
 nebius ai endpoint get --id <endpoint-id> --format json | grep -o 'https://port8000-[^"]*'
 ```
-vLLM first loads the model (10–15 min); the URL answers once it is ready. Then, from your clone of this repository:
+vLLM first loads the model (about 8 to 10 minutes); the URL answers once it is ready. Then, from your clone of this repository:
 ```bash
 curl https://<your-endpoint-url>/health
 python scripts/verify_endpoint.py https://<your-endpoint-url> --all
