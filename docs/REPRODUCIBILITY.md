@@ -114,7 +114,7 @@ The Safe Endpoint runs as a Nebius AI Endpoint, created with the Nebius CLI (ste
 - A Nebius AI Cloud account with billing set up, and a project in `eu-north1` with a subnet (*not re-run by us*).
 - GPU quota for one H100 (`gpu-h100-sxm`) for the endpoint (*not re-run by us*).
 - The Nebius CLI, installed and logged in with a profile for your project: `nebius ai endpoint create` takes the project from the profile (`--parent-id` sets another) (*not re-run by us*).
-- A Token Factory API key (`NEBIUS_API_KEY`) for the three judges: your two dedicated endpoints (step 1) and serverless Nemotron Nano (`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`).
+- A Token Factory API key (`NEBIUS_API_KEY`) for the three judges: your two dedicated endpoints (step 1) and serverless Nemotron Nano (`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`). Nebius has announced that it ends API support for serverless Nemotron Nano on 9 November 2026, and that dedicated endpoints using it are not affected (README, B8, item 5). After that date the gate's Nemotron call fails, its verdict is `ERROR` and `scripts/verify_endpoint.py` reports a failure; serving the model from a third dedicated endpoint and setting `NEMOTRON_NANO` in `src/safety_gate.py` to its routing key should restore it (*not tried by us*).
 - No HuggingFace token: the endpoint loads the public `chambul/MediSimplifier-OpenBioLLM-v2-merged`, at the revision pinned in `scripts/start_endpoint.sh`.
 - For step 5, a clone of this repository and Python with `requests` (`pip install -r requirements.txt`). Docker only to copy or rebuild the image.
 

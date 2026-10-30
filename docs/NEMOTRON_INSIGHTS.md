@@ -10,6 +10,8 @@ Every number below is reproducible from committed scripts and a locked verdict s
 we pre-registered the experiments that could have gone either way and report them
 whether they helped us or not.
 
+**Availability:** Nebius has announced that it ends Playground and API support for the serverless Nemotron 3 Nano and Nemotron 3 Super models on 9 November 2026 (dedicated endpoints are not affected). The committed verdicts and receipts behind the numbers below are unaffected; README B8, item 5 lists what changes in Live.
+
 These are engineer-to-engineer notes: two are immediately actionable SDK/inference
 items, two are capability/task-fit characterizations, one is a genuinely favorable
 result that surprised us. We lead with the surprise.

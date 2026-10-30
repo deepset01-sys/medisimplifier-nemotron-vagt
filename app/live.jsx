@@ -203,6 +203,9 @@ export default function Live({ text, setText, reproUrl }) {
         <a href={requestMailto()}>{T.onRequestAddress}</a>
         {T.onRequestAfter}
       </p>
+      <p className="ms-lv-retire" role="note">
+        {T.retireNote}
+      </p>
 
       <label className="ms-lv-label" htmlFor="ms-lv-url">
         {T.urlLabel}

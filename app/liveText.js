@@ -39,6 +39,11 @@ export const T = {
     "text only.",
   onRequestSubject: "MediSimplifier Live session",
   onRequestBody: "The time I plan to look (with my time zone): ",
+  retireNote:
+    "Nebius has announced that it ends API support for the serverless Nemotron Nano model on 9 November 2026. The " +
+    "gate calls that model as one of its two deciding judges, so after that date a Live session shows ERROR for it, " +
+    "the gate's verdict is ERROR unless Qwen judges the rewrite unsafe, and a flagged rewrite has no explanation. " +
+    "Replay shows all three judges on the 28 recorded cases.",
   urlLabel: "Endpoint URL",
   urlPlaceholder: "https://…",
   urlHint: "Kept in this page only: not saved, and not added to the address bar.",

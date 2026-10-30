@@ -35,6 +35,10 @@ is never withheld; the verdict is shown beside it.
   deepset01@gmail.com with the time you plan to look; they are started for your session and take about 8 to 10
   minutes to load, and you get an endpoint address to paste into the page. That endpoint has no
   authentication: use synthetic text only.
+- **From 9 November 2026.** Nebius has announced that it ends API support for the serverless Nemotron Nano model
+  on that date. The gate calls it as one of its two deciding judges, so a Live session then shows `ERROR` for the
+  Nemotron judge, the gate's verdict is `ERROR` unless Qwen judges the rewrite `UNSAFE`, and a flagged rewrite has
+  no explanation. Replay shows all three judges on the 28 recorded cases (README, B8, item 5).
 - **Where your text goes:** to that endpoint, nowhere else. This is not medical advice.
 - **Browser access:** the endpoint answers browsers only from this page on GitHub Pages and
   from a local `npm run dev` (below); its `CORS_ALLOW_ORIGINS` setting replaces that list.
