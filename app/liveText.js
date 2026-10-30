@@ -29,6 +29,16 @@ export const T = {
   needEndpointBefore: "New text needs a running endpoint. Enter its URL below, or deploy your own with the ",
   needEndpointLink: "reproduction guide",
   needEndpointAfter: ".",
+  onRequestBefore:
+    "This project's Safe Endpoint and its two judge endpoints are not kept running between demos: together they " +
+    "cost about $14 an hour. To try Live on them at no cost to you, write to ",
+  onRequestAddress: "deepset01@gmail.com",
+  onRequestAfter:
+    " with the time you plan to look. They are started for your session and take about 8 to 10 minutes to load; " +
+    "you then get an endpoint address to paste below. That endpoint has no authentication, so use synthetic " +
+    "text only.",
+  onRequestSubject: "MediSimplifier Live session",
+  onRequestBody: "The time I plan to look (with my time zone): ",
   urlLabel: "Endpoint URL",
   urlPlaceholder: "https://…",
   urlHint: "Kept in this page only: not saved, and not added to the address bar.",
@@ -124,6 +134,12 @@ export function judgeList(s) {
 /** The line shown while waiting, by elapsed seconds. */
 export function waitLine(seconds) {
   return seconds >= 90 ? T.wait90 : seconds >= 45 ? T.wait45 : T.wait0;
+}
+
+/** The mailto link that asks for the project's endpoints to be started for a session. */
+export function requestMailto() {
+  const q = "subject=" + encodeURIComponent(T.onRequestSubject) + "&body=" + encodeURIComponent(T.onRequestBody);
+  return "mailto:" + T.onRequestAddress + "?" + q;
 }
 
 /** The endpoint's base URL from what the visitor typed: http(s) only; a pasted /v1/simplify or /health is dropped. */

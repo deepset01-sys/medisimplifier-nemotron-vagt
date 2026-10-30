@@ -305,6 +305,8 @@ const CSS = `
 .ms-lv-intro { margin: 0 0 4px; font-size: 15px; color: var(--ink); }
 .ms-lv-hint { margin: 6px 0 0; font-size: 12.5px; color: var(--ink-faint); }
 .ms-lv-hint a { color: var(--brand); font-weight: 600; }
+.ms-lv-request { margin: 10px 0 0; padding: 10px 12px; font-size: 13.5px; line-height: 1.5; color: var(--ink-soft); background: var(--brand-soft); border-radius: 8px; }
+.ms-lv-request a { color: var(--brand); font-weight: 600; overflow-wrap: anywhere; }
 .ms-lv-label {
   display: block; margin: 18px 0 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
   text-transform: uppercase; color: var(--ink-faint);

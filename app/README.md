@@ -30,6 +30,11 @@ is never withheld; the verdict is shown beside it.
   and paste its URL into the page; **Check endpoint** asks its `/health` whether it is ready
   (that check does not call the judges).
   The URL stays in the page: it is not saved and not added to the address bar.
+- **The project's endpoints, on request.** The Safe Endpoint and its two judge endpoints are not kept running
+  between demos (about $14 an hour together). To try Live on them at no cost to you, write to
+  deepset01@gmail.com with the time you plan to look; they are started for your session and take about 8 to 10
+  minutes to load, and you get an endpoint address to paste into the page. That endpoint has no
+  authentication: use synthetic text only.
 - **Where your text goes:** to that endpoint, nowhere else. This is not medical advice.
 - **Browser access:** the endpoint answers browsers only from this page on GitHub Pages and
   from a local `npm run dev` (below); its `CORS_ALLOW_ORIGINS` setting replaces that list.

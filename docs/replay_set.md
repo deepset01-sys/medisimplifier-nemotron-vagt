@@ -55,8 +55,9 @@ recorded cases contain text derived from them, so the replay data file joins the
 
 ## New text in Replay mode
 
-Pasted text is never processed in Replay mode. Pasting switches to Live mode, which needs the user's own endpoint
-URL; without one, the app says that new text needs a running endpoint and links the reproduction guide.
+Pasted text is never processed in Replay mode. Pasting switches to Live mode, which needs an endpoint
+URL; without one, the app says that new text needs a running endpoint, links the reproduction guide and says
+how to ask for the project's endpoints to be started.
 
 ## Corrections
 

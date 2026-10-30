@@ -17,6 +17,7 @@ import {
   healthView,
   normalizeEndpoint,
   readSimplify,
+  requestMailto,
   waitLine,
 } from "./liveText.js";
 
@@ -196,6 +197,11 @@ export default function Live({ text, setText, reproUrl }) {
           {T.needEndpointLink}
         </a>
         {T.needEndpointAfter}
+      </p>
+      <p className="ms-lv-request">
+        {T.onRequestBefore}
+        <a href={requestMailto()}>{T.onRequestAddress}</a>
+        {T.onRequestAfter}
       </p>
 
       <label className="ms-lv-label" htmlFor="ms-lv-url">
